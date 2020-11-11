@@ -3,6 +3,9 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.clothutils.GameruleManager;
+
+import java.io.File;
 import java.io.PrintStream;
 import java.util.Random;
 
@@ -153,13 +156,17 @@ public class BlockPortal extends BlockBreakable
 
     public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity)
     {
+        GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+        if(gameruleManager.getBooleanGamerule("NetherAllowed", true) == true){
         if(world.multiplayerWorld)
         {
+            entity.func_4042_C();
             return;
         } else
         {
             entity.func_4042_C();
             return;
+        }
         }
     }
 }

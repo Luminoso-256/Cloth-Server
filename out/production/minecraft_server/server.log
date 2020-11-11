@@ -326,3 +326,17 @@ net.minecraft.src.MinecraftException: Failed to check session lock, aborting
 2020-11-11 13:25:28 [INFO] Redbunny1 lost connection: Quitting
 2020-11-11 13:26:24 [INFO] Stopping server
 2020-11-11 13:26:24 [INFO] Saving chunks
+2020-11-11 13:27:08 [INFO] Cloth v1.0.0| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-11 13:27:08 [INFO] Loading properties
+2020-11-11 13:27:08 [INFO] Starting Minecraft server on *:25565
+2020-11-11 13:27:08 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-11 13:27:08 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-11 13:27:08 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-11 13:27:08 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-11 13:27:08 [INFO] Preparing level "world"
+2020-11-11 13:27:08 [INFO] Preparing start region
+2020-11-11 13:27:13 [INFO] Done! For help, type "help" or "?"
+2020-11-11 13:27:18 [INFO] Redbunny1 [/127.0.0.1:55171] logged in with entity id 1317
+2020-11-11 13:29:04 [INFO] Redbunny1 lost connection: Quitting
+2020-11-11 13:29:26 [INFO] Stopping server
+2020-11-11 13:29:26 [INFO] Saving chunks

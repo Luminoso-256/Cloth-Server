@@ -57,10 +57,10 @@ public class NameIDMappings {
         if(NamespacedName.equals("obsidian")){ID = 49;}
         if(NamespacedName.equals("torch")){ID = 50;}
         if(NamespacedName.equals("fire")){ID = 51;}
-        if(NamespacedName.equals("infinite_water")){ID = 52;}
-        if(NamespacedName.equals("infinite_lava")){ID = 53;}
+        if(NamespacedName.equals("mob_spawner")){ID = 52;}
+        if(NamespacedName.equals("wooden_stairs")){ID = 53;}
         if(NamespacedName.equals("chest")){ID = 54;}
-        if(NamespacedName.equals("cog")){ID = 55;}
+        if(NamespacedName.equals("redstone_dust")){ID = 55;}
         if(NamespacedName.equals("diamond_ore")){ID = 56;}
         if(NamespacedName.equals("diamond_block")){ID = 57;}
         if(NamespacedName.equals("crafting_table")){ID = 58;}

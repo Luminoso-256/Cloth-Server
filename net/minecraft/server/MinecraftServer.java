@@ -4,6 +4,7 @@
 
 package net.minecraft.server;
 
+import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.clothutils.WorldGenParams;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.ChunkProviderServer;
@@ -66,11 +67,12 @@ public class MinecraftServer
         if(Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L)
         {
             logger.warning("**** NOT ENOUGH RAM!");
-            logger.warning("To start the server with more ram, launch it as \"java -Xmx1024M -Xms1024M -jar minecraft_server.jar\"");
+            logger.warning("To start the server with more ram, launch it as \"java -Xmx1024M -Xms1024M -jar server.jar\"");
         }
         logger.info("Loading properties");
         Random random = new Random();
         propertyManagerObj = new PropertyManager(new File("server.properties"));
+        GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules")); //gamerule config file
         String s = propertyManagerObj.getStringProperty("server-ip", "");
         long Seed = propertyManagerObj.getLongProperty("seed", random.nextLong()); // just here to ensure property initialization  (i think)
         onlineMode = propertyManagerObj.getBooleanProperty("online-mode", true);

@@ -3,6 +3,9 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.clothutils.GameruleManager;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -170,7 +173,8 @@ public class Block
 
     public int tickRate()
     {
-        return 10;
+        GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+        return gameruleManager.getIntGamerule("BlockTickRate", 10);
     }
 
     public void onBlockAdded(World world, int i, int j, int k)
