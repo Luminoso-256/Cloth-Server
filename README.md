@@ -1,5 +1,5 @@
 ## Cloth-Server
-A Modded server  for  minecraft alpha 1.2.6 back-porting modern minecraft server amenities alpha 1.2.6
+A Modded server  for  minecraft alpha 1.2.6 back-porting modern minecraft server features to alpha 1.2.6
 
 #### Features
  - give command now takes string names like `stone` instead of numeric ids like `1`
