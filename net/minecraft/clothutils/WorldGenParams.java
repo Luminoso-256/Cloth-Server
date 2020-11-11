@@ -15,4 +15,16 @@ public class WorldGenParams {
         return propertyManager.getLongProperty("seed", random.nextLong());
 
     }
+    public long GetOctavesA(){
+        PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
+        return propertyManager.getLongProperty("OctaveMultiplierA", 9871L);
+    }
+    public long GetOctavesB(){
+        PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
+        return propertyManager.getLongProperty("OctaveMultiplierB", 39811L);
+    }
+    public long GetOctavesC(){
+        PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
+        return propertyManager.getLongProperty("OctaveMultiplierC", 0x84a59L);
+    }
 }
