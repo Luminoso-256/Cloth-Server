@@ -9,7 +9,7 @@ A Modded server  for  minecraft alpha 1.2.6 back-porting modern minecraft server
 #### Roadmap
  - plugin support of some  kind - with docs
  - MOTD message when a player joins
-
+ - expose noise gen params to settings file, watch chaos ensue
 ## How To Build
  - clone github repository
  - open repository as Intellij Idea(tm) project

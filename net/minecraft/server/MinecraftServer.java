@@ -33,11 +33,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.minecraft.clothutils.NameIDMappings;
@@ -72,8 +68,10 @@ public class MinecraftServer
             logger.warning("To start the server with more ram, launch it as \"java -Xmx1024M -Xms1024M -jar minecraft_server.jar\"");
         }
         logger.info("Loading properties");
+        Random random = new Random();
         propertyManagerObj = new PropertyManager(new File("server.properties"));
         String s = propertyManagerObj.getStringProperty("server-ip", "");
+        long Seed = propertyManagerObj.getLongProperty("seed", random.nextLong()); // just here to ensure property initialization  (i think)
         onlineMode = propertyManagerObj.getBooleanProperty("online-mode", true);
         noAnimals = propertyManagerObj.getBooleanProperty("spawn-animals", true);
         field_9011_n = propertyManagerObj.getBooleanProperty("pvp", true);

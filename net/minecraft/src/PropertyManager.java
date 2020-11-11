@@ -74,6 +74,18 @@ public class PropertyManager
         }
         return i;
     }
+    public long getLongProperty(String s, long i)
+    {
+        try
+        {
+            return Long.parseLong(getStringProperty(s, (new StringBuilder()).append("").append(i).toString()));
+        }
+        catch(Exception exception)
+        {
+            serverProperties.setProperty(s, (new StringBuilder()).append("").append(i).toString());
+        }
+        return i;
+    }
 
     public boolean getBooleanProperty(String s, boolean flag)
     {

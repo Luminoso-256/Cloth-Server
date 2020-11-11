@@ -3,6 +3,8 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.clothutils.WorldGenParams;
+
 import java.io.*;
 import java.util.*;
 
@@ -76,7 +78,8 @@ public class World
             {
                 NBTTagCompound nbttagcompound = CompressedStreamTools.func_770_a(new FileInputStream(file2));
                 NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
-                randomSeed = nbttagcompound1.getLong("RandomSeed");
+                WorldGenParams params = new WorldGenParams();
+                randomSeed = params.GetSeedFromPropertiesFile();
                 spawnX = nbttagcompound1.getInteger("SpawnX");
                 spawnY = nbttagcompound1.getInteger("SpawnY");
                 spawnZ = nbttagcompound1.getInteger("SpawnZ");
