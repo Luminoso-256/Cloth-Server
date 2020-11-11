@@ -110,6 +110,7 @@ public class MinecraftServer
         func_6017_c(s1);
         logger.info("Done! For help, type \"help\" or \"?\"");
         return true;
+
     }
 
     private void func_6017_c(String s)

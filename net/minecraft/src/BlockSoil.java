@@ -3,6 +3,9 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.clothutils.GameruleManager;
+
+import java.io.File;
 import java.util.Random;
 
 public class BlockSoil extends Block
@@ -29,21 +32,18 @@ public class BlockSoil extends Block
 
     public void updateTick(World world, int i, int j, int k, Random random)
     {
-        if(random.nextInt(5) == 0)
-        {
-            if(func_283_h(world, i, j, k))
-            {
-                world.setBlockMetadataWithNotify(i, j, k, 7);
-            } else
-            {
-                int l = world.getBlockMetadata(i, j, k);
-                if(l > 0)
-                {
-                    world.setBlockMetadataWithNotify(i, j, k, l - 1);
-                } else
-                if(!func_282_g(world, i, j, k))
-                {
-                    world.setBlockWithNotify(i, j, k, Block.dirt.blockID);
+        GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules")); //gamerule config file
+        if(gameruleManager.getBooleanGamerule("randomtrample", false) == true) {
+            if (random.nextInt(5) == 0) {
+                if (func_283_h(world, i, j, k)) {
+                    world.setBlockMetadataWithNotify(i, j, k, 7);
+                } else {
+                    int l = world.getBlockMetadata(i, j, k);
+                    if (l > 0) {
+                        world.setBlockMetadataWithNotify(i, j, k, l - 1);
+                    } else if (!func_282_g(world, i, j, k)) {
+                        world.setBlockWithNotify(i, j, k, Block.dirt.blockID);
+                    }
                 }
             }
         }
