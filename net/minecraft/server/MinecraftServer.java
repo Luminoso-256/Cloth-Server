@@ -334,16 +334,20 @@ public class MinecraftServer
                 icommandlistener.log("   save-off                  disables terrain saving (useful for backup scripts)");
                 icommandlistener.log("   save-on                   re-enables terrain saving");
                 icommandlistener.log("   list                      lists all currently connected players");
-                icommandlistener.log("   day                      sets time to day");
-                icommandlistener.log("   night                      sets time to night");
+                icommandlistener.log("   time set <day/night/number of ticks>                   changes time");
+
                 icommandlistener.log("   say <message>             broadcasts a message to all players");
             } else
-            if(s.toLowerCase().startsWith("day")){
-                // Set it  to daytime
-                worldMngr.worldTime = 1000;
-            }
-            if(s.toLowerCase().startsWith("night")){
-                worldMngr.worldTime = 13000;
+
+            if(s.toLowerCase().startsWith("time set ")){
+                String targetTime = s.substring(s.indexOf(" ")).trim();
+                if(targetTime == "day"){ worldMngr.worldTime = 1000;}
+                else
+                if(targetTime == "night"){worldMngr.worldTime = 13000;}
+                else{
+                   int time =   Integer.parseInt(targetTime);
+                   worldMngr.worldTime = time;
+                }
             }
             if(s.toLowerCase().startsWith("list"))
             {
