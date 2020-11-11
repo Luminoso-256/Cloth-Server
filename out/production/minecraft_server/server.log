@@ -164,3 +164,100 @@
 2020-11-11 11:11:05 [INFO] Redbunny1 lost connection: Quitting
 2020-11-11 11:11:08 [INFO] Stopping server
 2020-11-11 11:11:08 [INFO] Saving chunks
+2020-11-11 11:11:18 [INFO] Cloth v1.0.0| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-11 11:11:18 [INFO] Loading properties
+2020-11-11 11:11:18 [INFO] Starting Minecraft server on *:25565
+2020-11-11 11:11:18 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-11 11:11:18 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-11 11:11:18 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-11 11:11:18 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-11 11:11:18 [INFO] Preparing level "world"
+2020-11-11 11:11:18 [INFO] Preparing start region
+2020-11-11 11:11:22 [INFO] Done! For help, type "help" or "?"
+2020-11-11 11:12:12 [INFO] Redbunny1 [/127.0.0.1:52750] logged in with entity id 7201
+2020-11-11 11:12:52 [INFO] Redbunny1 lost connection: Quitting
+2020-11-11 11:14:14 [SEVERE] Unexpected exception
+net.minecraft.src.MinecraftException: Failed to check session lock, aborting
+	at net.minecraft.src.World.func_476_g(World.java:1994)
+	at net.minecraft.src.World.func_478_h(World.java:163)
+	at net.minecraft.src.World.func_485_a(World.java:153)
+	at net.minecraft.src.World.tick(World.java:1573)
+	at net.minecraft.src.WorldServer.tick(WorldServer.java:23)
+	at net.minecraft.server.MinecraftServer.func_6018_h(MinecraftServer.java:274)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:201)
+	at net.minecraft.src.ThreadServerApplication.run(ThreadServerApplication.java:19)
+2020-11-11 11:25:40 [INFO] Cloth v1.0.0| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-11 11:25:40 [INFO] Loading properties
+2020-11-11 11:25:40 [INFO] Starting Minecraft server on *:25565
+2020-11-11 11:25:40 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-11 11:25:40 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-11 11:25:40 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-11 11:25:40 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-11 11:25:40 [INFO] Preparing level "world"
+2020-11-11 11:25:40 [INFO] Preparing start region
+2020-11-11 11:25:42 [INFO] Done! For help, type "help" or "?"
+2020-11-11 11:25:42 [INFO] Stopping server
+2020-11-11 11:25:42 [INFO] Saving chunks
+2020-11-11 11:50:49 [INFO] Cloth v1.0.0| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-11 11:50:49 [INFO] Loading properties
+2020-11-11 11:50:49 [INFO] Starting Minecraft server on *:25565
+2020-11-11 11:50:49 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-11 11:50:49 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-11 11:50:49 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-11 11:50:49 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-11 11:50:49 [INFO] Preparing level "world"
+2020-11-11 11:50:49 [INFO] Preparing start region
+2020-11-11 11:50:52 [INFO] Done! For help, type "help" or "?"
+2020-11-11 11:51:08 [WARNING] Can't keep up! Did the system time change, or is the server overloaded?
+2020-11-11 11:52:07 [INFO] Cloth v1.0.0| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-11 11:52:07 [INFO] Loading properties
+2020-11-11 11:52:07 [INFO] Starting Minecraft server on *:25565
+2020-11-11 11:52:08 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-11 11:52:08 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-11 11:52:08 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-11 11:52:08 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-11 11:52:08 [INFO] Preparing level "world"
+2020-11-11 11:52:08 [INFO] Preparing start region
+2020-11-11 11:52:08 [INFO] Done! For help, type "help" or "?"
+2020-11-11 11:52:15 [INFO] Redbunny1 [/127.0.0.1:53544] logged in with entity id 2
+2020-11-11 11:54:45 [INFO] Redbunny1 issued server command: help
+2020-11-11 11:54:45 [INFO] Unknown console command. Type "help" for help.
+2020-11-11 11:54:56 [INFO] To run the server without a gui, start it like this:
+2020-11-11 11:54:56 [INFO]    java -Xmx1024M -Xms1024M -jar minecraft_server.jar nogui
+2020-11-11 11:54:57 [INFO] Console commands:
+2020-11-11 11:54:57 [INFO]    help  or  ?               shows this message
+2020-11-11 11:54:57 [INFO]    kick <player>             removes a player from the server
+2020-11-11 11:54:57 [INFO]    ban <player>              bans a player from the server
+2020-11-11 11:54:57 [INFO]    pardon <player>           pardons a banned player so that they can connect again
+2020-11-11 11:54:57 [INFO]    ban-ip <ip>               bans an IP address from the server
+2020-11-11 11:54:57 [INFO]    pardon-ip <ip>            pardons a banned IP address so that they can connect again
+2020-11-11 11:54:57 [INFO]    op <player>               turns a player into an op
+2020-11-11 11:54:57 [INFO]    deop <player>             removes op status from a player
+2020-11-11 11:54:57 [INFO]    tp <player1> <player2>    moves one player to the same location as another player
+2020-11-11 11:54:57 [INFO]    tpcord <player1> <x> <y> <z>    moves one player to the given cords
+2020-11-11 11:54:57 [INFO]    give <player> <name string> [num]  gives a player a resource
+2020-11-11 11:54:57 [INFO]    giveid <player> <id> [num]  gives a player a resource taking numeric ID
+2020-11-11 11:54:57 [INFO]    tell <player> <message>   sends a private message to a player
+2020-11-11 11:54:57 [INFO]    stop                      gracefully stops the server
+2020-11-11 11:54:57 [INFO]    save-all                  forces a server-wide level save
+2020-11-11 11:54:57 [INFO]    save-off                  disables terrain saving (useful for backup scripts)
+2020-11-11 11:54:57 [INFO]    save-on                   re-enables terrain saving
+2020-11-11 11:54:57 [INFO]    list                      lists all currently connected players
+2020-11-11 11:54:57 [INFO]    time set <day/night/number of ticks>                   changes time
+2020-11-11 11:54:57 [INFO]    say <message>             broadcasts a message to all players
+2020-11-11 11:54:57 [INFO] Unknown console command. Type "help" for help.
+2020-11-11 11:55:02 [INFO] CONSOLE: Forcing save..
+2020-11-11 11:55:03 [INFO] CONSOLE: Save complete.
+2020-11-11 11:55:15 [INFO] Redbunny1 issued server command: give redbunny1 portal
+2020-11-11 11:56:10 [WARNING] Can't keep up! Did the system time change, or is the server overloaded?
+2020-11-11 11:56:27 [INFO] Redbunny1 issued server command: creative
+2020-11-11 11:56:27 [INFO] Unknown console command. Type "help" for help.
+2020-11-11 11:56:55 [INFO] Redbunny1 issued server command: tpcord redbunny1 1000 100 100
+2020-11-11 11:56:55 [INFO] Redbunny1: Teleporting redbunny1 to 1000.
+2020-11-11 11:56:58 [WARNING] Can't keep up! Did the system time change, or is the server overloaded?
+2020-11-11 11:57:54 [WARNING] Can't keep up! Did the system time change, or is the server overloaded?
+2020-11-11 11:58:55 [INFO] Redbunny1 lost connection: Quitting
+2020-11-11 11:58:57 [INFO] Redbunny1 [/127.0.0.1:53783] logged in with entity id 8165
+2020-11-11 12:01:00 [INFO] Redbunny1 lost connection: Quitting
+2020-11-11 12:01:05 [INFO] Stopping server
+2020-11-11 12:01:05 [INFO] Saving chunks

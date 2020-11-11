@@ -4,6 +4,7 @@
 
 package net.minecraft.server;
 
+import net.minecraft.clothutils.WorldGenParams;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.ChunkProviderServer;
 import net.minecraft.src.ConsoleLogManager;
@@ -332,12 +333,16 @@ public class MinecraftServer
                 icommandlistener.log("   save-off                  disables terrain saving (useful for backup scripts)");
                 icommandlistener.log("   save-on                   re-enables terrain saving");
                 icommandlistener.log("   list                      lists all currently connected players");
-                icommandlistener.log("   time set <day/night/number of ticks>                   changes time");
+                icommandlistener.log("   timeset <day/night/number of ticks>                   changes time");
+                icommandlistener.log("   seed                   logs world seed to server console");
 
                 icommandlistener.log("   say <message>             broadcasts a message to all players");
             } else
-
-            if(s.toLowerCase().startsWith("time set ")){
+            if(s.toLowerCase().startsWith("seed")){
+                WorldGenParams params = new WorldGenParams();
+                icommandlistener.log("Seed for this world is:"+ params.GetSeedFromPropertiesFile());
+            }
+            if(s.toLowerCase().startsWith("timeset ")){
                 String targetTime = s.substring(s.indexOf(" ")).trim();
                 if(targetTime == "day"){ worldMngr.worldTime = 1000;}
                 else

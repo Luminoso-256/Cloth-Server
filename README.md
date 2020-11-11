@@ -6,6 +6,7 @@ A Modded server  for  minecraft alpha 1.2.6 back-porting modern minecraft server
  - giveid command exists to take ids if you desire
  - tpcord command teleports you to a given set of cordinates
  - time set command from modern minecraft
+ - Seed support! -  server.properties has a `seed` property that  takes a number value
 #### Roadmap
  - plugin support of some  kind - with docs
  - MOTD message when a player joins
