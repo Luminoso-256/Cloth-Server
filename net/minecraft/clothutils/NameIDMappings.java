@@ -73,7 +73,7 @@ public class NameIDMappings {
         if(NamespacedName.equals("ladder")){ID = 65;}
         if(NamespacedName.equals("rail")){ID = 66;}
         if(NamespacedName.equals("cobblestone_stairs")){ID = 67;}
-        if(NamespacedName.equals("sign")){ID = 68;}
+        if(NamespacedName.equals("sign_wall")){ID = 68;}
         if(NamespacedName.equals("lever")){ID = 69;}
         if(NamespacedName.equals("stone_pressure_plate")){ID = 70;}
         if(NamespacedName.equals("iron_door")){ID = 71;}
@@ -164,6 +164,31 @@ public class NameIDMappings {
         if(NamespacedName.equals("pork")){ID = 319;}
         if(NamespacedName.equals("cooked_pork")){ID = 320;}
         if(NamespacedName.equals("painting")){ID = 321;}
+        if(NamespacedName.equals("golden_apple")){ID = 322;}
+        if(NamespacedName.equals("sign")){ID = 323;}
+        if(NamespacedName.equals("wooden_door_item")){ID = 324;}
+        if(NamespacedName.equals("bucket")){ID = 325;}
+        if(NamespacedName.equals("water_bucket")){ID = 326;}
+        if(NamespacedName.equals("lava_bucket")){ID = 327;}
+        if(NamespacedName.equals("minecart")){ID = 328;}
+        if(NamespacedName.equals("saddle")){ID = 329;}
+        if(NamespacedName.equals("iron_door_item")){ID = 330;}
+        if(NamespacedName.equals("redstone_dust")){ID = 331;}
+        if(NamespacedName.equals("snowball")){ID = 332;}
+        if(NamespacedName.equals("boat")){ID = 333;}
+        if(NamespacedName.equals("leather")){ID = 334;}
+        if(NamespacedName.equals("milk_bucket")){ID = 335;}
+        if(NamespacedName.equals("clay_brick")){ID = 336;}
+        if(NamespacedName.equals("clay_balls")){ID = 337;}
+        if(NamespacedName.equals("reed")){ID = 338;}
+        if(NamespacedName.equals("paper")){ID = 339;}
+        if(NamespacedName.equals("book")){ID = 340;}
+        if(NamespacedName.equals("slime_ball")){ID = 341;}
+        if(NamespacedName.equals("storage_minecart")){ID = 342;}
+        if(NamespacedName.equals("powered_minecart")){ID = 343;}
+        if(NamespacedName.equals("egg")){ID = 344;}
+        if(NamespacedName.equals("gold_record")){ID = 2256;}
+        if(NamespacedName.equals("green_record")){ID = 2257;}
         return ID;
     }
 }
