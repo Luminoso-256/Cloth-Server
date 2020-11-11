@@ -14,3 +14,7 @@ A Modded server  for  minecraft alpha 1.2.6 back-porting modern minecraft server
  - open repository as Intellij Idea(tm) project
  - run the `MinecraftServer` configuration
  - enjoy!
+
+## Why?
+
+Why not
