@@ -6,6 +6,8 @@ package net.minecraft.src;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Logger;
+
+import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.server.MinecraftServer;
 
 public class ServerConfigurationManager
@@ -43,6 +45,9 @@ public class ServerConfigurationManager
 
     public void playerLoggedIn(EntityPlayerMP entityplayermp)
     {
+        PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
+        String MOTD = propertyManager.getStringProperty("motd", "welcome!")+ entityplayermp.username;
+        sendChatMessageToAllPlayers(MOTD);
         playerEntities.add(entityplayermp);
         playerNBTManagerObj.readPlayerData(entityplayermp);
         mcServer.worldMngr.field_821.loadChunk((int)entityplayermp.posX >> 4, (int)entityplayermp.posZ >> 4);

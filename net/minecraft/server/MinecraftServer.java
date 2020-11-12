@@ -157,16 +157,33 @@ public class MinecraftServer
         field_6025_n = false;
     }
 
+    public String createPlayerList(){
+        String players = "";
+        for(int i = 0; i < configManager.playerEntities.size(); i++){
+            EntityPlayer player = (EntityPlayer)configManager.playerEntities.get(i);
+            players += " ";
+            players += player.username;
+            players += " ";
+
+        }
+        return players;
+    }
+
+
     public void run()
     {
+        //List<EntityPlayer> PlayerOld = new List<EntityPlayer>() {}
+
         try
         {
             if(func_6008_d())
             {
+
                 long l = System.currentTimeMillis();
                 long l1 = 0L;
                 while(field_6025_n)  //MAIN GAME LOOP FOR HOOKINS
                 {
+
                     //Death Check
                     for(int i = 0; i < configManager.playerEntities.size(); i++)
                     {
@@ -196,6 +213,8 @@ public class MinecraftServer
 
                        // System.out.println("PLAYER: "+player.username+" Health: "+player.field_9109_aQ);
                     }
+
+
 
 
                     //Original MC main code
