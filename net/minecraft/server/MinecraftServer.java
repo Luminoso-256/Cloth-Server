@@ -6,29 +6,8 @@ package net.minecraft.server;
 
 import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.clothutils.WorldGenParams;
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.ChunkProviderServer;
-import net.minecraft.src.ConsoleLogManager;
-import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.EntityTracker;
-import net.minecraft.src.ICommandListener;
-import net.minecraft.src.IUpdatePlayerListBox;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NetServerHandler;
-import net.minecraft.src.NetworkListenThread;
-import net.minecraft.src.Packet3Chat;
-import net.minecraft.src.Packet4UpdateTime;
-import net.minecraft.src.PropertyManager;
-import net.minecraft.src.ServerCommand;
-import net.minecraft.src.ServerConfigurationManager;
-import net.minecraft.src.ServerGUI;
-import net.minecraft.src.ThreadCommandReader;
-import net.minecraft.src.ThreadServerApplication;
-import net.minecraft.src.ThreadSleepForever;
-import net.minecraft.src.Vec3D;
-import net.minecraft.src.WorldManager;
-import net.minecraft.src.WorldServer;
+import net.minecraft.src.*;
+
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
@@ -183,8 +162,22 @@ public class MinecraftServer
             {
                 long l = System.currentTimeMillis();
                 long l1 = 0L;
-                while(field_6025_n) 
+                while(field_6025_n)  //
                 {
+                    //Death Check
+                    for(int i = 0; i < configManager.playerEntities.size(); i++)
+                    {
+                        GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+                        EntityPlayer player = (EntityPlayer)configManager.playerEntities.get(i);
+                        if(gameruleManager.getBooleanGamerule("announcedeath", false) == true && player.field_9109_aQ == 0){
+                            // your dead. Boohoo
+                            String DeathMsg = player.username+"has died. Rest in Peace"; // eventually ill get more interesting
+                            configManager.sendChatMessageToAllPlayers(DeathMsg);
+                        }
+                       // System.out.println("PLAYER: "+player.username+" Health: "+player.field_9109_aQ);
+                    }
+
+
                     long l2 = System.currentTimeMillis();
                     long l3 = l2 - l;
                     if(l3 > 2000L)
@@ -344,6 +337,20 @@ public class MinecraftServer
             if(s.toLowerCase().startsWith("seed")){
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:"+ params.GetSeedFromPropertiesFile());
+            }
+            if(s.toLowerCase().startsWith("gamerule ")){
+                GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+                String commandparts[] = s.split(" ");
+                switch(commandparts[1]){
+                    case "randomtrample":
+                        if(commandparts[2] == "true"){gameruleManager.setBooleanGamerule("randomtrample", true);}
+                        else if(commandparts[2] == "true")
+                            {gameruleManager.setBooleanGamerule("randomtrample", false);}
+                        else { //add generic print
+
+                             }
+                        break;
+                }
             }
             if(s.toLowerCase().startsWith("timeset ")){
                 String targetTime = s.substring(s.indexOf(" ")).trim();

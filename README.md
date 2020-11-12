@@ -13,7 +13,9 @@ A Modded server  for  minecraft alpha 1.2.6 back-porting modern minecraft server
  - plugin support of some  kind - with docs
  - MOTD message when a player joins
  - expose noise gen params to settings file, watch chaos ensue
- 
+ - blockmappings.properties to let you customize string name mappings
+ - death messages
+ - more fine control over crop trampling
 #### Added Server Parameters
  - seed - takes integer, governs world seed
  - OctaveMultiplierA - int, Unknown effects on noise octaves
