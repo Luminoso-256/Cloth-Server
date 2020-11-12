@@ -1,0 +1,13 @@
+2020-11-12 07:50:41 [INFO] Cloth v1.0.0| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 07:50:41 [INFO] Loading properties
+2020-11-12 07:50:41 [WARNING] server.properties does not exist
+2020-11-12 07:50:41 [INFO] Generating new properties file
+2020-11-12 07:50:41 [WARNING] server.gamerules does not exist
+2020-11-12 07:50:41 [INFO] Generating new gamerules file
+2020-11-12 07:50:41 [INFO] Starting Minecraft server on *:25565
+2020-11-12 07:50:41 [WARNING] Failed to load ban list: java.io.FileNotFoundException: banned-players.txt (The system cannot find the file specified)
+2020-11-12 07:50:41 [WARNING] Failed to load ip ban list: java.io.FileNotFoundException: banned-ips.txt (The system cannot find the file specified)
+2020-11-12 07:50:41 [INFO] Preparing level "world"
+2020-11-12 07:50:41 [INFO] Preparing start region
+2020-11-12 07:50:44 [INFO] Done! For help, type "help" or "?"
+2020-11-12 07:51:06 [INFO] Redbunny1 [/127.0.0.1:57876] lost connection

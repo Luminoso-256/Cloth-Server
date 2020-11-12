@@ -78,6 +78,10 @@ public class BlockMappingsManager
 
     public void NewTableInit(){
         //TODO: Make this function call every ID with a default mapping to ensure stuff doesnt break!
+        // like this:
+        getIdForString("air", 0);
+        getIdForString("stone", 1);
+        getIdForString("rock", 1);
     }
 
 

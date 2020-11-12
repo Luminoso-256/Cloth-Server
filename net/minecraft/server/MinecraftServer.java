@@ -23,6 +23,8 @@ public class MinecraftServer
     implements ICommandListener, Runnable
 {
 
+    public static final String VERSION_STRING = "[Cloth Alpha 1.4]";
+
     public MinecraftServer()
     {
         field_6025_n = true;
@@ -43,7 +45,7 @@ public class MinecraftServer
         threadcommandreader.setDaemon(true);
         threadcommandreader.start();
         ConsoleLogManager.init();
-        logger.info("Cloth v1.0.0| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0");
+        logger.info("Cloth "+VERSION_STRING+"| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0");
         if(Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L)
         {
             logger.warning("**** NOT ENOUGH RAM!");
@@ -333,12 +335,17 @@ public class MinecraftServer
                 icommandlistener.log("   list                      lists all currently connected players");
                 icommandlistener.log("   timeset <day/night/number of ticks>                   changes time");
                 icommandlistener.log("   seed                   logs world seed to server console");
+                icommandlistener.log("   version                   outputs current Cloth version");
 
                 icommandlistener.log("   say <message>             broadcasts a message to all players");
             } else
             if(s.toLowerCase().startsWith("seed")){
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:"+ params.GetSeedFromPropertiesFile());
+            }
+            if(s.toLowerCase().startsWith("version")){
+                WorldGenParams params = new WorldGenParams();
+                icommandlistener.log(VERSION_STRING);
             }
             if(s.toLowerCase().startsWith("gamerule ")){
                 GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));

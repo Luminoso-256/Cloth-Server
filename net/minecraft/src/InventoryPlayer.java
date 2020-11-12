@@ -161,7 +161,21 @@ public class InventoryPlayer
         }
         aitemstack[i] = itemstack;
     }
-
+    public ItemStack getInventorySlotContents(int slot)
+    {
+        ItemStack aitemstack[] = mainInventory;
+        if(slot >= aitemstack.length)
+        {
+            slot -= aitemstack.length;
+            aitemstack = armorInventory;
+        }
+        if(slot >= aitemstack.length)
+        {
+            slot -= aitemstack.length;
+            aitemstack = craftingInventory;
+        }
+        return aitemstack[slot];
+    }
     public float getStrVsBlock(Block block)
     {
         float f = 1.0F;

@@ -1,0 +1,41 @@
+2020-11-12 07:50:41 [INFO] Cloth v1.0.0| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 07:50:41 [INFO] Loading properties
+2020-11-12 07:50:41 [WARNING] server.properties does not exist
+2020-11-12 07:50:41 [INFO] Generating new properties file
+2020-11-12 07:50:41 [WARNING] server.gamerules does not exist
+2020-11-12 07:50:41 [INFO] Generating new gamerules file
+2020-11-12 07:50:41 [INFO] Starting Minecraft server on *:25565
+2020-11-12 07:50:41 [WARNING] Failed to load ban list: java.io.FileNotFoundException: banned-players.txt (The system cannot find the file specified)
+2020-11-12 07:50:41 [WARNING] Failed to load ip ban list: java.io.FileNotFoundException: banned-ips.txt (The system cannot find the file specified)
+2020-11-12 07:50:41 [INFO] Preparing level "world"
+2020-11-12 07:50:41 [INFO] Preparing start region
+2020-11-12 07:50:44 [INFO] Done! For help, type "help" or "?"
+2020-11-12 07:51:06 [INFO] Redbunny1 [/127.0.0.1:57876] lost connection
+2020-11-12 07:51:27 [INFO] Cloth v1.0.0| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 07:51:27 [INFO] Loading properties
+2020-11-12 07:51:27 [INFO] Starting Minecraft server on *:25565
+2020-11-12 07:51:27 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-12 07:51:27 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-12 07:51:27 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-12 07:51:27 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-12 07:51:27 [INFO] Preparing level "world"
+2020-11-12 07:51:27 [INFO] Preparing start region
+2020-11-12 07:51:28 [INFO] Done! For help, type "help" or "?"
+2020-11-12 07:52:54 [INFO] Redbunny1 [/127.0.0.1:57924] logged in with entity id 190
+2020-11-12 07:53:04 [INFO] Redbunny1 issued server command: give redbunny1 portal 34
+2020-11-12 07:53:04 [INFO] Redbunny1: Giving Redbunny1 some portal
+2020-11-12 07:54:41 [INFO] Redbunny1 lost connection: Quitting
+2020-11-12 07:54:48 [WARNING] Can't keep up! Did the system time change, or is the server overloaded?
+2020-11-12 07:54:50 [WARNING] Can't keep up! Did the system time change, or is the server overloaded?
+2020-11-12 07:54:59 [INFO] Redbunny1 [/127.0.0.1:58110] logged in with entity id 2317
+2020-11-12 07:55:09 [INFO] Redbunny1 issued server command: give redbunny1 obisdian 340
+2020-11-12 07:55:39 [INFO] Redbunny1 issued server command: give redbunny1 obsidian 23
+2020-11-12 07:55:39 [INFO] Redbunny1: Giving Redbunny1 some obsidian
+2020-11-12 07:56:04 [INFO] Redbunny1 issued server command: give redbunny1 flint_and_steel
+2020-11-12 07:56:23 [INFO] Redbunny1 issued server command: give redbunny1 flintandsteel
+2020-11-12 07:56:23 [INFO] Redbunny1: Giving Redbunny1 some flintandsteel
+2020-11-12 07:57:54 [INFO] Redbunny1 lost connection: Quitting
+2020-11-12 08:03:20 [WARNING] Can't keep up! Did the system time change, or is the server overloaded?
+2020-11-12 08:50:47 [WARNING] Can't keep up! Did the system time change, or is the server overloaded?
+2020-11-12 08:51:28 [INFO] Stopping server
+2020-11-12 08:51:28 [INFO] Saving chunks
