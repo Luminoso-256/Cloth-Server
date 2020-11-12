@@ -11,6 +11,7 @@ public abstract class Entity
 
     public Entity(World world)
     {
+        IsPlayer =false;
         field_331_c = field_384_a++;
         field_9094_h = 1.0D;
         field_329_e = false;
@@ -43,6 +44,7 @@ public abstract class Entity
         field_4131_c = true;
         field_9079_ae = false;
         field_276_Z = false;
+
         worldObj = world;
         setPosition(0.0D, 0.0D, 0.0D);
     }
@@ -947,5 +949,6 @@ public abstract class Entity
     public int field_307_aa;
     public int field_305_ab;
     public int field_303_ac;
+    public boolean IsPlayer;
 
 }

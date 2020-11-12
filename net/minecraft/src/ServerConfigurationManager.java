@@ -46,7 +46,7 @@ public class ServerConfigurationManager
     public void playerLoggedIn(EntityPlayerMP entityplayermp)
     {
         PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
-        String MOTD = propertyManager.getStringProperty("motd", "welcome!")+ entityplayermp.username;
+        String MOTD = propertyManager.getStringProperty("motd", "Welcome! ")+ entityplayermp.username;
         sendChatMessageToAllPlayers(MOTD);
         playerEntities.add(entityplayermp);
         playerNBTManagerObj.readPlayerData(entityplayermp);

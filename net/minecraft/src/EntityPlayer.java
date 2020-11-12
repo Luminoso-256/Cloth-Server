@@ -22,6 +22,7 @@ public class EntityPlayer extends EntityLiving
         field_421_a = 0;
         field_6124_at = null;
         yOffset = 1.62F;
+        IsPlayer =  true;
         func_107_c((double)world.spawnX + 0.5D, world.spawnY + 1, (double)world.spawnZ + 0.5D, 0.0F, 0.0F);
         health = 20; //THIS IS THE HEALTH VALUE
         field_9116_aJ = "humanoid";

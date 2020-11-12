@@ -33,7 +33,7 @@ public class BlockSoil extends Block
     public void updateTick(World world, int i, int j, int k, Random random)
     {
         GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules")); //gamerule config file
-        if(gameruleManager.getBooleanGamerule("randomtrample", false) == true) {
+        if(gameruleManager.getBooleanGamerule("dorandomtrample", true) == true) {
             if (random.nextInt(5) == 0) {
                 if (func_283_h(world, i, j, k)) {
                     world.setBlockMetadataWithNotify(i, j, k, 7);
@@ -51,9 +51,11 @@ public class BlockSoil extends Block
 
     public void onEntityWalking(World world, int i, int j, int k, Entity entity)
     {
-        if(world.rand.nextInt(4) == 0)
-        {
-            world.setBlockWithNotify(i, j, k, Block.dirt.blockID);
+        GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+        if(gameruleManager.getBooleanGamerule("doplayertrample", true)&& !entity.IsPlayer) {
+            if (world.rand.nextInt(4) == 0) {
+                world.setBlockWithNotify(i, j, k, Block.dirt.blockID);
+            }
         }
     }
 

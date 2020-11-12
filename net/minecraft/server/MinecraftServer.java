@@ -344,8 +344,13 @@ public class MinecraftServer
             }
             ServerCommand servercommand = (ServerCommand)commands.remove(0);
             String s = servercommand.command;
+
             ICommandListener icommandlistener = servercommand.commandListener;
             String s1 = icommandlistener.getUsername();
+            // Preprocess string with shorthands
+            s.replace("@p", s1);
+            
+            //Onwards
             if(s.toLowerCase().startsWith("help") || s.toLowerCase().startsWith("?"))
             {
                 icommandlistener.log("To run the server without a gui, start it like this:");
