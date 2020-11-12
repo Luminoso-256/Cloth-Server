@@ -23,7 +23,7 @@ public class MinecraftServer
     implements ICommandListener, Runnable
 {
 
-    public static final String VERSION_STRING = "[Cloth Alpha 1.3.2]";
+    public static final String VERSION_STRING = "[Cloth Alpha 1.4.0]";
 
     public MinecraftServer()
     {
@@ -356,6 +356,7 @@ public class MinecraftServer
 
                 icommandlistener.log("   say <message>             broadcasts a message to all players");
             } else
+
             if(s.toLowerCase().startsWith("seed")){
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:"+ params.GetSeedFromPropertiesFile());
@@ -363,6 +364,16 @@ public class MinecraftServer
             if(s.toLowerCase().startsWith("version")){
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log(VERSION_STRING);
+            }
+            if(s.toLowerCase().startsWith("heal")){
+             EntityPlayer player =  configManager.getPlayerEntity(s1);
+             player.field_9109_aQ = 20;
+            }
+            if(s.toLowerCase().startsWith("kill")){
+                if(s.toLowerCase().startsWith("heal")){
+                    EntityPlayer player =  configManager.getPlayerEntity(s1);
+                    player.field_9109_aQ = 0;
+                }
             }
             if(s.toLowerCase().startsWith("gamerule ")){
                 GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
