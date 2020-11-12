@@ -12,11 +12,16 @@ A Modded server  for  minecraft alpha 1.2.6 back-porting modern minecraft server
  - a gamerules system
  - rudementary death messages (default off)
  - blocks.mappings - a file that lets you customize which string means  which block!
+ - version command gives you the current Cloth version
 #### Roadmap
  - plugin support of some  kind - with docs
  - MOTD message when a player joins
  - better death messages
  - more fine control over crop trampling
+ - investigate and fix broken spawn chunks
+ - protect against invalid block/item Ids
+ - Patch nether to work correctly in multiplayer
+ - "Rulesets" - gamerule files that allow you to tweak gameplay
 #### Added Server Parameters
  - seed - takes integer, governs world seed
  - OctaveMultiplierA - int, Unknown effects on noise octaves

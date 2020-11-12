@@ -1,6 +1,7 @@
 #Cloth - ID <--> Namespaced names mappings file
-#Thu Nov 12 07:56:04 CST 2020
+#Thu Nov 12 11:03:03 CST 2020
 ironaxe=258
+=0
 egg=344
 woodsword=268
 clayblock=82
@@ -32,8 +33,8 @@ soil=60
 crops=59
 diamondblock=57
 pork=319
-clay=337
 diamondhelmet=310
+clay=337
 gold=41
 grass=2
 ironhelmet=306
@@ -68,10 +69,10 @@ glass=20
 obsidian=49
 chest=54
 seeds=295
-diamondhoe=293
 stoneaxe=275
-netherstone=87
+diamondhoe=293
 goldore=14
+netherstone=87
 sand=12
 doublestair=43
 diamondspade=277

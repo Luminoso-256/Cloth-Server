@@ -321,4 +321,7 @@ public class EntityPlayer extends EntityLiving
     public int field_4110_as;
     private int field_421_a;
     public EntityFish field_6124_at;
+    //Death stuff
+    public boolean IsDead = false;
+    public boolean HasRespawed =  true;
 }

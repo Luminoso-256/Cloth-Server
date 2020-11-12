@@ -170,13 +170,30 @@ public class MinecraftServer
                     //Death Check
                     for(int i = 0; i < configManager.playerEntities.size(); i++)
                     {
+
                         GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
                         EntityPlayer player = (EntityPlayer)configManager.playerEntities.get(i);
-                        if(gameruleManager.getBooleanGamerule("announcedeath", false) == true && player.field_9109_aQ == 0){
+                       //
+                        if(gameruleManager.getBooleanGamerule("announcedeath", true) == true && player.field_9109_aQ < 1){
                             // your dead. Boohoo
-                            String DeathMsg = player.username+"has died. Rest in Peace"; // eventually ill get more interesting
-                            configManager.sendChatMessageToAllPlayers(DeathMsg);
+
+                            player.IsDead = true;
+                           if(player.IsDead && player.HasRespawed == false){
+                         //      System.out.println("IsDead:"+ player.IsDead+" HasRespawned:"+player.HasRespawed);
+                                String DeathMsg = player.username+" has died. Rest in Peace"; // eventually ill get more interesting- maybe have a registery of dmg sources?
+                                configManager.sendChatMessageToAllPlayers(DeathMsg);
+                                player.HasRespawed = true;
+                         }
+
+
                         }
+                        else {
+                            //your alive!
+                       //     System.out.println("Alive");
+                            player.IsDead = false;
+                            player.HasRespawed = false;
+                        }
+
                        // System.out.println("PLAYER: "+player.username+" Health: "+player.field_9109_aQ);
                     }
 
