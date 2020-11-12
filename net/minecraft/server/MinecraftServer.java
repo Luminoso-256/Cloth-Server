@@ -23,7 +23,7 @@ public class MinecraftServer
     implements ICommandListener, Runnable
 {
 
-    public static final String VERSION_STRING = "[Cloth Alpha 1.5.1]";
+    public static final String VERSION_STRING = "[Cloth Alpha 1.5.2]";
 
     public MinecraftServer()
     {
