@@ -4,6 +4,7 @@
 
 package net.minecraft.server;
 
+import net.minecraft.clothutils.BlockMappingsManager;
 import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.clothutils.WorldGenParams;
 import net.minecraft.src.*;
@@ -162,7 +163,7 @@ public class MinecraftServer
             {
                 long l = System.currentTimeMillis();
                 long l1 = 0L;
-                while(field_6025_n)  //
+                while(field_6025_n)  //MAIN GAME LOOP FOR HOOKINS
                 {
                     //Death Check
                     for(int i = 0; i < configManager.playerEntities.size(); i++)
@@ -178,6 +179,7 @@ public class MinecraftServer
                     }
 
 
+                    //Original MC main code
                     long l2 = System.currentTimeMillis();
                     long l3 = l2 - l;
                     if(l3 > 2000L)
@@ -354,9 +356,9 @@ public class MinecraftServer
             }
             if(s.toLowerCase().startsWith("timeset ")){
                 String targetTime = s.substring(s.indexOf(" ")).trim();
-                if(targetTime == "day"){ worldMngr.worldTime = 1000;}
+                if(targetTime.equals("day")){ worldMngr.worldTime = 1000;}
                 else
-                if(targetTime == "night"){worldMngr.worldTime = 13000;}
+                if(targetTime.equals("night")){worldMngr.worldTime = 13000;}
                 else{
                    int time =   Integer.parseInt(targetTime);
                    worldMngr.worldTime = time;
@@ -515,6 +517,9 @@ public class MinecraftServer
                     try
                     {
                         NameIDMappings nameIDMappings = new NameIDMappings();
+
+                        BlockMappingsManager BlockMappings = new BlockMappingsManager(new File("blocks.mappings"));
+
                         int j = nameIDMappings.GetIDForNamespacedBlockName(as1[2]); // This is literally the only change between give and giveID
                        // logger.info("Inputed name:"+as1[2]);
                        // logger.info("Processed ID:"+j);

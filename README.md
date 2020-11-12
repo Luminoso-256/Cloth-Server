@@ -9,12 +9,13 @@ A Modded server  for  minecraft alpha 1.2.6 back-porting modern minecraft server
  - Seed support! -  server.properties has a `seed` property that  takes a number value
  - seed command which tells you the world seed (random if no seed set in server.properties)
  - Other misc server.properties params that let you mess with world gen (see added server parameters section)
+ - a gamerules system
+ - rudementary death messages (default off)
 #### Roadmap
  - plugin support of some  kind - with docs
  - MOTD message when a player joins
- - expose noise gen params to settings file, watch chaos ensue
  - blockmappings.properties to let you customize string name mappings
- - death messages
+ - better death messages
  - more fine control over crop trampling
 #### Added Server Parameters
  - seed - takes integer, governs world seed

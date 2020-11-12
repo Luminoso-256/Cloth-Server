@@ -52,7 +52,7 @@ public class BlockMappingsManager
         }
     }
 
-    public String getStringGamerule(String s, String s1)
+    public String getString(String s, String s1)
     {
         if(!serverProperties.containsKey(s))
         {
@@ -61,6 +61,24 @@ public class BlockMappingsManager
         }
         return serverProperties.getProperty(s, s1);
     }
+
+    public int getIdForString(String name, int fallback)
+    {
+        try
+        {
+            return Integer.parseInt(getString(name, (new StringBuilder()).append("").append(fallback).toString()));
+        }
+        catch(Exception exception)
+        {
+            serverProperties.setProperty(name, (new StringBuilder()).append("").append(fallback).toString());
+        }
+        return fallback;
+    }
+
+    public void NewTableInit(){
+        //TODO: Make this function call every ID with a default mapping to ensure stuff doesnt break!
+    }
+
 
     public static Logger logger = Logger.getLogger("Minecraft");
     private Properties serverProperties;
