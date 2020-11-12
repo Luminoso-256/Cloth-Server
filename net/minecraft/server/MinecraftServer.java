@@ -516,11 +516,11 @@ public class MinecraftServer
                 {
                     try
                     {
-                        NameIDMappings nameIDMappings = new NameIDMappings();
+                      //  NameIDMappings nameIDMappings = new NameIDMappings();
 
                         BlockMappingsManager BlockMappings = new BlockMappingsManager(new File("blocks.mappings"));
 
-                        int j = nameIDMappings.GetIDForNamespacedBlockName(as1[2]); // This is literally the only change between give and giveID
+                        int j = BlockMappings.getIdForString(as1[2], 0); // This is literally the only change between give and giveID
                        // logger.info("Inputed name:"+as1[2]);
                        // logger.info("Processed ID:"+j);
                         if(Item.itemsList[j] != null)

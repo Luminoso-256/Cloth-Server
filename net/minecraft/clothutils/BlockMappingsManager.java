@@ -67,6 +67,7 @@ public class BlockMappingsManager
         try
         {
             return Integer.parseInt(getString(name, (new StringBuilder()).append("").append(fallback).toString()));
+
         }
         catch(Exception exception)
         {

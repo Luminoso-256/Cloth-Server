@@ -11,10 +11,10 @@ A Modded server  for  minecraft alpha 1.2.6 back-porting modern minecraft server
  - Other misc server.properties params that let you mess with world gen (see added server parameters section)
  - a gamerules system
  - rudementary death messages (default off)
+ - blocks.mappings - a file that lets you customize which string means  which block!
 #### Roadmap
  - plugin support of some  kind - with docs
  - MOTD message when a player joins
- - blockmappings.properties to let you customize string name mappings
  - better death messages
  - more fine control over crop trampling
 #### Added Server Parameters
