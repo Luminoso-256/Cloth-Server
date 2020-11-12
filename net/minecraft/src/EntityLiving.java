@@ -4,7 +4,6 @@ package net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.util.List;
-import java.util.Random;
 
 public class EntityLiving extends Entity
 {
@@ -37,7 +36,7 @@ public class EntityLiving extends Entity
         field_9127_bs = 0.0F;
         field_9126_bt = 0.7F;
         field_4104_c = 0;
-        field_9109_aQ = 10;
+        health = 10;
         field_329_e = true;
         field_9096_ay = (float)(Math.random() + 1.0D) * 0.01F;
         setPosition(posX, posY, posZ);
@@ -127,7 +126,7 @@ public class EntityLiving extends Entity
         {
             field_9083_ac--;
         }
-        if(field_9109_aQ <= 0)
+        if(health <= 0)
         {
             field_9104_aV++;
             if(field_9104_aV > 20)
@@ -237,14 +236,14 @@ public class EntityLiving extends Entity
 
     public void heal(int i)
     {
-        if(field_9109_aQ <= 0)
+        if(health <= 0)
         {
             return;
         }
-        field_9109_aQ += i;
-        if(field_9109_aQ > 20)
+        health += i;
+        if(health > 20)
         {
-            field_9109_aQ = 20;
+            health = 20;
         }
         field_9083_ac = field_9099_av / 2;
     }
@@ -256,7 +255,7 @@ public class EntityLiving extends Entity
             return false;
         }
         field_9132_bn = 0;
-        if(field_9109_aQ <= 0)
+        if(health <= 0)
         {
             return false;
         }
@@ -268,15 +267,15 @@ public class EntityLiving extends Entity
             {
                 return false;
             }
-            func_6099_c(i - field_9133_bm);
+            takeDamage(i - field_9133_bm);
             field_9133_bm = i;
             flag = false;
         } else
         {
             field_9133_bm = i;
-            field_9108_aR = field_9109_aQ;
+            field_9108_aR = health;
             field_9083_ac = field_9099_av;
-            func_6099_c(i);
+            takeDamage(i);
             field_9107_aS = field_9106_aT = 10;
         }
         field_9105_aU = 0.0F;
@@ -300,7 +299,7 @@ public class EntityLiving extends Entity
                 field_9105_aU = (int)(Math.random() * 2D) * 180;
             }
         }
-        if(field_9109_aQ <= 0)
+        if(health <= 0)
         {
             if(flag)
             {
@@ -315,9 +314,9 @@ public class EntityLiving extends Entity
         return true;
     }
 
-    protected void func_6099_c(int i)
+    protected void takeDamage(int i)
     {
-        field_9109_aQ -= i;
+        health -= i;
     }
 
     protected float getSoundVolume()
@@ -492,7 +491,7 @@ public class EntityLiving extends Entity
 
     public void writeEntityToNBT(NBTTagCompound nbttagcompound)
     {
-        nbttagcompound.setShort("Health", (short)field_9109_aQ);
+        nbttagcompound.setShort("Health", (short) health);
         nbttagcompound.setShort("HurtTime", (short)field_9107_aS);
         nbttagcompound.setShort("DeathTime", (short)field_9104_aV);
         nbttagcompound.setShort("AttackTime", (short)field_9103_aW);
@@ -500,10 +499,10 @@ public class EntityLiving extends Entity
 
     public void readEntityFromNBT(NBTTagCompound nbttagcompound)
     {
-        field_9109_aQ = nbttagcompound.getShort("Health");
+        health = nbttagcompound.getShort("Health");
         if(!nbttagcompound.hasKey("Health"))
         {
-            field_9109_aQ = 10;
+            health = 10;
         }
         field_9107_aS = nbttagcompound.getShort("HurtTime");
         field_9104_aV = nbttagcompound.getShort("DeathTime");
@@ -512,7 +511,7 @@ public class EntityLiving extends Entity
 
     public boolean func_120_t()
     {
-        return !field_304_B && field_9109_aQ > 0;
+        return !field_304_B && health > 0;
     }
 
     public void onLivingUpdate()
@@ -531,7 +530,7 @@ public class EntityLiving extends Entity
             setPosition(d, d1, d2);
             setRotation(rotationYaw, rotationPitch);
         }
-        if(field_9109_aQ <= 0)
+        if(health <= 0)
         {
             field_9128_br = false;
             field_9131_bo = 0.0F;
@@ -749,7 +748,7 @@ public class EntityLiving extends Entity
     public boolean field_9112_aN;
     public float field_9111_aO;
     public float field_9110_aP;
-    public int field_9109_aQ;
+    public int health;
     public int field_9108_aR;
     private int field_4099_a;
     public int field_9107_aS;

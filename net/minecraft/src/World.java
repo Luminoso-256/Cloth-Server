@@ -1376,8 +1376,8 @@ public class World
         return false;
     }
 
-    public Explosion func_12013_a(Entity entity, double d, double d1, double d2, 
-            float f)
+    public Explosion createExplosion(Entity entity, double d, double d1, double d2,
+                                     float f)
     {
         return func_12015_a(entity, d, d1, d2, f, false);
     }

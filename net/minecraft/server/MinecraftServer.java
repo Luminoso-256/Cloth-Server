@@ -4,6 +4,7 @@
 
 package net.minecraft.server;
 
+import com.sun.tools.jconsole.JConsoleContext;
 import net.minecraft.clothutils.BlockMappingsManager;
 import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.clothutils.WorldGenParams;
@@ -12,18 +13,17 @@ import net.minecraft.src.*;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.minecraft.clothutils.NameIDMappings;
+
 public class MinecraftServer
     implements ICommandListener, Runnable
 {
 
-    public static final String VERSION_STRING = "[Cloth Alpha 1.4.0]";
+    public static final String VERSION_STRING = "[Cloth Alpha 1.5.0]";
 
     public MinecraftServer()
     {
@@ -174,7 +174,7 @@ public class MinecraftServer
                         GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
                         EntityPlayer player = (EntityPlayer)configManager.playerEntities.get(i);
                        //
-                        if(gameruleManager.getBooleanGamerule("announcedeath", true) == true && player.field_9109_aQ < 1){
+                        if(gameruleManager.getBooleanGamerule("announcedeath", true) == true && player.health <= 0){
                             // your dead. Boohoo
 
                             player.IsDead = true;
@@ -353,6 +353,8 @@ public class MinecraftServer
                 icommandlistener.log("   timeset <day/night/number of ticks>                   changes time");
                 icommandlistener.log("   seed                   logs world seed to server console");
                 icommandlistener.log("   version                   outputs current Cloth version");
+                icommandlistener.log("   kill                   sets health to 0");
+                icommandlistener.log("   heal                   heals 20 health");
 
                 icommandlistener.log("   say <message>             broadcasts a message to all players");
             } else
@@ -367,13 +369,22 @@ public class MinecraftServer
             }
             if(s.toLowerCase().startsWith("heal")){
              EntityPlayer player =  configManager.getPlayerEntity(s1);
-             player.field_9109_aQ = 20;
+             player.heal(20);
             }
             if(s.toLowerCase().startsWith("kill")){
-                if(s.toLowerCase().startsWith("heal")){
+             //   if(s.toLowerCase().startsWith("heal")){
                     EntityPlayer player =  configManager.getPlayerEntity(s1);
-                    player.field_9109_aQ = 0;
-                }
+                    player.exposedTakeDamage(40);
+
+            }
+            if(s.toLowerCase().startsWith("keepinvadd ")){
+                String commandparts[] = s.split(" ");
+                GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+                String keepinvlist = gameruleManager.getStringGamerule("keepinvlist", "");
+                keepinvlist += " ";
+                keepinvlist += commandparts[1];
+               // System.out.println(keepinvlist);
+                gameruleManager.setStringGamerule("keepinvlist", keepinvlist);
             }
             if(s.toLowerCase().startsWith("gamerule ")){
                 GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));

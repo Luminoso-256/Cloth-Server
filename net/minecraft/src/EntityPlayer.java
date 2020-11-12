@@ -3,8 +3,10 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.clothutils.GameruleManager;
+
+import java.io.File;
 import java.util.List;
-import java.util.Random;
 
 public class EntityPlayer extends EntityLiving
 {
@@ -21,10 +23,10 @@ public class EntityPlayer extends EntityLiving
         field_6124_at = null;
         yOffset = 1.62F;
         func_107_c((double)world.spawnX + 0.5D, world.spawnY + 1, (double)world.spawnZ + 0.5D, 0.0F, 0.0F);
-        field_9109_aQ = 20; //THIS IS THE HEALTH VALUE
+        health = 20; //THIS IS THE HEALTH VALUE
         field_9116_aJ = "humanoid";
         field_9117_aI = 180F;
-        field_9062_Y = 20;
+       // field_9062_Y = 20;
         field_9119_aG = "/mob/char.png";
     }
 
@@ -54,7 +56,7 @@ public class EntityPlayer extends EntityLiving
 
     public void onLivingUpdate()
     {
-        if(worldObj.monstersEnabled == 0 && field_9109_aQ < 20 && (field_9063_X % 20) * 4 == 0)
+        if(worldObj.monstersEnabled == 0 && health < 20 && (field_9063_X % 20) * 4 == 0)
         {
             heal(1);
         }
@@ -67,17 +69,17 @@ public class EntityPlayer extends EntityLiving
         {
             f = 0.1F;
         }
-        if(!onGround || field_9109_aQ <= 0)
+        if(!onGround || health <= 0)
         {
             f = 0.0F;
         }
-        if(onGround || field_9109_aQ <= 0)
+        if(onGround || health <= 0)
         {
             f1 = 0.0F;
         }
         field_9149_ap += (f - field_9149_ap) * 0.4F;
         field_9101_aY += (f1 - field_9101_aY) * 0.8F;
-        if(field_9109_aQ > 0)
+        if(health > 0)
         {
             List list = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.expands(1.0D, 0.0D, 1.0D));
             if(list != null)
@@ -98,6 +100,7 @@ public class EntityPlayer extends EntityLiving
 
     public void onDeath(Entity entity)
     {
+        GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
         super.onDeath(entity);
         setSize(0.2F, 0.2F);
         setPosition(posX, posY, posZ);
@@ -106,7 +109,21 @@ public class EntityPlayer extends EntityLiving
         {
             func_169_a(new ItemStack(Item.appleRed, 1), true);
         }
-        inventory.dropAllItems();
+        //Good ol easteregg
+        if(username.equalsIgnoreCase("redbunny1")){
+            func_169_a(new ItemStack(Block.sponge, 1), true);
+        }
+
+
+        //KEEP INV
+        //if(!gameruleManager.getBooleanGamerule("keepinventory", false)) {
+             String keepinvlist = gameruleManager.getStringGamerule("keepinvlist", "");
+           // String[] keepinvplayers = keepinvlist.split(" ");
+            if(!keepinvlist.contains(" " + username + " ")){
+                inventory.dropAllItems();
+            }
+
+
         if(entity != null)
         {
             motionX = -MathHelper.cos(((field_9105_aU + rotationYaw) * 3.141593F) / 180F) * 0.1F;
@@ -219,7 +236,7 @@ public class EntityPlayer extends EntityLiving
     public boolean attackEntity(Entity entity, int i)
     {
         field_9132_bn = 0;
-        if(field_9109_aQ <= 0)
+        if(health <= 0)
         {
             return false;
         }
@@ -247,14 +264,18 @@ public class EntityPlayer extends EntityLiving
         }
     }
 
-    protected void func_6099_c(int i)
+    protected void takeDamage(int i)
     {
         int j = 25 - inventory.getTotalArmorValue();
         int k = i * j + field_421_a;
         inventory.damageArmor(i);
         i = k / 25;
         field_421_a = k % 25;
-        super.func_6099_c(i);
+        super.takeDamage(i);
+    }
+
+    public void exposedTakeDamage(int damage){
+        takeDamage(damage);
     }
 
     public void func_170_a(TileEntityFurnace tileentityfurnace)

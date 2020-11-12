@@ -3,8 +3,6 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.util.Random;
-
 public class EntitySlime extends EntityLiving
     implements IMobs
 {
@@ -25,7 +23,7 @@ public class EntitySlime extends EntityLiving
     {
         field_403_ad = i;
         setSize(0.6F * (float)i, 0.6F * (float)i);
-        field_9109_aQ = i * i;
+        health = i * i;
         setPosition(posX, posY, posZ);
     }
 
@@ -100,7 +98,7 @@ public class EntitySlime extends EntityLiving
 
     public void setEntityDead()
     {
-        if(field_403_ad > 1 && field_9109_aQ == 0)
+        if(field_403_ad > 1 && health == 0)
         {
             for(int i = 0; i < 4; i++)
             {

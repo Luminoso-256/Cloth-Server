@@ -279,3 +279,15 @@
 2020-11-12 11:55:24 [INFO] Redbunny1 issued server command: heal
 2020-11-12 11:55:24 [INFO] Unknown console command. Type "help" for help.
 2020-11-12 11:55:44 [INFO] Redbunny1 lost connection: Quitting
+2020-11-12 13:11:55 [INFO] Cloth [Cloth Alpha 1.4.1]| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 13:11:55 [INFO] Loading properties
+2020-11-12 13:11:55 [INFO] Starting Minecraft server on *:25565
+2020-11-12 13:11:55 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-12 13:11:55 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-12 13:11:55 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-12 13:11:55 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-12 13:11:55 [INFO] Preparing level "world"
+2020-11-12 13:11:55 [INFO] Preparing start region
+2020-11-12 13:11:57 [INFO] Done! For help, type "help" or "?"
+2020-11-12 13:11:59 [INFO] Stopping server
+2020-11-12 13:11:59 [INFO] Saving chunks

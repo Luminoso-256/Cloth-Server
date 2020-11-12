@@ -3,8 +3,6 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.util.Random;
-
 public class EntityChicken extends EntityAnimals
 {
 
@@ -17,7 +15,7 @@ public class EntityChicken extends EntityAnimals
         field_390_ai = 1.0F;
         field_9119_aG = "/mob/chicken.png";
         setSize(0.3F, 0.4F);
-        field_9109_aQ = 4;
+        health = 4;
         field_396_aj = field_9064_W.nextInt(6000) + 6000;
     }
 

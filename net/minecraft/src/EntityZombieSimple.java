@@ -13,7 +13,7 @@ public class EntityZombieSimple extends EntityMobs
         field_9119_aG = "/mob/zombie.png";
         field_9126_bt = 0.5F;
         field_404_af = 50;
-        field_9109_aQ *= 10;
+        health *= 10;
         yOffset *= 6F;
         setSize(width * 6F, height * 6F);
     }

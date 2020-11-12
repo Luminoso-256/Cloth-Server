@@ -114,10 +114,10 @@ public class EntityPlayerMP extends EntityPlayer
 
             }
         }
-        if(field_9109_aQ != field_9156_bu)
+        if(health != field_9156_bu)
         {
-            field_421_a.sendPacket(new Packet8(field_9109_aQ));
-            field_9156_bu = field_9109_aQ;
+            field_421_a.sendPacket(new Packet8(health));
+            field_9156_bu = health;
         }
     }
 

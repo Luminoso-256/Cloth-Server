@@ -3,8 +3,6 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.PrintStream;
-import java.util.List;
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
@@ -518,7 +516,7 @@ public class NetServerHandler extends NetHandler
 
     public void func_9002_a(Packet9 packet9)
     {
-        if(playerEntity.field_9109_aQ > 0)
+        if(playerEntity.health > 0)
         {
             return;
         } else

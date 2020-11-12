@@ -3,7 +3,9 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.util.Random;
+import net.minecraft.clothutils.GameruleManager;
+
+import java.io.File;
 
 public class EntityCreeper extends EntityMobs
 {
@@ -111,7 +113,10 @@ public class EntityCreeper extends EntityMobs
             field_406_a++;
             if(field_406_a == field_408_ad)
             {
-                worldObj.func_12013_a(this, posX, posY, posZ, 3F);
+                GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+                if(gameruleManager.getBooleanGamerule("domobgriefing", false)) {
+                    worldObj.createExplosion(this, posX, posY, posZ, 3F);
+                }
                 setEntityDead();
             }
             field_387_ah = true;

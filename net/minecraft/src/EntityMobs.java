@@ -3,8 +3,6 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.util.Random;
-
 public class EntityMobs extends EntityCreature
     implements IMobs
 {
@@ -13,7 +11,7 @@ public class EntityMobs extends EntityCreature
     {
         super(world);
         field_404_af = 2;
-        field_9109_aQ = 20;
+        health = 20;
     }
 
     public void onLivingUpdate()
