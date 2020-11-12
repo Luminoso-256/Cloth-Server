@@ -304,3 +304,13 @@
 2020-11-12 15:16:06 [INFO] Redbunny1 [/127.0.0.1:63973] logged in with entity id 47
 2020-11-12 15:17:28 [INFO] Redbunny1 lost connection: Quitting
 2020-11-12 15:43:53 [WARNING] Can't keep up! Did the system time change, or is the server overloaded?
+2020-11-12 17:54:06 [INFO] Cloth [Cloth Alpha 1.5.2]| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 17:54:06 [INFO] Loading properties
+2020-11-12 17:54:06 [INFO] Starting Minecraft server on *:25565
+2020-11-12 17:54:06 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-12 17:54:06 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-12 17:54:06 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-12 17:54:06 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-12 17:54:06 [INFO] Preparing level "world"
+2020-11-12 17:54:06 [INFO] Preparing start region
+2020-11-12 17:54:06 [INFO] Done! For help, type "help" or "?"

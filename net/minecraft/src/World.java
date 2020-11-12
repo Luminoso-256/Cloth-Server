@@ -1555,7 +1555,7 @@ public class World
 
     public void tick()
     {
-        SpawnerAnimals.func_4111_a(this);
+        SpawnerAnimals.SpawnMobs(this);
         chunkProvider.func_361_a();
         int i = calculateSkylightSubtracted(1.0F);
         if(i != skylightSubtracted)

@@ -1,3 +1,5 @@
 #Cloth Gamerule Data
-#Thu Nov 12 11:10:40 CST 2020
+#Thu Nov 12 17:55:19 CST 2020
+domobgriefing=true
 announcedeath=true
+spawnrate=1
