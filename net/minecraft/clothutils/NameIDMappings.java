@@ -1,5 +1,8 @@
 package net.minecraft.clothutils;
-
+/**
+ * [OLD]Hardcoded block namespaced names
+ * @author Luminoso-256
+ */
 public class NameIDMappings {
     public int GetIDForNamespacedBlockName(String NamespacedName){
         int ID = 0; // air if all else fails

@@ -5,7 +5,10 @@ import java.io.*;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/**
+ * core gamerule class
+ * @author Luminoso-256
+ */
 public class GameruleManager
 {
 

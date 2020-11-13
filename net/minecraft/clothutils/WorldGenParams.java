@@ -5,7 +5,10 @@ import net.minecraft.src.PropertyManager;
 import java.io.Console;
 import java.io.File;
 import java.util.Random;
-
+/**
+ * Helper functions to hook into world gen
+ * @author Luminoso-256
+ */
 public class WorldGenParams {
     public long GetSeedFromPropertiesFile(){
      //  long seed = 0l;//failsafe

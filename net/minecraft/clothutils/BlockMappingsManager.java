@@ -7,7 +7,10 @@ import java.io.FileOutputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/**
+ * Grab string-to-id mappings
+ * @author Luminoso-256
+ */
 public class BlockMappingsManager
 {
 
