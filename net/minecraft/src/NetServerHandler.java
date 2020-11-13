@@ -511,6 +511,7 @@ public class NetServerHandler extends NetHandler
         {
             return;
         }
+
         TileEntity tileentity = mcServer.worldMngr.getBlock(packet59complexentity.xPosition, packet59complexentity.yPosition, packet59complexentity.zPosition);
         if(tileentity != null)
         {

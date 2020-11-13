@@ -87,6 +87,12 @@ public final class ItemStack
         stackSize = nbttagcompound.getByte("Count");
         itemDamage = nbttagcompound.getShort("Damage");
     }
+    public int readIDFromNBT(NBTTagCompound nbttagcompound)
+    {
+        return nbttagcompound.getShort("id");
+      //  stackSize = nbttagcompound.getByte("Count");
+        //itemDamage = nbttagcompound.getShort("Damage");
+    }
 
     public int getMaxStackSize()
     {
