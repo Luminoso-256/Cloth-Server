@@ -3,7 +3,10 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import java.io.File;
 import java.util.logging.Logger;
+
+import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.server.MinecraftServer;
 
 public class NetServerHandler extends NetHandler
@@ -375,6 +378,29 @@ public class NetServerHandler extends NetHandler
 
     private void parseCommand(String s)
     {
+        //PREPROCESS
+        s = s.toLowerCase().replace("@p", playerEntity.username);
+
+        //END PREPROCESS
+
+        if(s.toLowerCase().startsWith("/sleepvote ")){
+            GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+            String[] Args = s.toLowerCase().split(" ");
+            if(Args[1].equals("start") && !mcServer.IsSleepVoteOngoing && gameruleManager.getBooleanGamerule("dosleepvote", false)){
+                //start a vote
+                mcServer.IsSleepVoteOngoing = true;
+               // mcServer.SleepVoteRemainingTime = 60000;
+                mcServer.configManager.sendChatMessageToAllPlayers("§b"+playerEntity.username+" §bIs Starting a Sleep Vote! Vote with /sleepvote <yes/no>");
+            }
+            else if(Args[1].equals("yes") && mcServer.IsSleepVoteOngoing){
+                mcServer.SleepVoteYesCount++;
+                mcServer.configManager.sendChatMessageToAllPlayers(playerEntity.username+" votes yes for sleeping");
+            }
+            else if(Args[1].equals("no") && mcServer.IsSleepVoteOngoing){
+                mcServer.SleepVoteNoCount++;
+                mcServer.configManager.sendChatMessageToAllPlayers(playerEntity.username+" votes no for sleeping");
+            }
+        }
         if(s.toLowerCase().startsWith("/me "))
         {
             s = (new StringBuilder()).append("* ").append(playerEntity.username).append(" ").append(s.substring(s.indexOf(" ")).trim()).toString();

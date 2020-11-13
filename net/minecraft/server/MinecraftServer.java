@@ -184,6 +184,27 @@ public class MinecraftServer
                 while(field_6025_n)  //MAIN GAME LOOP FOR HOOKINS
                 {
 
+                    //Sleep vote control logic
+                    if(IsSleepVoteOngoing){
+                        int TotalNumPlayers = configManager.playerEntities.size();
+                        int TotalVoted = SleepVoteNoCount+SleepVoteYesCount;
+                        if(TotalVoted ==TotalNumPlayers){
+                            if(SleepVoteYesCount == SleepVoteNoCount){
+                                configManager.sendChatMessageToAllPlayers("The Sleep Vote was a stalemate. No action will be taken");
+                            }
+                            else if(SleepVoteYesCount > SleepVoteNoCount){
+                                configManager.sendChatMessageToAllPlayers("The Sleep Vote recieved a majority approval! Skipping to morning...");
+                                worldMngr.worldTime = 1000;
+                            }
+                            else if(SleepVoteNoCount >SleepVoteYesCount){
+                                configManager.sendChatMessageToAllPlayers("The Sleep Vote recieved a majority dissaproval. No action will be taken");
+                            }
+                            IsSleepVoteOngoing = false;
+                        }
+
+                    }
+
+
                     //Death Check
                     for(int i = 0; i < configManager.playerEntities.size(); i++)
                     {
@@ -352,7 +373,7 @@ public class MinecraftServer
             ICommandListener icommandlistener = servercommand.commandListener;
             String s1 = icommandlistener.getUsername();
             // Preprocess string with shorthands
-            s.toLowerCase().replace("@p", s1);
+
             
             //Onwards
             
@@ -807,5 +828,10 @@ public class MinecraftServer
     public boolean onlineMode;
     public boolean noAnimals;
     public boolean field_9011_n;
+    //Sleep vote
+    public boolean IsSleepVoteOngoing = false;
+  //  public int SleepVoteRemainingTime = 0;
+    public int SleepVoteYesCount = 0;
+    public int SleepVoteNoCount= 0;
 
 }
