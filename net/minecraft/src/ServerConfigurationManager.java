@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 import com.sun.tools.javac.Main;
+import net.minecraft.clothutils.ExploitUtils;
 import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.server.MinecraftServer;
 
@@ -63,15 +64,29 @@ public class ServerConfigurationManager
         int MainInvSize = 36;
         int CraftInvSize  = 4;
         int ArmorInvSize = 4;
-        for(int i = 0; i < entityplayermp.inventory.func_83_a(); i++){
+        ItemStack fallbackItem = new ItemStack(0);
+        for(int i = 0; i < MainInvSize+CraftInvSize+ArmorInvSize+1; i++){
             ItemStack item = entityplayermp.inventory.getStackInSlot(i);
             // System.out.println("Processing item: "+item.itemID+" in slot "+i);
             if(item != null){
                 System.out.println("Slot contains item of ID: "+item.itemID);
-                if(itemIDBlacklist.contains(Integer.toString(item.itemID))){//Blacklist Check
-                    ItemStack fallbackItem =  new ItemStack(Block.stone);
+                //Whitelist
+                ExploitUtils exploitUtils = new ExploitUtils();
+                if(exploitUtils.IsIdValid(item.itemID)) {
+
+                    //Whatever makes it through whitelist check gets processed by Blacklist Check
+                    if (itemIDBlacklist.contains(Integer.toString(item.itemID))) {
+
+                        entityplayermp.inventory.setInventorySlotContents(i, fallbackItem);
+                    }
+                }
+                else{
                     entityplayermp.inventory.setInventorySlotContents(i, fallbackItem);
-                }}
+                }
+                }
+
+
+
             else{System.out.println("Slot "+i+" contained null or nonextistant item");}
         }
         //MOTD
