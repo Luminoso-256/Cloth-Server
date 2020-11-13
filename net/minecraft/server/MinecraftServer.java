@@ -401,7 +401,6 @@ public class MinecraftServer
                     icommandlistener.log("§cError in command arguments, try §a/help 1");
                 }
             } else
-
             if(s.toLowerCase().startsWith("seed")){
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:"+ params.GetSeedFromPropertiesFile());

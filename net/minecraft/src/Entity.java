@@ -714,6 +714,13 @@ public abstract class Entity
         onGround = nbttagcompound.getBoolean("OnGround");
         setPosition(posX, posY, posZ);
         readEntityFromNBT(nbttagcompound);
+        //Anti-Phantom
+        short health = nbttagcompound.getShort("Health");
+        if(0 > health){
+            health = 0;
+            nbttagcompound.setShort("Health", health);
+        }
+
     }
 
     protected final String func_109_s()

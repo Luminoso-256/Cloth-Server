@@ -364,7 +364,7 @@ public class NetServerHandler extends NetHandler
 
         if(s.startsWith("/"))
         {
-            func_4010_d(s);
+            parseCommand(s);
         } else
         {
             s = (new StringBuilder()).append("<").append(playerEntity.username).append("> ").append(s).toString();
@@ -373,7 +373,7 @@ public class NetServerHandler extends NetHandler
         }
     }
 
-    private void func_4010_d(String s)
+    private void parseCommand(String s)
     {
         if(s.toLowerCase().startsWith("/me "))
         {
