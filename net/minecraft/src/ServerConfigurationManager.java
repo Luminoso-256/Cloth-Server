@@ -68,7 +68,7 @@ public class ServerConfigurationManager
             // System.out.println("Processing item: "+item.itemID+" in slot "+i);
             if(item != null){
                 System.out.println("Slot contains item of ID: "+item.itemID);
-                if(itemIDBlacklist.contains(Integer.toString(item.itemID))){
+                if(itemIDBlacklist.contains(Integer.toString(item.itemID))){//Blacklist Check
                     ItemStack fallbackItem =  new ItemStack(Block.stone);
                     entityplayermp.inventory.setInventorySlotContents(i, fallbackItem);
                 }}

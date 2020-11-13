@@ -197,10 +197,14 @@ public class MinecraftServer
                             player.IsDead = true;
                            if(player.IsDead && player.HasRespawed == false){
                          //      System.out.println("IsDead:"+ player.IsDead+" HasRespawned:"+player.HasRespawed);
+                               // You WILL DIE PROPERLY
+                                player.setEntityDead();
+                                //And then we will announce it
                                 String DeathMsg = player.username+" has died. Rest in Peace"; // eventually ill get more interesting- maybe have a registery of dmg sources?
                                 configManager.sendChatMessageToAllPlayers(DeathMsg);
                                 player.HasRespawed = true;
                          }
+
 
 
                         }
@@ -399,6 +403,20 @@ public class MinecraftServer
              //   if(s.toLowerCase().startsWith("heal")){
                     EntityPlayer player =  configManager.getPlayerEntity(s1);
                     player.exposedTakeDamage(40);
+
+            }
+            if(s.toLowerCase().startsWith("killall")){
+                //   if(s.toLowerCase().startsWith("heal")){
+                for(int i = 0; i < worldMngr.EntityList.size(); i++){
+                    Entity entity = (Entity)worldMngr.EntityList.get(i);
+                    if(entity != null){entity.setEntityDead();} //Just in case  something wacky  happens
+                }
+
+            }
+            if(s.toLowerCase().startsWith("clear")){
+                //   if(s.toLowerCase().startsWith("heal")){
+                EntityPlayer player =  configManager.getPlayerEntity(s1);
+                player.inventory.dropAllItems();
 
             }
             if(s.toLowerCase().startsWith("keepinvadd ")){

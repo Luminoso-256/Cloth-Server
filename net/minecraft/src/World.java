@@ -21,7 +21,7 @@ public class World
     {
         field_4280_a = false;
         field_821 = new ArrayList();
-        field_815_a = new ArrayList();
+        EntityList = new ArrayList();
         field_790_z = new ArrayList();
         scheduledTickTreeSet = new TreeSet();
         scheduledTickSet = new HashSet();
@@ -867,7 +867,7 @@ public class World
                 System.out.println((new StringBuilder()).append("Player count: ").append(playerEntities.size()).toString());
             }
             getChunkFromChunkCoords(i, j).addEntity(entity);
-            field_815_a.add(entity);
+            EntityList.add(entity);
             func_479_b(entity);
             return true;
         } else
@@ -916,7 +916,7 @@ public class World
         {
             getChunkFromChunkCoords(i, j).func_350_b(entity);
         }
-        field_815_a.remove(entity);
+        EntityList.remove(entity);
         func_531_c(entity);
     }
 
@@ -1047,7 +1047,7 @@ public class World
 
     public void func_459_b()
     {
-        field_815_a.removeAll(field_790_z);
+        EntityList.removeAll(field_790_z);
         for(int i = 0; i < field_790_z.size(); i++)
         {
             Entity entity = (Entity)field_790_z.get(i);
@@ -1065,9 +1065,9 @@ public class World
         }
 
         field_790_z.clear();
-        for(int k = 0; k < field_815_a.size(); k++)
+        for(int k = 0; k < EntityList.size(); k++)
         {
-            Entity entity1 = (Entity)field_815_a.get(k);
+            Entity entity1 = (Entity) EntityList.get(k);
             if(entity1.field_327_g != null)
             {
                 if(!entity1.field_327_g.field_304_B && entity1.field_327_g.field_328_f == entity1)
@@ -1091,7 +1091,7 @@ public class World
             {
                 getChunkFromChunkCoords(j1, l1).func_350_b(entity1);
             }
-            field_815_a.remove(k--);
+            EntityList.remove(k--);
             func_531_c(entity1);
         }
 
@@ -1740,9 +1740,9 @@ public class World
     public int countEntities(Class class1)
     {
         int i = 0;
-        for(int j = 0; j < field_815_a.size(); j++)
+        for(int j = 0; j < EntityList.size(); j++)
         {
-            Entity entity = (Entity)field_815_a.get(j);
+            Entity entity = (Entity) EntityList.get(j);
             if(class1.isAssignableFrom(entity.getClass()))
             {
                 i++;
@@ -1754,7 +1754,7 @@ public class World
 
     public void func_464_a(List list)
     {
-        field_815_a.addAll(list);
+        EntityList.addAll(list);
         for(int i = 0; i < list.size(); i++)
         {
             func_479_b((Entity)list.get(i));
@@ -2006,7 +2006,7 @@ public class World
 
     public boolean field_4280_a;
     private List field_821;
-    public List field_815_a;
+    public List EntityList;
     private List field_790_z;
     private TreeSet scheduledTickTreeSet;
     private Set scheduledTickSet;

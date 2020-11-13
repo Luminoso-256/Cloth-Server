@@ -29,6 +29,7 @@ public final class SpawnerAnimals
 
         GameruleManager gameruleManager =  new GameruleManager(new File("server.gamerules")); //We  are going to  hook you up to a gamerule!
         int UpperSpawnRateBound = gameruleManager.getIntGamerule("inversespawnrate", 50);
+        int UpperJocketBound = gameruleManager.getIntGamerule("inverseskeletonjockeyrate", 100);
 
         int var1;
         for(var1 = 0; var1 < world.playerEntities.size(); ++var1) {
@@ -98,7 +99,7 @@ public final class SpawnerAnimals
                                          if(var34.getCanSpawnHere()) {
                                             ++mobCap;
                                             world.entityJoinedWorld(var34);
-                                            if(var34 instanceof EntitySpider && world.rand.nextInt(100) == 0) {
+                                            if(var34 instanceof EntitySpider && world.rand.nextInt(UpperJocketBound) == 0) {
                                                EntitySkeleton var35 = new EntitySkeleton(world);
                                                var35.func_107_c((double)var20, (double)var21, (double)var22, var34.rotationYaw, 0.0F);
                                                world.entityJoinedWorld(var35);
