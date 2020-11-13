@@ -235,7 +235,7 @@ public class InventoryPlayer
 
     }
 
-    public int func_83_a()
+    public int getInventorySize()
     {
         return mainInventory.length + 4;
     }

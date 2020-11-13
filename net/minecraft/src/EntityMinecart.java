@@ -4,7 +4,6 @@ package net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.util.List;
-import java.util.Random;
 
 public class EntityMinecart extends Entity
     implements IInventory
@@ -92,7 +91,7 @@ public class EntityMinecart extends Entity
     public void setEntityDead()
     {
 label0:
-        for(int i = 0; i < func_83_a(); i++)
+        for(int i = 0; i < getInventorySize(); i++)
         {
             ItemStack itemstack = getStackInSlot(i);
             if(itemstack == null)
@@ -519,7 +518,7 @@ label0:
         if(minecartType == 1)
         {
             NBTTagList nbttaglist = nbttagcompound.getTagList("Items");
-            cargoItems = new ItemStack[func_83_a()];
+            cargoItems = new ItemStack[getInventorySize()];
             for(int i = 0; i < nbttaglist.tagCount(); i++)
             {
                 NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
@@ -606,7 +605,7 @@ label0:
         }
     }
 
-    public int func_83_a()
+    public int getInventorySize()
     {
         return 27;
     }

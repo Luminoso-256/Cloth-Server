@@ -97,7 +97,7 @@ public class BlockChest extends BlockContainer
     {
         TileEntityChest tileentitychest = (TileEntityChest)world.getBlock(i, j, k);
 label0:
-        for(int l = 0; l < tileentitychest.func_83_a(); l++)
+        for(int l = 0; l < tileentitychest.getInventorySize(); l++)
         {
             ItemStack itemstack = tileentitychest.getStackInSlot(l);
             if(itemstack == null)

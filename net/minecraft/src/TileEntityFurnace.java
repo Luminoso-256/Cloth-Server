@@ -16,7 +16,7 @@ public class TileEntityFurnace extends TileEntity
         field_486_h = 0;
     }
 
-    public int func_83_a()
+    public int getInventorySize()
     {
         return field_489_e.length;
     }
@@ -30,7 +30,7 @@ public class TileEntityFurnace extends TileEntity
     {
         super.readFromNBT(nbttagcompound);
         NBTTagList nbttaglist = nbttagcompound.getTagList("Items");
-        field_489_e = new ItemStack[func_83_a()];
+        field_489_e = new ItemStack[getInventorySize()];
         for(int i = 0; i < nbttaglist.tagCount(); i++)
         {
             NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);

@@ -7,7 +7,7 @@ package net.minecraft.src;
 public interface IInventory
 {
 
-    public abstract int func_83_a();
+    public abstract int getInventorySize();
 
     public abstract ItemStack getStackInSlot(int i);
 }

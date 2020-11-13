@@ -15,16 +15,16 @@ public class InventoryLargeChest
         lowerChest = iinventory1;
     }
 
-    public int func_83_a()
+    public int getInventorySize()
     {
-        return upperChest.func_83_a() + lowerChest.func_83_a();
+        return upperChest.getInventorySize() + lowerChest.getInventorySize();
     }
 
     public ItemStack getStackInSlot(int i)
     {
-        if(i >= upperChest.func_83_a())
+        if(i >= upperChest.getInventorySize())
         {
-            return lowerChest.getStackInSlot(i - upperChest.func_83_a());
+            return lowerChest.getStackInSlot(i - upperChest.getInventorySize());
         } else
         {
             return upperChest.getStackInSlot(i);

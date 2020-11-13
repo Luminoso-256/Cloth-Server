@@ -33,7 +33,7 @@ public class BlockJukeBox extends Block
 
     public void ejectRecord(World world, int i, int j, int k, int l)
     {
-        world.playRecord(null, i, j, k);
+     //   world.playRecord(null, i, j, k);
         world.setBlockMetadataWithNotify(i, j, k, 0);
         int i1 = (Item.record13.swiftedIndex + l) - 1;
         float f = 0.7F;

@@ -126,7 +126,7 @@ label0:
                     ItemStack itemstack = func_434_a(random);
                     if(itemstack != null)
                     {
-                        tileentitychest.func_197_a(random.nextInt(tileentitychest.func_83_a()), itemstack);
+                        tileentitychest.func_197_a(random.nextInt(tileentitychest.getInventorySize()), itemstack);
                     }
                     k4++;
                 } while(true);
