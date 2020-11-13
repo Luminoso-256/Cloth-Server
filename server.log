@@ -326,3 +326,145 @@
 2020-11-12 17:54:50 [INFO] Done! For help, type "help" or "?"
 2020-11-12 17:55:00 [INFO] Redbunny1 [/127.0.0.1:51589] logged in with entity id 41
 2020-11-12 17:56:25 [INFO] Redbunny1 lost connection: Timed out
+2020-11-12 21:07:28 [INFO] Cloth [Cloth Alpha 1.6.0]| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 21:07:28 [INFO] Loading properties
+2020-11-12 21:07:28 [INFO] Starting Minecraft server on *:25565
+2020-11-12 21:07:28 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-12 21:07:28 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-12 21:07:28 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-12 21:07:28 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-12 21:07:28 [INFO] Preparing level "world"
+2020-11-12 21:07:28 [INFO] Preparing start region
+2020-11-12 21:07:29 [INFO] Done! For help, type "help" or "?"
+2020-11-12 21:07:40 [INFO] Redbunny1 [/127.0.0.1:53509] logged in with entity id 89
+2020-11-12 21:07:40 [INFO] Disconnecting Redbunny1 [/127.0.0.1:53509]: Internal server error
+2020-11-12 21:07:40 [WARNING] Failed to handle packet: java.lang.NullPointerException
+java.lang.NullPointerException
+	at net.minecraft.src.ServerConfigurationManager.playerLoggedIn(ServerConfigurationManager.java:57)
+	at net.minecraft.src.NetLoginHandler.doLogin(NetLoginHandler.java:102)
+	at net.minecraft.src.NetLoginHandler.handleLogin(NetLoginHandler.java:85)
+	at net.minecraft.src.Packet1Login.processPacket(Packet1Login.java:44)
+	at net.minecraft.src.NetworkManager.processReadPackets(NetworkManager.java:181)
+	at net.minecraft.src.NetLoginHandler.tryLogin(NetLoginHandler.java:38)
+	at net.minecraft.src.NetworkListenThread.func_715_a(NetworkListenThread.java:55)
+	at net.minecraft.server.MinecraftServer.func_6018_h(MinecraftServer.java:314)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:238)
+	at net.minecraft.src.ThreadServerApplication.run(ThreadServerApplication.java:19)
+2020-11-12 21:08:22 [INFO] Cloth [Cloth Alpha 1.6.0]| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 21:08:22 [INFO] Loading properties
+2020-11-12 21:08:22 [INFO] Starting Minecraft server on *:25565
+2020-11-12 21:08:22 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-12 21:08:22 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-12 21:08:22 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-12 21:08:22 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-12 21:08:22 [INFO] Preparing level "world"
+2020-11-12 21:08:22 [INFO] Preparing start region
+2020-11-12 21:08:22 [INFO] Done! For help, type "help" or "?"
+2020-11-12 21:08:24 [INFO] Redbunny1 [/127.0.0.1:53519] logged in with entity id 81
+2020-11-12 21:08:24 [INFO] Disconnecting Redbunny1 [/127.0.0.1:53519]: Internal server error
+2020-11-12 21:08:24 [WARNING] Failed to handle packet: java.lang.NullPointerException
+java.lang.NullPointerException
+	at net.minecraft.src.ServerConfigurationManager.playerLoggedIn(ServerConfigurationManager.java:59)
+	at net.minecraft.src.NetLoginHandler.doLogin(NetLoginHandler.java:102)
+	at net.minecraft.src.NetLoginHandler.handleLogin(NetLoginHandler.java:85)
+	at net.minecraft.src.Packet1Login.processPacket(Packet1Login.java:44)
+	at net.minecraft.src.NetworkManager.processReadPackets(NetworkManager.java:181)
+	at net.minecraft.src.NetLoginHandler.tryLogin(NetLoginHandler.java:38)
+	at net.minecraft.src.NetworkListenThread.func_715_a(NetworkListenThread.java:55)
+	at net.minecraft.server.MinecraftServer.func_6018_h(MinecraftServer.java:314)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:238)
+	at net.minecraft.src.ThreadServerApplication.run(ThreadServerApplication.java:19)
+2020-11-12 21:09:16 [INFO] Cloth [Cloth Alpha 1.6.0]| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 21:09:16 [INFO] Loading properties
+2020-11-12 21:09:16 [INFO] Starting Minecraft server on *:25565
+2020-11-12 21:09:16 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-12 21:09:16 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-12 21:09:16 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-12 21:09:16 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-12 21:09:16 [INFO] Preparing level "world"
+2020-11-12 21:09:16 [INFO] Preparing start region
+2020-11-12 21:09:17 [INFO] Done! For help, type "help" or "?"
+2020-11-12 21:09:19 [INFO] Redbunny1 [/127.0.0.1:53531] logged in with entity id 81
+2020-11-12 21:09:42 [INFO] Redbunny1 issued server command: give redbunny1 grass 349
+2020-11-12 21:09:42 [INFO] Redbunny1: Giving Redbunny1 some grass
+2020-11-12 21:09:48 [INFO] Redbunny1 lost connection: Quitting
+2020-11-12 21:09:50 [INFO] Redbunny1 [/127.0.0.1:53547] logged in with entity id 306
+2020-11-12 21:10:51 [INFO] Cloth [Cloth Alpha 1.6.0]| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 21:10:51 [INFO] Loading properties
+2020-11-12 21:10:51 [INFO] Starting Minecraft server on *:25565
+2020-11-12 21:10:51 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-12 21:10:51 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-12 21:10:51 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-12 21:10:51 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-12 21:10:51 [INFO] Preparing level "world"
+2020-11-12 21:10:51 [INFO] Preparing start region
+2020-11-12 21:10:51 [INFO] Done! For help, type "help" or "?"
+2020-11-12 21:10:52 [INFO] Redbunny1 [/127.0.0.1:53581] logged in with entity id 72
+2020-11-12 21:11:42 [INFO] Redbunny1 lost connection: Quitting
+2020-11-12 21:14:42 [INFO] Cloth [Cloth Alpha 1.6.0]| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 21:14:42 [INFO] Loading properties
+2020-11-12 21:14:42 [INFO] Starting Minecraft server on *:25565
+2020-11-12 21:14:42 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-12 21:14:42 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-12 21:14:42 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-12 21:14:42 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-12 21:14:42 [INFO] Preparing level "world"
+2020-11-12 21:14:42 [INFO] Preparing start region
+2020-11-12 21:14:43 [INFO] Done! For help, type "help" or "?"
+2020-11-12 21:14:48 [INFO] Redbunny1 [/127.0.0.1:53622] logged in with entity id 78
+2020-11-12 21:16:34 [INFO] Cloth [Cloth Alpha 1.6.0]| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 21:16:34 [INFO] Loading properties
+2020-11-12 21:16:34 [INFO] Starting Minecraft server on *:25565
+2020-11-12 21:16:34 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-12 21:16:34 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-12 21:16:34 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-12 21:16:34 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-12 21:16:34 [INFO] Preparing level "world"
+2020-11-12 21:16:34 [INFO] Preparing start region
+2020-11-12 21:16:35 [INFO] Done! For help, type "help" or "?"
+2020-11-12 21:16:36 [INFO] Redbunny1 [/127.0.0.1:53635] logged in with entity id 81
+2020-11-12 21:18:08 [INFO] Cloth [Cloth Alpha 1.6.0]| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 21:18:08 [INFO] Loading properties
+2020-11-12 21:18:08 [INFO] Starting Minecraft server on *:25565
+2020-11-12 21:18:08 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-12 21:18:08 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-12 21:18:08 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-12 21:18:08 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-12 21:18:08 [INFO] Preparing level "world"
+2020-11-12 21:18:08 [INFO] Preparing start region
+2020-11-12 21:18:09 [INFO] Done! For help, type "help" or "?"
+2020-11-12 21:18:12 [INFO] Redbunny1 [/127.0.0.1:53649] logged in with entity id 78
+2020-11-12 21:20:25 [INFO] Cloth [Cloth Alpha 1.6.0]| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 21:20:25 [INFO] Loading properties
+2020-11-12 21:20:25 [INFO] Starting Minecraft server on *:25565
+2020-11-12 21:20:25 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-12 21:20:25 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-12 21:20:25 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-12 21:20:25 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-12 21:20:25 [INFO] Preparing level "world"
+2020-11-12 21:20:25 [INFO] Preparing start region
+2020-11-12 21:20:25 [INFO] Done! For help, type "help" or "?"
+2020-11-12 21:20:28 [INFO] Redbunny1 [/127.0.0.1:53673] logged in with entity id 63
+2020-11-12 21:22:15 [INFO] Cloth [Cloth Alpha 1.6.0]| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 21:22:15 [INFO] Loading properties
+2020-11-12 21:22:15 [INFO] Starting Minecraft server on *:25565
+2020-11-12 21:22:15 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-12 21:22:15 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-12 21:22:15 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-12 21:22:15 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-12 21:22:15 [INFO] Preparing level "world"
+2020-11-12 21:22:15 [INFO] Preparing start region
+2020-11-12 21:22:16 [INFO] Done! For help, type "help" or "?"
+2020-11-12 21:22:19 [INFO] Redbunny1 [/127.0.0.1:53687] logged in with entity id 49
+2020-11-12 21:23:51 [INFO] Cloth [Cloth Alpha 1.6.0]| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-12 21:23:51 [INFO] Loading properties
+2020-11-12 21:23:51 [INFO] Starting Minecraft server on *:25565
+2020-11-12 21:23:51 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-12 21:23:51 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-12 21:23:51 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-12 21:23:51 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-12 21:23:51 [INFO] Preparing level "world"
+2020-11-12 21:23:51 [INFO] Preparing start region
+2020-11-12 21:23:52 [INFO] Done! For help, type "help" or "?"
+2020-11-12 21:23:56 [INFO] Redbunny1 [/127.0.0.1:53703] logged in with entity id 54
+2020-11-12 21:24:26 [INFO] Redbunny1 lost connection: Quitting

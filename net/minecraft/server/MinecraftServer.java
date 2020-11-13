@@ -23,7 +23,7 @@ public class MinecraftServer
     implements ICommandListener, Runnable
 {
 
-    public static final String VERSION_STRING = "[Cloth Alpha 1.5.2]";
+    public static final String VERSION_STRING = "[Cloth Alpha 1.6.0]";
 
     public MinecraftServer()
     {
@@ -348,7 +348,7 @@ public class MinecraftServer
             ICommandListener icommandlistener = servercommand.commandListener;
             String s1 = icommandlistener.getUsername();
             // Preprocess string with shorthands
-            s.replace("@p", s1);
+            s.toLowerCase().replace("@p", s1);
             
             //Onwards
             if(s.toLowerCase().startsWith("help") || s.toLowerCase().startsWith("?"))

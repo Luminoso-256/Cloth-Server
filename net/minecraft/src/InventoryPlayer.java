@@ -161,21 +161,7 @@ public class InventoryPlayer
         }
         aitemstack[i] = itemstack;
     }
-    public ItemStack getInventorySlotContents(int slot)
-    {
-        ItemStack aitemstack[] = mainInventory;
-        if(slot >= aitemstack.length)
-        {
-            slot -= aitemstack.length;
-            aitemstack = armorInventory;
-        }
-        if(slot >= aitemstack.length)
-        {
-            slot -= aitemstack.length;
-            aitemstack = craftingInventory;
-        }
-        return aitemstack[slot];
-    }
+
     public float getStrVsBlock(Block block)
     {
         float f = 1.0F;
@@ -256,17 +242,21 @@ public class InventoryPlayer
 
     public ItemStack getStackInSlot(int i)
     {
+        System.out.println("getting slot "+i);
         ItemStack aitemstack[] = mainInventory;
         if(i >= aitemstack.length)
         {
+            System.out.println("Swapping inv to armor inv");
             i -= aitemstack.length;
             aitemstack = armorInventory;
         }
         if(i >= aitemstack.length)
         {
+            System.out.println("Swapping to crafting inv");
             i -= aitemstack.length;
             aitemstack = craftingInventory;
         }
+        System.out.println("Out: "+aitemstack[i]);
         return aitemstack[i];
     }
 

@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.Logger;
 
+import com.sun.tools.javac.Main;
 import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.server.MinecraftServer;
 
@@ -16,7 +17,7 @@ public class ServerConfigurationManager
     public ServerConfigurationManager(MinecraftServer minecraftserver)
     {
         playerEntities = new ArrayList();
-        field_9252_f = new HashSet();
+        banList = new HashSet();
         bannedIPs = new HashSet();
         ops = new HashSet();
         mcServer = minecraftserver;
@@ -45,15 +46,38 @@ public class ServerConfigurationManager
 
     public void playerLoggedIn(EntityPlayerMP entityplayermp)
     {
-        PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
-        String MOTD = propertyManager.getStringProperty("motd", "Welcome! ")+ entityplayermp.username;
-        sendChatMessageToAllPlayers(MOTD);
+
+
+
+        //
         playerEntities.add(entityplayermp);
         playerNBTManagerObj.readPlayerData(entityplayermp);
         mcServer.worldMngr.field_821.loadChunk((int)entityplayermp.posX >> 4, (int)entityplayermp.posZ >> 4);
         for(; mcServer.worldMngr.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) { }
         mcServer.worldMngr.entityJoinedWorld(entityplayermp);
         playerManagerObj.func_9214_a(entityplayermp);
+        //INV
+        GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+        String itemIDBlacklist = gameruleManager.getStringGamerule("itemidblacklist", " ");
+        boolean IsInvClean = true;
+        int MainInvSize = 36;
+        int CraftInvSize  = 4;
+        int ArmorInvSize = 4;
+        for(int i = 0; i < entityplayermp.inventory.func_83_a(); i++){
+            ItemStack item = entityplayermp.inventory.getStackInSlot(i);
+            // System.out.println("Processing item: "+item.itemID+" in slot "+i);
+            if(item != null){
+                System.out.println("Slot contains item of ID: "+item.itemID);
+                if(itemIDBlacklist.contains(Integer.toString(item.itemID))){
+                    ItemStack fallbackItem =  new ItemStack(Block.stone);
+                    entityplayermp.inventory.setInventorySlotContents(i, fallbackItem);
+                }}
+            else{System.out.println("Slot "+i+" contained null or nonextistant item");}
+        }
+        //MOTD
+        PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
+        String MOTD = propertyManager.getStringProperty("motd", "Welcome! ")+ entityplayermp.username;
+        sendChatMessageToAllPlayers(MOTD);
     }
 
     public void func_613_b(EntityPlayerMP entityplayermp)
@@ -71,7 +95,7 @@ public class ServerConfigurationManager
 
     public EntityPlayerMP login(NetLoginHandler netloginhandler, String s, String s1)
     {
-        if(field_9252_f.contains(s.trim().toLowerCase()))
+        if(banList.contains(s.trim().toLowerCase()))
         {
             netloginhandler.kickUser("You are banned from this server!");
             return null;
@@ -158,13 +182,13 @@ public class ServerConfigurationManager
 
     public void banPlayer(String s)
     {
-        field_9252_f.add(s.toLowerCase());
+        banList.add(s.toLowerCase());
         writeBannedPlayers();
     }
 
     public void unbanPlayer(String s)
     {
-        field_9252_f.remove(s.toLowerCase());
+        banList.remove(s.toLowerCase());
         writeBannedPlayers();
     }
 
@@ -172,11 +196,11 @@ public class ServerConfigurationManager
     {
         try
         {
-            field_9252_f.clear();
+            banList.clear();
             BufferedReader bufferedreader = new BufferedReader(new FileReader(bannedPlayersFile));
             for(String s = ""; (s = bufferedreader.readLine()) != null;)
             {
-                field_9252_f.add(s.trim().toLowerCase());
+                banList.add(s.trim().toLowerCase());
             }
 
             bufferedreader.close();
@@ -193,7 +217,7 @@ public class ServerConfigurationManager
         {
             PrintWriter printwriter = new PrintWriter(new FileWriter(bannedPlayersFile, false));
             String s;
-            for(Iterator iterator = field_9252_f.iterator(); iterator.hasNext(); printwriter.println(s))
+            for(Iterator iterator = banList.iterator(); iterator.hasNext(); printwriter.println(s))
             {
                 s = (String)iterator.next();
             }
@@ -396,7 +420,7 @@ public class ServerConfigurationManager
     private MinecraftServer mcServer;
     private PlayerManager playerManagerObj;
     private int maxPlayers;
-    private Set field_9252_f;
+    private Set banList;
     private Set bannedIPs;
     private Set ops;
     private File bannedPlayersFile;
