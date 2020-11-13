@@ -3,7 +3,7 @@
 !/banned-players.txt
 !/minecraft_server.iml
 !/world/
-!/out/
+/out/
 !/server.log.lck
 !/server.log
 !/server.properties
