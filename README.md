@@ -21,7 +21,7 @@ A Modded server  for  minecraft alpha 1.2.6 back-porting modern minecraft server
   - heal command  which puts you back at full health
  - clear command drops all items in your inventory
  - Item blacklist
- 
+ - Sleepvote gamerule
   
 #### Roadmap
  - plugin support of some  kind - with docs
