@@ -355,36 +355,51 @@ public class MinecraftServer
             s.toLowerCase().replace("@p", s1);
             
             //Onwards
+            
+            //Help code -- ChessChicken
             if(s.toLowerCase().startsWith("help") || s.toLowerCase().startsWith("?"))
             {
-                icommandlistener.log("To run the server without a gui, start it like this:");
-                icommandlistener.log("   java -Xmx1024M -Xms1024M -jar minecraft_server.jar nogui");
-                icommandlistener.log("Console commands:");
-                icommandlistener.log("   help  or  ?               shows this message");
-                icommandlistener.log("   kick <player>             removes a player from the server");
-                icommandlistener.log("   ban <player>              bans a player from the server");
-                icommandlistener.log("   pardon <player>           pardons a banned player so that they can connect again");
-                icommandlistener.log("   ban-ip <ip>               bans an IP address from the server");
-                icommandlistener.log("   pardon-ip <ip>            pardons a banned IP address so that they can connect again");
-                icommandlistener.log("   op <player>               turns a player into an op");
-                icommandlistener.log("   deop <player>             removes op status from a player");
-                icommandlistener.log("   tp <player1> <player2>    moves one player to the same location as another player");
-                icommandlistener.log("   tpcord <player1> <x> <y> <z>    moves one player to the given cords");
-                icommandlistener.log("   give <player> <name string> [num]  gives a player a resource");
-                icommandlistener.log("   giveid <player> <id> [num]  gives a player a resource taking numeric ID");
-                icommandlistener.log("   tell <player> <message>   sends a private message to a player");
-                icommandlistener.log("   stop                      gracefully stops the server");
-                icommandlistener.log("   save-all                  forces a server-wide level save");
-                icommandlistener.log("   save-off                  disables terrain saving (useful for backup scripts)");
-                icommandlistener.log("   save-on                   re-enables terrain saving");
-                icommandlistener.log("   list                      lists all currently connected players");
-                icommandlistener.log("   timeset <day/night/number of ticks>                   changes time");
-                icommandlistener.log("   seed                   logs world seed to server console");
-                icommandlistener.log("   version                   outputs current Cloth version");
-                icommandlistener.log("   kill                   sets health to 0");
-                icommandlistener.log("   heal                   heals 20 health");
+                //10
+                String[] getArgs = s.split(" ");
+                if(getArgs.length == 2)
+                {
+                    if(getArgs[1].equalsIgnoreCase("1"))
+                    {
+                        icommandlistener.log("§bConsole commands (page 1)");
+                        icommandlistener.log("§a/help <id>  or  ? shows this message");
+                        icommandlistener.log("§a/kick <player> §bremoves a player from the server");
+                        icommandlistener.log("§a/ban <player> §bbans a player from the server");
+                        icommandlistener.log("§a/pardon <player> §bpardons a banned player");
+                        icommandlistener.log("§a/ban-ip <ip> §bbans an IP address");
+                        icommandlistener.log("§a/pardon-ip <ip> §bpardons a banned IP address");
+                        icommandlistener.log("§a/op <player> §bturns a player into an op");
+                        icommandlistener.log("§a/deop <player> §bremoves op status from a player");
+                        icommandlistener.log("§a/tp <player1> <player2> §bmoves player1 to player2");
+                        icommandlistener.log("§a/tpcord <player1><x><y><z> §bmoves player to the coords");
+                        return;
+                    }
+                    if(getArgs[1].equalsIgnoreCase("2"))
+                    {
+                        icommandlistener.log("§bConsole commands (page 2)");
+                        icommandlistener.log("§a/give <player><name string>[num] §bgives a player a resource");
+                        icommandlistener.log("§a/giveid <player><id>[num] §bgives a player a resource taking numeric ID");
+                        icommandlistener.log("§a/tell <player><message> §bsends a private message to a player");
+                        icommandlistener.log("§a/stop §bgracefully stops the server");
+                        icommandlistener.log("§a/save-all §bforces a server-wide level save");
+                        icommandlistener.log("§a/save-off §bdisables terrain saving (useful for backup scripts)");
+                        icommandlistener.log("§a/save-on §bre-enables terrain saving");
+                        icommandlistener.log("§a/list §blists all currently connected players");
+                        icommandlistener.log("§a/time set <day/night/number of ticks> §bchanges time");
+                        icommandlistener.log("§a/say <message> §bbroadcasts a message to all players");
+                        return;
+                    }
 
-                icommandlistener.log("   say <message>             broadcasts a message to all players");
+                    icommandlistener.log("§bTo run the server without a gui, start it like this:");
+                    icommandlistener.log("§bjava -Xmx1024M -Xms1024M -jar minecraft_server.jar nogui");
+                }else
+                {
+                    icommandlistener.log("§cError in command arguments, try §a/help 1");
+                }
             } else
 
             if(s.toLowerCase().startsWith("seed")){
