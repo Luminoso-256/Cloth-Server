@@ -97,7 +97,7 @@ public class EntityCreeper extends EntityMobs
         super.onDeath(entity);
         if(entity instanceof EntitySkeleton)
         {
-            dropItem(Item.record13.swiftedIndex + field_9064_W.nextInt(2), 1);
+            dropItem(Item.record13.swiftedIndex + field_9064_W.nextInt(2), 0, 1);
         }
     }
 

@@ -474,3 +474,27 @@ java.lang.NullPointerException
 2020-11-13 07:18:23 [INFO] Redbunny1 lost connection: Quitting
 2020-11-13 07:20:35 [INFO] Redbunny1 [/127.0.0.1:57058] logged in with entity id 1361
 2020-11-13 07:20:56 [INFO] Redbunny1 lost connection: Quitting
+2020-11-13 07:57:55 [INFO] Stopping server
+2020-11-13 07:57:55 [INFO] Saving chunks
+2020-11-13 09:48:20 [INFO] Cloth [Cloth Alpha 1.6.0]| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0
+2020-11-13 09:48:20 [INFO] Loading properties
+2020-11-13 09:48:20 [INFO] Starting Minecraft server on *:25565
+2020-11-13 09:48:20 [WARNING] **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+2020-11-13 09:48:20 [WARNING] The server will make no attempt to authenticate usernames. Beware.
+2020-11-13 09:48:20 [WARNING] While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+2020-11-13 09:48:20 [WARNING] To change this, set "online-mode" to "true" in the server.settings file.
+2020-11-13 09:48:20 [INFO] Preparing level "world"
+2020-11-13 09:48:20 [INFO] Preparing start region
+2020-11-13 09:48:21 [INFO] Done! For help, type "help" or "?"
+2020-11-13 09:48:35 [INFO] Player [/127.0.0.1:59264] logged in with entity id 33
+2020-11-13 09:48:43 [INFO] Player tried command: timeset day
+2020-11-13 09:48:53 [INFO] CONSOLE: Opping redbunny1
+2020-11-13 09:48:58 [INFO] Connected players: Player
+2020-11-13 09:49:02 [INFO] CONSOLE: Opping Player
+2020-11-13 09:49:17 [INFO] Player issued server command: timeset day
+2020-11-13 09:49:17 [INFO] Unknown console command. Type "help" for help.
+2020-11-13 09:49:39 [INFO] Player issued server command: give Player diamondshovel
+2020-11-13 09:49:39 [INFO] Player: Giving Player some diamondshovel
+2020-11-13 09:51:02 [INFO] Player lost connection: Quitting
+2020-11-13 09:51:16 [INFO] Stopping server
+2020-11-13 09:51:16 [INFO] Saving chunks

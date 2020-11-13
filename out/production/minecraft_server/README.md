@@ -15,10 +15,12 @@ A Modded server  for  minecraft alpha 1.2.6 back-porting modern minecraft server
  - version command gives you the current Cloth version
   - MOTD message when a player joins
   - death messages
- 
+ - control the chances of jockies spawning
   - Full control over spawnrates
   - kill command 
   - heal command  which puts you back at full health
+ - clear command drops all items in your inventory
+ - Item blacklist
  
   
 #### Roadmap

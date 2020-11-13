@@ -753,14 +753,14 @@ public abstract class Entity
         return nbttaglist;
     }
 
-    public EntityItem dropItem(int i, int j)
+    public EntityItem dropItem(int i, int j, int damage)
     {
-        return dropItemWithOffset(i, j, 0.0F);
+        return dropItemWithOffset(i, j, damage, 0.0F);
     }
 
-    public EntityItem dropItemWithOffset(int i, int j, float f)
+    public EntityItem dropItemWithOffset(int i, int j, int damage, float f)
     {
-        EntityItem entityitem = new EntityItem(worldObj, posX, posY + (double)f, posZ, new ItemStack(i, j));
+        EntityItem entityitem = new EntityItem(worldObj, posX, posY + (double)f, posZ, new ItemStack(i, j, damage));
         entityitem.field_433_ad = 10;
         worldObj.entityJoinedWorld(entityitem);
         return entityitem;

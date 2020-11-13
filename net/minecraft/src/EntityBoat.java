@@ -67,12 +67,12 @@ public class EntityBoat extends Entity
         {
             for(int j = 0; j < 3; j++)
             {
-                dropItemWithOffset(Block.planks.blockID, 1, 0.0F);
+                dropItemWithOffset(Block.planks.blockID, 1, 0, 0.0F);
             }
 
             for(int k = 0; k < 2; k++)
             {
-                dropItemWithOffset(Item.stick.swiftedIndex, 1, 0.0F);
+                dropItemWithOffset(Item.stick.swiftedIndex, 1,0,  0.0F);
             }
 
             setEntityDead();
@@ -206,12 +206,12 @@ public class EntityBoat extends Entity
                 setEntityDead();
                 for(int k = 0; k < 3; k++)
                 {
-                    dropItemWithOffset(Block.planks.blockID, 1, 0.0F);
+                    dropItemWithOffset(Block.planks.blockID, 1, 0, 0.0F);
                 }
 
                 for(int l = 0; l < 2; l++)
                 {
-                    dropItemWithOffset(Item.stick.swiftedIndex, 1, 0.0F);
+                    dropItemWithOffset(Item.stick.swiftedIndex, 1, 0,0.0F);
                 }
 
             }

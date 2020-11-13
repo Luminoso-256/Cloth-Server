@@ -67,12 +67,12 @@ public class EntityFallingSand extends Entity
             setEntityDead();
             if(!worldObj.func_516_a(field_427_a, i, j, k, true) || !worldObj.setBlockWithNotify(i, j, k, field_427_a))
             {
-                dropItem(field_427_a, 1);
+                dropItem(field_427_a, 1,0);
             }
         } else
         if(field_426_b > 100)
         {
-            dropItem(field_427_a, 1);
+            dropItem(field_427_a, 1,0);
             setEntityDead();
         }
     }

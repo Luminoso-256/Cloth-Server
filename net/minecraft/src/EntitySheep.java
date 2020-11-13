@@ -24,7 +24,7 @@ public class EntitySheep extends EntityAnimals
             int j = 1 + field_9064_W.nextInt(3);
             for(int k = 0; k < j; k++)
             {
-                EntityItem entityitem = dropItemWithOffset(Block.cloth.blockID, 1, 1.0F);
+                EntityItem entityitem = dropItemWithOffset(Block.cloth.blockID, 1, 0,  1.0F);
                 entityitem.motionY += field_9064_W.nextFloat() * 0.05F;
                 entityitem.motionX += (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.1F;
                 entityitem.motionZ += (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.1F;

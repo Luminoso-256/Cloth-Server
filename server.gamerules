@@ -1,5 +1,6 @@
 #Cloth Gamerule Data
-#Fri Nov 13 07:20:36 CST 2020
+#Fri Nov 13 09:48:21 CST 2020
 inversespawnrate=50
 announcedeath=true
 itemidblacklist=\ 
+inverseskeletonjockeyrate=100

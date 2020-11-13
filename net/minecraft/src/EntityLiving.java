@@ -370,7 +370,7 @@ public class EntityLiving extends Entity
                 int j = field_9064_W.nextInt(3);
                 for(int k = 0; k < j; k++)
                 {
-                    dropItem(i, 1);
+                    dropItem(i, 1, 0);
                 }
 
             }

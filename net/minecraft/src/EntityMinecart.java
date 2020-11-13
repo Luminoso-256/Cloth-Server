@@ -70,14 +70,14 @@ public class EntityMinecart extends Entity
         field_9168_a += i * 10;
         if(field_9168_a > 40)
         {
-            dropItemWithOffset(Item.minecartEmpty.swiftedIndex, 1, 0.0F);
+            dropItemWithOffset(Item.minecartEmpty.swiftedIndex, 1, 0,0.0F);
             if(minecartType == 1)
             {
-                dropItemWithOffset(Block.crate.blockID, 1, 0.0F);
+                dropItemWithOffset(Block.crate.blockID, 1,0, 0.0F);
             } else
             if(minecartType == 2)
             {
-                dropItemWithOffset(Block.stoneOvenIdle.blockID, 1, 0.0F);
+                dropItemWithOffset(Block.stoneOvenIdle.blockID, 1, 0,0.0F);
             }
             setEntityDead();
         }
