@@ -716,8 +716,8 @@ public abstract class Entity
         readEntityFromNBT(nbttagcompound);
         //Anti-Phantom
         short health = nbttagcompound.getShort("Health");
-        if(0 > health){
-            health = 0;
+        if(0 >= health){
+            health = 1;
             nbttagcompound.setShort("Health", health);
         }
 
