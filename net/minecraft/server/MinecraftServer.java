@@ -4,11 +4,10 @@
 
 package net.minecraft.server;
 
-import com.sun.tools.jconsole.JConsoleContext;
 import net.minecraft.clothutils.BlockMappingsManager;
 import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.clothutils.WorldGenParams;
-import net.minecraft.clothutils.plugins.stich.StichLoader;
+import net.minecraft.clothutils.plugins.stich.StitchLoader;
 import net.minecraft.src.*;
 
 import java.awt.GraphicsEnvironment;
@@ -25,7 +24,7 @@ public class MinecraftServer
 {
     // [Cloth Version  β1.0.0]
     // [Cloth Release 1.0.0]
-    public static final String VERSION_STRING = "[Cloth Version α1.7.0]";
+    public static final String VERSION_STRING = "[Cloth Version α1.8.0]";
 
     public MinecraftServer()
     {
@@ -43,6 +42,8 @@ public class MinecraftServer
     private boolean func_6008_d() throws UnknownHostException
     {
 
+        StitchLoader stich = new StitchLoader();
+
         ThreadCommandReader threadcommandreader = new ThreadCommandReader(this);
         threadcommandreader.setDaemon(true);
         threadcommandreader.start();
@@ -50,10 +51,12 @@ public class MinecraftServer
         logger.info("Cloth "+VERSION_STRING+"| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0");
         logger.info("Loading stitch plugins from /plugins...");
 
-        StichLoader.RegisterAllPlugins();
+        stich.RegisterAllPlugins();
+        logger.info("[Stitch] Calling initiliazation hook");
+        stich.CallHook("OnServerInit");
 
 
-        logger.info("Proceeding with server initiliazation");
+        logger.info("Proceeding with server initialization");
         if(Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L)
         {
             logger.warning("**** NOT ENOUGH RAM!");
