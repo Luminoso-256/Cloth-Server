@@ -1,5 +1,6 @@
 package net.minecraft;
 
+import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.clothutils.plugins.stich.StitchLoader;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.Block;
@@ -10,6 +11,7 @@ import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +24,7 @@ public class Main {
     // [Cloth Version  β1.0.0]
     // [Cloth Release 1.0.0]
 
-    public static final String VERSION_STRING = "[Cloth Version α1.8.0]";
+    public static final String VERSION_STRING = "[Cloth Alpha 1.8.0]";
 
 
     public static final Logger logger = Logger.getLogger("Minecraft");
@@ -35,6 +37,7 @@ public class Main {
         LuaValue ConfigManager = CoerceJavaToLua.coerce(minecraftServer.configManager);
         LuaValue WorldManager = CoerceJavaToLua.coerce(minecraftServer.worldMngr);
         LuaValue PropertyManager = CoerceJavaToLua.coerce(minecraftServer.propertyManagerObj);
+        LuaValue GameruleManager = CoerceJavaToLua.coerce(new GameruleManager(new File("server.gamerules")));
        // LuaValue _Block = CoerceJavaToLua.coerce(Entity());
         _G.set("minecraft_server", MinecraftServer);
         _G.set("world_manager", WorldManager);
