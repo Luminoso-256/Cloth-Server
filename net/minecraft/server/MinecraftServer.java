@@ -8,6 +8,7 @@ import com.sun.tools.jconsole.JConsoleContext;
 import net.minecraft.clothutils.BlockMappingsManager;
 import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.clothutils.WorldGenParams;
+import net.minecraft.clothutils.plugins.stich.StichLoader;
 import net.minecraft.src.*;
 
 import java.awt.GraphicsEnvironment;
@@ -24,7 +25,7 @@ public class MinecraftServer
 {
     // [Cloth Version  β1.0.0]
     // [Cloth Release 1.0.0]
-    public static final String VERSION_STRING = "[Cloth Version α1.6.0]";
+    public static final String VERSION_STRING = "[Cloth Version α1.7.0]";
 
     public MinecraftServer()
     {
@@ -47,6 +48,12 @@ public class MinecraftServer
         threadcommandreader.start();
         ConsoleLogManager.init();
         logger.info("Cloth "+VERSION_STRING+"| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0");
+        logger.info("Loading stitch plugins from /plugins...");
+
+        StichLoader.RegisterAllPlugins();
+
+
+        logger.info("Proceeding with server initiliazation");
         if(Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L)
         {
             logger.warning("**** NOT ENOUGH RAM!");
