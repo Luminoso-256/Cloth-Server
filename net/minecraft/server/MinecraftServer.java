@@ -9,6 +9,7 @@ import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.clothutils.WorldGenParams;
 import net.minecraft.clothutils.plugins.stich.StitchLoader;
 import net.minecraft.src.*;
+import org.luaj.vm2.lib.jse.JsePlatform;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
@@ -19,12 +20,12 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static net.minecraft.Main.VERSION_STRING;
+
 public class MinecraftServer
     implements ICommandListener, Runnable
 {
-    // [Cloth Version  β1.0.0]
-    // [Cloth Release 1.0.0]
-    public static final String VERSION_STRING = "[Cloth Version α1.8.0]";
+
 
     public MinecraftServer()
     {
@@ -42,18 +43,12 @@ public class MinecraftServer
     private boolean func_6008_d() throws UnknownHostException
     {
 
-        StitchLoader stich = new StitchLoader();
 
         ThreadCommandReader threadcommandreader = new ThreadCommandReader(this);
         threadcommandreader.setDaemon(true);
         threadcommandreader.start();
         ConsoleLogManager.init();
-        logger.info("Cloth "+VERSION_STRING+"| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0");
-        logger.info("Loading stitch plugins from /plugins...");
 
-        stich.RegisterAllPlugins();
-        logger.info("[Stitch] Calling initiliazation hook");
-        stich.CallHook("OnServerInit");
 
 
         logger.info("Proceeding with server initialization");
@@ -438,7 +433,7 @@ public class MinecraftServer
                 icommandlistener.log("Seed for this world is:"+ params.GetSeedFromPropertiesFile());
             }
             if(s.toLowerCase().startsWith("version")){
-                WorldGenParams params = new WorldGenParams();
+                //WorldGenParams params = new WorldGenParams();
                 icommandlistener.log(VERSION_STRING);
             }
             if(s.toLowerCase().startsWith("heal")){

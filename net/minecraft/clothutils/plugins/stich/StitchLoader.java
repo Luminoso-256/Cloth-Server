@@ -19,8 +19,10 @@ import org.luaj.vm2.lib.jse.*;
  * 3. Listen to each hook, and on call defer to the plugin
  */
 public class StitchLoader {
-
-
+    public Globals stichGlobals;
+    public StitchLoader(Globals StichGlobals){
+        stichGlobals = StichGlobals;
+    }
 
 
     public void RegisterAllPlugins(){
@@ -79,7 +81,7 @@ public class StitchLoader {
 
     public String CallFunctionFromLuaFile(String filePath, String funcName){
         //run the lua script defining your function
-        LuaValue _G = JsePlatform.standardGlobals();
+        LuaValue _G = stichGlobals;
         _G.get("dofile").call( LuaValue.valueOf("./plugins/"+filePath));
 
         //call the function
@@ -92,4 +94,6 @@ public class StitchLoader {
 
     //Hook Lists
     public List<String> OnServerInitHook = new ArrayList<String>();
+
+
 }
