@@ -5,7 +5,6 @@ package net.minecraft.src;
 
 import java.io.PrintStream;
 import java.util.Random;
-import java.util.logging.Logger;
 
 public class BlockPortal extends BlockBreakable
 {
@@ -156,8 +155,6 @@ public class BlockPortal extends BlockBreakable
     {
         if(world.multiplayerWorld)
         {
-            Logger logger = Logger.getLogger("Minecraft");
-            logger.info("Entity attempted to join nether. Is player: "+entity.IsPlayer);
             return;
         } else
         {

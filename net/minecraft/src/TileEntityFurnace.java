@@ -4,8 +4,6 @@ package net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-import net.minecraft.clothutils.ExploitUtils;
-
 public class TileEntityFurnace extends TileEntity
     implements IInventory
 {
@@ -36,17 +34,10 @@ public class TileEntityFurnace extends TileEntity
         for(int i = 0; i < nbttaglist.tagCount(); i++)
         {
             NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-            ItemStack itemStack = new ItemStack(0);//classref
             byte byte0 = nbttagcompound1.getByte("Slot");
             if(byte0 >= 0 && byte0 < field_489_e.length)
             {
-                ExploitUtils exploitUtils = new ExploitUtils();
-                if(exploitUtils.IsIdValid(itemStack.readIDFromNBT(nbttagcompound1))) {
-                    field_489_e[byte0] = new ItemStack(nbttagcompound1);
-                }
-                else{
-                    field_489_e[byte0] = new ItemStack(0);
-                }
+                field_489_e[byte0] = new ItemStack(nbttagcompound1);
             }
         }
 
