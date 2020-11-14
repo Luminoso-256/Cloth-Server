@@ -2,7 +2,12 @@ package net.minecraft;
 
 import net.minecraft.clothutils.plugins.stich.StitchLoader;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.src.Block;
 import net.minecraft.src.ConsoleLogManager;
+import net.minecraft.src.Entity;
+import org.luaj.vm2.Globals;
+import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
 import java.io.IOException;
@@ -25,10 +30,20 @@ public class Main {
     public static void main(String[] args) throws IOException {
         logger.info("[Cloth] Cloth "+VERSION_STRING+"| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0");
         logger.info("[Stitch] Loading stitch plugins from /plugins...");
-        StitchLoader stich = new StitchLoader(JsePlatform.standardGlobals()); //Gotta change these to custom globals later
+        Globals _G = JsePlatform.standardGlobals();
+        LuaValue MinecraftServer = CoerceJavaToLua.coerce(minecraftServer);
+        LuaValue ConfigManager = CoerceJavaToLua.coerce(minecraftServer.configManager);
+        LuaValue WorldManager = CoerceJavaToLua.coerce(minecraftServer.worldMngr);
+        LuaValue PropertyManager = CoerceJavaToLua.coerce(minecraftServer.propertyManagerObj);
+       // LuaValue _Block = CoerceJavaToLua.coerce(Entity());
+        _G.set("minecraft_server", MinecraftServer);
+        _G.set("world_manager", WorldManager);
+        _G.set("config_manager", ConfigManager);
+        _G.set("property_manager", PropertyManager);
+        StitchLoader stich = new StitchLoader(_G); //Got ta change these to custom globals later
         stich.RegisterAllPlugins();
         logger.info("[Stitch] Calling initiliazation hook");
-        stich.CallHook("OnServerInit");
+        stich.CallHook("OnServerInit", null, null);
 
 
 

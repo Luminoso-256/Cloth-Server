@@ -37,7 +37,9 @@ public class MinecraftServer
         new ThreadSleepForever(this);
     }
 
-
+    public void log(String text, String originator){
+        logger.info("["+originator+"]"+": "+text);
+    }
 
 
     private boolean func_6008_d() throws UnknownHostException

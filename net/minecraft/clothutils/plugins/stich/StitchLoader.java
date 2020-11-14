@@ -83,8 +83,8 @@ public class StitchLoader {
         Logger logger = Logger.getLogger("Minecraft");
 
         //Overload/Optional handling
-        Entity entity = Entity.isPresent() ? Entity.get() : null;
-        Block block = Block.isPresent() ? Block.get() : null;
+      //  Entity entity = Entity.isPresent() ? Entity.get() : null;
+        //Block block = Block.isPresent() ? Block.get() : null;
 
         //Calling the hook
         switch (Hook) {
@@ -119,14 +119,11 @@ public class StitchLoader {
 
         String ArgType = HookToArgMappings.GetArgsListForHook(funcName);
 
-        LuaValue retvals = null;
-        switch (ArgType) {
-            case "None":
-                retvals = Function.call();
-                break;
-            case "Block, Entity":
-                break;
-        }
+
+
+             LuaValue retvals = Function.call();
+
+
         //print out the result from the lua function
         return retvals.tojstring(1);
     }
