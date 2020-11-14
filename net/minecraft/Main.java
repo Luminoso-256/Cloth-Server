@@ -2,6 +2,7 @@ package net.minecraft;
 
 import net.minecraft.clothutils.plugins.stich.StitchLoader;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.src.ConsoleLogManager;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
 import java.io.IOException;
@@ -9,12 +10,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Custom Main class for stich & convience
+ * Custom Main class for stitch & convience
  * @author Luminoso-256
  */
 public class Main {
     // [Cloth Version  β1.0.0]
     // [Cloth Release 1.0.0]
+
     public static final String VERSION_STRING = "[Cloth Version α1.8.0]";
 
 

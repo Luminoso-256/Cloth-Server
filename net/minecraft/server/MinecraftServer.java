@@ -43,11 +43,11 @@ public class MinecraftServer
     private boolean func_6008_d() throws UnknownHostException
     {
 
-
+        ConsoleLogManager.init(); //No GUI till main MC class takes over
         ThreadCommandReader threadcommandreader = new ThreadCommandReader(this);
         threadcommandreader.setDaemon(true);
         threadcommandreader.start();
-        ConsoleLogManager.init();
+
 
 
 
