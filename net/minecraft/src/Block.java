@@ -444,12 +444,7 @@ public class Block
     }
 
     public void onBlockPlacedBy(World world, int i, int j, int k, EntityLiving entityliving)
-    {
-        StitchLoader stitch = new StitchLoader(JsePlatform.standardGlobals());
-
-
-
-    }
+    { }
 
     static Class _mthclass$(String s)
     {
