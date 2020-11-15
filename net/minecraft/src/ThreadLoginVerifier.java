@@ -40,7 +40,7 @@ class ThreadLoginVerifier extends Thread
                     NetLoginHandler.setLoginPacket(loginHandler, loginPacket);
                 }
                 else{
-                    loginHandler.kickUser("Failed to verify username!");
+                    loginHandler.kickUser("Failed to verify username from sessionserver!");
                 }
             }
             else {
