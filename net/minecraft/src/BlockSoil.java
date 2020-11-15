@@ -32,30 +32,34 @@ public class BlockSoil extends Block
 
     public void updateTick(World world, int i, int j, int k, Random random)
     {
-      //  GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules")); //gamerule config file
-      //  if(gameruleManager.getBooleanGamerule("dorandomtrample", true) == true) {
-            if (random.nextInt(5) == 0) {
-                if (func_283_h(world, i, j, k)) {
-                    world.setBlockMetadataWithNotify(i, j, k, 7);
-                } else {
-                    int l = world.getBlockMetadata(i, j, k);
-                    if (l > 0) {
-                        world.setBlockMetadataWithNotify(i, j, k, l - 1);
-                    } else if (!func_282_g(world, i, j, k)) {
-                        world.setBlockWithNotify(i, j, k, Block.dirt.blockID);
-                    }
+        if (random.nextInt(5) == 0) {
+            if (func_283_h(world, i, j, k)) {
+                world.setBlockMetadataWithNotify(i, j, k, 7);
+            } else {
+                int l = world.getBlockMetadata(i, j, k);
+                if (l > 0) {
+                    world.setBlockMetadataWithNotify(i, j, k, l - 1);
+                } else if (!func_282_g(world, i, j, k)) {
+                    world.setBlockWithNotify(i, j, k, Block.dirt.blockID);
                 }
             }
-   //     }
+        }
     }
 
     public void onEntityWalking(World world, int i, int j, int k, Entity entity)
     {
-     //   GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
-        if(GameruleManager.getBooleanGamerule("doplayertrample", true)&& !entity.IsPlayer) {
+        if(!GameruleManager.getBooleanGamerule("domoderntrample", true) && entity.IsPlayer || GameruleManager.getBooleanGamerule("domobtrample", true)) {
             if (world.rand.nextInt(4) == 0) {
                 world.setBlockWithNotify(i, j, k, Block.dirt.blockID);
             }
+        }
+    }
+    
+    public void onEntityFallen(World world, int i, int j, int k, Entity entity, float f)
+    {
+        if (!GameruleManager.getBooleanGamerule("domoderntrample", true) && world.rand.nextFloat() < f - 0.5F)
+        {
+            world.setBlockWithNotify(i, j, k, Block.dirt.blockID);
         }
     }
 
