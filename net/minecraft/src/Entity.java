@@ -437,6 +437,15 @@ public abstract class Entity
         {
             if(fallDistance > 0.0F)
             {
+            	int i = MathHelper.floor_double(posX);
+                int j = MathHelper.floor_double(posY - 0.20000000298023224D - (double)yOffset);
+                int k = MathHelper.floor_double(posZ);
+                int l = worldObj.getBlockId(i, j, k);
+                //checks for farmland, since I only wrote that function for it
+                if(l > 0 && l == Block.tilledField.blockID)
+                {
+                	Block.blocksList[l].onEntityFallen(worldObj, i, j, k, this, fallDistance);
+                }
                 fall(fallDistance);
                 fallDistance = 0.0F;
             }

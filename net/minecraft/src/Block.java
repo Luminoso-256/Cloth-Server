@@ -393,6 +393,10 @@ public class Block
     public void onEntityWalking(World world, int i, int j, int k, Entity entity)
     {
     }
+    
+    public void onEntityFallen(World world, int i, int j, int k, Entity entity, float f)
+    {
+    }
 
     public void onBlockPlaced(World world, int i, int j, int k, int l)
     {
