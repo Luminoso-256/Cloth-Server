@@ -27,9 +27,9 @@ public final class SpawnerAnimals
     public static final int SpawnMobs(World world) {
         field_4311_a.clear();
 
-        GameruleManager gameruleManager =  new GameruleManager(new File("server.gamerules")); //We  are going to  hook you up to a gamerule!
-        int UpperSpawnRateBound = gameruleManager.getIntGamerule("inversespawnrate", 50);
-        int UpperJocketBound = gameruleManager.getIntGamerule("inverseskeletonjockeyrate", 100);
+       // GameruleManager gameruleManager =  new GameruleManager(new File("server.gamerules")); //We  are going to  hook you up to a gamerule!
+        int UpperSpawnRateBound = GameruleManager.getIntGamerule("inversespawnrate", 50);
+        int UpperJocketBound = GameruleManager.getIntGamerule("inverseskeletonjockeyrate", 100);
 
         int var1;
         for(var1 = 0; var1 < world.playerEntities.size(); ++var1) {

@@ -12,9 +12,10 @@ import java.util.logging.Logger;
 public class GameruleManager
 {
 
-    public GameruleManager(File file)
+    public GameruleManager()
     {
         serverProperties = new Properties();
+        File file = new File("server.gamerules");
         serverPropertiesFile = file;
         if(file.exists())
         {
@@ -34,14 +35,17 @@ public class GameruleManager
         }
     }
 
-    public void generateNewProperties()
+    public static void generateNewProperties()
     {
         logger.log(Level.INFO, "Generating new gamerules file");
         saveProperties();
     }
 
-    public void saveProperties()
+    public static void saveProperties()
     {
+        Properties serverProperties = new Properties();
+        File serverPropertiesFile = new File("server.gamerules");
+
         try
         {
             serverProperties.store(new FileOutputStream(serverPropertiesFile), "Cloth Gamerule Data");
@@ -53,8 +57,10 @@ public class GameruleManager
         }
     }
 
-    public String getStringGamerule(String s, String s1)
+    public static String getStringGamerule(String s, String s1)
     {
+        Properties serverProperties = new Properties();
+        File serverPropertiesFile = new File("server.gamerules");
         if(!serverProperties.containsKey(s))
         {
             serverProperties.setProperty(s, s1);
@@ -63,8 +69,10 @@ public class GameruleManager
         return serverProperties.getProperty(s, s1);
     }
 
-    public int getIntGamerule(String s, int i)
+    public static int getIntGamerule(String s, int i)
     {
+        Properties serverProperties = new Properties();
+        File serverPropertiesFile = new File("server.gamerules");
         try
         {
             return Integer.parseInt(getStringGamerule(s, (new StringBuilder()).append("").append(i).toString()));
@@ -76,8 +84,10 @@ public class GameruleManager
         return i;
     }
 
-    public boolean getBooleanGamerule(String s, boolean flag)
+    public static boolean getBooleanGamerule(String s, boolean flag)
     {
+        Properties serverProperties = new Properties();
+        File serverPropertiesFile = new File("server.gamerules");
         try
         {
             return Boolean.parseBoolean(getStringGamerule(s, (new StringBuilder()).append("").append(flag).toString()));
@@ -89,13 +99,19 @@ public class GameruleManager
         return flag;
     }
 
-    public void setBooleanGamerule(String Gamerule, boolean flag){
+    public static void setBooleanGamerule(String Gamerule, boolean flag){
+        Properties serverProperties = new Properties();
+        File serverPropertiesFile = new File("server.gamerules");
         serverProperties.setProperty(Gamerule, (new StringBuilder()).append("").append(flag).toString());
     }
-    public void setStringGamerule(String Gamerule, String value){
+    public static void setStringGamerule(String Gamerule, String value){
+        Properties serverProperties = new Properties();
+        File serverPropertiesFile = new File("server.gamerules");
         serverProperties.setProperty(Gamerule, (new StringBuilder()).append("").append(value).toString());
     }
-    public void setIntGamerule(String Gamerule, int value){
+    public static void setIntGamerule(String Gamerule, int value){
+        Properties serverProperties = new Properties();
+        File serverPropertiesFile = new File("server.gamerules");
         serverProperties.setProperty(Gamerule, (new StringBuilder()).append("").append(value).toString());
     }
     public static Logger logger = Logger.getLogger("Minecraft");

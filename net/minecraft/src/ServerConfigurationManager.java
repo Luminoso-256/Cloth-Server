@@ -58,8 +58,8 @@ public class ServerConfigurationManager
         mcServer.worldMngr.entityJoinedWorld(entityplayermp);
         playerManagerObj.func_9214_a(entityplayermp);
         //INV
-        GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
-        String itemIDBlacklist = gameruleManager.getStringGamerule("itemidblacklist", " ");
+       // GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+        String itemIDBlacklist = GameruleManager.getStringGamerule("itemidblacklist", " ");
         boolean IsInvClean = true;
         int MainInvSize = 36;
         int CraftInvSize  = 4;

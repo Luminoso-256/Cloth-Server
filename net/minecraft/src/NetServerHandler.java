@@ -384,9 +384,9 @@ public class NetServerHandler extends NetHandler
         //END PREPROCESS
 
         if(s.toLowerCase().startsWith("/sleepvote ")){
-            GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+           // GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
             String[] Args = s.toLowerCase().split(" ");
-            if(Args[1].equals("start") && !mcServer.IsSleepVoteOngoing && gameruleManager.getBooleanGamerule("dosleepvote", false)){
+            if(Args[1].equals("start") && !mcServer.IsSleepVoteOngoing && GameruleManager.getBooleanGamerule("dosleepvote", false)){
                 //start a vote
                 mcServer.IsSleepVoteOngoing = true;
                // mcServer.SleepVoteRemainingTime = 60000;

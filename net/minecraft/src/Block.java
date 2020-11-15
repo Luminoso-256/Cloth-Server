@@ -4,6 +4,8 @@ package net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import net.minecraft.clothutils.GameruleManager;
+import net.minecraft.clothutils.plugins.stich.StitchLoader;
+import org.luaj.vm2.lib.jse.JsePlatform;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -173,8 +175,8 @@ public class Block
 
     public int tickRate()
     {
-        GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
-        return gameruleManager.getIntGamerule("BlockTickRate", 10);
+       // GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+        return GameruleManager.getIntGamerule("BlockTickRate", 10);
     }
 
     public void onBlockAdded(World world, int i, int j, int k)
@@ -439,6 +441,10 @@ public class Block
 
     public void onBlockPlacedBy(World world, int i, int j, int k, EntityLiving entityliving)
     {
+        StitchLoader stitch = new StitchLoader(JsePlatform.standardGlobals());
+
+
+
     }
 
     static Class _mthclass$(String s)

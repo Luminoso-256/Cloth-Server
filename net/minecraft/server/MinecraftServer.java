@@ -62,7 +62,7 @@ public class MinecraftServer
         logger.info("Loading properties");
         Random random = new Random();
         propertyManagerObj = new PropertyManager(new File("server.properties"));
-        GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules")); //gamerule config file
+        //GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules")); //gamerule config file
         String s = propertyManagerObj.getStringProperty("server-ip", "");
         long Seed = propertyManagerObj.getLongProperty("seed", random.nextLong()); // just here to ensure property initialization  (i think)
         onlineMode = propertyManagerObj.getBooleanProperty("online-mode", true);
@@ -217,10 +217,10 @@ public class MinecraftServer
                     for(int i = 0; i < configManager.playerEntities.size(); i++)
                     {
 
-                        GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+                        //GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
                         EntityPlayer player = (EntityPlayer)configManager.playerEntities.get(i);
                        //
-                        if(gameruleManager.getBooleanGamerule("announcedeath", true) == true && player.health <= 0){
+                        if(GameruleManager.getBooleanGamerule("announcedeath", true) == true && player.health <= 0){
                             // your dead. Boohoo
 
                             player.IsDead = true;
@@ -464,21 +464,21 @@ public class MinecraftServer
             }
             if(s.toLowerCase().startsWith("keepinvadd ")){
                 String commandparts[] = s.split(" ");
-                GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
-                String keepinvlist = gameruleManager.getStringGamerule("keepinvlist", "");
+                //GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+                String keepinvlist = GameruleManager.getStringGamerule("keepinvlist", "");
                 keepinvlist += " ";
                 keepinvlist += commandparts[1];
                // System.out.println(keepinvlist);
-                gameruleManager.setStringGamerule("keepinvlist", keepinvlist);
+                GameruleManager.setStringGamerule("keepinvlist", keepinvlist);
             }
             if(s.toLowerCase().startsWith("gamerule ")){
-                GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+              //  GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
                 String commandparts[] = s.split(" ");
                 switch(commandparts[1]){
                     case "randomtrample":
-                        if(commandparts[2] == "true"){gameruleManager.setBooleanGamerule("randomtrample", true);}
+                        if(commandparts[2] == "true"){GameruleManager.setBooleanGamerule("randomtrample", true);}
                         else if(commandparts[2] == "true")
-                            {gameruleManager.setBooleanGamerule("randomtrample", false);}
+                            {GameruleManager.setBooleanGamerule("randomtrample", false);}
                         else { //add generic print
 
                              }

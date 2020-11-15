@@ -113,8 +113,8 @@ public class EntityCreeper extends EntityMobs
             field_406_a++;
             if(field_406_a == field_408_ad)
             {
-                GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
-                if(gameruleManager.getBooleanGamerule("domobgriefing", true)) {
+              //  GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+                if(GameruleManager.getBooleanGamerule("domobgriefing", true)) {
                     worldObj.createExplosion(this, posX, posY, posZ, 3F);
                 }
                 setEntityDead();

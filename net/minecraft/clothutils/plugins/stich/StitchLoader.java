@@ -13,8 +13,9 @@ import java.util.logging.Logger;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityLiving;
+import net.minecraft.src.World;
 import org.luaj.vm2.*;
-import org.luaj.vm2.lib.jse.*;
 
 /**
  * Core stitch system
@@ -72,42 +73,20 @@ public class StitchLoader {
         }
     }
 
-    /**
-     * Triggers code execution for a given hook
-     *
-     * @param Hook
-     */
+    //HOOK CALL
 
-    public void CallHook(String Hook, Optional<Entity> Entity, Optional<Block> Block) {
+    public void CallServerInitHook() {
         String output = null;
         Logger logger = Logger.getLogger("Minecraft");
-
-        //Overload/Optional handling
-      //  Entity entity = Entity.isPresent() ? Entity.get() : null;
-        //Block block = Block.isPresent() ? Block.get() : null;
-
-        //Calling the hook
-        switch (Hook) {
-            case "OnServerInit":
-                for (int i = 0; i < OnServerInitHook.size(); i++)
-                    //That gives us paths
-                    output = CallFunctionFromLuaFile(OnServerInitHook.get(i), "OnServerInit");
-                logger.info("Called Hook: " + Hook + " With result " + output);
-                break;
-            case "OnBlockDestroy":
-                for (int i = 0; i < OnServerInitHook.size(); i++)
-                    //That gives us paths
-                    output = CallFunctionFromLuaFile(OnBlockDestroyHook.get(i), "OnBlockDestroy");
-                logger.info("Called Hook: " + Hook + " With result " + output);
-                break;
-            case "OnBlockCreate":
-                for (int i = 0; i < OnServerInitHook.size(); i++)
-                    //That gives us paths
-                    output = CallFunctionFromLuaFile(OnBlockCreateHook.get(i), "OnBlockCreate");
-                logger.info("Called Hook: " + Hook + " With result " + output);
-                break;
-        }
+        for (int i = 0; i < OnServerInitHook.size(); i++)
+            output = CallFunctionFromLuaFile(OnServerInitHook.get(i), "OnServerInit");
+        logger.info("Called Hook: ServerInit With result " + output);
     }
+
+    public void CallOnBlockPlacedByHook(World world, int Xpos, int Ypos, int Zpos, EntityLiving entity){
+
+    }
+
 
     public String CallFunctionFromLuaFile(String filePath, String funcName) {
         //run the lua script defining your function
@@ -120,8 +99,7 @@ public class StitchLoader {
         String ArgType = HookToArgMappings.GetArgsListForHook(funcName);
 
 
-
-             LuaValue retvals = Function.call();
+        LuaValue retvals = Function.call();
 
 
         //print out the result from the lua function
@@ -132,7 +110,7 @@ public class StitchLoader {
     //Hook Lists
     public List<String> OnServerInitHook = new ArrayList<String>();
     public List<String> OnBlockDestroyHook = new ArrayList<String>();
-    public List<String> OnBlockCreateHook = new ArrayList<String>();
+    public List<String> OnBlockCreateByHook = new ArrayList<String>();
 
 
 }

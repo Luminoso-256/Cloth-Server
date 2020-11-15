@@ -101,7 +101,7 @@ public class EntityPlayer extends EntityLiving
 
     public void onDeath(Entity entity)
     {
-        GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+      //  GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
         super.onDeath(entity);
         setSize(0.2F, 0.2F);
         setPosition(posX, posY, posZ);
@@ -118,7 +118,7 @@ public class EntityPlayer extends EntityLiving
 
         //KEEP INV
         //if(!gameruleManager.getBooleanGamerule("keepinventory", false)) {
-             String keepinvlist = gameruleManager.getStringGamerule("keepinvlist", "");
+             String keepinvlist = GameruleManager.getStringGamerule("keepinvlist", "");
            // String[] keepinvplayers = keepinvlist.split(" ");
             if(!keepinvlist.contains(" " + username + " ")){
                 inventory.dropAllItems();
