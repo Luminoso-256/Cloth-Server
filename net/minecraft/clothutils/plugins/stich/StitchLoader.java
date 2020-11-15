@@ -16,6 +16,7 @@ import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.World;
 import org.luaj.vm2.*;
+import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
 /**
  * Core stitch system
@@ -39,17 +40,19 @@ public class StitchLoader {
         Logger logger = Logger.getLogger("Minecraft");
         File PluginsDirectory = new File("plugins");
         String[] PluginFiles = PluginsDirectory.list();
-        for (int i = 0; i < PluginFiles.length; i++) {
-            logger.info("Found File: " + PluginFiles[i]);
+        if(PluginFiles != null) {
+            for (int i = 0; i < PluginFiles.length; i++) {
+                logger.info("Found File: " + PluginFiles[i]);
 
-            try {
-                RegisterPlugin(PluginFiles[i]);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    RegisterPlugin(PluginFiles[i]);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
-
         }
     }
 
@@ -84,7 +87,19 @@ public class StitchLoader {
     }
 
     public void CallOnBlockPlacedByHook(World world, int Xpos, int Ypos, int Zpos, EntityLiving entity){
+        String output = null;
+        Logger logger = Logger.getLogger("Minecraft");
+        for (int i = 0; i < OnBlockCreateByHook.size(); i++) {
+            //output = CallFunctionFromLuaFile(OnBlockCreateByHook.get(i), "OnBlockCreateBy");
 
+            LuaValue _G = stichGlobals;
+            _G.get("dofile").call(LuaValue.valueOf("./plugins/" + OnBlockCreateByHook.get(i)));
+
+            LuaValue Function = _G.get("OnBlockCreateBy");
+
+            LuaValue retvals = Function.call();
+            logger.info("Called Hook: OnBlockPlacedBy With result " + retvals.tojstring());
+        }
     }
 
 
