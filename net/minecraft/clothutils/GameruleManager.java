@@ -16,7 +16,6 @@ public class GameruleManager
     {
         serverProperties = new Properties();
         File file = new File("server.gamerules");
-        serverPropertiesFile = file;
         if(file.exists())
         {
             try
@@ -38,10 +37,10 @@ public class GameruleManager
     public static void generateNewProperties()
     {
         logger.log(Level.INFO, "Generating new gamerules file");
-        saveProperties();
+        saveNewProperties();
     }
 
-    public static void saveProperties()
+    public static void saveNewProperties()
     {
         Properties serverProperties = new Properties();
         File serverPropertiesFile = new File("server.gamerules");
@@ -57,22 +56,45 @@ public class GameruleManager
         }
     }
 
+    public static Properties loadProperties() {
+    	try
+        {
+    		Properties serverProperties = new Properties();
+            serverProperties.load(new FileInputStream(new File("server.gamerules")));
+            return serverProperties;
+        }
+        catch(Exception exception)
+        {
+            logger.log(Level.WARNING, "Failed to load gamerules", exception);
+        }
+    	return null;
+    }
+    
+    public static void saveProperties(Properties serverProperties) {
+    	try
+        {
+            serverProperties.store(new FileOutputStream(new File("server.gamerules")), "Cloth Gamerule Data");
+        }
+        catch(Exception exception)
+        {
+            logger.log(Level.WARNING, "Failed to save gamerules", exception);
+        }
+    }
+    
     public static String getStringGamerule(String s, String s1)
     {
-        Properties serverProperties = new Properties();
-        File serverPropertiesFile = new File("server.gamerules");
+        Properties serverProperties = loadProperties();
         if(!serverProperties.containsKey(s))
         {
             serverProperties.setProperty(s, s1);
-            saveProperties();
+            saveProperties(serverProperties);
         }
         return serverProperties.getProperty(s, s1);
     }
 
     public static int getIntGamerule(String s, int i)
     {
-        Properties serverProperties = new Properties();
-        File serverPropertiesFile = new File("server.gamerules");
+    	Properties serverProperties = loadProperties();
         try
         {
             return Integer.parseInt(getStringGamerule(s, (new StringBuilder()).append("").append(i).toString()));
@@ -80,14 +102,14 @@ public class GameruleManager
         catch(Exception exception)
         {
             serverProperties.setProperty(s, (new StringBuilder()).append("").append(i).toString());
+            saveProperties(serverProperties);
         }
         return i;
     }
 
     public static boolean getBooleanGamerule(String s, boolean flag)
     {
-        Properties serverProperties = new Properties();
-        File serverPropertiesFile = new File("server.gamerules");
+    	Properties serverProperties = loadProperties();
         try
         {
             return Boolean.parseBoolean(getStringGamerule(s, (new StringBuilder()).append("").append(flag).toString()));
@@ -95,28 +117,28 @@ public class GameruleManager
         catch(Exception exception)
         {
             serverProperties.setProperty(s, (new StringBuilder()).append("").append(flag).toString());
+            saveProperties(serverProperties);
         }
         return flag;
     }
 
     public static void setBooleanGamerule(String Gamerule, boolean flag){
-        Properties serverProperties = new Properties();
-        File serverPropertiesFile = new File("server.gamerules");
+    	Properties serverProperties = loadProperties();
         serverProperties.setProperty(Gamerule, (new StringBuilder()).append("").append(flag).toString());
+        saveProperties(serverProperties);
     }
     public static void setStringGamerule(String Gamerule, String value){
-        Properties serverProperties = new Properties();
-        File serverPropertiesFile = new File("server.gamerules");
+    	Properties serverProperties = loadProperties();
         serverProperties.setProperty(Gamerule, (new StringBuilder()).append("").append(value).toString());
+        saveProperties(serverProperties);
     }
     public static void setIntGamerule(String Gamerule, int value){
-        Properties serverProperties = new Properties();
-        File serverPropertiesFile = new File("server.gamerules");
+    	Properties serverProperties = loadProperties();
         serverProperties.setProperty(Gamerule, (new StringBuilder()).append("").append(value).toString());
+        saveProperties(serverProperties);
     }
     public static Logger logger = Logger.getLogger("Minecraft");
     private Properties serverProperties;
-    private File serverPropertiesFile;
 
 }
 
