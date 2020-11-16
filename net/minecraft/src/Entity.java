@@ -724,11 +724,11 @@ public abstract class Entity
         setPosition(posX, posY, posZ);
         readEntityFromNBT(nbttagcompound);
         //Anti-Phantom
-        short health = nbttagcompound.getShort("Health");
-        if(0 >= health){
-            health = 1;
-            nbttagcompound.setShort("Health", health);
-        }
+       // short health = nbttagcompound.getShort("Health");
+       // if(0 >= health){
+        //    health = 1;
+        //    nbttagcompound.setShort("Health", health);
+       // }
 
     }
 
