@@ -10,11 +10,14 @@ public class HookToArgMappings {
                 ArgMapping = "None";
                 break;
             case "OnBlockCreate":
-                ArgMapping = "Block,Entity";
+                ArgMapping = "Entity,X,Y,Z";
                 break;
             case "OnBlockDestroy":
                 ArgMapping = "Block,Entity,WasExplosion";
                 break;
+            case "OnEntitySpawn":
+                ArgMapping = "EntityType,X,Y,Z";
+
         }
         return ArgMapping;
 

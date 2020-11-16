@@ -162,7 +162,8 @@ public class World
     {
         func_476_g();
         NBTTagCompound nbttagcompound = new NBTTagCompound();
-        nbttagcompound.setLong("RandomSeed", randomSeed);
+        PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
+        nbttagcompound.setLong("RandomSeed", propertyManager.getLongProperty("seed", 1l));
         nbttagcompound.setInteger("SpawnX", spawnX);
         nbttagcompound.setInteger("SpawnY", spawnY);
         nbttagcompound.setInteger("SpawnZ", spawnZ);

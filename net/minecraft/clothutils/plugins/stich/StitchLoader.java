@@ -101,16 +101,27 @@ public class StitchLoader {
         LuaValue Function = _G.get(funcName);
         LuaValue Return = null;
         String ArgType = HookToArgMappings.GetArgsListForHook(funcName);
+        //Commmon LuaVals
+        LuaValue Block;
+        LuaValue Entity;
+        LuaValue ArgsList = CoerceJavaToLua.coerce(Args);
         switch(ArgType){
             case "None":
                 Return = Function.call();
                 break;
             case "Block,Entity":
                 //Assume order of args list is the same as the param order
-                LuaValue Block = CoerceJavaToLua.coerce(Args.get(0));
-                LuaValue Entity = CoerceJavaToLua.coerce(Args.get(1));
+                 Block = CoerceJavaToLua.coerce(Args.get(0));
+                 Entity = CoerceJavaToLua.coerce(Args.get(1));
                 Return = Function.call(Block, Entity);
-
+            case "Block,Entity,WasExplosion":
+                 Block = CoerceJavaToLua.coerce(Args.get(0));
+                 Entity = CoerceJavaToLua.coerce(Args.get(1));
+                 LuaValue WasExplosion = CoerceJavaToLua.coerce(Args.get(2));
+                 Return = Function.call(Block, Entity, WasExplosion);
+            case "Entity,X,Y,Z":
+                //Higher than 3 vals so we directly pass the full list. Whop-De-Do
+                Return = Function.call(ArgsList);
         }
 
 

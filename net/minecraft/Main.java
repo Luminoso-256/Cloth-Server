@@ -30,7 +30,7 @@ public class Main {
 
     public static final Logger logger = Logger.getLogger("Minecraft");
     public static final MinecraftServer minecraftServer = new MinecraftServer(); //Get a reference to our lovely MC server class
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         logger.info("[Cloth] Cloth "+VERSION_STRING+"| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0");
         logger.info("[Stitch] Loading stitch plugins from /plugins...");
         Globals _G = JsePlatform.standardGlobals();
@@ -40,6 +40,8 @@ public class Main {
         LuaValue WorldManager = CoerceJavaToLua.coerce(minecraftServer.worldMngr);
         LuaValue PropertyManager = CoerceJavaToLua.coerce(minecraftServer.propertyManagerObj);
         LuaValue GameruleManager = CoerceJavaToLua.coerce(new GameruleManager());
+        //LuaValue Block = CoerceJavaToLua.coerce(new Block(0, Material.air));
+
 
         //All of our lovely small classes we could ever possible need
         LuaValue EntityCreeper = CoerceJavaToLua.coerce(new EntityCreeper(minecraftServer.worldMngr));
@@ -60,12 +62,15 @@ public class Main {
 
 
         StitchLoader stich = new StitchLoader(_G);
+
         stich.RegisterAllPlugins();
         logger.info("[Stitch] Calling initiliazation hook");
          List<String> DummyList = new ArrayList<>();
         stich.CallHook("OnServerInit", DummyList);
 
-
+        logger.info("[Cloth] Checking world seed");
+        PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
+        propertyManager.getLongProperty("seed", 1l);
 
         logger.info("[Cloth] Cloth init complete. Deffering to MinecraftServer class ");
         try {

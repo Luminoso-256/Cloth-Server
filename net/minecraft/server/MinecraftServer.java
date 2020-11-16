@@ -64,7 +64,7 @@ public class MinecraftServer
         propertyManagerObj = new PropertyManager(new File("server.properties"));
         //GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules")); //gamerule config file
         String s = propertyManagerObj.getStringProperty("server-ip", "");
-        long Seed = propertyManagerObj.getLongProperty("seed", random.nextLong()); // just here to ensure property initialization  (i think)
+       // long Seed = propertyManagerObj.getLongProperty("seed", random.nextLong()); // just here to ensure property initialization  (i think)
         onlineMode = propertyManagerObj.getBooleanProperty("online-mode", true);
         noAnimals = propertyManagerObj.getBooleanProperty("spawn-animals", true);
         field_9011_n = propertyManagerObj.getBooleanProperty("pvp", true);
@@ -430,6 +430,7 @@ public class MinecraftServer
                     icommandlistener.log("§cError in command arguments, try §a/help 1");
                 }
             } else
+
             if(s.toLowerCase().startsWith("seed")){
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:"+ params.GetSeedFromPropertiesFile());
