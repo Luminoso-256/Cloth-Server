@@ -42,7 +42,7 @@ public class WorldServer extends World
 
     protected IChunkProvider func_4076_a(File file)
     {
-        field_821 = new ChunkProviderServer(this, field_4272_q.getChunkLoader(file), field_4272_q.getChunkProvider());
+        field_821 = new ChunkProviderServer(this, worldProvider.getChunkLoader(file), worldProvider.getChunkProvider());
         return field_821;
     }
 

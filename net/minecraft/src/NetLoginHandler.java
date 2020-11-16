@@ -96,7 +96,7 @@ public class NetLoginHandler extends NetHandler
         {
             logger.info((new StringBuilder()).append(getUserAndIPString()).append(" logged in with entity id ").append(entityplayermp.field_331_c).toString());
             NetServerHandler netserverhandler = new NetServerHandler(mcServer, netManager, entityplayermp);
-            netserverhandler.sendPacket(new Packet1Login("", "", entityplayermp.field_331_c, mcServer.worldMngr.randomSeed, (byte)mcServer.worldMngr.field_4272_q.field_6165_g));
+            netserverhandler.sendPacket(new Packet1Login("", "", entityplayermp.field_331_c, mcServer.worldMngr.randomSeed, (byte)mcServer.worldMngr.worldProvider.field_6165_g));
             netserverhandler.sendPacket(new Packet6SpawnPosition(mcServer.worldMngr.spawnX, mcServer.worldMngr.spawnY, mcServer.worldMngr.spawnZ));
             mcServer.configManager.sendPacketToAllPlayers(new Packet3Chat((new StringBuilder()).append("\247e").append(entityplayermp.username).append(" joined the game.").toString()));
             mcServer.configManager.playerLoggedIn(entityplayermp);

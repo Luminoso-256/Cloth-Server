@@ -28,7 +28,7 @@ public class BlockFlowing extends BlockFluids
     {
         int l = func_301_g(world, i, j, k);
         byte byte0 = 1;
-        if(blockMaterial == Material.lava && !world.field_4272_q.field_6166_d)
+        if(blockMaterial == Material.lava && !world.worldProvider.field_6166_d)
         {
             byte0 = 2;
         }

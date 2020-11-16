@@ -14,7 +14,7 @@ public class World
 
     public WorldChunkManager func_4077_a()
     {
-        return field_4272_q.field_4301_b;
+        return worldProvider.field_4301_b;
     }
 
     public World(File file, String s, long l, WorldProvider worldprovider)
@@ -110,15 +110,15 @@ public class World
             randomSeed = l;
             flag = true;
         }
-        field_4272_q = ((WorldProvider) (obj));
-        field_4272_q.func_4093_a(this);
+        worldProvider = ((WorldProvider) (obj));
+        worldProvider.func_4093_a(this);
         chunkProvider = func_4076_a(field_797_s);
         if(flag)
         {
             field_9209_x = true;
             spawnX = 0;
             spawnY = 64;
-            for(spawnZ = 0; !field_4272_q.canCoordinateBeSpawn(spawnX, spawnZ); spawnZ += rand.nextInt(64) - rand.nextInt(64))
+            for(spawnZ = 0; !worldProvider.canCoordinateBeSpawn(spawnX, spawnZ); spawnZ += rand.nextInt(64) - rand.nextInt(64))
             {
                 spawnX += rand.nextInt(64) - rand.nextInt(64);
             }
@@ -130,7 +130,7 @@ public class World
 
     protected IChunkProvider func_4076_a(File file)
     {
-        return new ChunkProviderLoadOrGenerate(this, field_4272_q.getChunkLoader(file), field_4272_q.getChunkProvider());
+        return new ChunkProviderLoadOrGenerate(this, worldProvider.getChunkLoader(file), worldProvider.getChunkProvider());
     }
 
     public int func_528_f(int i, int j)
@@ -579,7 +579,7 @@ public class World
 
     public void neighborLightPropagationChanged(EnumSkyBlock enumskyblock, int i, int j, int k, int l)
     {
-        if(field_4272_q.field_4306_c && enumskyblock == EnumSkyBlock.Sky)
+        if(worldProvider.field_4306_c && enumskyblock == EnumSkyBlock.Sky)
         {
             return;
         }
@@ -655,7 +655,7 @@ public class World
 
     public float getLightBrightness(int i, int j, int k)
     {
-        return field_4272_q.lightBrightnessTable[getBlockLightValue(i, j, k)];
+        return worldProvider.lightBrightnessTable[getBlockLightValue(i, j, k)];
     }
 
     public boolean isDaytime()
@@ -992,7 +992,7 @@ public class World
 
     public float func_477_b(float f)
     {
-        return field_4272_q.func_4089_a(worldTime, f);
+        return worldProvider.func_4089_a(worldTime, f);
     }
 
     public int func_4075_e(int i, int j)
@@ -1501,7 +1501,7 @@ public class World
     public void func_484_a(EnumSkyBlock enumskyblock, int i, int j, int k, int l, int i1, int j1, 
             boolean flag)
     {
-        if(field_4272_q.field_4306_c && enumskyblock == EnumSkyBlock.Sky)
+        if(worldProvider.field_4306_c && enumskyblock == EnumSkyBlock.Sky)
         {
             return;
         }
@@ -2027,7 +2027,7 @@ public class World
     public int spawnY;
     public int spawnZ;
     public boolean field_9212_p;
-    public final WorldProvider field_4272_q;
+    public final WorldProvider worldProvider;
     protected List field_798_r;
     private IChunkProvider chunkProvider;
     public File field_9211_s;
