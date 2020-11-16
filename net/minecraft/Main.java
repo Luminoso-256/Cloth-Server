@@ -25,7 +25,7 @@ public class Main {
     // [Cloth Version  β1.0.0]
     // [Cloth Release 1.0.0]
 
-    public static final String VERSION_STRING = "[Cloth Alpha 1.9.5]";
+    public static final String VERSION_STRING = "[Cloth Alpha 1.9.6]";
 
 
     public static final Logger logger = Logger.getLogger("Minecraft");
