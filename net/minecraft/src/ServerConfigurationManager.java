@@ -64,7 +64,7 @@ public class ServerConfigurationManager
         int MainInvSize = 36;
         int CraftInvSize  = 4;
         int ArmorInvSize = 4;
-        ItemStack fallbackItem = new ItemStack(0);
+        ItemStack fallbackItem = new ItemStack(1);
         for(int i = 0; i < entityplayermp.inventory.getInventorySize(); i++){
             ItemStack item = entityplayermp.inventory.getStackInSlot(i);
             // System.out.println("Processing item: "+item.itemID+" in slot "+i);
