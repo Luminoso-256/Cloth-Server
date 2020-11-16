@@ -316,7 +316,7 @@ public class EntityLiving extends Entity
 
     protected void takeDamage(int i)
     {
-        health -= i;
+    	health = Math.max(health -= i, 0);
     }
 
     protected float getSoundVolume()
