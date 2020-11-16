@@ -7,14 +7,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 import java.util.logging.Logger;
-
-import net.minecraft.src.Block;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.World;
 import org.luaj.vm2.*;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
@@ -66,59 +60,64 @@ public class StitchLoader {
         try (Scanner scanner = new Scanner(new File("./plugins/" + plugin), StandardCharsets.UTF_8)) {
             PluginFileRaw = scanner.useDelimiter("\\A").next();
         }
-
-
-        //  System.out.println("Searching raw file |||"+PluginFileRaw+"||| for hooks ");
-        //Time for some good-ol contains operations
+        //Add to hook lists
         if (PluginFileRaw.contains("OnServerInit")) {
-            //    System.out.println("Registering file to OnTestCommandTriggered");
+
             OnServerInitHook.add(plugin); //Store a ref to the lua file so we can exec it later
+        }
+        if(PluginFileRaw.contains("OnBlockCreateBy")){
+            OnBlockCreateByHook.add(plugin);
         }
     }
 
     //HOOK CALL
 
-    public void CallServerInitHook() {
+    public void CallHook(String HookName, List<? extends Object> Args){
         String output = null;
         Logger logger = Logger.getLogger("Minecraft");
-        for (int i = 0; i < OnServerInitHook.size(); i++)
-            output = CallFunctionFromLuaFile(OnServerInitHook.get(i), "OnServerInit");
-        logger.info("Called Hook: ServerInit With result " + output);
-    }
 
-    public void CallOnBlockPlacedByHook(World world, int Xpos, int Ypos, int Zpos, EntityLiving entity){
-        String output = null;
-        Logger logger = Logger.getLogger("Minecraft");
-        for (int i = 0; i < OnBlockCreateByHook.size(); i++) {
-            //output = CallFunctionFromLuaFile(OnBlockCreateByHook.get(i), "OnBlockCreateBy");
+        switch (HookName){
+            case "OnServerInit":
+                for (int i = 0; i < OnServerInitHook.size(); i++)
+                    output = CallFunctionFromLuaFile(OnServerInitHook.get(i), "OnServerInit", Args); //No usage of the args list as this takes no params
+                logger.info("Called Hook: ServerInit With result " + output);
+                break;
+            case "OnBlockCreateBy":
+                for (int i = 0; i < OnBlockCreateByHook.size(); i++)
+                    output = CallFunctionFromLuaFile(OnBlockCreateByHook.get(i), "OnBlockCreateBy", Args);
+                logger.info("Called Hook: OnBlockCreateBy With result " + output);
+                break;
 
-            LuaValue _G = stichGlobals;
-            _G.get("dofile").call(LuaValue.valueOf("./plugins/" + OnBlockCreateByHook.get(i)));
-
-            LuaValue Function = _G.get("OnBlockCreateBy");
-
-            LuaValue retvals = Function.call();
-            logger.info("Called Hook: OnBlockPlacedBy With result " + retvals.tojstring());
         }
     }
 
 
-    public String CallFunctionFromLuaFile(String filePath, String funcName) {
+    public String CallFunctionFromLuaFile(String filePath, String funcName, List<? extends Object> Args) {
         //run the lua script defining your function
         LuaValue _G = stichGlobals;
         _G.get("dofile").call(LuaValue.valueOf("./plugins/" + filePath));
 
         //call the function
         LuaValue Function = _G.get(funcName);
-
+        LuaValue Return = null;
         String ArgType = HookToArgMappings.GetArgsListForHook(funcName);
+        switch(ArgType){
+            case "None":
+                Return = Function.call();
+                break;
+            case "Block,Entity":
+                //Assume order of args list is the same as the param order
+                LuaValue Block = CoerceJavaToLua.coerce(Args.get(0));
+                LuaValue Entity = CoerceJavaToLua.coerce(Args.get(1));
+                Return = Function.call(Block, Entity);
+
+        }
 
 
-        LuaValue retvals = Function.call();
 
 
         //print out the result from the lua function
-        return retvals.tojstring(1);
+        return Return.tojstring(1);
     }
 
 

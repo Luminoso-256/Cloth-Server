@@ -3,9 +3,7 @@ package net.minecraft;
 import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.clothutils.plugins.stich.StitchLoader;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.EntityCreature;
-import net.minecraft.src.EntityCreeper;
-import net.minecraft.src.World;
+import net.minecraft.src.*;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.Lua;
 import org.luaj.vm2.LuaValue;
@@ -14,6 +12,8 @@ import org.luaj.vm2.lib.jse.JsePlatform;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,9 +40,12 @@ public class Main {
         LuaValue WorldManager = CoerceJavaToLua.coerce(minecraftServer.worldMngr);
         LuaValue PropertyManager = CoerceJavaToLua.coerce(minecraftServer.propertyManagerObj);
         LuaValue GameruleManager = CoerceJavaToLua.coerce(new GameruleManager());
+
         //All of our lovely small classes we could ever possible need
         LuaValue EntityCreeper = CoerceJavaToLua.coerce(new EntityCreeper(minecraftServer.worldMngr));
-
+        LuaValue EntitySpider = CoerceJavaToLua.coerce(new EntitySpider(minecraftServer.worldMngr));
+        LuaValue EntitySkeleton = CoerceJavaToLua.coerce(new EntitySkeleton(minecraftServer.worldMngr));
+        LuaValue EntityZombie = CoerceJavaToLua.coerce(new EntityZombie(minecraftServer.worldMngr));
         //Main classes
         _G.set("minecraft_server", MinecraftServer);
         _G.set("world", WorldManager);
@@ -51,11 +54,16 @@ public class Main {
         _G.set("gamerule_manager", GameruleManager);
         //small classes
         _G.set("entity_creeper", EntityCreeper);
+        _G.set("entity_spider", EntitySpider);
+        _G.set("entity_skeleton", EntitySkeleton);
+        _G.set("entity_zombie", EntityZombie);
 
-        StitchLoader stich = new StitchLoader(_G); //Got ta change these to custom globals later
+
+        StitchLoader stich = new StitchLoader(_G);
         stich.RegisterAllPlugins();
         logger.info("[Stitch] Calling initiliazation hook");
-        stich.CallServerInitHook();
+         List<String> DummyList = new ArrayList<>();
+        stich.CallHook("OnServerInit", DummyList);
 
 
 
