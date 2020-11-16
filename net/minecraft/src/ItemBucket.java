@@ -92,7 +92,7 @@ public class ItemBucket extends Item
                 }
                 if(world.getBlockId(i, j, k) == 0 || !world.getBlockMaterial(i, j, k).func_216_a())
                 {
-                    if(world.field_4272_q.field_6166_d && field_274_a == Block.waterStill.blockID)
+                    if(world.worldProvider.field_6166_d && field_274_a == Block.waterStill.blockID)
                     {
                         world.playSoundEffect(d + 0.5D, d1 + 0.5D, d2 + 0.5D, "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
                         for(int l = 0; l < 8; l++)

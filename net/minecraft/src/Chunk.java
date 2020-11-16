@@ -59,12 +59,28 @@ public class Chunk
         {
             for(int l = 0; l < 16; l++)
             {
-                heightMap[l << 4 | j] = -128;
-                func_339_g(j, 127, l);
-                if((heightMap[l << 4 | j] & 0xff) < i)
+                int j1 = 127;
+                int k1;
+                for(k1 = j << 11 | l << 7; j1 > 0 && Block.lightOpacity[blocks[(k1 + j1) - 1]] == 0; j1--) { }
+                heightMap[l << 4 | j] = (byte)j1;
+                if(j1 < i)
                 {
-                    i = heightMap[l << 4 | j] & 0xff;
+                    i = j1;
                 }
+                if(worldObj.worldProvider.field_4306_c)
+                {
+                    continue;
+                }
+                int l1 = 15;
+                int i2 = 127;
+                do
+                {
+                    l1 -= Block.lightOpacity[blocks[k1 + i2]];
+                    if(l1 > 0)
+                    {
+                        skylightMap.setNibble(j, i2, l, l1);
+                    }
+                } while(--i2 > 0 && l1 > 0);
             }
 
         }
@@ -147,12 +163,13 @@ public class Chunk
         if(l > k)
         {
             worldObj.func_483_a(EnumSkyBlock.Sky, i, k, j, i, l, j);
+            isModified = true;
         } else
         if(l < k)
         {
             worldObj.func_483_a(EnumSkyBlock.Sky, i, l, j, i, k, j);
+            isModified = true;
         }
-        isModified = true;
     }
 
     private void func_339_g(int i, int j, int k)
@@ -255,7 +272,7 @@ public class Chunk
             Block.blocksList[k1].onBlockRemoval(worldObj, l1, j, i2);
         }
         data.setNibble(i, j, k, i1);
-        if(!worldObj.field_4272_q.field_4306_c)
+        if(!worldObj.worldProvider.field_4306_c)
         {
             if(Block.lightOpacity[byte0] != 0)
             {

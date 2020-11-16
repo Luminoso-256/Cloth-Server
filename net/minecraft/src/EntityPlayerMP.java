@@ -20,7 +20,7 @@ public class EntityPlayerMP extends EntityPlayer
         int i = world.spawnX;
         int j = world.spawnZ;
         int k = world.spawnY;
-        if(!world.field_4272_q.field_4306_c)
+        if(!world.worldProvider.field_4306_c)
         {
             i += field_9064_W.nextInt(20) - 10;
             k = world.func_4075_e(i, j);
