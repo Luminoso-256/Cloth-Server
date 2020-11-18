@@ -3,6 +3,9 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.clothutils.GameruleManager;
+
+import java.io.File;
 import java.util.Random;
 
 public class BlockLeaves extends BlockLeavesBase
@@ -54,8 +57,15 @@ public class BlockLeaves extends BlockLeavesBase
     
     private void removeLeaves(World world, int i, int j, int k)
     {
-        dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k));
-        world.setBlockWithNotify(i, j, k, 0);
+        if(shouldDecay == null){
+            PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
+            boolean shouldDecayBool = propertyManager.getBooleanProperty("doleafdecay", false);
+            if(shouldDecayBool){shouldDecay = "true";}else{shouldDecay = "false";}
+        }
+        else if (shouldDecay  == "true") {
+            dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k));
+            world.setBlockWithNotify(i, j, k, 0);
+        }
     }
 
     public int quantityDropped(Random random)
@@ -83,4 +93,5 @@ public class BlockLeaves extends BlockLeavesBase
     private int baseIndexInPNG;
     int decayRange = 4;
 	int rangeP1 = decayRange + 1;
+	String shouldDecay = null; //Forgive me,but this is regrettably the only type which will accept null
 }

@@ -433,22 +433,9 @@ public class MinecraftServer
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:"+ params.GetSeedFromPropertiesFile());
             }
-            if(s.toLowerCase().startsWith("summon ")){
-                String[] args = s.toLowerCase().split(" ");
-                logger.info("[Debug] Attempting to spawn mob of type "+args[1]);
-                switch(args[1]){
-                    case "zombie":
-                        EntityZombie zombie = new EntityZombie(worldMngr);
-                        System.out.println(zombie);
-                        worldMngr.entityJoinedWorld(zombie);
-                        break;
-                    case "skeleton":
-                        EntitySkeleton skeleton = new EntitySkeleton(worldMngr);
-                        System.out.println(skeleton);
-                        worldMngr.entityJoinedWorld(skeleton);
-                        break;
-                        
-                }
+            if(s.toLowerCase().startsWith("nether")){
+
+
             }
             if(s.toLowerCase().startsWith("version")){
                 //WorldGenParams params = new WorldGenParams();
