@@ -43,7 +43,7 @@ public class World
         field_9207_I = new ArrayList();
         field_4265_J = 0;
         field_4264_K = new HashSet();
-        field_4263_L = rand.nextInt(12000);
+        ambientCounter = rand.nextInt(12000);
         field_778_L = new ArrayList();
         multiplayerWorld = false;
         field_9211_s = file;
@@ -1574,10 +1574,10 @@ public class World
             func_485_a(false, null);
         }
         TickUpdates(false);
-        func_4073_g();
+        randomTickUpdates();
     }
 
-    protected void func_4073_g()
+    protected void randomTickUpdates()
     {
         field_4264_K.clear();
         for(int i = 0; i < playerEntities.size(); i++)
@@ -1597,9 +1597,9 @@ public class World
 
         }
 
-        if(field_4263_L > 0)
+        if(ambientCounter > 0)
         {
-            field_4263_L--;
+            ambientCounter--;
         }
         for(Iterator iterator = field_4264_K.iterator(); iterator.hasNext();)
         {
@@ -1607,7 +1607,7 @@ public class World
             int k = chunkcoordintpair.field_152_a * 16;
             int i1 = chunkcoordintpair.field_151_b * 16;
             Chunk chunk = getChunkFromChunkCoords(chunkcoordintpair.field_152_a, chunkcoordintpair.field_151_b);
-            if(field_4263_L == 0)
+            if(ambientCounter == 0)
             {
                 field_4279_g = field_4279_g * 3 + field_4278_h;
                 int k1 = field_4279_g >> 2;
@@ -1623,12 +1623,12 @@ public class World
                     if(entityplayer1 != null && entityplayer1.getDistanceSq((double)j2 + 0.5D, (double)j3 + 0.5D, (double)l2 + 0.5D) > 4D)
                     {
                         playSoundEffect((double)j2 + 0.5D, (double)j3 + 0.5D, (double)l2 + 0.5D, "ambient.cave.cave", 0.7F, 0.8F + rand.nextFloat() * 0.2F);
-                        field_4263_L = rand.nextInt(12000) + 6000;
+                        ambientCounter = rand.nextInt(12000) + 6000;
                     }
                 }
             }
             int l1 = 0;
-            while(l1 < 80) 
+            while(l1 < 80)//how many updates per tick
             {
                 field_4279_g = field_4279_g * 3 + field_4278_h;
                 int k2 = field_4279_g >> 2;
@@ -2041,7 +2041,7 @@ public class World
     private int field_4265_J;
     static int field_4268_y = 0;
     private Set field_4264_K;
-    private int field_4263_L;
+    private int ambientCounter;
     private List field_778_L;
     public boolean multiplayerWorld;
 
