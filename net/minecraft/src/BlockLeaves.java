@@ -17,7 +17,6 @@ public class BlockLeaves extends BlockLeavesBase
 
     public void onNeighborBlockChange(World world, int i, int j, int k, int l)
     {
-    	leafDecay(world, i, j, k);
         super.onNeighborBlockChange(world, i, j, k, l);
         return;
     }
