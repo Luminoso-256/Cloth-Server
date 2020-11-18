@@ -7,9 +7,7 @@ package net.minecraft.server;
 import net.minecraft.clothutils.BlockMappingsManager;
 import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.clothutils.WorldGenParams;
-import net.minecraft.clothutils.plugins.stich.StitchLoader;
 import net.minecraft.src.*;
-import org.luaj.vm2.lib.jse.JsePlatform;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
@@ -147,7 +145,7 @@ public class MinecraftServer
         worldMngr.func_485_a(true, null);
     }
 
-    private void func_6013_g()
+    private void shutdown()
     {
         logger.info("Stopping server");
         if(configManager != null)
@@ -307,9 +305,9 @@ public class MinecraftServer
         }
         finally
         {
-            func_6013_g();
-            field_6032_g = true;
-            System.exit(0);
+           shutdown();
+           field_6032_g = true;
+           System.exit(0);
         }
     }
 
@@ -434,6 +432,23 @@ public class MinecraftServer
             if(s.toLowerCase().startsWith("seed")){
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:"+ params.GetSeedFromPropertiesFile());
+            }
+            if(s.toLowerCase().startsWith("summon ")){
+                String[] args = s.toLowerCase().split(" ");
+                logger.info("[Debug] Attempting to spawn mob of type "+args[1]);
+                switch(args[1]){
+                    case "zombie":
+                        EntityZombie zombie = new EntityZombie(worldMngr);
+                        System.out.println(zombie);
+                        worldMngr.entityJoinedWorld(zombie);
+                        break;
+                    case "skeleton":
+                        EntitySkeleton skeleton = new EntitySkeleton(worldMngr);
+                        System.out.println(skeleton);
+                        worldMngr.entityJoinedWorld(skeleton);
+                        break;
+                        
+                }
             }
             if(s.toLowerCase().startsWith("version")){
                 //WorldGenParams params = new WorldGenParams();
