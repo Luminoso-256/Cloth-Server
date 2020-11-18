@@ -19,14 +19,14 @@ public class WorldChunkManager
         WorldGenParams params = new WorldGenParams();
 
 
-       // field_4255_e = new NoiseGeneratorOctaves2(new Random(world.randomSeed * 9871L), 4);
-       // field_4254_f = new NoiseGeneratorOctaves2(new Random(world.randomSeed * 39811L), 4);
-       // field_4253_g = new NoiseGeneratorOctaves2(new Random(world.randomSeed * 0x84a59L), 2);
-        field_4255_e = new NoiseGeneratorOctaves2(new Random(world.randomSeed * params.GetOctavesA()), 4);
+       field_4255_e = new NoiseGeneratorOctaves2(new Random(world.randomSeed * 9871L), 4);
+       field_4254_f = new NoiseGeneratorOctaves2(new Random(world.randomSeed * 39811L), 4);
+       field_4253_g = new NoiseGeneratorOctaves2(new Random(world.randomSeed * 0x84a59L), 2);
+        //field_4255_e = new NoiseGeneratorOctaves2(new Random(world.randomSeed * params.GetOctavesA()), 4);
 
-        field_4254_f = new NoiseGeneratorOctaves2(new Random(world.randomSeed * params.GetOctavesB()), 4);
+        //field_4254_f = new NoiseGeneratorOctaves2(new Random(world.randomSeed * params.GetOctavesB()), 4);
 
-        field_4253_g = new NoiseGeneratorOctaves2(new Random(world.randomSeed * params.GetOctavesC()), 2);
+        //field_4253_g = new NoiseGeneratorOctaves2(new Random(world.randomSeed * params.GetOctavesC()), 2);
     }
 
     public MobSpawnerBase func_4066_a(ChunkCoordIntPair chunkcoordintpair)

@@ -78,10 +78,13 @@ public class WorldServer extends World
         field_6159_E.addKey(entity.field_331_c, entity);
     }
 
-    protected void func_531_c(Entity entity)
+    protected void removeEntity(Entity entity)
     {
-        super.func_531_c(entity);
+        super.removeEntity(entity);
         field_6159_E.removeObject(entity.field_331_c);
+    }
+    public void RemoveEntity(Entity entity){
+        removeEntity(entity);
     }
 
     public Entity func_6158_a(int i)

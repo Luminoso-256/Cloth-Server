@@ -105,8 +105,12 @@ public class MinecraftServer
     {
         logger.info("Preparing start region");
         worldMngr = new WorldServer(this, new File("."), s, propertyManagerObj.getBooleanProperty("hellworld", false) ? -1 : 0);
+        logger.info("[Debug] Starting nether init");
+        worldNetherManager = new WorldServer(this, new File("."), "world_nether", -1);
         worldMngr.func_4072_a(new WorldManager(this));
+        worldNetherManager.func_4072_a(new WorldManager(this));
         worldMngr.monstersEnabled = propertyManagerObj.getBooleanProperty("spawn-monsters", true) ? 1 : 0;
+        logger.info("[Debug] created nether object with seed "+worldNetherManager.randomSeed);
         configManager.setPlayerManager(worldMngr);
         byte byte0 = 10;
         for(int i = -byte0; i <= byte0; i++)
@@ -142,7 +146,7 @@ public class MinecraftServer
     private void saveServerWorld()
     {
         logger.info("Saving chunks");
-        worldMngr.func_485_a(true, null);
+        worldMngr.saveWorld(true, null);
     }
 
     private void shutdown()
@@ -374,20 +378,20 @@ public class MinecraftServer
                 break;
             }
             ServerCommand servercommand = (ServerCommand)commands.remove(0);
-            String s = servercommand.command;
+            String command = servercommand.command;
 
             ICommandListener icommandlistener = servercommand.commandListener;
-            String s1 = icommandlistener.getUsername();
+            String username = icommandlistener.getUsername();
             // Preprocess string with shorthands
 
             
             //Onwards
             
             //Help code -- ChessChicken
-            if(s.toLowerCase().startsWith("help") || s.toLowerCase().startsWith("?"))
+            if(command.toLowerCase().startsWith("help") || command.toLowerCase().startsWith("?"))
             {
                 //10
-                String[] getArgs = s.split(" ");
+                String[] getArgs = command.split(" ");
                 if(getArgs.length == 2)
                 {
                     if(getArgs[1].equalsIgnoreCase("1"))
@@ -429,29 +433,33 @@ public class MinecraftServer
                 }
             } else
 
-            if(s.toLowerCase().startsWith("seed")){
+            if(command.toLowerCase().startsWith("seed")){
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:"+ params.GetSeedFromPropertiesFile());
             }
-            if(s.toLowerCase().startsWith("nether")){
-
+            if(command.toLowerCase().startsWith("nether")){
+                EntityPlayer player = configManager.getPlayerEntity(username);
+                logger.info("[Debug] Attempting to send player "+ player.username +" to the nether. Safe Travels!");
+                worldMngr.RemoveEntity(player);
+                worldNetherManager.entityJoinedWorld(player);
+                logger.info("WorldNetherManager connected entities number:" + worldNetherManager.EntityList.size());
 
             }
-            if(s.toLowerCase().startsWith("version")){
+            if(command.toLowerCase().startsWith("version")){
                 //WorldGenParams params = new WorldGenParams();
                 icommandlistener.log(VERSION_STRING);
             }
-            if(s.toLowerCase().startsWith("heal")){
-             EntityPlayer player =  configManager.getPlayerEntity(s1);
+            if(command.toLowerCase().startsWith("heal")){
+             EntityPlayer player =  configManager.getPlayerEntity(username);
              player.heal(20);
             }
-            if(s.toLowerCase().startsWith("kill")){
+            if(command.toLowerCase().startsWith("kill")){
              //   if(s.toLowerCase().startsWith("heal")){
-                    EntityPlayer player =  configManager.getPlayerEntity(s1);
+                    EntityPlayer player =  configManager.getPlayerEntity(username);
                     player.exposedTakeDamage(40);
 
             }
-            if(s.toLowerCase().startsWith("killall")){
+            if(command.toLowerCase().startsWith("killall")){
                 //   if(s.toLowerCase().startsWith("heal")){
                 for(int i = 0; i < worldMngr.EntityList.size(); i++){
                     Entity entity = (Entity)worldMngr.EntityList.get(i);
@@ -459,14 +467,14 @@ public class MinecraftServer
                 }
 
             }
-            if(s.toLowerCase().startsWith("clear")){
+            if(command.toLowerCase().startsWith("clear")){
                 //   if(s.toLowerCase().startsWith("heal")){
-                EntityPlayer player =  configManager.getPlayerEntity(s1);
+                EntityPlayer player =  configManager.getPlayerEntity(username);
                 player.inventory.dropAllItems();
 
             }
-            if(s.toLowerCase().startsWith("keepinvadd ")){
-                String commandparts[] = s.split(" ");
+            if(command.toLowerCase().startsWith("keepinvadd ")){
+                String commandparts[] = command.split(" ");
                 //GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
                 String keepinvlist = GameruleManager.getStringGamerule("keepinvlist", "");
                 keepinvlist += " ";
@@ -474,9 +482,9 @@ public class MinecraftServer
                // System.out.println(keepinvlist);
                 GameruleManager.setStringGamerule("keepinvlist", keepinvlist);
             }
-            if(s.toLowerCase().startsWith("gamerule ")){
+            if(command.toLowerCase().startsWith("gamerule ")){
               //  GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
-                String commandparts[] = s.split(" ");
+                String commandparts[] = command.split(" ");
                 switch(commandparts[1]){
                     case "randomtrample":
                         if(commandparts[2] == "true"){GameruleManager.setBooleanGamerule("randomtrample", true);}
@@ -488,8 +496,8 @@ public class MinecraftServer
                         break;
                 }
             }
-            if(s.toLowerCase().startsWith("timeset ")){
-                String targetTime = s.substring(s.indexOf(" ")).trim();
+            if(command.toLowerCase().startsWith("timeset ")){
+                String targetTime = command.substring(command.indexOf(" ")).trim();
                 if(targetTime.equals("day")){ worldMngr.worldTime = 1000;}
                 else
                 if(targetTime.equals("night")){worldMngr.worldTime = 13000;}
@@ -498,77 +506,77 @@ public class MinecraftServer
                    worldMngr.worldTime = time;
                 }
             }
-            if(s.toLowerCase().startsWith("list"))
+            if(command.toLowerCase().startsWith("list"))
             {
                 icommandlistener.log((new StringBuilder()).append("Connected players: ").append(configManager.getPlayerList()).toString());
             } else
-            if(s.toLowerCase().startsWith("stop"))
+            if(command.toLowerCase().startsWith("stop"))
             {
-                func_6014_a(s1, "Stopping the server..");
+                func_6014_a(username, "Stopping the server..");
                 field_6025_n = false;
             } else
-            if(s.toLowerCase().startsWith("save-all"))
+            if(command.toLowerCase().startsWith("save-all"))
             {
-                func_6014_a(s1, "Forcing save..");
-                worldMngr.func_485_a(true, null);
-                func_6014_a(s1, "Save complete.");
+                func_6014_a(username, "Forcing save..");
+                worldMngr.saveWorld(true, null);
+                func_6014_a(username, "Save complete.");
             } else
-            if(s.toLowerCase().startsWith("save-off"))
+            if(command.toLowerCase().startsWith("save-off"))
             {
-                func_6014_a(s1, "Disabling level saving..");
+                func_6014_a(username, "Disabling level saving..");
                 worldMngr.field_816_A = true;
             } else
-            if(s.toLowerCase().startsWith("save-on"))
+            if(command.toLowerCase().startsWith("save-on"))
             {
-                func_6014_a(s1, "Enabling level saving..");
+                func_6014_a(username, "Enabling level saving..");
                 worldMngr.field_816_A = false;
             } else
-            if(s.toLowerCase().startsWith("op "))
+            if(command.toLowerCase().startsWith("op "))
             {
-                String s2 = s.substring(s.indexOf(" ")).trim();
+                String s2 = command.substring(command.indexOf(" ")).trim();
                 configManager.opPlayer(s2);
-                func_6014_a(s1, (new StringBuilder()).append("Opping ").append(s2).toString());
+                func_6014_a(username, (new StringBuilder()).append("Opping ").append(s2).toString());
                 configManager.sendChatMessageToPlayer(s2, "\247eYou are now op!");
             } else
-            if(s.toLowerCase().startsWith("deop "))
+            if(command.toLowerCase().startsWith("deop "))
             {
-                String s3 = s.substring(s.indexOf(" ")).trim();
+                String s3 = command.substring(command.indexOf(" ")).trim();
                 configManager.deopPlayer(s3);
                 configManager.sendChatMessageToPlayer(s3, "\247eYou are no longer op!");
-                func_6014_a(s1, (new StringBuilder()).append("De-opping ").append(s3).toString());
+                func_6014_a(username, (new StringBuilder()).append("De-opping ").append(s3).toString());
             } else
-            if(s.toLowerCase().startsWith("ban-ip "))
+            if(command.toLowerCase().startsWith("ban-ip "))
             {
-                String s4 = s.substring(s.indexOf(" ")).trim();
+                String s4 = command.substring(command.indexOf(" ")).trim();
                 configManager.banIP(s4);
-                func_6014_a(s1, (new StringBuilder()).append("Banning ip ").append(s4).toString());
+                func_6014_a(username, (new StringBuilder()).append("Banning ip ").append(s4).toString());
             } else
-            if(s.toLowerCase().startsWith("pardon-ip "))
+            if(command.toLowerCase().startsWith("pardon-ip "))
             {
-                String s5 = s.substring(s.indexOf(" ")).trim();
+                String s5 = command.substring(command.indexOf(" ")).trim();
                 configManager.unbanIP(s5);
-                func_6014_a(s1, (new StringBuilder()).append("Pardoning ip ").append(s5).toString());
+                func_6014_a(username, (new StringBuilder()).append("Pardoning ip ").append(s5).toString());
             } else
-            if(s.toLowerCase().startsWith("ban "))
+            if(command.toLowerCase().startsWith("ban "))
             {
-                String s6 = s.substring(s.indexOf(" ")).trim();
+                String s6 = command.substring(command.indexOf(" ")).trim();
                 configManager.banPlayer(s6);
-                func_6014_a(s1, (new StringBuilder()).append("Banning ").append(s6).toString());
+                func_6014_a(username, (new StringBuilder()).append("Banning ").append(s6).toString());
                 EntityPlayerMP entityplayermp = configManager.getPlayerEntity(s6);
                 if(entityplayermp != null)
                 {
                     entityplayermp.field_421_a.func_43_c("Banned by admin");
                 }
             } else
-            if(s.toLowerCase().startsWith("pardon "))
+            if(command.toLowerCase().startsWith("pardon "))
             {
-                String s7 = s.substring(s.indexOf(" ")).trim();
+                String s7 = command.substring(command.indexOf(" ")).trim();
                 configManager.unbanPlayer(s7);
-                func_6014_a(s1, (new StringBuilder()).append("Pardoning ").append(s7).toString());
+                func_6014_a(username, (new StringBuilder()).append("Pardoning ").append(s7).toString());
             } else
-            if(s.toLowerCase().startsWith("kick "))
+            if(command.toLowerCase().startsWith("kick "))
             {
-                String s8 = s.substring(s.indexOf(" ")).trim();
+                String s8 = command.substring(command.indexOf(" ")).trim();
                 EntityPlayerMP entityplayermp1 = null;
                 for(int i = 0; i < configManager.playerEntities.size(); i++)
                 {
@@ -582,15 +590,15 @@ public class MinecraftServer
                 if(entityplayermp1 != null)
                 {
                     entityplayermp1.field_421_a.func_43_c("Kicked by admin");
-                    func_6014_a(s1, (new StringBuilder()).append("Kicking ").append(entityplayermp1.username).toString());
+                    func_6014_a(username, (new StringBuilder()).append("Kicking ").append(entityplayermp1.username).toString());
                 } else
                 {
                     icommandlistener.log((new StringBuilder()).append("Can't find user ").append(s8).append(". No kick.").toString());
                 }
             } else
-            if(s.toLowerCase().startsWith("tp "))
+            if(command.toLowerCase().startsWith("tp "))
             {
-                String as[] = s.split(" ");
+                String as[] = command.split(" ");
                 if(as.length == 3)
                 {
                     EntityPlayerMP entityplayermp2 = configManager.getPlayerEntity(as[1]);
@@ -605,16 +613,16 @@ public class MinecraftServer
                     } else
                     {
                         entityplayermp2.field_421_a.func_41_a(entityplayermp3.posX, entityplayermp3.posY, entityplayermp3.posZ, entityplayermp3.rotationYaw, entityplayermp3.rotationPitch);
-                        func_6014_a(s1, (new StringBuilder()).append("Teleporting ").append(as[1]).append(" to ").append(as[2]).append(".").toString());
+                        func_6014_a(username, (new StringBuilder()).append("Teleporting ").append(as[1]).append(" to ").append(as[2]).append(".").toString());
                     }
                 } else
                 {
                     icommandlistener.log("Syntax error, please provice a source and a target.");
                 }
             } else
-            if(s.toLowerCase().startsWith("tpcord "))
+            if(command.toLowerCase().startsWith("tpcord "))
             {
-                String as[] = s.split(" ");
+                String as[] = command.split(" ");
                 if(as.length == 5)
                 {
                     EntityPlayerMP entityplayermp2 = configManager.getPlayerEntity(as[1]);
@@ -630,16 +638,16 @@ public class MinecraftServer
 
                     {
                         entityplayermp2.field_421_a.func_41_a(x, y, z, entityplayermp2.rotationYaw, entityplayermp2.rotationPitch);
-                        func_6014_a(s1, (new StringBuilder()).append("Teleporting ").append(as[1]).append(" to ").append(as[2]).append(".").toString());
+                        func_6014_a(username, (new StringBuilder()).append("Teleporting ").append(as[1]).append(" to ").append(as[2]).append(".").toString());
                     }
                 } else
                 {
                     icommandlistener.log("Syntax error, please provice a source and 3 numbers for cordinates");
                 }
             } else
-            if(s.toLowerCase().startsWith("give "))
+            if(command.toLowerCase().startsWith("give "))
             {
-                String as1[] = s.split(" ");
+                String as1[] = command.split(" ");
                 if(as1.length != 3 && as1.length != 4)
                 {
                     return;
@@ -659,7 +667,7 @@ public class MinecraftServer
                        // logger.info("Processed ID:"+j);
                         if(Item.itemsList[j] != null)
                         {
-                            func_6014_a(s1, (new StringBuilder()).append("Giving ").append(entityplayermp4.username).append(" some ").append(as1[2]).toString());
+                            func_6014_a(username, (new StringBuilder()).append("Giving ").append(entityplayermp4.username).append(" some ").append(as1[2]).toString());
                             int k = 1;
                             if(as1.length > 3)
                             {
@@ -688,9 +696,9 @@ public class MinecraftServer
                     icommandlistener.log((new StringBuilder()).append("Can't find user ").append(s9).toString());
                 }
             } else
-            if(s.toLowerCase().startsWith("giveid "))
+            if(command.toLowerCase().startsWith("giveid "))
             {
-                String as1[] = s.split(" ");
+                String as1[] = command.split(" ");
                 if(as1.length != 3 && as1.length != 4)
                 {
                     return;
@@ -704,7 +712,7 @@ public class MinecraftServer
                         int j = Integer.parseInt(as1[2]);
                         if(Item.itemsList[j] != null)
                         {
-                            func_6014_a(s1, (new StringBuilder()).append("Giving ").append(entityplayermp4.username).append(" some ").append(j).toString());
+                            func_6014_a(username, (new StringBuilder()).append("Giving ").append(entityplayermp4.username).append(" some ").append(j).toString());
                             int k = 1;
                             if(as1.length > 3)
                             {
@@ -733,23 +741,23 @@ public class MinecraftServer
                     icommandlistener.log((new StringBuilder()).append("Can't find user ").append(s9).toString());
                 }
             } else
-            if(s.toLowerCase().startsWith("say "))
+            if(command.toLowerCase().startsWith("say "))
             {
-                s = s.substring(s.indexOf(" ")).trim();
-                logger.info((new StringBuilder()).append("[").append(s1).append("] ").append(s).toString());
-                configManager.sendPacketToAllPlayers(new Packet3Chat((new StringBuilder()).append("\247d[Server] ").append(s).toString()));
+                command = command.substring(command.indexOf(" ")).trim();
+                logger.info((new StringBuilder()).append("[").append(username).append("] ").append(command).toString());
+                configManager.sendPacketToAllPlayers(new Packet3Chat((new StringBuilder()).append("\247d[Server] ").append(command).toString()));
             } else
-            if(s.toLowerCase().startsWith("tell "))
+            if(command.toLowerCase().startsWith("tell "))
             {
-                String as2[] = s.split(" ");
+                String as2[] = command.split(" ");
                 if(as2.length >= 3)
                 {
-                    s = s.substring(s.indexOf(" ")).trim();
-                    s = s.substring(s.indexOf(" ")).trim();
-                    logger.info((new StringBuilder()).append("[").append(s1).append("->").append(as2[1]).append("] ").append(s).toString());
-                    s = (new StringBuilder()).append("\2477").append(s1).append(" whispers ").append(s).toString();
-                    logger.info(s);
-                    if(!configManager.sendPacketToPlayer(as2[1], new Packet3Chat(s)))
+                    command = command.substring(command.indexOf(" ")).trim();
+                    command = command.substring(command.indexOf(" ")).trim();
+                    logger.info((new StringBuilder()).append("[").append(username).append("->").append(as2[1]).append("] ").append(command).toString());
+                    command = (new StringBuilder()).append("\2477").append(username).append(" whispers ").append(command).toString();
+                    logger.info(command);
+                    if(!configManager.sendPacketToPlayer(as2[1], new Packet3Chat(command)))
                     {
                         icommandlistener.log("There's no player by that name online.");
                     }
@@ -827,6 +835,7 @@ public class MinecraftServer
     public NetworkListenThread field_6036_c;
     public PropertyManager propertyManagerObj;
     public WorldServer worldMngr;
+    public WorldServer worldNetherManager;
     public ServerConfigurationManager configManager;
     private boolean field_6025_n;
     public boolean field_6032_g;

@@ -69,14 +69,15 @@ public class World
             ioexception.printStackTrace();
             throw new RuntimeException("Failed to check session lock, aborting");
         }
-        Object obj = new WorldProvider();
-        File file2 = new File(field_797_s, "level.dat");
-        field_9212_p = !file2.exists();
-        if(file2.exists())
+        Object worldProvider = new WorldProvider();
+//        Object worldProviderNether = new WorldProviderHell();
+        File levelDat = new File(field_797_s, "level.dat");
+        field_9212_p = !levelDat.exists();
+        if(levelDat.exists())
         {
             try
             {
-                NBTTagCompound nbttagcompound = CompressedStreamTools.func_770_a(new FileInputStream(file2));
+                NBTTagCompound nbttagcompound = CompressedStreamTools.func_770_a(new FileInputStream(levelDat));
                 NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
                 WorldGenParams params = new WorldGenParams();
                 randomSeed = params.GetSeedFromPropertiesFile();
@@ -91,7 +92,7 @@ public class World
                     int i = nbtCompoundPlayer.getInteger("Dimension");
                     if(i == -1)
                     {
-                        obj = new WorldProviderHell();
+                        worldProvider = new WorldProviderHell();
                     }
                 }
             }
@@ -102,7 +103,7 @@ public class World
         }
         if(worldprovider != null)
         {
-            obj = worldprovider;
+            worldProvider = worldprovider;
         }
         boolean flag = false;
         if(randomSeed == 0L)
@@ -110,15 +111,15 @@ public class World
             randomSeed = l;
             flag = true;
         }
-        worldProvider = ((WorldProvider) (obj));
-        worldProvider.func_4093_a(this);
+        this.worldProvider = ((WorldProvider) (worldProvider));
+        this.worldProvider.func_4093_a(this);
         chunkProvider = func_4076_a(field_797_s);
         if(flag)
         {
             field_9209_x = true;
             spawnX = 0;
             spawnY = 64;
-            for(spawnZ = 0; !worldProvider.canCoordinateBeSpawn(spawnX, spawnZ); spawnZ += rand.nextInt(64) - rand.nextInt(64))
+            for(spawnZ = 0; !this.worldProvider.canCoordinateBeSpawn(spawnX, spawnZ); spawnZ += rand.nextInt(64) - rand.nextInt(64))
             {
                 spawnX += rand.nextInt(64) - rand.nextInt(64);
             }
@@ -140,7 +141,7 @@ public class World
         return getBlockId(i, k, j);
     }
 
-    public void func_485_a(boolean flag, IProgressUpdate iprogressupdate)
+    public void saveWorld(boolean flag, IProgressUpdate iprogressupdate)
     {
         if(!chunkProvider.func_364_b())
         {
@@ -877,6 +878,7 @@ public class World
         }
     }
 
+
     protected void func_479_b(Entity entity)
     {
         for(int i = 0; i < field_798_r.size(); i++)
@@ -886,7 +888,7 @@ public class World
 
     }
 
-    protected void func_531_c(Entity entity)
+    protected void removeEntity(Entity entity)
     {
         for(int i = 0; i < field_798_r.size(); i++)
         {
@@ -918,7 +920,7 @@ public class World
             getChunkFromChunkCoords(i, j).func_350_b(entity);
         }
         EntityList.remove(entity);
-        func_531_c(entity);
+        removeEntity(entity);
     }
 
     public void func_4072_a(IWorldAccess iworldaccess)
@@ -1062,7 +1064,7 @@ public class World
 
         for(int j = 0; j < field_790_z.size(); j++)
         {
-            func_531_c((Entity)field_790_z.get(j));
+            removeEntity((Entity)field_790_z.get(j));
         }
 
         field_790_z.clear();
@@ -1093,7 +1095,7 @@ public class World
                 getChunkFromChunkCoords(j1, l1).func_350_b(entity1);
             }
             EntityList.remove(k--);
-            func_531_c(entity1);
+            removeEntity(entity1);
         }
 
         for(int l = 0; l < field_814_b.size(); l++)
@@ -1571,7 +1573,7 @@ public class World
         worldTime++;
         if(worldTime % (long)field_4277_j == 0L)
         {
-            func_485_a(false, null);
+            saveWorld(false, null);
         }
         TickUpdates(false);
         randomTickUpdates();

@@ -3,7 +3,6 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode
 
-import java.io.PrintStream;
 import java.util.Random;
 
 public class BlockPortal extends BlockBreakable
@@ -153,13 +152,9 @@ public class BlockPortal extends BlockBreakable
 
     public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity)
     {
-        if(world.multiplayerWorld)
-        {
+
+            entity.goToNether();
             return;
-        } else
-        {
-            entity.func_4042_C();
-            return;
-        }
+
     }
 }

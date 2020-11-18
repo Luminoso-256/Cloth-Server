@@ -95,6 +95,13 @@ public class EntityTracker
         }
     }
 
+    public void DeleteEntityFromTracker(Entity entity){
+        if(field_910_b.containsItem(entity.field_331_c)){
+            //int EntityIndex = field_910_b.
+            field_910_b.removeObject(entity.field_331_c);
+        }
+    }
+
     public void func_610_b(Entity entity)
     {
         if(entity instanceof EntityPlayerMP)

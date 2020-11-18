@@ -901,7 +901,7 @@ public abstract class Entity
         return null;
     }
 
-    public void func_4042_C()
+    public void goToNether()
     {
     }
 
