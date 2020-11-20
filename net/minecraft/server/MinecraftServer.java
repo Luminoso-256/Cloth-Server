@@ -444,6 +444,7 @@ public class MinecraftServer
                 logger.info("[Debug] Attempting to send player "+ player.username +" to the nether. Safe Travels!");
                 worldMngr.RemoveEntity(player);
                 worldNetherManager.entityJoinedWorld(player);
+                player.GoToWorld(worldNetherManager);
                 logger.info("WorldNetherManager connected entities number:" + worldNetherManager.EntityList.size());
 
             }

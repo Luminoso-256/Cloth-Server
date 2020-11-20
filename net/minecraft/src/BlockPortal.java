@@ -153,7 +153,7 @@ public class BlockPortal extends BlockBreakable
     public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity)
     {
 
-            entity.goToNether();
+          //  entity.goToNether();
             return;
 
     }

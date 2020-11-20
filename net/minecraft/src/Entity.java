@@ -896,13 +896,14 @@ public abstract class Entity
         entity.field_328_f = this;
     }
 
+    public void GoToWorld(World world){
+        System.out.println("Setting Entity WorldObj field to "+worldObj);
+        worldObj = world;
+    }
+
     public Vec3D func_4039_B()
     {
         return null;
-    }
-
-    public void goToNether()
-    {
     }
 
     private static int field_384_a = 0;
