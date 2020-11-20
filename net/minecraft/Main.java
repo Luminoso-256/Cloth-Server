@@ -31,7 +31,7 @@ public class Main {
     public static final Logger logger = Logger.getLogger("Minecraft");
     public static final MinecraftServer minecraftServer = new MinecraftServer(); //Get a reference to our lovely MC server class
     public static void main(String[] args){
-        logger.info("[Cloth] Cloth "+VERSION_STRING+"| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0");
+        logger.info("[Server] "+VERSION_STRING+"| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0");
         logger.info("[Stitch] Loading stitch plugins from /plugins...");
         Globals _G = JsePlatform.standardGlobals();
         //Main classes
