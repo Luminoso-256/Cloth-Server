@@ -105,12 +105,14 @@ public class MinecraftServer
     {
         logger.info("Preparing start region");
         worldMngr = new WorldServer(this, new File("."), worldName, seed, propertyManagerObj.getBooleanProperty("hellworld", false) ? -1 : 0);
+        worldMngr.func_4072_a(new WorldManager(this));
+        /* disabled for alpha 1.11 release
         logger.info("[Debug] Starting nether init");
         worldNetherManager = new WorldServer(this, new File("."), worldName + "_nether", seed, -1);
-        worldMngr.func_4072_a(new WorldManager(this));
         worldNetherManager.func_4072_a(new WorldManager(this));
-        worldMngr.monstersEnabled = propertyManagerObj.getBooleanProperty("spawn-monsters", true) ? 1 : 0;
         logger.info("[Debug] created nether object with seed "+worldNetherManager.randomSeed);
+        */
+        worldMngr.monstersEnabled = propertyManagerObj.getBooleanProperty("spawn-monsters", true) ? 1 : 0;
         configManager.setPlayerManager(worldMngr);
         byte byte0 = 10;
         for(int i = -byte0; i <= byte0; i++)
