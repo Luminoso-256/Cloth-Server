@@ -17,7 +17,7 @@ public class World
         return worldProvider.field_4301_b;
     }
 
-    public World(File file, String s, long l, WorldProvider worldprovider)
+    public World(File file, String worldName, long seed, WorldProvider worldprovider)
     {
         field_4280_a = false;
         field_821 = new ArrayList();
@@ -47,9 +47,9 @@ public class World
         field_778_L = new ArrayList();
         multiplayerWorld = false;
         field_9211_s = file;
-        field_9210_w = s;
+        field_9210_w = worldName;
         file.mkdirs();
-        field_797_s = new File(file, s);
+        field_797_s = new File(file, worldName);
         field_797_s.mkdirs();
         try
         {
@@ -79,8 +79,7 @@ public class World
             {
                 NBTTagCompound nbttagcompound = CompressedStreamTools.func_770_a(new FileInputStream(levelDat));
                 NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
-                WorldGenParams params = new WorldGenParams();
-                randomSeed = params.GetSeedFromPropertiesFile();
+                randomSeed = nbttagcompound1.getLong("RandomSeed");
                 spawnX = nbttagcompound1.getInteger("SpawnX");
                 spawnY = nbttagcompound1.getInteger("SpawnY");
                 spawnZ = nbttagcompound1.getInteger("SpawnZ");
@@ -108,7 +107,7 @@ public class World
         boolean flag = false;
         if(randomSeed == 0L)
         {
-            randomSeed = l;
+            randomSeed = seed;
             flag = true;
         }
         this.worldProvider = ((WorldProvider) (worldProvider));
@@ -151,7 +150,7 @@ public class World
         {
             iprogressupdate.func_438_a("Saving level");
         }
-        func_478_h();
+        saveLevel();
         if(iprogressupdate != null)
         {
             iprogressupdate.func_439_b("Saving chunks");
@@ -159,12 +158,11 @@ public class World
         chunkProvider.saveWorld(flag, iprogressupdate);
     }
 
-    private void func_478_h()
+    private void saveLevel()
     {
         func_476_g();
         NBTTagCompound nbttagcompound = new NBTTagCompound();
-        PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
-        nbttagcompound.setLong("RandomSeed", propertyManager.getLongProperty("seed", 1l));
+        nbttagcompound.setLong("RandomSeed", randomSeed);
         nbttagcompound.setInteger("SpawnX", spawnX);
         nbttagcompound.setInteger("SpawnY", spawnY);
         nbttagcompound.setInteger("SpawnZ", spawnZ);

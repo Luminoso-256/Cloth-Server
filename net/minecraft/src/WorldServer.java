@@ -10,9 +10,9 @@ import net.minecraft.server.MinecraftServer;
 public class WorldServer extends World
 {
 
-    public WorldServer(MinecraftServer minecraftserver, File file, String s, int i)
+    public WorldServer(MinecraftServer minecraftserver, File file, String worldName, long seed, int i)
     {
-        super(file, s, (new Random()).nextLong(), WorldProvider.func_4091_a(i));
+        super(file, worldName, seed, WorldProvider.func_4091_a(i));
         field_819_z = false;
         field_6159_E = new MCHashTable();
         field_6160_D = minecraftserver;

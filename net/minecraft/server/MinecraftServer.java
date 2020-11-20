@@ -40,7 +40,7 @@ public class MinecraftServer
     }
 
 
-    private boolean func_6008_d() throws UnknownHostException
+    private boolean serverInit() throws UnknownHostException
     {
 
         ConsoleLogManager.init(); //No GUI till main MC class takes over
@@ -62,7 +62,7 @@ public class MinecraftServer
         propertyManagerObj = new PropertyManager(new File("server.properties"));
         //GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules")); //gamerule config file
         String s = propertyManagerObj.getStringProperty("server-ip", "");
-       // long Seed = propertyManagerObj.getLongProperty("seed", random.nextLong()); // just here to ensure property initialization  (i think)
+        long seed = propertyManagerObj.getLongProperty("seed", random.nextLong());
         onlineMode = propertyManagerObj.getBooleanProperty("online-mode", true);
         noAnimals = propertyManagerObj.getBooleanProperty("spawn-animals", true);
         field_9011_n = propertyManagerObj.getBooleanProperty("pvp", true);
@@ -93,20 +93,20 @@ public class MinecraftServer
         }
         configManager = new ServerConfigurationManager(this);
         field_6028_k = new EntityTracker(this);
-        String s1 = propertyManagerObj.getStringProperty("level-name", "world");
-        logger.info((new StringBuilder()).append("Preparing level \"").append(s1).append("\"").toString());
-        func_6017_c(s1);
+        String worldName = propertyManagerObj.getStringProperty("level-name", "world");
+        logger.info((new StringBuilder()).append("Preparing level \"").append(worldName).append("\"").toString());
+        loadWorld(worldName, seed);
         logger.info("Done! For help, type \"help\" or \"?\"");
         return true;
 
     }
 
-    private void func_6017_c(String s)
+    private void loadWorld(String worldName, long seed)
     {
         logger.info("Preparing start region");
-        worldMngr = new WorldServer(this, new File("."), s, propertyManagerObj.getBooleanProperty("hellworld", false) ? -1 : 0);
+        worldMngr = new WorldServer(this, new File("."), worldName, seed, propertyManagerObj.getBooleanProperty("hellworld", false) ? -1 : 0);
         logger.info("[Debug] Starting nether init");
-        worldNetherManager = new WorldServer(this, new File("."), "world_nether", -1);
+        worldNetherManager = new WorldServer(this, new File("."), worldName + "_nether", seed, -1);
         worldMngr.func_4072_a(new WorldManager(this));
         worldNetherManager.func_4072_a(new WorldManager(this));
         worldMngr.monstersEnabled = propertyManagerObj.getBooleanProperty("spawn-monsters", true) ? 1 : 0;
@@ -186,7 +186,7 @@ public class MinecraftServer
 
         try
         {
-            if(func_6008_d())
+            if(serverInit())
             {
 
                 long l = System.currentTimeMillis();
