@@ -25,6 +25,7 @@ public class ServerConfigurationManager
         bannedPlayersFile = minecraftserver.getFile("banned-players.txt");
         ipBanFile = minecraftserver.getFile("banned-ips.txt");
         opFile = minecraftserver.getFile("ops.txt");
+        whitelistFile = minecraftserver.getFile("whitelist.txt");
         playerManagerObj = new PlayerManager(minecraftserver);
         maxPlayers = minecraftserver.propertyManagerObj.getIntProperty("max-players", 20);
         readBannedPlayers();
@@ -50,15 +51,19 @@ public class ServerConfigurationManager
 
 
 
-        //
+
+
+
+
+        //Connect player to world
         playerEntities.add(entityplayermp);
         playerNBTManagerObj.readPlayerData(entityplayermp);
         mcServer.worldMngr.field_821.loadChunk((int)entityplayermp.posX >> 4, (int)entityplayermp.posZ >> 4);
         for(; mcServer.worldMngr.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) { }
         mcServer.worldMngr.entityJoinedWorld(entityplayermp);
         playerManagerObj.func_9214_a(entityplayermp);
-        //INV
-       // GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
+
+        //Check their invenotry for illageal items.
         String itemIDBlacklist = GameruleManager.getStringGamerule("itemidblacklist", " ");
         boolean IsInvClean = true;
         int MainInvSize = 36;
@@ -114,6 +119,10 @@ public class ServerConfigurationManager
         {
             netloginhandler.kickUser("You are banned from this server!");
             return null;
+        }
+        if(GameruleManager.getBooleanGamerule("usewhitelist", false) && !whitelist.contains(s.trim().toLowerCase())){
+            //You arent whitelisted!
+            netloginhandler.kickUser("You arent whitelisted on this server!");
         }
         String s2 = netloginhandler.netManager.getRemoteAddress().toString();
         s2 = s2.substring(s2.indexOf("/") + 1);
@@ -344,7 +353,62 @@ public class ServerConfigurationManager
             logger.warning((new StringBuilder()).append("Failed to save ip ban list: ").append(exception).toString());
         }
     }
+    // whitelist
+    public void whitelistPlayer(String s)
+    {
+        whitelist.add(s.toLowerCase());
+        saveWhitelist();
+    }
 
+    public void deWhitelistPlayer(String s)
+    {
+        whitelist.remove(s.toLowerCase());
+        saveWhitelist();
+    }
+
+    private void loadWhitelist()
+    {
+        try
+        {
+            whitelist.clear();
+            BufferedReader bufferedreader = new BufferedReader(new FileReader(whitelistFile));
+            for(String s = ""; (s = bufferedreader.readLine()) != null;)
+            {
+                whitelist.add(s.trim().toLowerCase());
+            }
+
+            bufferedreader.close();
+        }
+        catch(Exception exception)
+        {
+            logger.warning((new StringBuilder()).append("[Cloth] Failed to load whitelist: ").append(exception).toString());
+        }
+    }
+
+    private void saveWhitelist()
+    {
+        try
+        {
+            PrintWriter printwriter = new PrintWriter(new FileWriter(whitelistFile, false));
+            String s;
+            for(Iterator iterator = whitelist.iterator(); iterator.hasNext(); printwriter.println(s))
+            {
+                s = (String)iterator.next();
+            }
+
+            printwriter.close();
+        }
+        catch(Exception exception)
+        {
+            logger.warning((new StringBuilder()).append("[Cloth] Failed to save whitelist: ").append(exception).toString());
+        }
+    }
+
+    public boolean isInWhitelist(String player)
+    {
+        return whitelist.contains(player.trim().toLowerCase());
+    }
+    //End whitelist addition
     public boolean isOp(String s)
     {
         return ops.contains(s.trim().toLowerCase());
@@ -438,9 +502,11 @@ public class ServerConfigurationManager
     private Set banList;
     private Set bannedIPs;
     private Set ops;
+    private Set whitelist;
     private File bannedPlayersFile;
     private File ipBanFile;
     private File opFile;
+    private File whitelistFile;
     private PlayerNBTManager playerNBTManagerObj;
 
 }

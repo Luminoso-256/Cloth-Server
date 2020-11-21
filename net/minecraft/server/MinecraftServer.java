@@ -439,6 +439,21 @@ public class MinecraftServer
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:"+ params.GetSeedFromPropertiesFile());
             }
+            if(command.toLowerCase().startsWith("whitelist ")){
+                String[] args =  command.toLowerCase().split(" ");
+                if(args[1] == "add"){
+                    configManager.whitelistPlayer(args[2]);
+                }
+                if(args[1] == "remove"){
+                    configManager.deWhitelistPlayer(args[2]);
+                }
+                if(args[1] == "on"){
+                    GameruleManager.setBooleanGamerule("usewhitelist", true);
+                }
+                if(args[1] == "off"){
+                    GameruleManager.setBooleanGamerule("usewhitelist", false);
+                }
+            }
             if(command.toLowerCase().startsWith("nether")){
                 EntityPlayer player = configManager.getPlayerEntity(username);
                 logger.info("[Debug] Attempting to send player "+ player.username +" to the nether. Safe Travels!");
