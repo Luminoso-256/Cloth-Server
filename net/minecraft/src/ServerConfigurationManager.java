@@ -7,7 +7,6 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.Logger;
 
-import com.sun.tools.javac.Main;
 import net.minecraft.clothutils.ExploitUtils;
 import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.server.MinecraftServer;
@@ -58,7 +57,7 @@ public class ServerConfigurationManager
         //Connect player to world
         playerEntities.add(entityplayermp);
         playerNBTManagerObj.readPlayerData(entityplayermp);
-        mcServer.worldMngr.field_821.loadChunk((int)entityplayermp.posX >> 4, (int)entityplayermp.posZ >> 4);
+        mcServer.worldMngr.chunkProvider.loadChunk((int)entityplayermp.posX >> 4, (int)entityplayermp.posZ >> 4);
         for(; mcServer.worldMngr.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) { }
         mcServer.worldMngr.entityJoinedWorld(entityplayermp);
         playerManagerObj.func_9214_a(entityplayermp);
@@ -159,7 +158,7 @@ public class ServerConfigurationManager
         EntityPlayerMP entityplayermp1 = new EntityPlayerMP(mcServer, mcServer.worldMngr, entityplayermp.username, new ItemInWorldManager(mcServer.worldMngr));
         entityplayermp1.field_331_c = entityplayermp.field_331_c;
         entityplayermp1.field_421_a = entityplayermp.field_421_a;
-        mcServer.worldMngr.field_821.loadChunk((int)entityplayermp1.posX >> 4, (int)entityplayermp1.posZ >> 4);
+        mcServer.worldMngr.chunkProvider.loadChunk((int)entityplayermp1.posX >> 4, (int)entityplayermp1.posZ >> 4);
         for(; mcServer.worldMngr.getCollidingBoundingBoxes(entityplayermp1, entityplayermp1.boundingBox).size() != 0; entityplayermp1.setPosition(entityplayermp1.posX, entityplayermp1.posY + 1.0D, entityplayermp1.posZ)) { }
         entityplayermp1.field_421_a.sendPacket(new Packet9());
         entityplayermp1.field_421_a.func_41_a(entityplayermp1.posX, entityplayermp1.posY, entityplayermp1.posZ, entityplayermp1.rotationYaw, entityplayermp1.rotationPitch);
@@ -497,7 +496,7 @@ public class ServerConfigurationManager
     public static Logger logger = Logger.getLogger("Minecraft");
     public List playerEntities;
     private MinecraftServer mcServer;
-    private PlayerManager playerManagerObj;
+    public PlayerManager playerManagerObj;
     private int maxPlayers;
     private Set banList;
     private Set bannedIPs;

@@ -118,12 +118,12 @@ public class MinecraftServer
         logger.info("Preparing start region");
         worldMngr = new WorldServer(this, new File("."), worldName, seed, propertyManagerObj.getBooleanProperty("hellworld", false) ? -1 : 0);
         worldMngr.func_4072_a(new WorldManager(this));
-        /* disabled for alpha 1.11 release
-        logger.info("[Debug] Starting nether init");
+
+        logger.info("[Cloth] Starting nether init");
         worldNetherManager = new WorldServer(this, new File("."), worldName + "_nether", seed, -1);
         worldNetherManager.func_4072_a(new WorldManager(this));
         logger.info("[Debug] created nether object with seed "+worldNetherManager.randomSeed);
-        */
+
         worldMngr.monstersEnabled = propertyManagerObj.getBooleanProperty("spawn-monsters", true) ? 1 : 0;
         configManager.setPlayerManager(worldMngr);
         byte byte0 = 10;
@@ -136,7 +136,7 @@ public class MinecraftServer
                 {
                     return;
                 }
-                worldMngr.field_821.loadChunk((worldMngr.spawnX >> 4) + i, (worldMngr.spawnZ >> 4) + j);
+                worldMngr.chunkProvider.loadChunk((worldMngr.spawnX >> 4) + i, (worldMngr.spawnZ >> 4) + j);
             }
 
         }
@@ -467,12 +467,18 @@ public class MinecraftServer
                 }
             }
             if(command.toLowerCase().startsWith("nether")){
-                EntityPlayer player = configManager.getPlayerEntity(username);
+                EntityPlayerMP player = configManager.getPlayerEntity(username);
                 logger.info("[Debug] Attempting to send player "+ player.username +" to the nether. Safe Travels!");
-                worldMngr.RemoveEntity(player);
+                  worldMngr.RemoveEntity(player);
+               // worldNetherManager.entityJoinedWorld(player);
+               // player.GoToWorld(worldNetherManager);
+                //logger.info("WorldNetherManager connected entities number:" + worldNetherManager.EntityList.size());
+               worldNetherManager.playerEntities.add(player);
+               worldNetherManager.chunkProvider.loadChunk((int)player.posX >> 4, (int)player.posZ >> 4);
+                for(; worldNetherManager.getCollidingBoundingBoxes(player, player.boundingBox).size() != 0; player.setPosition(player.posX, player.posY + 1.0D, player.posZ)) { }
                 worldNetherManager.entityJoinedWorld(player);
-                player.GoToWorld(worldNetherManager);
-                logger.info("WorldNetherManager connected entities number:" + worldNetherManager.EntityList.size());
+                configManager.playerManagerObj.func_9214_a(player);
+
 
             }
             if(command.toLowerCase().startsWith("version")){
@@ -514,15 +520,31 @@ public class MinecraftServer
             }
             if(command.toLowerCase().startsWith("gamerule ")){
               //  GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
-                String commandparts[] = command.split(" ");
+                String commandparts[] = command.toLowerCase().split(" ");
                 switch(commandparts[1]){
-                    case "randomtrample":
-                        if(commandparts[2] == "true"){GameruleManager.setBooleanGamerule("randomtrample", true);}
-                        else if(commandparts[2] == "true")
-                            {GameruleManager.setBooleanGamerule("randomtrample", false);}
-                        else { //add generic print
-
-                             }
+                    case "announcedeath":
+                        if(commandparts[2] == "true"){GameruleManager.setBooleanGamerule("announcedeath", true);}
+                        else if (commandparts[2] == "false"){GameruleManager.setBooleanGamerule("announcedeath", false);}
+                        break;
+                    case "inversemobspawnrate":
+                        break;
+                    case "domobgriefing":
+                        if(commandparts[2] == "true"){GameruleManager.setBooleanGamerule("domobgriefing", true);}
+                        else if (commandparts[2] == "false"){GameruleManager.setBooleanGamerule("domobgriefing", false);}
+                        break;
+                    case "dosleepvote":
+                        if(commandparts[2] == "true"){GameruleManager.setBooleanGamerule("dosleepvote", true);}
+                        else if (commandparts[2] == "false"){GameruleManager.setBooleanGamerule("dosleepvote", false);}
+                        break;
+                    case "inverseskeletonjockeyspawnrate":
+                        break;
+                    case "domoderntrample":
+                        if(commandparts[2] == "true"){GameruleManager.setBooleanGamerule("domoderntrample", true);}
+                        else if (commandparts[2] == "false"){GameruleManager.setBooleanGamerule("domoderntrample", false);}
+                        break;
+                    case "usewhitelist":
+                        if(commandparts[2] == "true"){GameruleManager.setBooleanGamerule("usewhitelist", true);}
+                        else if (commandparts[2] == "false"){GameruleManager.setBooleanGamerule("usewhitelist", false);}
                         break;
                 }
             }

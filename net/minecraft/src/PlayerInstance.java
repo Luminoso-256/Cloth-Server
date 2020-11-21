@@ -4,7 +4,6 @@ package net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.util.*;
-import net.minecraft.server.MinecraftServer;
 
 class PlayerInstance
 {
@@ -18,7 +17,7 @@ class PlayerInstance
         field_1071_c = i;
         field_1070_d = j;
         field_1069_e = new ChunkCoordIntPair(i, j);
-        PlayerManager.getMinecraftServer(playermanager).worldMngr.field_821.loadChunk(i, j);
+        PlayerManager.getMinecraftServer(playermanager).worldMngr.chunkProvider.loadChunk(i, j);
     }
 
     public void func_779_a(EntityPlayerMP entityplayermp)
@@ -55,7 +54,7 @@ class PlayerInstance
             {
                 PlayerManager.func_533_c(field_1073_a).remove(this);
             }
-            PlayerManager.getMinecraftServer(field_1073_a).worldMngr.field_821.func_374_c(field_1071_c, field_1070_d);
+            PlayerManager.getMinecraftServer(field_1073_a).worldMngr.chunkProvider.func_374_c(field_1071_c, field_1070_d);
         }
         entityplayermp.field_422_ag.remove(field_1069_e);
         if(entityplayermp.field_420_ah.contains(field_1069_e))
