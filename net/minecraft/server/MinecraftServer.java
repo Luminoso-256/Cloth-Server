@@ -61,18 +61,19 @@ public class MinecraftServer
         Random random = new Random();
         propertyManagerObj = new PropertyManager(new File("server.properties"));
         //GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules")); //gamerule config file
-        String s = propertyManagerObj.getStringProperty("server-ip", "");
-        long seed = propertyManagerObj.getLongProperty("seed", random.nextLong());
+        String ip = propertyManagerObj.getStringProperty("server-ip", "");
+        String seedString = propertyManagerObj.getStringProperty("seed", String.valueOf(random.nextLong()));
+        long seed = hashSeed(seedString);
         onlineMode = propertyManagerObj.getBooleanProperty("online-mode", true);
         noAnimals = propertyManagerObj.getBooleanProperty("spawn-animals", true);
         field_9011_n = propertyManagerObj.getBooleanProperty("pvp", true);
         InetAddress inetaddress = null;
-        if(s.length() > 0)
+        if(ip.length() > 0)
         {
-            inetaddress = InetAddress.getByName(s);
+            inetaddress = InetAddress.getByName(ip);
         }
         int i = propertyManagerObj.getIntProperty("server-port", 25565);
-        logger.info((new StringBuilder()).append("Starting Minecraft server on ").append(s.length() != 0 ? s : "*").append(":").append(i).toString());
+        logger.info((new StringBuilder()).append("Starting Minecraft server on ").append(ip.length() != 0 ? ip : "*").append(":").append(i).toString());
         try
         {
             field_6036_c = new NetworkListenThread(this, inetaddress, i);
@@ -99,6 +100,17 @@ public class MinecraftServer
         logger.info("Done! For help, type \"help\" or \"?\"");
         return true;
 
+    }
+    
+    private long hashSeed(String seedString) {
+    	long seed;
+    	try {
+    		seed = Long.parseLong(seedString);
+    	}
+    	catch(Exception e) {
+    		seed = seedString.hashCode();
+    	}
+    	return seed;
     }
 
     private void loadWorld(String worldName, long seed)
