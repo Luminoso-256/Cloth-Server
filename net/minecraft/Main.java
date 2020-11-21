@@ -5,13 +5,11 @@ import net.minecraft.clothutils.plugins.stich.StitchLoader;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
 import org.luaj.vm2.Globals;
-import org.luaj.vm2.Lua;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,17 +35,17 @@ public class Main {
         //Main classes
         LuaValue MinecraftServer = CoerceJavaToLua.coerce(minecraftServer);
         LuaValue ConfigManager = CoerceJavaToLua.coerce(minecraftServer.configManager);
-        LuaValue WorldManager = CoerceJavaToLua.coerce(minecraftServer.worldMngr);
+        LuaValue WorldManager = CoerceJavaToLua.coerce(minecraftServer.overworld);
         LuaValue PropertyManager = CoerceJavaToLua.coerce(minecraftServer.propertyManagerObj);
         LuaValue GameruleManager = CoerceJavaToLua.coerce(new GameruleManager());
         //LuaValue Block = CoerceJavaToLua.coerce(new Block(0, Material.air));
 
 
         //All of our lovely small classes we could ever possible need
-        LuaValue EntityCreeper = CoerceJavaToLua.coerce(new EntityCreeper(minecraftServer.worldMngr));
-        LuaValue EntitySpider = CoerceJavaToLua.coerce(new EntitySpider(minecraftServer.worldMngr));
-        LuaValue EntitySkeleton = CoerceJavaToLua.coerce(new EntitySkeleton(minecraftServer.worldMngr));
-        LuaValue EntityZombie = CoerceJavaToLua.coerce(new EntityZombie(minecraftServer.worldMngr));
+        LuaValue EntityCreeper = CoerceJavaToLua.coerce(new EntityCreeper(minecraftServer.overworld));
+        LuaValue EntitySpider = CoerceJavaToLua.coerce(new EntitySpider(minecraftServer.overworld));
+        LuaValue EntitySkeleton = CoerceJavaToLua.coerce(new EntitySkeleton(minecraftServer.overworld));
+        LuaValue EntityZombie = CoerceJavaToLua.coerce(new EntityZombie(minecraftServer.overworld));
         //Main classes
         _G.set("minecraft_server", MinecraftServer);
         _G.set("world", WorldManager);

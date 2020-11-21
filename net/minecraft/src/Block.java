@@ -4,10 +4,7 @@ package net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import net.minecraft.clothutils.GameruleManager;
-import net.minecraft.clothutils.plugins.stich.StitchLoader;
-import org.luaj.vm2.lib.jse.JsePlatform;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -203,7 +200,7 @@ public class Block
         {
             return 0.0F;
         }
-        if(!entityplayer.func_167_b(this))
+        if(!entityplayer.canHarvest(this))
         {
             return 1.0F / blockHardness / 100F;
         } else

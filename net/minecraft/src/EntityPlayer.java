@@ -5,7 +5,6 @@ package net.minecraft.src;
 
 import net.minecraft.clothutils.GameruleManager;
 
-import java.io.File;
 import java.util.List;
 
 public class EntityPlayer extends EntityLiving
@@ -175,10 +174,10 @@ public class EntityPlayer extends EntityLiving
             entityitem.motionY += (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.1F;
             entityitem.motionZ += Math.sin(f3) * (double)f1;
         }
-        func_162_a(entityitem);
+        dropItem(entityitem);
     }
 
-    protected void func_162_a(EntityItem entityitem)
+    protected void dropItem(EntityItem entityitem)
     {
         worldObj.entityJoinedWorld(entityitem);
     }
@@ -197,7 +196,7 @@ public class EntityPlayer extends EntityLiving
         return f;
     }
 
-    public boolean func_167_b(Block block)
+    public boolean canHarvest(Block block)
     {
         return inventory.canHarvestBlock(block);
     }

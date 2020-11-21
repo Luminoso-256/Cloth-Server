@@ -90,7 +90,7 @@ public class EntityTracker
             EntityTrackerEntry entitytrackerentry = new EntityTrackerEntry(entity, i, j, flag);
             field_911_a.add(entitytrackerentry);
             field_910_b.addKey(entity.field_331_c, entitytrackerentry);
-            entitytrackerentry.func_601_b(mcServer.worldMngr.playerEntities);
+            entitytrackerentry.func_601_b(mcServer.overworld.playerEntities);
             return;
         }
     }
@@ -133,7 +133,7 @@ public class EntityTracker
                 break;
             }
             EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry)iterator.next();
-            entitytrackerentry.func_605_a(mcServer.worldMngr.playerEntities);
+            entitytrackerentry.func_605_a(mcServer.overworld.playerEntities);
             if(entitytrackerentry.field_900_j && (entitytrackerentry.field_909_a instanceof EntityPlayerMP))
             {
                 arraylist.add((EntityPlayerMP)entitytrackerentry.field_909_a);

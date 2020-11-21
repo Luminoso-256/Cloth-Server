@@ -97,7 +97,7 @@ public class ItemInWorldManager
                 field_675_a.func_164_C();
             }
         }
-        if(flag && field_675_a.func_167_b(Block.blocksList[l]))
+        if(flag && field_675_a.canHarvest(Block.blocksList[l]))
         {
             Block.blocksList[l].func_12007_g(field_674_b, i, j, k, i1);
         }

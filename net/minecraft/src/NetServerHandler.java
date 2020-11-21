@@ -3,7 +3,6 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.File;
 import java.util.logging.Logger;
 
 import net.minecraft.clothutils.GameruleManager;
@@ -84,7 +83,7 @@ public class NetServerHandler extends NetHandler
                 playerEntity.motionZ = d9;
                 if(playerEntity.field_327_g != null)
                 {
-                    mcServer.worldMngr.func_12017_b(playerEntity.field_327_g, true);
+                    mcServer.overworld.func_12017_b(playerEntity.field_327_g, true);
                 }
                 if(playerEntity.field_327_g != null)
                 {
@@ -94,7 +93,7 @@ public class NetServerHandler extends NetHandler
                 field_9009_g = playerEntity.posX;
                 field_9008_h = playerEntity.posY;
                 field_9007_i = playerEntity.posZ;
-                mcServer.worldMngr.func_520_e(playerEntity);
+                mcServer.overworld.func_520_e(playerEntity);
                 return;
             }
             double d1 = playerEntity.posY;
@@ -135,7 +134,7 @@ public class NetServerHandler extends NetHandler
             double d12 = d5 - playerEntity.posY;
             double d13 = d7 - playerEntity.posZ;
             float f4 = 0.0625F;
-            boolean flag = mcServer.worldMngr.getCollidingBoundingBoxes(playerEntity, playerEntity.boundingBox.copy().func_694_e(f4, f4, f4)).size() == 0;
+            boolean flag = mcServer.overworld.getCollidingBoundingBoxes(playerEntity, playerEntity.boundingBox.copy().func_694_e(f4, f4, f4)).size() == 0;
             playerEntity.moveEntity(d11, d12, d13);
             d11 = d3 - playerEntity.posX;
             d12 = d5 - playerEntity.posY;
@@ -154,7 +153,7 @@ public class NetServerHandler extends NetHandler
                 System.out.println((new StringBuilder()).append("Expected ").append(playerEntity.posX).append(", ").append(playerEntity.posY).append(", ").append(playerEntity.posZ).toString());
             }
             playerEntity.setPositionAndRotation(d3, d5, d7, f2, f3);
-            boolean flag2 = mcServer.worldMngr.getCollidingBoundingBoxes(playerEntity, playerEntity.boundingBox.copy().func_694_e(f4, f4, f4)).size() == 0;
+            boolean flag2 = mcServer.overworld.getCollidingBoundingBoxes(playerEntity, playerEntity.boundingBox.copy().func_694_e(f4, f4, f4)).size() == 0;
             if(flag && (flag1 || !flag2))
             {
                 func_41_a(field_9009_g, field_9008_h, field_9007_i, f2, f3);
@@ -180,7 +179,7 @@ public class NetServerHandler extends NetHandler
     public void handleBlockDig(Packet14BlockDig packet14blockdig)
     {
         playerEntity.inventory.mainInventory[playerEntity.inventory.currentItem] = field_10_k;
-        boolean flag = mcServer.worldMngr.field_819_z = mcServer.configManager.isOp(playerEntity.username);
+        boolean flag = mcServer.overworld.field_819_z = mcServer.configManager.isOp(playerEntity.username);
         boolean flag1 = false;
         if(packet14blockdig.status == 0)
         {
@@ -208,8 +207,8 @@ public class NetServerHandler extends NetHandler
             playerEntity.posY = d7;
         }
         int l = packet14blockdig.face;
-        int i1 = (int)MathHelper.abs(i - mcServer.worldMngr.spawnX);
-        int j1 = (int)MathHelper.abs(k - mcServer.worldMngr.spawnZ);
+        int i1 = (int)MathHelper.abs(i - mcServer.overworld.spawnX);
+        int j1 = (int)MathHelper.abs(k - mcServer.overworld.spawnZ);
         if(i1 > j1)
         {
             j1 = i1;
@@ -240,27 +239,27 @@ public class NetServerHandler extends NetHandler
             double d8 = d2 * d2 + d4 * d4 + d6 * d6;
             if(d8 < 256D)
             {
-                playerEntity.field_421_a.sendPacket(new Packet53BlockChange(i, j, k, mcServer.worldMngr));
+                playerEntity.field_421_a.sendPacket(new Packet53BlockChange(i, j, k, mcServer.overworld));
             }
         }
-        mcServer.worldMngr.field_819_z = false;
+        mcServer.overworld.field_819_z = false;
     }
 
     public void handlePlace(Packet15Place packet15place)
     {
-        boolean flag = mcServer.worldMngr.field_819_z = mcServer.configManager.isOp(playerEntity.username);
+        boolean flag = mcServer.overworld.field_819_z = mcServer.configManager.isOp(playerEntity.username);
         if(packet15place.direction == 255)
         {
             ItemStack itemstack = packet15place.id < 0 ? null : new ItemStack(packet15place.id);
-            playerEntity.field_425_ad.func_6154_a(playerEntity, mcServer.worldMngr, itemstack);
+            playerEntity.field_425_ad.func_6154_a(playerEntity, mcServer.overworld, itemstack);
         } else
         {
             int i = packet15place.xPosition;
             int j = packet15place.yPosition;
             int k = packet15place.zPosition;
             int l = packet15place.direction;
-            int i1 = (int)MathHelper.abs(i - mcServer.worldMngr.spawnX);
-            int j1 = (int)MathHelper.abs(k - mcServer.worldMngr.spawnZ);
+            int i1 = (int)MathHelper.abs(i - mcServer.overworld.spawnX);
+            int j1 = (int)MathHelper.abs(k - mcServer.overworld.spawnZ);
             if(i1 > j1)
             {
                 j1 = i1;
@@ -268,9 +267,9 @@ public class NetServerHandler extends NetHandler
             if(j1 > 16 || flag)
             {
                 ItemStack itemstack1 = packet15place.id < 0 ? null : new ItemStack(packet15place.id);
-                playerEntity.field_425_ad.func_327_a(playerEntity, mcServer.worldMngr, itemstack1, i, j, k, l);
+                playerEntity.field_425_ad.func_327_a(playerEntity, mcServer.overworld, itemstack1, i, j, k, l);
             }
-            playerEntity.field_421_a.sendPacket(new Packet53BlockChange(i, j, k, mcServer.worldMngr));
+            playerEntity.field_421_a.sendPacket(new Packet53BlockChange(i, j, k, mcServer.overworld));
             if(l == 0)
             {
                 j--;
@@ -295,9 +294,9 @@ public class NetServerHandler extends NetHandler
             {
                 i++;
             }
-            playerEntity.field_421_a.sendPacket(new Packet53BlockChange(i, j, k, mcServer.worldMngr));
+            playerEntity.field_421_a.sendPacket(new Packet53BlockChange(i, j, k, mcServer.overworld));
         }
-        mcServer.worldMngr.field_819_z = false;
+        mcServer.overworld.field_819_z = false;
     }
 
     public void handleErrorMessage(String s)
@@ -339,12 +338,12 @@ public class NetServerHandler extends NetHandler
         double d = (double)packet21pickupspawn.xPosition / 32D;
         double d1 = (double)packet21pickupspawn.yPosition / 32D;
         double d2 = (double)packet21pickupspawn.zPosition / 32D;
-        EntityItem entityitem = new EntityItem(mcServer.worldMngr, d, d1, d2, new ItemStack(packet21pickupspawn.itemId, packet21pickupspawn.count));
+        EntityItem entityitem = new EntityItem(mcServer.overworld, d, d1, d2, new ItemStack(packet21pickupspawn.itemId, packet21pickupspawn.count));
         entityitem.motionX = (double)packet21pickupspawn.rotation / 128D;
         entityitem.motionY = (double)packet21pickupspawn.pitch / 128D;
         entityitem.motionZ = (double)packet21pickupspawn.roll / 128D;
         entityitem.field_433_ad = 10;
-        mcServer.worldMngr.entityJoinedWorld(entityitem);
+        mcServer.overworld.entityJoinedWorld(entityitem);
     }
 
     public void handleChat(Packet3Chat packet3chat)
@@ -511,7 +510,7 @@ public class NetServerHandler extends NetHandler
         {
             return;
         }
-        TileEntity tileentity = mcServer.worldMngr.getBlock(packet59complexentity.xPosition, packet59complexentity.yPosition, packet59complexentity.zPosition);
+        TileEntity tileentity = mcServer.overworld.getBlock(packet59complexentity.xPosition, packet59complexentity.yPosition, packet59complexentity.zPosition);
         if(tileentity != null)
         {
             try
@@ -525,7 +524,7 @@ public class NetServerHandler extends NetHandler
 
     public void func_6006_a(Packet7 packet7)
     {
-        Entity entity = mcServer.worldMngr.func_6158_a(packet7.field_9018_b);
+        Entity entity = mcServer.overworld.func_6158_a(packet7.field_9018_b);
         playerEntity.inventory.mainInventory[playerEntity.inventory.currentItem] = field_10_k;
         if(entity != null && playerEntity.func_145_g(entity))
         {

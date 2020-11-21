@@ -104,8 +104,8 @@ public class EntityPlayerMP extends EntityPlayer
             if(flag)
             {
                 field_422_ag.remove(chunkcoordintpair);
-                field_421_a.sendPacket(new Packet51MapChunk(chunkcoordintpair.field_152_a * 16, 0, chunkcoordintpair.field_151_b * 16, 16, 128, 16, mcServer.worldMngr));
-                List list = mcServer.worldMngr.func_532_d(chunkcoordintpair.field_152_a * 16, 0, chunkcoordintpair.field_151_b * 16, chunkcoordintpair.field_152_a * 16 + 16, 128, chunkcoordintpair.field_151_b * 16 + 16);
+                field_421_a.sendPacket(new Packet51MapChunk(chunkcoordintpair.field_152_a * 16, 0, chunkcoordintpair.field_151_b * 16, 16, 128, 16, mcServer.overworld));
+                List list = mcServer.overworld.func_532_d(chunkcoordintpair.field_152_a * 16, 0, chunkcoordintpair.field_151_b * 16, chunkcoordintpair.field_152_a * 16 + 16, 128, chunkcoordintpair.field_151_b * 16 + 16);
                 for(int j = 0; j < list.size(); j++)
                 {
                     TileEntity tileentity = (TileEntity)list.get(j);
