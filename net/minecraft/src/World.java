@@ -3,6 +3,7 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.clothutils.WorldGenParams;
 
 import java.io.*;
@@ -1568,7 +1569,9 @@ public class World
             }
 
         }
-        worldTime++;
+        if(GameruleManager.getBooleanGamerule("freezetime", false)) {
+            worldTime++;
+        }
         if(worldTime % (long)field_4277_j == 0L)
         {
             saveWorld(false, null);

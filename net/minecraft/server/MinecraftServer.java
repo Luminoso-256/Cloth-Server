@@ -560,6 +560,10 @@ public class MinecraftServer
                         if(commandparts[2] == "true"){GameruleManager.setBooleanGamerule("usewhitelist", true);}
                         else if (commandparts[2] == "false"){GameruleManager.setBooleanGamerule("usewhitelist", false);}
                         break;
+                    case "freezetime":
+                        if(commandparts[2] == "true"){GameruleManager.setBooleanGamerule("freezetime", true);}
+                        else if (commandparts[2] == "false"){GameruleManager.setBooleanGamerule("freezetime", false);}
+                        break;
                 }
             }
             if(command.toLowerCase().startsWith("timeset ")){
@@ -573,7 +577,7 @@ public class MinecraftServer
                    overworld.worldTime = time;
                 }
             }
-            
+
             if(command.toLowerCase().startsWith("list"))
             {
                 icommandlistener.log((new StringBuilder()).append("Connected players: ").append(configManager.getPlayerList()).toString());
