@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static net.minecraft.Main.VERSION_STRING;
+import static net.minecraft.clothutils.Globals.*;
 
 public class MinecraftServer
     implements ICommandListener, Runnable

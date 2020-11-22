@@ -1,13 +1,13 @@
 package net.minecraft.clothutils;
 /**
- * [OLD]Hardcoded block namespaced names
+ * Hard-coded fallback block mappings
  * @author Luminoso-256
  */
 public class FallbackIdMaps {
     public int GetIDForNamespacedBlockName(String NamespacedName){
         int ID = 0; // air if all else fails
-        //This is likely the most treacherous way  to do it,  but its simple, so why not - ill clean  it  up  later
-        if(NamespacedName.equals("air")){ID = 0;}
+        //Hardcoded maps if blocks.mappings falls short
+        //if(NamespacedName.equals("air")){ID = 0;}
         if(NamespacedName.equals("stone")){ID = 1;}
         if(NamespacedName.equals("grass")){ID = 2;}
         if(NamespacedName.equals("dirt")){ID = 3;}

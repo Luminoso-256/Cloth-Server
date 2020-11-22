@@ -16,26 +16,21 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static net.minecraft.clothutils.Globals.*;
+
 /**
  * Custom Main class for stitch & convience
  * @author Luminoso-256
  */
 public class Main {
-    // [Cloth Version  β1.0.0]
-    // [Cloth Release 1.0.0]
 
-    public static final String VERSION_STRING = "Cloth Beta 1.0.0 - pre1";
-
-    //Dont ask why. IDK why. Its fun ig
-    public static final String[] WELCOME_MSG = {"Its itchy!", "Get stitching!",
-     "Supporting alpha!", "Its in beta!", "Also check out MineOnline!",
-     "Bugs are features!", "Report issues on github!", "Unobfuscated!"};
 
     public static final Logger logger = Logger.getLogger("Minecraft");
     public static final MinecraftServer minecraftServer = new MinecraftServer(); //Get a reference to our lovely MC server class
     public static void main(String[] args){
         Random random = new Random();
         logger.info("Welcome to "+VERSION_STRING+" - "+WELCOME_MSG[random.nextInt(WELCOME_MSG.length)]);
+        if(IS_PREVIEW){logger.warning("Warning: This is a pre-release build of Cloth. Issues may arise.");}
         logger.info("[Stitch] Loading stitch plugins from /plugins...");
         Globals _G = JsePlatform.standardGlobals();
         //Main classes
