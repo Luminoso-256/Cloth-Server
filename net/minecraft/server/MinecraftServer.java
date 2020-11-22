@@ -7,6 +7,7 @@ package net.minecraft.server;
 import net.minecraft.clothutils.BlockMappingsManager;
 import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.clothutils.WorldGenParams;
+import net.minecraft.clothutils.plugins.stich.StitchLoader;
 import net.minecraft.src.*;
 
 import java.awt.GraphicsEnvironment;
@@ -60,7 +61,8 @@ public class MinecraftServer
         logger.info("Loading properties");
         Random random = new Random();
         propertyManagerObj = new PropertyManager(new File("server.properties"));
-        //GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules")); //gamerule config file
+
+
         String ip = propertyManagerObj.getStringProperty("server-ip", "");
         String seedString = propertyManagerObj.getStringProperty("seed", String.valueOf(random.nextLong()));
         long seed = hashSeed(seedString);
@@ -119,11 +121,13 @@ public class MinecraftServer
         overworld = new WorldServer(this, new File("."), worldName, seed, propertyManagerObj.getBooleanProperty("hellworld", false) ? -1 : 0);
         overworld.func_4072_a(new WorldManager(this));
 
-        logger.info("[Cloth] Starting nether init");
-        netherWorld = new WorldServer(this, new File("."), worldName + "_nether", seed, -1);
-        netherWorld.func_4072_a(new WorldManager(this));
-        logger.info("[Debug] created nether object with seed "+ netherWorld.randomSeed);
 
+       if(GameruleManager.getBooleanGamerule("preview_nether_worldgen",false)) {
+           logger.info("[Cloth] Starting nether init");
+           netherWorld = new WorldServer(this, new File("."), worldName + "_nether", seed, -1);
+           netherWorld.func_4072_a(new WorldManager(this));
+           logger.info("[Debug] created nether object with seed " + netherWorld.randomSeed);
+       }
         overworld.monstersEnabled = propertyManagerObj.getBooleanProperty("spawn-monsters", true) ? 1 : 0;
         configManager.setPlayerManager(overworld);
         byte byte0 = 10;
@@ -207,6 +211,7 @@ public class MinecraftServer
                 long l1 = 0L;
                 while(field_6025_n)  //MAIN GAME LOOP FOR HOOKINS
                 {
+
 
                     //Sleep vote control logic
                     if(IsSleepVoteOngoing){
@@ -451,7 +456,7 @@ public class MinecraftServer
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:"+ params.GetSeedFromPropertiesFile());
             }
-            if(command.toLowerCase().startsWith("whitelist ")){
+            if(command.toLowerCase().startsWith("whitelist ") && GameruleManager.getBooleanGamerule("preview_keepinventorysystem", false)){
                 String[] args =  command.toLowerCase().split(" ");
                 if(args[1] == "add"){
                     configManager.whitelistPlayer(args[2]);
@@ -466,7 +471,9 @@ public class MinecraftServer
                     GameruleManager.setBooleanGamerule("usewhitelist", false);
                 }
             }
-            if(command.toLowerCase().startsWith("nether")){
+
+
+            if(command.toLowerCase().startsWith("nether") && GameruleManager.getBooleanGamerule("preview_nether_netherteleportcommand", false)){
                 EntityPlayerMP player = configManager.getPlayerEntity(username);
                 logger.info("[Debug] Attempting to send player "+ player.username +" to the nether. Safe Travels!");
                 overworld.RemoveEntity(player);
@@ -506,11 +513,9 @@ public class MinecraftServer
             }
             if(command.toLowerCase().startsWith("keepinvadd ")){
                 String commandparts[] = command.split(" ");
-                //GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
                 String keepinvlist = GameruleManager.getStringGamerule("keepinvlist", "");
-                keepinvlist += " ";
+                keepinvlist += "|"; //Pipe is seperator. Actual string would look something like Redbunny1|Redbunny2
                 keepinvlist += commandparts[1];
-               // System.out.println(keepinvlist);
                 GameruleManager.setStringGamerule("keepinvlist", keepinvlist);
             }
             if(command.toLowerCase().startsWith("gamerule ")){
@@ -522,6 +527,13 @@ public class MinecraftServer
                         else if (commandparts[2] == "false"){GameruleManager.setBooleanGamerule("announcedeath", false);}
                         break;
                     case "inversemobspawnrate":
+                        if(commandparts[2] == "reset") {
+                            GameruleManager.setIntGamerule("inversemobspawnrate", 50);
+                        }
+                        else{
+                            int newVal = Integer.parseInt(commandparts[2]);
+                            GameruleManager.setIntGamerule("inversemobspawnrate", newVal);
+                        }
                         break;
                     case "domobgriefing":
                         if(commandparts[2] == "true"){GameruleManager.setBooleanGamerule("domobgriefing", true);}
@@ -532,6 +544,13 @@ public class MinecraftServer
                         else if (commandparts[2] == "false"){GameruleManager.setBooleanGamerule("dosleepvote", false);}
                         break;
                     case "inverseskeletonjockeyspawnrate":
+                        if(commandparts[2] == "reset") {
+                            GameruleManager.setIntGamerule("inverseskeletonjockeyspawnrate", 50);
+                        }
+                        else{
+                            int newVal = Integer.parseInt(commandparts[2]);
+                            GameruleManager.setIntGamerule("inverseskeletonjockeyspawnrate", newVal);
+                        }
                         break;
                     case "domoderntrample":
                         if(commandparts[2] == "true"){GameruleManager.setBooleanGamerule("domoderntrample", true);}
@@ -554,6 +573,7 @@ public class MinecraftServer
                    overworld.worldTime = time;
                 }
             }
+            
             if(command.toLowerCase().startsWith("list"))
             {
                 icommandlistener.log((new StringBuilder()).append("Connected players: ").append(configManager.getPlayerList()).toString());

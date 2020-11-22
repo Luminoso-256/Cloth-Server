@@ -12,6 +12,7 @@ import org.luaj.vm2.lib.jse.JsePlatform;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,13 +24,18 @@ public class Main {
     // [Cloth Version  β1.0.0]
     // [Cloth Release 1.0.0]
 
-    public static final String VERSION_STRING = "[Cloth Alpha 1.11.0]";
+    public static final String VERSION_STRING = "Cloth Beta 1.0.0 - pre1";
 
+    //Dont ask why. IDK why. Its fun ig
+    public static final String[] WELCOME_MSG = {"Its itchy!", "Get stitching!",
+     "Supporting alpha!", "Its in beta!", "Also check out MineOnline!",
+     "Bugs are features!", "Report issues on github!", "Unobfuscated!"};
 
     public static final Logger logger = Logger.getLogger("Minecraft");
     public static final MinecraftServer minecraftServer = new MinecraftServer(); //Get a reference to our lovely MC server class
     public static void main(String[] args){
-        logger.info("[Server] "+VERSION_STRING+"| Client Ver: Alpha1.2.6 | Original Server Ver: 0.28.0");
+        Random random = new Random();
+        logger.info("Welcome to "+VERSION_STRING+" - "+WELCOME_MSG[random.nextInt(WELCOME_MSG.length)]);
         logger.info("[Stitch] Loading stitch plugins from /plugins...");
         Globals _G = JsePlatform.standardGlobals();
         //Main classes
@@ -59,12 +65,12 @@ public class Main {
         _G.set("entity_zombie", EntityZombie);
 
 
-        StitchLoader stich = new StitchLoader(_G);
+        StitchLoader stitch = new StitchLoader(_G);
 
-        stich.RegisterAllPlugins();
-        logger.info("[Stitch] Calling initiliazation hook");
+        stitch.RegisterAllPlugins();
+        logger.info("[Stitch] Calling initialization hook");
          List<String> DummyList = new ArrayList<>();
-        stich.CallHook("OnServerInit", DummyList);
+        stitch.CallHook("OnServerInit", DummyList);
 
         logger.info("[Cloth] Checking world seed");
         PropertyManager propertyManager = new PropertyManager(new File("server.properties"));

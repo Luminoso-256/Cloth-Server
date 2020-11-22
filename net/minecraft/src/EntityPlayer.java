@@ -118,8 +118,8 @@ public class EntityPlayer extends EntityLiving
         //KEEP INV
         //if(!gameruleManager.getBooleanGamerule("keepinventory", false)) {
              String keepinvlist = GameruleManager.getStringGamerule("keepinvlist", "");
-           // String[] keepinvplayers = keepinvlist.split(" ");
-            if(!keepinvlist.contains(" " + username + " ")){
+           System.out.println("Checking list "+keepinvlist+" for user "+username);
+            if(!keepinvlist.contains("|" + username + "|")){
                 inventory.dropAllItems();
             }
 

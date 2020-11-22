@@ -3,6 +3,8 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.clothutils.GameruleManager;
+
 import java.util.*;
 
 class PlayerInstance
@@ -18,7 +20,9 @@ class PlayerInstance
         field_1070_d = j;
         field_1069_e = new ChunkCoordIntPair(i, j);
         PlayerManager.getMinecraftServer(playermanager).overworld.chunkProvider.loadChunk(i, j);
-        PlayerManager.getMinecraftServer(playermanager).netherWorld.chunkProvider.loadChunk(i, j);
+        if(GameruleManager.getBooleanGamerule("preview_nether_playerinstanceload", false)) {
+            PlayerManager.getMinecraftServer(playermanager).netherWorld.chunkProvider.loadChunk(i, j);
+        }
     }
 
     public void func_779_a(EntityPlayerMP entityplayermp)
