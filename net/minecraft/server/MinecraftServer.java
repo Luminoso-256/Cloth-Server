@@ -5,6 +5,7 @@
 package net.minecraft.server;
 
 import net.minecraft.clothutils.BlockMappingsManager;
+import net.minecraft.clothutils.FallbackIdMaps;
 import net.minecraft.clothutils.GameruleManager;
 import net.minecraft.clothutils.WorldGenParams;
 import net.minecraft.clothutils.plugins.stich.StitchLoader;
@@ -733,13 +734,13 @@ public class MinecraftServer
                       //  NameIDMappings nameIDMappings = new NameIDMappings();
 
                         BlockMappingsManager BlockMappings = new BlockMappingsManager(new File("blocks.mappings"));
-
-                        int j = BlockMappings.getIdForString(as1[2], 0); // This is literally the only change between give and giveID
+                        FallbackIdMaps fallbackIdMaps = new FallbackIdMaps();
+                        int j = BlockMappings.getIdForString(as1[2], fallbackIdMaps.GetIDForNamespacedBlockName(as1[2])); // This is literally the only change between give and giveID
                        // logger.info("Inputed name:"+as1[2]);
                        // logger.info("Processed ID:"+j);
                         if(Item.itemsList[j] != null)
                         {
-                            func_6014_a(username, (new StringBuilder()).append("Giving ").append(entityplayermp4.username).append(" some ").append(as1[2]).toString());
+                            func_6014_a(username, (new StringBuilder()).append("Giving ").append(entityplayermp4.username).append(" "+as1[3]+"").append(as1[2]).toString());
                             int k = 1;
                             if(as1.length > 3)
                             {

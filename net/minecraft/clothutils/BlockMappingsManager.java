@@ -26,19 +26,19 @@ public class BlockMappingsManager
             }
             catch(Exception exception)
             {
-                logger.log(Level.WARNING, (new StringBuilder()).append("Failed to load ").append(file).toString(), exception);
+                logger.log(Level.WARNING, (new StringBuilder()).append("Failed to load - generating  new ").append(file).toString(), exception);
                 generateNewProperties();
             }
         } else
         {
-            logger.log(Level.WARNING, (new StringBuilder()).append(file).append(" does not exist").toString());
+            logger.log(Level.WARNING, (new StringBuilder()).append(file).append(" does not exist, generating new").toString());
             generateNewProperties();
         }
     }
 
     public void generateNewProperties()
     {
-        logger.log(Level.INFO, "Generating new gamerules file");
+        logger.log(Level.INFO, "Generating new blocks.mappings file");
         saveProperties();
     }
 
@@ -77,14 +77,6 @@ public class BlockMappingsManager
             serverProperties.setProperty(name, (new StringBuilder()).append("").append(fallback).toString());
         }
         return fallback;
-    }
-
-    public void NewTableInit(){
-        //TODO: Make this function call every ID with a default mapping to ensure stuff doesnt break!
-        // like this:
-        getIdForString("air", 0);
-        getIdForString("stone", 1);
-        getIdForString("rock", 1);
     }
 
 

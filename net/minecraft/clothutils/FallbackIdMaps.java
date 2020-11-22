@@ -3,7 +3,7 @@ package net.minecraft.clothutils;
  * [OLD]Hardcoded block namespaced names
  * @author Luminoso-256
  */
-public class NameIDMappings {
+public class FallbackIdMaps {
     public int GetIDForNamespacedBlockName(String NamespacedName){
         int ID = 0; // air if all else fails
         //This is likely the most treacherous way  to do it,  but its simple, so why not - ill clean  it  up  later
