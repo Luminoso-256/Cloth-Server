@@ -161,9 +161,7 @@ public abstract class Entity
             {
                 if(field_9061_Z % 20 == 0)
                 {
-                    //Your drowning! oh no!
-                    damageSources.add("drown");
-                    System.out.println("DROWN_DAMAGE_SOURCE");
+
 
                     attackEntity(null, 1);
                 }
@@ -177,6 +175,7 @@ public abstract class Entity
         }
         if(posY < -64D)
         {
+            damageSources.add("void");
             func_4043_o();
         }
         field_4131_c = false;
@@ -444,7 +443,7 @@ public abstract class Entity
             if(fallDistance > 0.0F)
             {
 
-                damageSources.add("fall");
+
             	int xPos = MathHelper.floor_double(posX);
                 int yPos = MathHelper.floor_double(posY - 0.20000000298023224D - (double)yOffset);
                 int zPos = MathHelper.floor_double(posZ);

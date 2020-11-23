@@ -555,11 +555,12 @@ public class Block
     public static final Block blockClay;
     public static final Block reed;
     public static final Block jukebox;
-    public static final Block field_9050_aZ;
+    public static final Block fence;
     public static final Block pumpkin;
     public static final Block bloodStone;
     public static final Block slowSand;
     public static final Block lightStone;
+   // public static final Block stoneModded;
     public static final BlockPortal portal;
     public static final Block field_9035_bf;
     public int blockIndexInTexture;
@@ -590,6 +591,7 @@ public class Block
         soundSandFootstep = new StepSoundSand("sand", 1.0F, 1.0F);
         blocksList = new Block[256];
         stone = (new BlockStone(1, 1)).setHardness(1.5F).setResistance(10F).setStepSound(soundStoneFootstep);
+        //stoneModded = (new BlockStone(255, 2)).setHardness(1.5F).setResistance(10F).setStepSound(soundStoneFootstep);
         grass = (BlockGrass)(new BlockGrass(2)).setHardness(0.6F).setStepSound(soundGrassFootstep);
         dirt = (new BlockDirt(3, 2)).setHardness(0.5F).setStepSound(soundGravelFootstep);
         cobblestone = (new Block(4, 16, Material.rock)).setHardness(2.0F).setResistance(10F).setStepSound(soundStoneFootstep);
@@ -658,7 +660,7 @@ public class Block
         blockClay = (new BlockClay(82, 72)).setHardness(0.6F).setStepSound(soundGravelFootstep);
         reed = (new BlockReed(83, 73)).setHardness(0.0F).setStepSound(soundGrassFootstep);
         jukebox = (new BlockJukeBox(84, 74)).setHardness(2.0F).setResistance(10F).setStepSound(soundStoneFootstep);
-        field_9050_aZ = (new BlockFence(85, 4)).setHardness(2.0F).setResistance(5F).setStepSound(soundWoodFootstep);
+        fence = (new BlockFence(85, 4)).setHardness(2.0F).setResistance(5F).setStepSound(soundWoodFootstep);
         pumpkin = (new BlockPumpkin(86, 102, false)).setHardness(1.0F).setStepSound(soundWoodFootstep);
         bloodStone = (new BlockBloodStone(87, 103)).setHardness(0.4F).setStepSound(soundStoneFootstep);
         slowSand = (new BlockSlowSand(88, 104)).setHardness(0.5F).setStepSound(soundSandFootstep);

@@ -213,7 +213,7 @@ public class MinecraftServer
                 while(field_6025_n)  //MAIN GAME LOOP FOR HOOKINS
                 {
 
-
+                    configManager.sendChatMessageToAllPlayers("TEST_CONFIGMANAGER_SENDCHAT");
                     //Sleep vote control logic
                     if(IsSleepVoteOngoing){
                         int TotalNumPlayers = configManager.playerEntities.size();
@@ -259,20 +259,25 @@ public class MinecraftServer
                                    DeathMsg = player.username + " has died. Rest in Peace"; // eventually ill get more interesting- maybe have a registery of dmg sources?
                                }
                                else {
-                                   String lastDamageSource = player.damageSources.get(player.damageSources.size() -1);
-
+                                   String lastDamageSource = "";
+                                   if(player.damageSources.size() != 0) {
+                                       logger.info("[Debug] Grabbing last dmg source");
+                                       lastDamageSource = player.damageSources.get(player.damageSources.size() - 1);
+                                   }
                                    int numMsg;
                                    String message;
                                    switch(lastDamageSource){
                                        case "lava":
                                             numMsg = (int) deathTypeMessageList.get("lava");
                                             message= (String) deathMsgNames.get("lava."+numMsg);
+                                            logger.info("[Debug] Lava is the damage source");
                                            DeathMsg = message.replace("%player%", player.username);
                                            break;
                                        case "entity":
                                            numMsg = (int) deathTypeMessageList.get("entity");
                                            message= (String) deathMsgNames.get("entity."+numMsg);
-                                           DeathMsg = message.replace("%player%", player.username);
+                                           String DeathMsgtmp = message.replace("%player%", player.username);
+                                           DeathMsg = DeathMsgtmp.replace("%entity%", player.lastDamagingEntity.toString());
                                            break;
                                        case "fall":
                                            numMsg = (int) deathTypeMessageList.get("fall");
@@ -307,7 +312,9 @@ public class MinecraftServer
                                    }
                                }
                                player.damageSources = new ArrayList<String>(); //reset the list
+                               logger.info("Sending dmsg string"+DeathMsg);
                                 configManager.sendChatMessageToAllPlayers(DeathMsg);
+
                                 player.HasRespawed = true;
                          }
 
@@ -550,6 +557,8 @@ public class MinecraftServer
             if(command.toLowerCase().startsWith("kill")){
              //   if(s.toLowerCase().startsWith("heal")){
                     EntityPlayer player =  configManager.getPlayerEntity(username);
+                    player.damageSources.add("entity");
+                    player.lastDamagingEntity = configManager.getPlayerEntity(username);
                     player.exposedTakeDamage(40);
 
             }
@@ -624,7 +633,9 @@ public class MinecraftServer
             }
             if(command.toLowerCase().startsWith("timeset ")){
                 String targetTime = command.substring(command.indexOf(" ")).trim();
-                if(targetTime.equals("day")){ overworld.worldTime = 1000;}
+                if(targetTime.equals("day")){
+                    overworld.worldTime = 1000;
+                }
                 else
                 if(targetTime.equals("night")){
                     overworld.worldTime = 13000;}

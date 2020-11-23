@@ -53,5 +53,6 @@ public class Globals {
         put("drown.1", "%player% didnt come up for air");
         put("drown.2", "%player% is sleeping with the fish");
         put("drown.3", "%player% drowned");
+        put("test.1", "player.username: %player%. Last damaged entity: %entity%. World name: %world%. | TestDeathMsg");
     }};
 }

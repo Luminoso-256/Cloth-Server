@@ -105,7 +105,9 @@ public class EntityLiving extends Entity
                     float f2 = random.nextFloat() - random.nextFloat();
                     worldObj.spawnParticle("bubble", posX + (double)f, posY + (double)f1, posZ + (double)f2, motionX, motionY, motionZ);
                 }
-
+                //Your drowning! oh no!
+                damageSources.add("drown");
+                System.out.println("DROWN_DAMAGE_SOURCE");
                 attackEntity(null, 2);
             }
             field_9061_Z = 0;
@@ -388,6 +390,7 @@ public class EntityLiving extends Entity
         int i = (int)Math.ceil(f - 3F);
         if(i > 0)
         {
+            damageSources.add("fall");
             attackEntity(null, i);
             int j = worldObj.getBlockId(MathHelper.floor_double(posX), MathHelper.floor_double(posY - 0.20000000298023224D - (double)yOffset), MathHelper.floor_double(posZ));
             if(j > 0)
