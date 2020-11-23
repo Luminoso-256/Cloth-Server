@@ -10,7 +10,7 @@ public class Globals {
 
     //-------------------Release Information
     public static final boolean IS_PREVIEW = true; //I plan to release more early or test-specific releases now, so thisl be handy
-    public static final String VERSION_STRING = "Cloth Beta 1.0.0 preview 2";
+    public static final String VERSION_STRING = "Cloth Beta 1.0.0 preview 3";
 
     //-------------------Easter-eggs/Tidbits
     public static final String[] WELCOME_MSG = {"Its itchy!", "Get stitching!",

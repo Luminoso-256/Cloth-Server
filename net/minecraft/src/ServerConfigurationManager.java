@@ -98,7 +98,7 @@ public class ServerConfigurationManager
         String MOTD = propertyManager.getStringProperty("motd", "Welcome %player% to %world% ! ");
         String pnameReplace = MOTD.replace("%player%", entityplayermp.username);
         String finalMOTD = pnameReplace.replace("%world%", mcServer.worldName);
-        sendChatMessageToAllPlayers(finalMOTD);
+        sendChatMessageToPlayer(entityplayermp.username, finalMOTD);
     }
 
     public void func_613_b(EntityPlayerMP entityplayermp)
