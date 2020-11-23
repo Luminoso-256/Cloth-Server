@@ -4,7 +4,6 @@ package net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.util.List;
-import java.util.Random;
 
 public class EntityFireball extends Entity
 {
@@ -38,9 +37,9 @@ public class EntityFireball extends Entity
         setPosition(posX, posY, posZ);
         yOffset = 0.0F;
         motionX = motionY = motionZ = 0.0D;
-        d += field_9064_W.nextGaussian() * 0.40000000000000002D;
-        d1 += field_9064_W.nextGaussian() * 0.40000000000000002D;
-        d2 += field_9064_W.nextGaussian() * 0.40000000000000002D;
+        d += random.nextGaussian() * 0.40000000000000002D;
+        d1 += random.nextGaussian() * 0.40000000000000002D;
+        d2 += random.nextGaussian() * 0.40000000000000002D;
         double d3 = MathHelper.sqrt_double(d * d + d1 * d1 + d2 * d2);
         field_9199_b = (d / d3) * 0.10000000000000001D;
         field_9198_c = (d1 / d3) * 0.10000000000000001D;
@@ -61,9 +60,9 @@ public class EntityFireball extends Entity
             if(i != field_9194_ak)
             {
                 field_9192_al = false;
-                motionX *= field_9064_W.nextFloat() * 0.2F;
-                motionY *= field_9064_W.nextFloat() * 0.2F;
-                motionZ *= field_9064_W.nextFloat() * 0.2F;
+                motionX *= random.nextFloat() * 0.2F;
+                motionY *= random.nextFloat() * 0.2F;
+                motionZ *= random.nextFloat() * 0.2F;
                 field_9190_an = 0;
                 field_9189_ao = 0;
             } else

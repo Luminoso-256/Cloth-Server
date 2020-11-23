@@ -3,8 +3,6 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.util.Random;
-
 public class EntitySheep extends EntityAnimals
 {
 
@@ -21,13 +19,13 @@ public class EntitySheep extends EntityAnimals
         if(!worldObj.multiplayerWorld && !sheared && (entity instanceof EntityLiving))
         {
             sheared = true;
-            int j = 1 + field_9064_W.nextInt(3);
+            int j = 1 + random.nextInt(3);
             for(int k = 0; k < j; k++)
             {
                 EntityItem entityitem = dropItemWithOffset(Block.cloth.blockID, 1, 0,  1.0F);
-                entityitem.motionY += field_9064_W.nextFloat() * 0.05F;
-                entityitem.motionX += (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.1F;
-                entityitem.motionZ += (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.1F;
+                entityitem.motionY += random.nextFloat() * 0.05F;
+                entityitem.motionX += (random.nextFloat() - random.nextFloat()) * 0.1F;
+                entityitem.motionZ += (random.nextFloat() - random.nextFloat()) * 0.1F;
             }
 
         }

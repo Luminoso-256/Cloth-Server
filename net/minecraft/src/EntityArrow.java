@@ -4,7 +4,6 @@ package net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.util.List;
-import java.util.Random;
 
 public class EntityArrow extends Entity
 {
@@ -53,9 +52,9 @@ public class EntityArrow extends Entity
         d /= f2;
         d1 /= f2;
         d2 /= f2;
-        d += field_9064_W.nextGaussian() * 0.0074999998323619366D * (double)f1;
-        d1 += field_9064_W.nextGaussian() * 0.0074999998323619366D * (double)f1;
-        d2 += field_9064_W.nextGaussian() * 0.0074999998323619366D * (double)f1;
+        d += random.nextGaussian() * 0.0074999998323619366D * (double)f1;
+        d1 += random.nextGaussian() * 0.0074999998323619366D * (double)f1;
+        d2 += random.nextGaussian() * 0.0074999998323619366D * (double)f1;
         d *= f;
         d1 *= f;
         d2 *= f;
@@ -87,9 +86,9 @@ public class EntityArrow extends Entity
             if(i != field_9179_f)
             {
                 field_9181_aj = false;
-                motionX *= field_9064_W.nextFloat() * 0.2F;
-                motionY *= field_9064_W.nextFloat() * 0.2F;
-                motionZ *= field_9064_W.nextFloat() * 0.2F;
+                motionX *= random.nextFloat() * 0.2F;
+                motionY *= random.nextFloat() * 0.2F;
+                motionZ *= random.nextFloat() * 0.2F;
                 field_438_ai = 0;
                 field_437_aj = 0;
             } else
@@ -149,7 +148,7 @@ public class EntityArrow extends Entity
             {
                 if(movingobjectposition.entityHit.attackEntity(field_439_ah, 4))
                 {
-                    worldObj.playSoundAtEntity(this, "random.drr", 1.0F, 1.2F / (field_9064_W.nextFloat() * 0.2F + 0.9F));
+                    worldObj.playSoundAtEntity(this, "random.drr", 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
                     setEntityDead();
                 } else
                 {
@@ -173,7 +172,7 @@ public class EntityArrow extends Entity
                 posX -= (motionX / (double)f1) * 0.05000000074505806D;
                 posY -= (motionY / (double)f1) * 0.05000000074505806D;
                 posZ -= (motionZ / (double)f1) * 0.05000000074505806D;
-                worldObj.playSoundAtEntity(this, "random.drr", 1.0F, 1.2F / (field_9064_W.nextFloat() * 0.2F + 0.9F));
+                worldObj.playSoundAtEntity(this, "random.drr", 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
                 field_9181_aj = true;
                 field_9184_a = 7;
             }
@@ -236,7 +235,7 @@ public class EntityArrow extends Entity
         }
         if(field_9181_aj && field_439_ah == entityplayer && field_9184_a <= 0 && entityplayer.inventory.addItemStackToInventory(new ItemStack(Item.arrow.swiftedIndex, 1)))
         {
-            worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+            worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((random.nextFloat() - random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
             entityplayer.func_163_c(this, 1);
             setEntityDead();
         }

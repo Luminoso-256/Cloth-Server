@@ -4,7 +4,6 @@ package net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.util.List;
-import java.util.Random;
 
 public class EntityPigZombie extends EntityZombie
 {
@@ -25,7 +24,7 @@ public class EntityPigZombie extends EntityZombie
         field_9126_bt = field_389_ag == null ? 0.5F : 0.95F;
         if(field_4105_b > 0 && --field_4105_b == 0)
         {
-            worldObj.playSoundAtEntity(this, "mob.zombiepig.zpigangry", getSoundVolume() * 2.0F, ((field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.2F + 1.0F) * 1.8F);
+            worldObj.playSoundAtEntity(this, "mob.zombiepig.zpigangry", getSoundVolume() * 2.0F, ((random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F) * 1.8F);
         }
         super.onUpdate();
     }
@@ -86,8 +85,8 @@ public class EntityPigZombie extends EntityZombie
     private void func_4047_h(Entity entity)
     {
         field_389_ag = entity;
-        field_4106_a = 400 + field_9064_W.nextInt(400);
-        field_4105_b = field_9064_W.nextInt(40);
+        field_4106_a = 400 + random.nextInt(400);
+        field_4105_b = random.nextInt(40);
     }
 
     protected String getLivingSound()

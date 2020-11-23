@@ -3,8 +3,6 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.util.Random;
-
 public class EntityZombie extends EntityMobs
 {
 
@@ -21,7 +19,7 @@ public class EntityZombie extends EntityMobs
         if(worldObj.isDaytime())
         {
             float f = getEntityBrightness(1.0F);
-            if(f > 0.5F && worldObj.canBlockSeeTheSky(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ)) && field_9064_W.nextFloat() * 30F < (f - 0.4F) * 2.0F)
+            if(f > 0.5F && worldObj.canBlockSeeTheSky(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ)) && random.nextFloat() * 30F < (f - 0.4F) * 2.0F)
             {
                 field_9061_Z = 300;
             }

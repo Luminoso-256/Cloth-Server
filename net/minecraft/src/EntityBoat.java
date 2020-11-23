@@ -4,7 +4,6 @@ package net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.util.List;
-import java.util.Random;
 
 public class EntityBoat extends Entity
 {
@@ -183,9 +182,9 @@ public class EntityBoat extends Entity
             double d15 = Math.sin(((double)rotationYaw * 3.1415926535897931D) / 180D);
             for(int i1 = 0; (double)i1 < 1.0D + d11 * 60D; i1++)
             {
-                double d18 = field_9064_W.nextFloat() * 2.0F - 1.0F;
-                double d20 = (double)(field_9064_W.nextInt(2) * 2 - 1) * 0.69999999999999996D;
-                if(field_9064_W.nextBoolean())
+                double d18 = random.nextFloat() * 2.0F - 1.0F;
+                double d20 = (double)(random.nextInt(2) * 2 - 1) * 0.69999999999999996D;
+                if(random.nextBoolean())
                 {
                     double d21 = (posX - d13 * d18 * 0.80000000000000004D) + d15 * d20;
                     double d23 = posZ - d15 * d18 * 0.80000000000000004D - d13 * d20;

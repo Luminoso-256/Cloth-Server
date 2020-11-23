@@ -241,7 +241,14 @@ public class MinecraftServer
 
                         //GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
                         EntityPlayer player = (EntityPlayer)configManager.playerEntities.get(i);
-                       //
+
+                        List<String> damagesources = player.damageSources;
+                        for(String damagesource : damagesources){
+                            logger.info("[Debug] "+player.username+" has damage source"+damagesource);
+                        }
+
+
+
                         if(GameruleManager.getBooleanGamerule("announcedeath", true) == true && player.health <= 0){
                             // your dead. Boohoo
 
@@ -251,7 +258,26 @@ public class MinecraftServer
                                // You WILL DIE PROPERLY
                                 player.setEntityDead();
                                 //And then we will announce it
-                                String DeathMsg = player.username+" has died. Rest in Peace"; // eventually ill get more interesting- maybe have a registery of dmg sources?
+                               String DeathMsg = "[Cloth] Error! Death message not found. Likely cause: preview_death_specificdeathcause has been set true";
+                               player.damageSources = new ArrayList<String>(); //reset the list
+                               if(!GameruleManager.getBooleanGamerule("preview_death_specificdeathcause", false)) {
+                                   DeathMsg = player.username + " has died. Rest in Peace"; // eventually ill get more interesting- maybe have a registery of dmg sources?
+                               }
+                               else {
+                                   String lastDamageSource = player.damageSources.get(player.damageSources.size() -1);
+                                   switch(lastDamageSource){
+                                       case "lava":
+                                           int numMsg = (int) deathTypeMessageList.get("lava");
+                                           String message= (String) deathMsgNames.get("lava.1");
+                                           DeathMsg = message.replace("%player%", player.username);
+                                           configManager.sendChatMessageToAllPlayers(DeathMsg);
+                                           break;
+                                       case "entity":
+                                           break;
+                                       case "fall":
+                                           break;
+                                   }
+                               }
                                 configManager.sendChatMessageToAllPlayers(DeathMsg);
                                 player.HasRespawed = true;
                          }

@@ -5,8 +5,6 @@ package net.minecraft.src;
 
 import net.minecraft.clothutils.GameruleManager;
 
-import java.io.File;
-
 public class EntityCreeper extends EntityMobs
 {
 
@@ -97,7 +95,7 @@ public class EntityCreeper extends EntityMobs
         super.onDeath(entity);
         if(entity instanceof EntitySkeleton)
         {
-            dropItem(Item.record13.swiftedIndex + field_9064_W.nextInt(2), 0, 1);
+            dropItem(Item.record13.swiftedIndex + random.nextInt(2), 0, 1);
         }
     }
 

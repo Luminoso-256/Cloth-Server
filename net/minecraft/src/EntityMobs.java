@@ -93,13 +93,13 @@ public class EntityMobs extends EntityCreature
         int i = MathHelper.floor_double(posX);
         int j = MathHelper.floor_double(boundingBox.minY);
         int k = MathHelper.floor_double(posZ);
-        if(worldObj.getSavedLightValue(EnumSkyBlock.Sky, i, j, k) > field_9064_W.nextInt(32))
+        if(worldObj.getSavedLightValue(EnumSkyBlock.Sky, i, j, k) > random.nextInt(32))
         {
             return false;
         } else
         {
             int l = worldObj.getBlockLightValue(i, j, k);
-            return l <= field_9064_W.nextInt(8) && super.getCanSpawnHere();
+            return l <= random.nextInt(8) && super.getCanSpawnHere();
         }
     }
 

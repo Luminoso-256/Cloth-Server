@@ -3,8 +3,6 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.util.Random;
-
 public class EntityCreature extends EntityLiving
 {
 
@@ -37,11 +35,11 @@ public class EntityCreature extends EntityLiving
                 func_157_a(field_389_ag, f1);
             }
         }
-        if(!field_387_ah && field_389_ag != null && (field_388_a == null || field_9064_W.nextInt(20) == 0))
+        if(!field_387_ah && field_389_ag != null && (field_388_a == null || random.nextInt(20) == 0))
         {
             field_388_a = worldObj.func_482_a(this, field_389_ag, f);
         } else
-        if(field_388_a == null && field_9064_W.nextInt(80) == 0 || field_9064_W.nextInt(80) == 0)
+        if(field_388_a == null && random.nextInt(80) == 0 || random.nextInt(80) == 0)
         {
             boolean flag = false;
             int j = -1;
@@ -50,9 +48,9 @@ public class EntityCreature extends EntityLiving
             float f2 = -99999F;
             for(int i1 = 0; i1 < 10; i1++)
             {
-                int j1 = MathHelper.floor_double((posX + (double)field_9064_W.nextInt(13)) - 6D);
-                int k1 = MathHelper.floor_double((posY + (double)field_9064_W.nextInt(7)) - 3D);
-                int l1 = MathHelper.floor_double((posZ + (double)field_9064_W.nextInt(13)) - 6D);
+                int j1 = MathHelper.floor_double((posX + (double) random.nextInt(13)) - 6D);
+                int k1 = MathHelper.floor_double((posY + (double) random.nextInt(7)) - 3D);
+                int l1 = MathHelper.floor_double((posZ + (double) random.nextInt(13)) - 6D);
                 float f3 = func_159_a(j1, k1, l1);
                 if(f3 > f2)
                 {
@@ -73,7 +71,7 @@ public class EntityCreature extends EntityLiving
         boolean flag1 = handleWaterMovement();
         boolean flag2 = func_112_q();
         rotationPitch = 0.0F;
-        if(field_388_a == null || field_9064_W.nextInt(100) == 0)
+        if(field_388_a == null || random.nextInt(100) == 0)
         {
             super.func_152_d_();
             field_388_a = null;
@@ -136,7 +134,7 @@ public class EntityCreature extends EntityLiving
         {
             field_9128_br = true;
         }
-        if(field_9064_W.nextFloat() < 0.8F && (flag1 || flag2))
+        if(random.nextFloat() < 0.8F && (flag1 || flag2))
         {
             field_9128_br = true;
         }

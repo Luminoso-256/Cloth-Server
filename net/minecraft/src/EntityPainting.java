@@ -39,7 +39,7 @@ public class EntityPainting extends Entity
 
         if(arraylist.size() > 0)
         {
-            field_9185_b = (EnumArt)arraylist.get(field_9064_W.nextInt(arraylist.size()));
+            field_9185_b = (EnumArt)arraylist.get(random.nextInt(arraylist.size()));
         }
         func_179_a(l);
     }

@@ -3,9 +3,6 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.util.List;
-import java.util.Random;
-
 public class EntityGhast extends EntityFlying
     implements IMobs
 {
@@ -36,13 +33,13 @@ public class EntityGhast extends EntityFlying
         double d3 = MathHelper.sqrt_double(d * d + d1 * d1 + d2 * d2);
         if(d3 < 1.0D || d3 > 60D)
         {
-            field_4098_b = posX + (double)((field_9064_W.nextFloat() * 2.0F - 1.0F) * 16F);
-            field_4104_c = posY + (double)((field_9064_W.nextFloat() * 2.0F - 1.0F) * 16F);
-            field_4102_d = posZ + (double)((field_9064_W.nextFloat() * 2.0F - 1.0F) * 16F);
+            field_4098_b = posX + (double)((random.nextFloat() * 2.0F - 1.0F) * 16F);
+            field_4104_c = posY + (double)((random.nextFloat() * 2.0F - 1.0F) * 16F);
+            field_4102_d = posZ + (double)((random.nextFloat() * 2.0F - 1.0F) * 16F);
         }
         if(field_4099_a-- <= 0)
         {
-            field_4099_a += field_9064_W.nextInt(5) + 2;
+            field_4099_a += random.nextInt(5) + 2;
             if(func_4046_a(field_4098_b, field_4104_c, field_4102_d, d3))
             {
                 motionX += (d / d3) * 0.10000000000000001D;
@@ -78,12 +75,12 @@ public class EntityGhast extends EntityFlying
             {
                 if(field_4100_f == 10)
                 {
-                    worldObj.playSoundAtEntity(this, "mob.ghast.charge", getSoundVolume(), (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.2F + 1.0F);
+                    worldObj.playSoundAtEntity(this, "mob.ghast.charge", getSoundVolume(), (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
                 }
                 field_4100_f++;
                 if(field_4100_f == 20)
                 {
-                    worldObj.playSoundAtEntity(this, "mob.ghast.fireball", getSoundVolume(), (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.2F + 1.0F);
+                    worldObj.playSoundAtEntity(this, "mob.ghast.fireball", getSoundVolume(), (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
                     EntityFireball entityfireball = new EntityFireball(worldObj, this, d5, d6, d7);
                     double d8 = 4D;
                     Vec3D vec3d = func_141_d(1.0F);
@@ -154,7 +151,7 @@ public class EntityGhast extends EntityFlying
 
     public boolean getCanSpawnHere()
     {
-        return field_9064_W.nextInt(20) == 0 && super.getCanSpawnHere() && worldObj.monstersEnabled > 0;
+        return random.nextInt(20) == 0 && super.getCanSpawnHere() && worldObj.monstersEnabled > 0;
     }
 
     public int func_4045_i()

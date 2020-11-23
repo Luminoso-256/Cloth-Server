@@ -4,7 +4,6 @@ package net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.util.List;
-import java.util.Random;
 
 public class EntityFish extends Entity
 {
@@ -59,9 +58,9 @@ public class EntityFish extends Entity
         d /= f2;
         d1 /= f2;
         d2 /= f2;
-        d += field_9064_W.nextGaussian() * 0.0074999998323619366D * (double)f1;
-        d1 += field_9064_W.nextGaussian() * 0.0074999998323619366D * (double)f1;
-        d2 += field_9064_W.nextGaussian() * 0.0074999998323619366D * (double)f1;
+        d += random.nextGaussian() * 0.0074999998323619366D * (double)f1;
+        d1 += random.nextGaussian() * 0.0074999998323619366D * (double)f1;
+        d2 += random.nextGaussian() * 0.0074999998323619366D * (double)f1;
         d *= f;
         d1 *= f;
         d2 *= f;
@@ -125,9 +124,9 @@ public class EntityFish extends Entity
             if(i != field_4132_ai)
             {
                 field_4129_aj = false;
-                motionX *= field_9064_W.nextFloat() * 0.2F;
-                motionY *= field_9064_W.nextFloat() * 0.2F;
-                motionZ *= field_9064_W.nextFloat() * 0.2F;
+                motionX *= random.nextFloat() * 0.2F;
+                motionY *= random.nextFloat() * 0.2F;
+                motionZ *= random.nextFloat() * 0.2F;
                 field_6150_ak = 0;
                 field_4125_al = 0;
             } else
@@ -231,23 +230,23 @@ public class EntityFish extends Entity
             {
                 field_4124_am--;
             } else
-            if(field_9064_W.nextInt(500) == 0)
+            if(random.nextInt(500) == 0)
             {
-                field_4124_am = field_9064_W.nextInt(30) + 10;
+                field_4124_am = random.nextInt(30) + 10;
                 motionY -= 0.20000000298023224D;
-                worldObj.playSoundAtEntity(this, "random.splash", 0.25F, 1.0F + (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.4F);
+                worldObj.playSoundAtEntity(this, "random.splash", 0.25F, 1.0F + (random.nextFloat() - random.nextFloat()) * 0.4F);
                 float f3 = MathHelper.floor_double(boundingBox.minY);
                 for(int i1 = 0; (float)i1 < 1.0F + width * 20F; i1++)
                 {
-                    float f4 = (field_9064_W.nextFloat() * 2.0F - 1.0F) * width;
-                    float f6 = (field_9064_W.nextFloat() * 2.0F - 1.0F) * width;
-                    worldObj.spawnParticle("bubble", posX + (double)f4, f3 + 1.0F, posZ + (double)f6, motionX, motionY - (double)(field_9064_W.nextFloat() * 0.2F), motionZ);
+                    float f4 = (random.nextFloat() * 2.0F - 1.0F) * width;
+                    float f6 = (random.nextFloat() * 2.0F - 1.0F) * width;
+                    worldObj.spawnParticle("bubble", posX + (double)f4, f3 + 1.0F, posZ + (double)f6, motionX, motionY - (double)(random.nextFloat() * 0.2F), motionZ);
                 }
 
                 for(int j1 = 0; (float)j1 < 1.0F + width * 20F; j1++)
                 {
-                    float f5 = (field_9064_W.nextFloat() * 2.0F - 1.0F) * width;
-                    float f7 = (field_9064_W.nextFloat() * 2.0F - 1.0F) * width;
+                    float f5 = (random.nextFloat() * 2.0F - 1.0F) * width;
+                    float f7 = (random.nextFloat() * 2.0F - 1.0F) * width;
                     worldObj.spawnParticle("splash", posX + (double)f5, f3 + 1.0F, posZ + (double)f7, motionX, motionY, motionZ);
                 }
 
@@ -255,7 +254,7 @@ public class EntityFish extends Entity
         }
         if(field_4124_am > 0)
         {
-            motionY -= (double)(field_9064_W.nextFloat() * field_9064_W.nextFloat() * field_9064_W.nextFloat()) * 0.20000000000000001D;
+            motionY -= (double)(random.nextFloat() * random.nextFloat() * random.nextFloat()) * 0.20000000000000001D;
         }
         double d7 = d5 * 2D - 1.0D;
         motionY += 0.039999999105930328D * d7;

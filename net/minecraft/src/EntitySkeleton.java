@@ -3,8 +3,6 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.util.Random;
-
 public class EntitySkeleton extends EntityMobs
 {
 
@@ -34,7 +32,7 @@ public class EntitySkeleton extends EntityMobs
         if(worldObj.isDaytime())
         {
             float f = getEntityBrightness(1.0F);
-            if(f > 0.5F && worldObj.canBlockSeeTheSky(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ)) && field_9064_W.nextFloat() * 30F < (f - 0.4F) * 2.0F)
+            if(f > 0.5F && worldObj.canBlockSeeTheSky(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ)) && random.nextFloat() * 30F < (f - 0.4F) * 2.0F)
             {
                 field_9061_Z = 300;
             }
@@ -54,7 +52,7 @@ public class EntitySkeleton extends EntityMobs
                 entityarrow.posY += 1.3999999761581421D;
                 double d2 = entity.posY - 0.20000000298023224D - entityarrow.posY;
                 float f1 = MathHelper.sqrt_double(d * d + d1 * d1) * 0.2F;
-                worldObj.playSoundAtEntity(this, "random.bow", 1.0F, 1.0F / (field_9064_W.nextFloat() * 0.4F + 0.8F));
+                worldObj.playSoundAtEntity(this, "random.bow", 1.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
                 worldObj.entityJoinedWorld(entityarrow);
                 entityarrow.func_177_a(d, d2 + (double)f1, d1, 0.6F, 12F);
                 field_9103_aW = 30;

@@ -22,9 +22,9 @@ public class EntityPlayerMP extends EntityPlayer
         int k = world.spawnY;
         if(!world.worldProvider.field_4306_c)
         {
-            i += field_9064_W.nextInt(20) - 10;
+            i += random.nextInt(20) - 10;
             k = world.func_4075_e(i, j);
-            j += field_9064_W.nextInt(20) - 10;
+            j += random.nextInt(20) - 10;
         }
         func_107_c((double)i + 0.5D, k, (double)j + 0.5D, 0.0F, 0.0F);
         mcServer = minecraftserver;

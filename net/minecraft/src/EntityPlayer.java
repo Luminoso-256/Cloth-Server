@@ -156,8 +156,8 @@ public class EntityPlayer extends EntityLiving
         float f = 0.1F;
         if(flag)
         {
-            float f2 = field_9064_W.nextFloat() * 0.5F;
-            float f4 = field_9064_W.nextFloat() * 3.141593F * 2.0F;
+            float f2 = random.nextFloat() * 0.5F;
+            float f4 = random.nextFloat() * 3.141593F * 2.0F;
             entityitem.motionX = -MathHelper.sin(f4) * f2;
             entityitem.motionZ = MathHelper.cos(f4) * f2;
             entityitem.motionY = 0.20000000298023224D;
@@ -168,10 +168,10 @@ public class EntityPlayer extends EntityLiving
             entityitem.motionZ = MathHelper.cos((rotationYaw / 180F) * 3.141593F) * MathHelper.cos((rotationPitch / 180F) * 3.141593F) * f1;
             entityitem.motionY = -MathHelper.sin((rotationPitch / 180F) * 3.141593F) * f1 + 0.1F;
             f1 = 0.02F;
-            float f3 = field_9064_W.nextFloat() * 3.141593F * 2.0F;
-            f1 *= field_9064_W.nextFloat();
+            float f3 = random.nextFloat() * 3.141593F * 2.0F;
+            f1 *= random.nextFloat();
             entityitem.motionX += Math.cos(f3) * (double)f1;
-            entityitem.motionY += (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.1F;
+            entityitem.motionY += (random.nextFloat() - random.nextFloat()) * 0.1F;
             entityitem.motionZ += Math.sin(f3) * (double)f1;
         }
         dropItem(entityitem);
@@ -262,6 +262,7 @@ public class EntityPlayer extends EntityLiving
         {
             return super.attackEntity(entity, i);
         }
+
     }
 
     protected void takeDamage(int i)
@@ -345,4 +346,5 @@ public class EntityPlayer extends EntityLiving
     //Death stuff
     public boolean IsDead = false;
     public boolean HasRespawed =  true;
+    public Entity lastDamagingEntity;
 }

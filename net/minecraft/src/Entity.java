@@ -3,6 +3,7 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -33,7 +34,7 @@ public abstract class Entity
         field_9066_T = false;
         field_286_P = 0.0F;
         field_9065_V = false;
-        field_9064_W = new Random();
+        random = new Random();
         field_9063_X = 0;
         field_9062_Y = 1;
         field_9061_Z = 0;
@@ -119,19 +120,19 @@ public abstract class Entity
                 {
                     f = 1.0F;
                 }
-                worldObj.playSoundAtEntity(this, "random.splash", f, 1.0F + (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.4F);
+                worldObj.playSoundAtEntity(this, "random.splash", f, 1.0F + (random.nextFloat() - random.nextFloat()) * 0.4F);
                 float f1 = MathHelper.floor_double(boundingBox.minY);
                 for(int i = 0; (float)i < 1.0F + width * 20F; i++)
                 {
-                    float f2 = (field_9064_W.nextFloat() * 2.0F - 1.0F) * width;
-                    float f4 = (field_9064_W.nextFloat() * 2.0F - 1.0F) * width;
-                    worldObj.spawnParticle("bubble", posX + (double)f2, f1 + 1.0F, posZ + (double)f4, motionX, motionY - (double)(field_9064_W.nextFloat() * 0.2F), motionZ);
+                    float f2 = (random.nextFloat() * 2.0F - 1.0F) * width;
+                    float f4 = (random.nextFloat() * 2.0F - 1.0F) * width;
+                    worldObj.spawnParticle("bubble", posX + (double)f2, f1 + 1.0F, posZ + (double)f4, motionX, motionY - (double)(random.nextFloat() * 0.2F), motionZ);
                 }
 
                 for(int j = 0; (float)j < 1.0F + width * 20F; j++)
                 {
-                    float f3 = (field_9064_W.nextFloat() * 2.0F - 1.0F) * width;
-                    float f5 = (field_9064_W.nextFloat() * 2.0F - 1.0F) * width;
+                    float f3 = (random.nextFloat() * 2.0F - 1.0F) * width;
+                    float f5 = (random.nextFloat() * 2.0F - 1.0F) * width;
                     worldObj.spawnParticle("splash", posX + (double)f3, f1 + 1.0F, posZ + (double)f5, motionX, motionY, motionZ);
                 }
 
@@ -167,6 +168,7 @@ public abstract class Entity
         }
         if(func_112_q())
         {
+            damageSources.add("lava");
             func_4040_n();
         }
         if(posY < -64D)
@@ -426,7 +428,7 @@ public abstract class Entity
         }
         if(flag2 && field_9061_Z > 0)
         {
-            worldObj.playSoundAtEntity(this, "random.fizz", 0.7F, 1.6F + (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.4F);
+            worldObj.playSoundAtEntity(this, "random.fizz", 0.7F, 1.6F + (random.nextFloat() - random.nextFloat()) * 0.4F);
             field_9061_Z = -field_9062_Y;
         }
     }
@@ -437,14 +439,16 @@ public abstract class Entity
         {
             if(fallDistance > 0.0F)
             {
-            	int i = MathHelper.floor_double(posX);
-                int j = MathHelper.floor_double(posY - 0.20000000298023224D - (double)yOffset);
-                int k = MathHelper.floor_double(posZ);
-                int l = worldObj.getBlockId(i, j, k);
+
+                damageSources.add("fall");
+            	int xPos = MathHelper.floor_double(posX);
+                int yPos = MathHelper.floor_double(posY - 0.20000000298023224D - (double)yOffset);
+                int zPos = MathHelper.floor_double(posZ);
+                int currentBlock = worldObj.getBlockId(xPos, yPos, zPos);
                 //checks for farmland, since I only wrote that function for it
-                if(l > 0 && l == Block.tilledField.blockID)
+                if(currentBlock > 0 && currentBlock == Block.tilledField.blockID)
                 {
-                	Block.blocksList[l].onEntityFallen(worldObj, i, j, k, this, fallDistance);
+                	Block.blocksList[currentBlock].onEntityFallen(worldObj, xPos, yPos, zPos, this, fallDistance);
                 }
                 fall(fallDistance);
                 fallDistance = 0.0F;
@@ -653,7 +657,13 @@ public abstract class Entity
 
     public boolean attackEntity(Entity entity, int i)
     {
+        if((entity instanceof  EntityPlayer)){
+            ((EntityPlayer) entity).damageSources.add("entity");
+            ((EntityPlayer) entity).lastDamagingEntity = this;
+
+        }
         func_9060_u();
+
         return false;
     }
 
@@ -723,12 +733,6 @@ public abstract class Entity
         onGround = nbttagcompound.getBoolean("OnGround");
         setPosition(posX, posY, posZ);
         readEntityFromNBT(nbttagcompound);
-        //Anti-Phantom
-       // short health = nbttagcompound.getShort("Health");
-       // if(0 >= health){
-        //    health = 1;
-        //    nbttagcompound.setShort("Health", health);
-       // }
 
     }
 
@@ -896,10 +900,7 @@ public abstract class Entity
         entity.field_328_f = this;
     }
 
-    public void GoToWorld(World world){
-        System.out.println("Setting Entity WorldObj field to "+worldObj);
-        worldObj = world;
-    }
+
 
     public Vec3D func_4039_B()
     {
@@ -950,7 +951,7 @@ public abstract class Entity
     public boolean field_9066_T;
     public float field_286_P;
     public boolean field_9065_V;
-    protected Random field_9064_W;
+    protected Random random;
     public int field_9063_X;
     public int field_9062_Y;
     public int field_9061_Z;
@@ -967,5 +968,6 @@ public abstract class Entity
     public int field_305_ab;
     public int field_303_ac;
     public boolean IsPlayer;
+    public List<String> damageSources = new ArrayList<String>();
 
 }

@@ -4,7 +4,6 @@ package net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.util.List;
-import java.util.Random;
 
 public class EntitySnowball extends Entity
 {
@@ -54,9 +53,9 @@ public class EntitySnowball extends Entity
         d /= f2;
         d1 /= f2;
         d2 /= f2;
-        d += field_9064_W.nextGaussian() * 0.0074999998323619366D * (double)f1;
-        d1 += field_9064_W.nextGaussian() * 0.0074999998323619366D * (double)f1;
-        d2 += field_9064_W.nextGaussian() * 0.0074999998323619366D * (double)f1;
+        d += random.nextGaussian() * 0.0074999998323619366D * (double)f1;
+        d1 += random.nextGaussian() * 0.0074999998323619366D * (double)f1;
+        d2 += random.nextGaussian() * 0.0074999998323619366D * (double)f1;
         d *= f;
         d1 *= f;
         d2 *= f;
@@ -85,9 +84,9 @@ public class EntitySnowball extends Entity
             if(i != field_459_af)
             {
                 field_457_ag = false;
-                motionX *= field_9064_W.nextFloat() * 0.2F;
-                motionY *= field_9064_W.nextFloat() * 0.2F;
-                motionZ *= field_9064_W.nextFloat() * 0.2F;
+                motionX *= random.nextFloat() * 0.2F;
+                motionY *= random.nextFloat() * 0.2F;
+                motionZ *= random.nextFloat() * 0.2F;
                 field_454_ai = 0;
                 field_453_aj = 0;
             } else
@@ -211,7 +210,7 @@ public class EntitySnowball extends Entity
     {
         if(field_457_ag && field_455_ah == entityplayer && field_458_a <= 0 && entityplayer.inventory.addItemStackToInventory(new ItemStack(Item.arrow.swiftedIndex, 1)))
         {
-            worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+            worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((random.nextFloat() - random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
             entityplayer.func_163_c(this, 1);
             setEntityDead();
         }

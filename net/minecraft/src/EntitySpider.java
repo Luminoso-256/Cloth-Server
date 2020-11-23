@@ -3,8 +3,6 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.util.Random;
-
 public class EntitySpider extends EntityMobs
 {
 
@@ -52,12 +50,12 @@ public class EntitySpider extends EntityMobs
     protected void func_157_a(Entity entity, float f)
     {
         float f1 = getEntityBrightness(1.0F);
-        if(f1 > 0.5F && field_9064_W.nextInt(100) == 0)
+        if(f1 > 0.5F && random.nextInt(100) == 0)
         {
             field_389_ag = null;
             return;
         }
-        if(f > 2.0F && f < 6F && field_9064_W.nextInt(10) == 0)
+        if(f > 2.0F && f < 6F && random.nextInt(10) == 0)
         {
             if(onGround)
             {

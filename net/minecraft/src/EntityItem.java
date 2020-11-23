@@ -3,8 +3,6 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.util.Random;
-
 public class EntityItem extends Entity
 {
 
@@ -50,9 +48,9 @@ public class EntityItem extends Entity
         if(worldObj.getBlockMaterial(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ)) == Material.lava)
         {
             motionY = 0.20000000298023224D;
-            motionX = (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.2F;
-            motionZ = (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.2F;
-            worldObj.playSoundAtEntity(this, "random.fizz", 0.4F, 2.0F + field_9064_W.nextFloat() * 0.4F);
+            motionX = (random.nextFloat() - random.nextFloat()) * 0.2F;
+            motionZ = (random.nextFloat() - random.nextFloat()) * 0.2F;
+            worldObj.playSoundAtEntity(this, "random.fizz", 0.4F, 2.0F + random.nextFloat() * 0.4F);
         }
         func_176_g(posX, posY, posZ);
         handleWaterMovement();
@@ -135,7 +133,7 @@ public class EntityItem extends Entity
                 double d7 = 1.0D - d5;
                 byte0 = 5;
             }
-            float f = field_9064_W.nextFloat() * 0.2F + 0.1F;
+            float f = random.nextFloat() * 0.2F + 0.1F;
             if(byte0 == 0)
             {
                 motionX = -f;
@@ -204,7 +202,7 @@ public class EntityItem extends Entity
         int i = item.stackSize;
         if(field_433_ad == 0 && entityplayer.inventory.addItemStackToInventory(item))
         {
-            worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+            worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((random.nextFloat() - random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
             entityplayer.func_163_c(this, i);
             setEntityDead();
         }

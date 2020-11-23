@@ -98,16 +98,16 @@ label0:
             {
                 continue;
             }
-            float f = field_9064_W.nextFloat() * 0.8F + 0.1F;
-            float f1 = field_9064_W.nextFloat() * 0.8F + 0.1F;
-            float f2 = field_9064_W.nextFloat() * 0.8F + 0.1F;
+            float f = random.nextFloat() * 0.8F + 0.1F;
+            float f1 = random.nextFloat() * 0.8F + 0.1F;
+            float f2 = random.nextFloat() * 0.8F + 0.1F;
             do
             {
                 if(itemstack.stackSize <= 0)
                 {
                     continue label0;
                 }
-                int j = field_9064_W.nextInt(21) + 10;
+                int j = random.nextInt(21) + 10;
                 if(j > itemstack.stackSize)
                 {
                     j = itemstack.stackSize;
@@ -115,9 +115,9 @@ label0:
                 itemstack.stackSize -= j;
                 EntityItem entityitem = new EntityItem(worldObj, posX + (double)f, posY + (double)f1, posZ + (double)f2, new ItemStack(itemstack.itemID, j, itemstack.itemDamage));
                 float f3 = 0.05F;
-                entityitem.motionX = (float)field_9064_W.nextGaussian() * f3;
-                entityitem.motionY = (float)field_9064_W.nextGaussian() * f3 + 0.2F;
-                entityitem.motionZ = (float)field_9064_W.nextGaussian() * f3;
+                entityitem.motionX = (float) random.nextGaussian() * f3;
+                entityitem.motionY = (float) random.nextGaussian() * f3 + 0.2F;
+                entityitem.motionZ = (float) random.nextGaussian() * f3;
                 worldObj.entityJoinedWorld(entityitem);
             } while(true);
         }
@@ -406,7 +406,7 @@ label0:
         {
             field_328_f = null;
         }
-        if(flag && field_9064_W.nextInt(4) == 0)
+        if(flag && random.nextInt(4) == 0)
         {
             field_9165_e--;
             if(field_9165_e < 0)

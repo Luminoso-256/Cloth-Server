@@ -13,9 +13,9 @@ public class EntitySlime extends EntityLiving
         field_402_ae = 0;
         field_403_ad = 1;
         field_9119_aG = "/mob/slime.png";
-        field_403_ad = 1 << field_9064_W.nextInt(3);
+        field_403_ad = 1 << random.nextInt(3);
         yOffset = 0.0F;
-        field_402_ae = field_9064_W.nextInt(20) + 10;
+        field_402_ae = random.nextInt(20) + 10;
         func_160_c(field_403_ad);
     }
 
@@ -48,8 +48,8 @@ public class EntitySlime extends EntityLiving
         {
             for(int i = 0; i < field_403_ad * 8; i++)
             {
-                float f = field_9064_W.nextFloat() * 3.141593F * 2.0F;
-                float f1 = field_9064_W.nextFloat() * 0.5F + 0.5F;
+                float f = random.nextFloat() * 3.141593F * 2.0F;
+                float f1 = random.nextFloat() * 0.5F + 0.5F;
                 float f2 = MathHelper.sin(f) * (float)field_403_ad * 0.5F * f1;
                 float f3 = MathHelper.cos(f) * (float)field_403_ad * 0.5F * f1;
                 worldObj.spawnParticle("slime", posX + (double)f2, boundingBox.minY, posZ + (double)f3, 0.0D, 0.0D, 0.0D);
@@ -57,7 +57,7 @@ public class EntitySlime extends EntityLiving
 
             if(field_403_ad > 2)
             {
-                worldObj.playSoundAtEntity(this, "mob.slime", getSoundVolume(), ((field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.2F + 1.0F) / 0.8F);
+                worldObj.playSoundAtEntity(this, "mob.slime", getSoundVolume(), ((random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
             }
             field_401_a = -0.5F;
         }
@@ -73,7 +73,7 @@ public class EntitySlime extends EntityLiving
         }
         if(onGround && field_402_ae-- <= 0)
         {
-            field_402_ae = field_9064_W.nextInt(20) + 10;
+            field_402_ae = random.nextInt(20) + 10;
             if(entityplayer != null)
             {
                 field_402_ae /= 3;
@@ -81,10 +81,10 @@ public class EntitySlime extends EntityLiving
             field_9128_br = true;
             if(field_403_ad > 1)
             {
-                worldObj.playSoundAtEntity(this, "mob.slime", getSoundVolume(), ((field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+                worldObj.playSoundAtEntity(this, "mob.slime", getSoundVolume(), ((random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F) * 0.8F);
             }
             field_401_a = 1.0F;
-            field_9131_bo = 1.0F - field_9064_W.nextFloat() * 2.0F;
+            field_9131_bo = 1.0F - random.nextFloat() * 2.0F;
             field_9130_bp = 1 * field_403_ad;
         } else
         {
@@ -106,7 +106,7 @@ public class EntitySlime extends EntityLiving
                 float f1 = (((float)(i / 2) - 0.5F) * (float)field_403_ad) / 4F;
                 EntitySlime entityslime = new EntitySlime(worldObj);
                 entityslime.func_160_c(field_403_ad / 2);
-                entityslime.func_107_c(posX + (double)f, posY + 0.5D, posZ + (double)f1, field_9064_W.nextFloat() * 360F, 0.0F);
+                entityslime.func_107_c(posX + (double)f, posY + 0.5D, posZ + (double)f1, random.nextFloat() * 360F, 0.0F);
                 worldObj.entityJoinedWorld(entityslime);
             }
 
@@ -118,7 +118,7 @@ public class EntitySlime extends EntityLiving
     {
         if(field_403_ad > 1 && func_145_g(entityplayer) && (double)getDistanceToEntity(entityplayer) < 0.59999999999999998D * (double)field_403_ad && entityplayer.attackEntity(this, field_403_ad))
         {
-            worldObj.playSoundAtEntity(this, "mob.slimeattack", 1.0F, (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.2F + 1.0F);
+            worldObj.playSoundAtEntity(this, "mob.slimeattack", 1.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
         }
     }
 
@@ -146,7 +146,7 @@ public class EntitySlime extends EntityLiving
     public boolean getCanSpawnHere()
     {
         Chunk chunk = worldObj.getChunkFromBlockCoords(MathHelper.floor_double(posX), MathHelper.floor_double(posZ));
-        return (field_403_ad == 1 || worldObj.monstersEnabled > 0) && field_9064_W.nextInt(10) == 0 && chunk.func_334_a(0x3ad8025fL).nextInt(10) == 0 && posY < 16D;
+        return (field_403_ad == 1 || worldObj.monstersEnabled > 0) && random.nextInt(10) == 0 && chunk.func_334_a(0x3ad8025fL).nextInt(10) == 0 && posY < 16D;
     }
 
     protected float getSoundVolume()

@@ -75,13 +75,13 @@ public class EntityLiving extends Entity
     {
         field_9111_aO = field_9110_aP;
         super.func_84_k();
-        if(field_9064_W.nextInt(1000) < field_4099_a++)
+        if(random.nextInt(1000) < field_4099_a++)
         {
             field_4099_a = -func_146_b();
             String s = getLivingSound();
             if(s != null)
             {
-                worldObj.playSoundAtEntity(this, s, getSoundVolume(), (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.2F + 1.0F);
+                worldObj.playSoundAtEntity(this, s, getSoundVolume(), (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
             }
         }
         if(func_120_t() && func_91_u())
@@ -100,9 +100,9 @@ public class EntityLiving extends Entity
                 air = 0;
                 for(int i = 0; i < 8; i++)
                 {
-                    float f = field_9064_W.nextFloat() - field_9064_W.nextFloat();
-                    float f1 = field_9064_W.nextFloat() - field_9064_W.nextFloat();
-                    float f2 = field_9064_W.nextFloat() - field_9064_W.nextFloat();
+                    float f = random.nextFloat() - random.nextFloat();
+                    float f1 = random.nextFloat() - random.nextFloat();
+                    float f2 = random.nextFloat() - random.nextFloat();
                     worldObj.spawnParticle("bubble", posX + (double)f, posY + (double)f1, posZ + (double)f2, motionX, motionY, motionZ);
                 }
 
@@ -135,10 +135,10 @@ public class EntityLiving extends Entity
                 setEntityDead();
                 for(int j = 0; j < 20; j++)
                 {
-                    double d = field_9064_W.nextGaussian() * 0.02D;
-                    double d1 = field_9064_W.nextGaussian() * 0.02D;
-                    double d2 = field_9064_W.nextGaussian() * 0.02D;
-                    worldObj.spawnParticle("explode", (posX + (double)(field_9064_W.nextFloat() * width * 2.0F)) - (double)width, posY + (double)(field_9064_W.nextFloat() * height), (posZ + (double)(field_9064_W.nextFloat() * width * 2.0F)) - (double)width, d, d1, d2);
+                    double d = random.nextGaussian() * 0.02D;
+                    double d1 = random.nextGaussian() * 0.02D;
+                    double d2 = random.nextGaussian() * 0.02D;
+                    worldObj.spawnParticle("explode", (posX + (double)(random.nextFloat() * width * 2.0F)) - (double)width, posY + (double)(random.nextFloat() * height), (posZ + (double)(random.nextFloat() * width * 2.0F)) - (double)width, d, d1, d2);
                 }
 
             }
@@ -153,11 +153,11 @@ public class EntityLiving extends Entity
     {
         for(int i = 0; i < 20; i++)
         {
-            double d = field_9064_W.nextGaussian() * 0.02D;
-            double d1 = field_9064_W.nextGaussian() * 0.02D;
-            double d2 = field_9064_W.nextGaussian() * 0.02D;
+            double d = random.nextGaussian() * 0.02D;
+            double d1 = random.nextGaussian() * 0.02D;
+            double d2 = random.nextGaussian() * 0.02D;
             double d3 = 10D;
-            worldObj.spawnParticle("explode", (posX + (double)(field_9064_W.nextFloat() * width * 2.0F)) - (double)width - d * d3, (posY + (double)(field_9064_W.nextFloat() * height)) - d1 * d3, (posZ + (double)(field_9064_W.nextFloat() * width * 2.0F)) - (double)width - d2 * d3, d, d1, d2);
+            worldObj.spawnParticle("explode", (posX + (double)(random.nextFloat() * width * 2.0F)) - (double)width - d * d3, (posY + (double)(random.nextFloat() * height)) - d1 * d3, (posZ + (double)(random.nextFloat() * width * 2.0F)) - (double)width - d2 * d3, d, d1, d2);
         }
 
     }
@@ -303,13 +303,13 @@ public class EntityLiving extends Entity
         {
             if(flag)
             {
-                worldObj.playSoundAtEntity(this, getDeathSound(), getSoundVolume(), (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.2F + 1.0F);
+                worldObj.playSoundAtEntity(this, getDeathSound(), getSoundVolume(), (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
             }
             onDeath(entity);
         } else
         if(flag)
         {
-            worldObj.playSoundAtEntity(this, getHurtSound(), getSoundVolume(), (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.2F + 1.0F);
+            worldObj.playSoundAtEntity(this, getHurtSound(), getSoundVolume(), (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
         }
         return true;
     }
@@ -367,7 +367,7 @@ public class EntityLiving extends Entity
             int i = getDropItemId();
             if(i > 0)
             {
-                int j = field_9064_W.nextInt(3);
+                int j = random.nextInt(3);
                 for(int k = 0; k < j; k++)
                 {
                     dropItem(i, 1, 0);
@@ -596,7 +596,7 @@ public class EntityLiving extends Entity
             {
                 setEntityDead();
             }
-            if(field_9132_bn > 600 && field_9064_W.nextInt(800) == 0)
+            if(field_9132_bn > 600 && random.nextInt(800) == 0)
             {
                 if(d3 < 1024D)
                 {
@@ -610,16 +610,16 @@ public class EntityLiving extends Entity
         field_9131_bo = 0.0F;
         field_9130_bp = 0.0F;
         float f = 8F;
-        if(field_9064_W.nextFloat() < 0.02F)
+        if(random.nextFloat() < 0.02F)
         {
             EntityPlayer entityplayer1 = worldObj.getClosestPlayerToEntity(this, f);
             if(entityplayer1 != null)
             {
                 field_4098_b = entityplayer1;
-                field_4104_c = 10 + field_9064_W.nextInt(20);
+                field_4104_c = 10 + random.nextInt(20);
             } else
             {
-                field_9129_bq = (field_9064_W.nextFloat() - 0.5F) * 20F;
+                field_9129_bq = (random.nextFloat() - 0.5F) * 20F;
             }
         }
         if(field_4098_b != null)
@@ -631,9 +631,9 @@ public class EntityLiving extends Entity
             }
         } else
         {
-            if(field_9064_W.nextFloat() < 0.05F)
+            if(random.nextFloat() < 0.05F)
             {
-                field_9129_bq = (field_9064_W.nextFloat() - 0.5F) * 20F;
+                field_9129_bq = (random.nextFloat() - 0.5F) * 20F;
             }
             rotationYaw += field_9129_bq;
             rotationPitch = field_9127_bs;
@@ -642,7 +642,7 @@ public class EntityLiving extends Entity
         boolean flag1 = func_112_q();
         if(flag || flag1)
         {
-            field_9128_br = field_9064_W.nextFloat() < 0.8F;
+            field_9128_br = random.nextFloat() < 0.8F;
         }
     }
 

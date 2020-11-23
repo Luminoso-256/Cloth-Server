@@ -16,7 +16,7 @@ public class EntityChicken extends EntityAnimals
         field_9119_aG = "/mob/chicken.png";
         setSize(0.3F, 0.4F);
         health = 4;
-        field_396_aj = field_9064_W.nextInt(6000) + 6000;
+        field_396_aj = random.nextInt(6000) + 6000;
     }
 
     public void onLivingUpdate()
@@ -45,9 +45,9 @@ public class EntityChicken extends EntityAnimals
         field_391_b += field_390_ai * 2.0F;
         if(!worldObj.multiplayerWorld && --field_396_aj <= 0)
         {
-            worldObj.playSoundAtEntity(this, "mob.chickenplop", 1.0F, (field_9064_W.nextFloat() - field_9064_W.nextFloat()) * 0.2F + 1.0F);
+            worldObj.playSoundAtEntity(this, "mob.chickenplop", 1.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
             dropItem(Item.egg.swiftedIndex, 1, 0);
-            field_396_aj = field_9064_W.nextInt(6000) + 6000;
+            field_396_aj = random.nextInt(6000) + 6000;
         }
     }
 
