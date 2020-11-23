@@ -161,6 +161,10 @@ public abstract class Entity
             {
                 if(field_9061_Z % 20 == 0)
                 {
+                    //Your drowning! oh no!
+                    damageSources.add("drown");
+                    System.out.println("DROWN_DAMAGE_SOURCE");
+
                     attackEntity(null, 1);
                 }
                 field_9061_Z--;

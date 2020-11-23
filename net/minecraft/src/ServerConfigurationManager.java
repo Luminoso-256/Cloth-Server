@@ -95,8 +95,10 @@ public class ServerConfigurationManager
         }
         //MOTD
         PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
-        String MOTD = propertyManager.getStringProperty("motd", "Welcome! ")+ entityplayermp.username;
-        sendChatMessageToAllPlayers(MOTD);
+        String MOTD = propertyManager.getStringProperty("motd", "Welcome %player% to %world% ! ");
+        String pnameReplace = MOTD.replace("%player%", entityplayermp.username);
+        String finalMOTD = pnameReplace.replace("%world%", mcServer.worldName);
+        sendChatMessageToAllPlayers(finalMOTD);
     }
 
     public void func_613_b(EntityPlayerMP entityplayermp)

@@ -97,7 +97,7 @@ public class MinecraftServer
         }
         configManager = new ServerConfigurationManager(this);
         field_6028_k = new EntityTracker(this);
-        String worldName = propertyManagerObj.getStringProperty("level-name", "world");
+        worldName = propertyManagerObj.getStringProperty("level-name", "world");
         logger.info((new StringBuilder()).append("Preparing level \"").append(worldName).append("\"").toString());
         loadWorld(worldName, seed);
         logger.info("Done! For help, type \"help\" or \"?\"");
@@ -241,14 +241,9 @@ public class MinecraftServer
 
                         //GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
                         EntityPlayer player = (EntityPlayer)configManager.playerEntities.get(i);
-
-                        List<String> damagesources = player.damageSources;
-                        for(String damagesource : damagesources){
-                            logger.info("[Debug] "+player.username+" has damage source"+damagesource);
+                        if(player.damageSources.size() != 0) {
+                           // logger.info("Player: " + player.username + " Last damage source: " + player.damageSources.get(player.damageSources.size() - 1));
                         }
-
-
-
                         if(GameruleManager.getBooleanGamerule("announcedeath", true) == true && player.health <= 0){
                             // your dead. Boohoo
 
@@ -259,25 +254,59 @@ public class MinecraftServer
                                 player.setEntityDead();
                                 //And then we will announce it
                                String DeathMsg = "[Cloth] Error! Death message not found. Likely cause: preview_death_specificdeathcause has been set true";
-                               player.damageSources = new ArrayList<String>(); //reset the list
+
                                if(!GameruleManager.getBooleanGamerule("preview_death_specificdeathcause", false)) {
                                    DeathMsg = player.username + " has died. Rest in Peace"; // eventually ill get more interesting- maybe have a registery of dmg sources?
                                }
                                else {
                                    String lastDamageSource = player.damageSources.get(player.damageSources.size() -1);
+
+                                   int numMsg;
+                                   String message;
                                    switch(lastDamageSource){
                                        case "lava":
-                                           int numMsg = (int) deathTypeMessageList.get("lava");
-                                           String message= (String) deathMsgNames.get("lava.1");
+                                            numMsg = (int) deathTypeMessageList.get("lava");
+                                            message= (String) deathMsgNames.get("lava."+numMsg);
                                            DeathMsg = message.replace("%player%", player.username);
-                                           configManager.sendChatMessageToAllPlayers(DeathMsg);
                                            break;
                                        case "entity":
+                                           numMsg = (int) deathTypeMessageList.get("entity");
+                                           message= (String) deathMsgNames.get("entity."+numMsg);
+                                           DeathMsg = message.replace("%player%", player.username);
                                            break;
                                        case "fall":
+                                           numMsg = (int) deathTypeMessageList.get("fall");
+                                           message= (String) deathMsgNames.get("fall."+numMsg);
+                                           DeathMsg = message.replace("%player%", player.username);
+                                           break;
+                                       case "suffocate":
+                                           numMsg = (int) deathTypeMessageList.get("suffocate");
+                                           message= (String) deathMsgNames.get("suffocate."+numMsg);
+                                           DeathMsg = message.replace("%player%", player.username);
+                                           break;
+                                       case "explosion":
+                                           numMsg = (int) deathTypeMessageList.get("explosion");
+                                           message= (String) deathMsgNames.get("explosion."+numMsg);
+                                           DeathMsg = message.replace("%player%", player.username);
+                                           break;
+                                       case "fire":
+                                           numMsg = (int) deathTypeMessageList.get("fire");
+                                           message= (String) deathMsgNames.get("fire."+numMsg);
+                                           DeathMsg = message.replace("%player%", player.username);
+                                           break;
+                                       case "void":
+                                           numMsg = (int) deathTypeMessageList.get("void");
+                                           message= (String) deathMsgNames.get("void."+numMsg);
+                                           DeathMsg = message.replace("%player%", player.username);
+                                           break;
+                                       case "drown":
+                                           numMsg = (int) deathTypeMessageList.get("drown");
+                                           message= (String) deathMsgNames.get("drown."+numMsg);
+                                           DeathMsg = message.replace("%player%", player.username);
                                            break;
                                    }
                                }
+                               player.damageSources = new ArrayList<String>(); //reset the list
                                 configManager.sendChatMessageToAllPlayers(DeathMsg);
                                 player.HasRespawed = true;
                          }
@@ -292,7 +321,7 @@ public class MinecraftServer
                             player.HasRespawed = false;
                         }
 
-                       // System.out.println("PLAYER: "+player.username+" Health: "+player.field_9109_aQ);
+                     //  System.out.println("PLAYER: "+player.username+" Health: "+player.health);
                     }
 
 
@@ -952,5 +981,6 @@ public class MinecraftServer
   //  public int SleepVoteRemainingTime = 0;
     public int SleepVoteYesCount = 0;
     public int SleepVoteNoCount= 0;
+    public String worldName;
 
 }
