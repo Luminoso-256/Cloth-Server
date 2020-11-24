@@ -176,6 +176,7 @@ public abstract class Entity
         if(posY < -64D)
         {
             damageSources.add("void");
+
             func_4043_o();
         }
         field_4131_c = false;

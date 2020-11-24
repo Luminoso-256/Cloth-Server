@@ -22,6 +22,7 @@ public class AdvancementManager {
             //we now safely have out file
             InputStream fileInputStream = new FileInputStream(advancementsFile);
             HashMap advancementMap = (HashMap) yaml.load(fileInputStream);
+            if(advancementMap == null){advancementMap = new HashMap<String, String>();} //prevent null access
             if(!advancementMap.containsKey(playerUsername)){
                 ArrayList<String> advancements = new ArrayList<String>();
                 advancements.add(advancementID);

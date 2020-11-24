@@ -66,7 +66,7 @@ public class Globals {
         put("test.duplicitadvancementcheck", "You got this again? yay anyway!");
 
         //inventory
-        put("inventory.getlog", "Punch a tree!");
+        put("inventory.log", "Punch a tree!");
         put("inventory.stone", "Stone age");
         put("inventory.iron", "Aquire Hardware");
         put("inventory.diamond", "Diamonds!");
@@ -80,6 +80,8 @@ public class Globals {
 
         //travel
         put("travel.nether", "getting buggier...");
+        put("travel.buildlimit", "I can see my house from here!");
+        put("travel.stableworldgenend", "Edge of the world");
         //stats
         put("stats.alldeaths", "PHD in dying");
         put("stats.voidout", "Wait, thats illegal");

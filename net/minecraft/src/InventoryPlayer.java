@@ -242,21 +242,21 @@ public class InventoryPlayer
 
     public ItemStack getStackInSlot(int i)
     {
-        System.out.println("getting slot "+i);
+       // System.out.println("getting slot "+i);
         ItemStack aitemstack[] = mainInventory;
         if(i >= aitemstack.length)
         {
-            System.out.println("Swapping inv to armor inv");
+       //     System.out.println("Swapping inv to armor inv");
             i -= aitemstack.length;
             aitemstack = armorInventory;
         }
         if(i >= aitemstack.length)
         {
-            System.out.println("Swapping to crafting inv");
+         //   System.out.println("Swapping to crafting inv");
             i -= aitemstack.length;
             aitemstack = craftingInventory;
         }
-        System.out.println("Out: "+aitemstack[i]);
+      //  System.out.println("Out: "+aitemstack[i]);
         return aitemstack[i];
     }
 

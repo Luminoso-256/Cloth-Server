@@ -240,48 +240,52 @@ public class MinecraftServer
 
                         //--------Advancement
                         if(GameruleManager.getBooleanGamerule("preview_advancementsystem", false)) {
+                           // System.out.println("Looping advancement inv checks");
                             InventoryPlayer inventory = player.inventory;
                             for (int slot = 0; slot < inventory.getInventorySize(); slot++) {
                                 ItemStack item = inventory.getStackInSlot(slot);
-                                //Log
-                                if (item.itemID == 17) {
-                                    grantAdvancement(player.username, "inventory.getlog");
-                                }
-                                //cobble
-                                if (item.itemID == 4) {
-                                    grantAdvancement(player.username, "inventory.stone");
-                                }
-                                //Iron
-                                if (item.itemID == 265) {
-                                    grantAdvancement(player.username, "inventory.iron");
-                                }
-                                //Diamond
-                                if (item.itemID == 264) {
-                                    grantAdvancement(player.username, "inventory.diamond");
-                                }
-                                //Diamondhoe
-                                if (item.itemID == 293) {
-                                    grantAdvancement(player.username, "inventory.diamondhoe");
-                                }
-                                //Furnace
-                                if (item.itemID == 61) {
-                                    grantAdvancement(player.username, "inventory.furnace");
-                                }
-                                //ironpickaxe
-                                if (item.itemID == 257) {
-                                    grantAdvancement(player.username, "inventory.ironpickaxe");
-                                }
-                                //diamondpickaxe
-                                if (item.itemID == 278) {
-                                    grantAdvancement(player.username, "inventory.diamondpickaxe");
-                                }
-                                //mossycobblestone
-                                if (item.itemID == 48) {
-                                    grantAdvancement(player.username, "inventory.mossycobblestone");
-                                }
-                                //sponge
-                                if (item.itemID == 19) {
-                                    grantAdvancement(player.username, "inventory.sponge");
+                                if(item != null) {
+                                    //System.out.println("Checking item of id " + item + " for advancement criterion");
+                                    //Log
+                                    if (item.itemID == 17) {
+                                        grantAdvancement(player.username, "inventory.log");
+                                    }
+                                    //cobble
+                                    if (item.itemID == 4) {
+                                        grantAdvancement(player.username, "inventory.stone");
+                                    }
+                                    //Iron
+                                    if (item.itemID == 265) {
+                                        grantAdvancement(player.username, "inventory.iron");
+                                    }
+                                    //Diamond
+                                    if (item.itemID == 264) {
+                                        grantAdvancement(player.username, "inventory.diamond");
+                                    }
+                                    //Diamondhoe
+                                    if (item.itemID == 293) {
+                                        grantAdvancement(player.username, "inventory.diamondhoe");
+                                    }
+                                    //Furnace
+                                    if (item.itemID == 61) {
+                                        grantAdvancement(player.username, "inventory.furnace");
+                                    }
+                                    //ironpickaxe
+                                    if (item.itemID == 257) {
+                                        grantAdvancement(player.username, "inventory.ironpickaxe");
+                                    }
+                                    //diamondpickaxe
+                                    if (item.itemID == 278) {
+                                        grantAdvancement(player.username, "inventory.diamondpickaxe");
+                                    }
+                                    //mossycobblestone
+                                    if (item.itemID == 48) {
+                                        grantAdvancement(player.username, "inventory.mossycobblestone");
+                                    }
+                                    //sponge
+                                    if (item.itemID == 19) {
+                                        grantAdvancement(player.username, "inventory.sponge");
+                                    }
                                 }
                             }
                         }
@@ -591,7 +595,11 @@ public class MinecraftServer
                 String[] args = command.split(" ");
                 grantAdvancement(username, args[1]);
             }
-
+            if(command.toLowerCase().startsWith("stats ")){
+                String[] args = command.split(" ");
+               PlayerStatsManager statsManager = new PlayerStatsManager();
+               statsManager.updateStat(username, args[1], args[2]);
+            }
             if(command.toLowerCase().startsWith("nether") && GameruleManager.getBooleanGamerule("preview_nether_netherteleportcommand", false)){
                 EntityPlayerMP player = configManager.getPlayerEntity(username);
                 logger.info("[Debug] Attempting to send player "+ player.username +" to the nether. Safe Travels!");
