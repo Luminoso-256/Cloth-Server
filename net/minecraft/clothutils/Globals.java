@@ -10,7 +10,11 @@ public class Globals {
 
     //-------------------Release Information
     public static final boolean IS_PREVIEW = true; //I plan to release more early or test-specific releases now, so thisl be handy
-    public static final String VERSION_STRING = "Cloth Beta 1.0.0-rc1";
+    public static final String VERSION_STRING = "Cloth Beta 1.0.0";
+    public static final int STITCH_HOOK_VERSION = -10; //for plugin compat. As evidenced by the negative, not prod ready yet
+    public static final String BRANCH = "debug-hardcoremode/spectator"; //not reffering to gh branches, but rather to features. ex: if a build was focused on nether testing this
+                                                // would be nether
+
 
     //-------------------Easter-eggs/Tidbits
     public static final String[] WELCOME_MSG = {"Its itchy!", "Get stitching!",
@@ -78,6 +82,7 @@ public class Globals {
         put("inventory.sponge", "Developer time!");
 
 
+
         //travel
         put("travel.nether", "getting buggier...");
         put("travel.buildlimit", "I can see my house from here!");
@@ -90,4 +95,6 @@ public class Globals {
 
 
     }};
+    //-------------------Perms
+
 }

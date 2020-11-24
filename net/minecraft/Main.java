@@ -30,7 +30,7 @@ public class Main {
     public static void main(String[] args){
         Random random = new Random();
         logger.info("Welcome to "+VERSION_STRING+" - "+WELCOME_MSG[random.nextInt(WELCOME_MSG.length)]);
-        if(IS_PREVIEW){logger.warning("*********Warning: This is a pre-release build of Cloth. Issues may arise.");}
+        if(IS_PREVIEW){logger.warning("*********Warning: This is a pre-release build of Cloth. Issues may arise. Targeting feature: "+BRANCH);}
         logger.info("[Stitch] Loading stitch plugins from /plugins...");
         Globals _G = JsePlatform.standardGlobals();
         //Main classes

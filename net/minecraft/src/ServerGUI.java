@@ -10,7 +10,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import net.minecraft.server.MinecraftServer;
-
+import static net.minecraft.clothutils.Globals.*;
 public class ServerGUI extends JComponent
     implements ICommandListener
 {
@@ -23,7 +23,7 @@ public class ServerGUI extends JComponent
         }
         catch(Exception exception) { }
         ServerGUI servergui = new ServerGUI(minecraftserver);
-        JFrame jframe = new JFrame("Minecraft server");
+        JFrame jframe = new JFrame("Cloth-Server | "+VERSION_STRING+" - branch: "+BRANCH);
         jframe.add(servergui);
         jframe.pack();
         jframe.setLocationRelativeTo(null);

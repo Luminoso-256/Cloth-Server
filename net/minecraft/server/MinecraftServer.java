@@ -239,7 +239,7 @@ public class MinecraftServer
                         EntityPlayer player = (EntityPlayer)configManager.playerEntities.get(i);
 
                         //--------Advancement
-                        if(GameruleManager.getBooleanGamerule("preview_advancementsystem", false)) {
+                        if(GameruleManager.getBooleanGamerule("enableadvancements", false)) {
                            // System.out.println("Looping advancement inv checks");
                             InventoryPlayer inventory = player.inventory;
                             //inventory
@@ -249,7 +249,7 @@ public class MinecraftServer
                                     //System.out.println("Checking item of id " + item + " for advancement criterion");
                                     //Log
                                     if (item.itemID == 17) {
-                                        grantAdvancement(player.username, "inventory.log");
+                                       // grantAdvancement(player.username, "inventory.log");
                                     }
                                     //cobble
                                     if (item.itemID == 4) {
@@ -308,9 +308,15 @@ public class MinecraftServer
                             player.IsDead = true;
                            if(player.IsDead && player.HasRespawed == false){
                          //      System.out.println("IsDead:"+ player.IsDead+" HasRespawned:"+player.HasRespawed);
+                               PlayerStatsManager statsManager = new PlayerStatsManager();
+                               //Hardcore mode
+                               boolean IsHardcode = GameruleManager.getBooleanGamerule("preview_hardcoremode", false);
+                               //statsManager.updateStat(player.username, "hardcore_is_spectator", "true");
+
+
 
                                //Stats
-                               PlayerStatsManager statsManager = new PlayerStatsManager();
+
                                String oldDeathStat = statsManager.getStat(player.username, "death.count");
                                System.out.println(oldDeathStat);
                                if(oldDeathStat == "none"){oldDeathStat = "0"; }
@@ -331,9 +337,9 @@ public class MinecraftServer
                                // You WILL DIE PROPERLY
                                 player.setEntityDead();
                                 //And then we will announce it
-                               String DeathMsg = "[Cloth] Error! Death message not found. Likely cause: preview_death_specificdeathcause has been set true";
+                               String DeathMsg = "[Cloth]Error! no death message!";
 
-                               if(!GameruleManager.getBooleanGamerule("preview_death_specificdeathcause", false)) {
+                               if(!GameruleManager.getBooleanGamerule("specificdeath", false)) {
                                    DeathMsg = player.username + " has died. Rest in Peace"; // eventually ill get more interesting- maybe have a registery of dmg sources?
                                }
                                else {
@@ -641,7 +647,7 @@ public class MinecraftServer
             }
             if(command.toLowerCase().startsWith("version")){
                 //WorldGenParams params = new WorldGenParams();
-                icommandlistener.log(VERSION_STRING);
+                icommandlistener.log(VERSION_STRING+" Branch: "+BRANCH);
             }
             if(command.toLowerCase().startsWith("heal")){
              EntityPlayer player =  configManager.getPlayerEntity(username);
