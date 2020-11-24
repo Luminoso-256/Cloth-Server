@@ -17,7 +17,8 @@ public class Globals {
             "Supporting alpha!", "Its in beta!", "Also check out MineOnline!",
             "Bugs are features!", "Report issues on github!", "Unobfuscated!",
             "Free for all!", "Open source!", "Fork me!", "Experimental shennigans!",
-            "With contributions from many", "Compatible with JRE14!",  "Why do these messages exist?"};
+            "With contributions from many", "Compatible with JRE14!",  "Why do these messages exist?",
+            "New flying pigmen!", "an uneasy alliance!", "buggy nether time!"};
 
     //-------------------Deaths
 
@@ -54,5 +55,36 @@ public class Globals {
         put("drown.2", "%player% is sleeping with the fish");
         put("drown.3", "%player% drowned");
         put("test.1", "player.username: %player%. Last damaged entity: %entity%. World name: %world%. | TestDeathMsg");
+    }};
+
+    //-------------------Advancement
+
+    //Eventually thisl be config
+    public static final HashMap advancementNames=new HashMap<String, String>() {{
+        //test
+        put("test.clothdeveloperadvancement", "Eureka! The cloth advancement system works :)");
+        put("test.duplicitadvancementcheck", "You got this again? yay anyway!");
+
+        //inventory
+        put("inventory.getlog", "Punch a tree!");
+        put("inventory.stone", "Stone age");
+        put("inventory.iron", "Aquire Hardware");
+        put("inventory.diamond", "Diamonds!");
+        put("inventory.diamondhoe", "Fool me once...");
+        put("inventory.furnace", "Smelting time");
+        put("inventory.ironpickaxe", "Inventory.ironpickaxe name (I forgot it)");
+        put("inventory.diamondpickaxe", "[Placeholder title for inventory.diamondpickaxe]");
+        put("inventory.mossycobblestone", "Mossy discovery");
+        put("inventory.sponge", "Developer time!");
+
+
+        //travel
+        put("travel.nether", "getting buggier...");
+        //stats
+        put("stats.alldeaths", "PHD in dying");
+        put("stats.voidout", "Wait, thats illegal");
+        //crafting
+
+
     }};
 }

@@ -459,7 +459,9 @@ public class ServerConfigurationManager
         Packet3Chat packet3chat = new Packet3Chat(s);
         for(int i = 0; i < playerEntities.size(); i++)
         {
+
             EntityPlayerMP entityplayermp = (EntityPlayerMP)playerEntities.get(i);
+            System.out.println("Sending chat packet to "+entityplayermp.username);
             if(isOp(entityplayermp.username))
             {
                 entityplayermp.field_421_a.sendPacket(packet3chat);
