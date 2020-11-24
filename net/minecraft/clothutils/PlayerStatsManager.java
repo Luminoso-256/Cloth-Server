@@ -16,7 +16,7 @@ public class PlayerStatsManager {
             if (statsFile.createNewFile()) {
                 logger.info("[Cloth] No stats file exists. Creating new one.");
             } else {
-                logger.info("[Cloth] Loading stats file...");
+             //   logger.info("[Cloth] Loading stats file...");
             }
             //we now safely have out file
             InputStream fileInputStream = new FileInputStream(statsFile);
@@ -30,9 +30,19 @@ public class PlayerStatsManager {
                 statMap.put(playerUsername, stats);
             }
             else{
+                ArrayList newStats = new ArrayList<String>();
                 ArrayList<String> stats = (ArrayList<String>) statMap.get(playerUsername);
-                    stats.add(statID+" : "+newStatValue);
-                    statMap.replace(playerUsername, stats);
+                    for (String stat:stats){
+                        if (stat.contains(statID)){
+                            newStats.add(statID+":"+newStatValue);
+                        }
+                        else{
+                            newStats.add(stat);
+                        }
+                    }
+                    System.out.println("Old Stats: "+stats);
+                    System.out.println("Setting stats to"+newStats);
+                    statMap.replace(playerUsername, newStats);
             }
             //Save
             String saveabledata = yaml.dump(statMap);
@@ -47,32 +57,29 @@ public class PlayerStatsManager {
 
     }
     public String getStat(String playerUsername, String statID){
-        String statValue = "error : no value found";
+        String statValue = "none";
         try{
             File statsFile = new File("stats.yml");
             if (statsFile.createNewFile()) {
                 logger.info("[Cloth] No stats file exists. Creating new one.");
             } else {
-                logger.info("[Cloth] Loading stats file...");
+               // logger.info("[Cloth] Loading stats file...");
             }
             InputStream fileInputStream = new FileInputStream(statsFile);
             HashMap statMap = (HashMap) yaml.load(fileInputStream);
-            if(statMap == null){statMap = new HashMap<String, String>();} //prevent null access
+            if(statMap == null){statMap = new HashMap<String, String>(); System.out.println("Error null stat hashmap");} //prevent null access
+            System.out.println(statMap);
             if(!statMap.containsKey(playerUsername)){
                 statValue="none";
+                System.out.println("Stats doesnt contai player username");
             }
             else{
                 ArrayList<String> stats = (ArrayList<String>) statMap.get(playerUsername);
-                if(stats.contains(statID)){
-                    for(String stat:stats){
-                        if(stat.contains(statID)){
-                            String[] statSplit= stat.split(":");
-                            statValue = statSplit[1];
-                        }
+                for(String stat:stats){
+                    if(stat.contains(statID)){
+                        String[] statSplit = stat.split(":");
+                        statValue = statSplit[1];
                     }
-                }
-                else{
-                    statValue="none";
                 }
 
 

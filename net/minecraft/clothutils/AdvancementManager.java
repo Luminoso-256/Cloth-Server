@@ -17,7 +17,7 @@ public class AdvancementManager {
             if (advancementsFile.createNewFile()) {
                 logger.info("[Cloth] No advancements file exists. Creating new one.");
             } else {
-                logger.info("[Cloth] Loading advancements file...");
+              //  logger.info("[Cloth] Loading advancements file...");
             }
             //we now safely have out file
             InputStream fileInputStream = new FileInputStream(advancementsFile);

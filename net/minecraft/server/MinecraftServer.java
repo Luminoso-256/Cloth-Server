@@ -242,6 +242,7 @@ public class MinecraftServer
                         if(GameruleManager.getBooleanGamerule("preview_advancementsystem", false)) {
                            // System.out.println("Looping advancement inv checks");
                             InventoryPlayer inventory = player.inventory;
+                            //inventory
                             for (int slot = 0; slot < inventory.getInventorySize(); slot++) {
                                 ItemStack item = inventory.getStackInSlot(slot);
                                 if(item != null) {
@@ -288,6 +289,13 @@ public class MinecraftServer
                                     }
                                 }
                             }
+                            //movement
+                            if(player.posY >= 128){
+                                grantAdvancement(player.username, "travel.buildlimit");
+                            }
+                            if(player.posY <= 0){
+                                grantAdvancement(player.username, "stats.voidout");
+                            }
                         }
 
                         //--------Death
@@ -300,6 +308,26 @@ public class MinecraftServer
                             player.IsDead = true;
                            if(player.IsDead && player.HasRespawed == false){
                          //      System.out.println("IsDead:"+ player.IsDead+" HasRespawned:"+player.HasRespawed);
+
+                               //Stats
+                               PlayerStatsManager statsManager = new PlayerStatsManager();
+                               String oldDeathStat = statsManager.getStat(player.username, "death.count");
+                               System.out.println(oldDeathStat);
+                               if(oldDeathStat == "none"){oldDeathStat = "0"; }
+                               int deathsInt = Integer.parseInt(oldDeathStat);
+                               //System.out.println("Olddeathint "+deathsInt);
+                               deathsInt ++;
+                               String finalStr = ""+deathsInt;
+                               //System.out.println("finalstr "+finalStr);
+                               statsManager.updateStat(player.username, "death.count", finalStr);
+                               //Advancement
+                               if(deathsInt >=100){
+                                   grantAdvancement(player.username, "stats.hundreddeaths");
+                               }
+
+
+
+
                                // You WILL DIE PROPERLY
                                 player.setEntityDead();
                                 //And then we will announce it
@@ -309,6 +337,7 @@ public class MinecraftServer
                                    DeathMsg = player.username + " has died. Rest in Peace"; // eventually ill get more interesting- maybe have a registery of dmg sources?
                                }
                                else {
+
                                    String lastDamageSource = "";
                                    if(player.damageSources.size() != 0) {
                                        logger.info("[Debug] Grabbing last dmg source");
