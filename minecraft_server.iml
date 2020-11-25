@@ -10,7 +10,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/luaj-jme-3.0.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/res/lib/gson-2.8.6.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -19,19 +19,13 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/luaj-jse-3.0.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/res/lib/luaj-jme-3.0.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/res/lib/luaj-jse-3.0.1.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/gson-2.8.6.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/res/lib/luaj-sources-3.0.1.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
   </component>
