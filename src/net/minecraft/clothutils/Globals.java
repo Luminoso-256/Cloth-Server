@@ -1,4 +1,4 @@
-package net.minecraft.clothutils;
+package src.net.minecraft.clothutils;
 
 //Cloth globals, in case they are needed outside of main. Better design
 

@@ -1,4 +1,4 @@
-package net.minecraft.clothutils;
+package src.net.minecraft.clothutils;
 // Essentially a copy of PropertyManager, but copied so that tweaks required for one file dont convolute the parser for the other
 
 import java.io.*;

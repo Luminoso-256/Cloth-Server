@@ -1,4 +1,4 @@
-package net.minecraft.src;
+package src.net.minecraft.src;
 // Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Random;
 import java.util.logging.Logger;
-import net.minecraft.server.MinecraftServer;
+import src.net.minecraft.server.MinecraftServer;
 
 public class NetLoginHandler extends NetHandler
 {

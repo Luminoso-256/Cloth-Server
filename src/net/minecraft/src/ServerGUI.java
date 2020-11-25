@@ -1,4 +1,4 @@
-package net.minecraft.src;
+package src.net.minecraft.src;
 // Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import net.minecraft.server.MinecraftServer;
-import static net.minecraft.clothutils.Globals.*;
+import src.net.minecraft.server.MinecraftServer;
+import static src.net.minecraft.clothutils.Globals.*;
 public class ServerGUI extends JComponent
     implements ICommandListener
 {

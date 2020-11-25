@@ -1,8 +1,8 @@
-package net.minecraft.clothutils;
+package src.net.minecraft.clothutils;
 
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.ItemStack;
+import src.net.minecraft.server.MinecraftServer;
+import src.net.minecraft.src.EntityPlayerMP;
+import src.net.minecraft.src.ItemStack;
 
 /**
  * Extended Player controlling class

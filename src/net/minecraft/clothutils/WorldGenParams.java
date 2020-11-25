@@ -1,6 +1,6 @@
-package net.minecraft.clothutils;
+package src.net.minecraft.clothutils;
 
-import net.minecraft.src.PropertyManager;
+import src.net.minecraft.src.PropertyManager;
 
 import java.io.Console;
 import java.io.File;

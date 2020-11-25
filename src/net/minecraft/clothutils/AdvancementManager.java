@@ -1,4 +1,4 @@
-package net.minecraft.clothutils;
+package src.net.minecraft.clothutils;
 
 
 import com.google.gson.Gson;

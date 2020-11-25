@@ -1,4 +1,4 @@
-package net.minecraft.src;
+package src.net.minecraft.src;
 // Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
@@ -6,7 +6,7 @@ package net.minecraft.src;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JList;
-import net.minecraft.server.MinecraftServer;
+import src.net.minecraft.server.MinecraftServer;
 
 public class PlayerListBox extends JList
     implements IUpdatePlayerListBox

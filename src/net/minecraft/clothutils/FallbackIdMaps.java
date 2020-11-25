@@ -1,4 +1,4 @@
-package net.minecraft.clothutils;
+package src.net.minecraft.clothutils;
 /**
  * Hard-coded fallback block mappings
  * @author Luminoso-256

@@ -1,4 +1,4 @@
-package net.minecraft.clothutils.plugins.stich;
+package src.net.minecraft.clothutils.plugins.stich;
 
 
 import java.io.File;
