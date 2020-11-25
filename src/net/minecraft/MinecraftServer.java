@@ -371,6 +371,10 @@ public class MinecraftServer
                                 }
                                 player.damageSources = new ArrayList<String>(); //reset the list
                                 logger.info("Sending dmsg string" + DeathMsg);
+                                //Server console
+                                String truncDeathMsg = DeathMsg.replace(player.username, "");
+                                logger.info("<"+player.username+"> **Died:** "+truncDeathMsg);
+                                //Ingame
                                 configManager.sendChatMessageToAllPlayers("§7" + DeathMsg);
 
                                 player.HasRespawed = true;
@@ -480,6 +484,7 @@ public class MinecraftServer
 
     public void grantAdvancement(String username, String advancementID) {
         if (advancementManager.grantAdvancement(username, advancementID)) {
+            logger.info("<"+username+"> **Got advancement: ** "+advancementNames.get(advancementID));
             configManager.sendChatMessageToAllPlayers(username + " has made the advancement §2[" + advancementNames.get(advancementID) + "]");
         }
     }
@@ -556,11 +561,11 @@ public class MinecraftServer
                 }
 
                 for(String advancement:advancementsObtained){
-                    configManager.sendChatMessageToAllPlayers("§a ×["+advancementNames.get(advancement)+"]");
+                    configManager.sendChatMessageToPlayer(username, "§a  ["+advancementNames.get(advancement)+"]");
                 }
                 for(Object advancement:missingAdvancements){
                     String advancementString = advancement.toString();
-                    configManager.sendChatMessageToAllPlayers("§9  ["+advancementNames.get(advancement)+"]");
+                    configManager.sendChatMessageToPlayer(username,"§9  ["+advancementNames.get(advancement)+"]");
                 }
 
 
