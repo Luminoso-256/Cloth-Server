@@ -13,8 +13,8 @@ public class Globals {
 
     //-------------------Release Information
     public static final boolean IS_PREVIEW = false; //I plan to release more early or test-specific releases now, so thisl be handy
-    public static final String VERSION_STRING = "Cloth Beta 1.0.0-";
-    public static final int STITCH_HOOK_VERSION = -10; //for plugin compat. As evidenced by the negative, not prod ready yet
+    public static final String VERSION_STRING = "Cloth Beta 1.0.1";
+    public static final int STITCH_HOOK_VERSION = 255; //testing random stuff
     public static final String TARGET_FEATURE = "release";
 
 
@@ -68,8 +68,8 @@ public class Globals {
     //Eventually thisl be config
     public static final HashMap advancementNames=new HashMap<String, String>() {{
         //test
-        put("test.clothdeveloperadvancement", "Eureka! The cloth advancement system works :)");
-        put("test.duplicitadvancementcheck", "You got this again? yay anyway!");
+//        put("test.clothdeveloperadvancement", "Eureka! The cloth advancement system works :)");
+//        put("test.duplicitadvancementcheck", "You got this again? yay anyway!");
 
         //inventory
         put("inventory.log", "Punch a tree!");
@@ -78,8 +78,8 @@ public class Globals {
         put("inventory.diamond", "Diamonds!");
         put("inventory.diamondhoe", "Fool me once...");
         put("inventory.furnace", "Smelting time");
-        put("inventory.ironpickaxe", "Inventory.ironpickaxe name (I forgot it)");
-        put("inventory.diamondpickaxe", "[Placeholder title for inventory.diamondpickaxe]");
+        put("inventory.ironpickaxe", "Isn't it iron pick?");
+        put("inventory.diamondpickaxe", "Mining machine");
         put("inventory.mossycobblestone", "Mossy discovery");
         put("inventory.sponge", "Developer time!");
 
@@ -88,7 +88,7 @@ public class Globals {
         //travel
         put("travel.nether", "getting buggier...");
         put("travel.buildlimit", "I can see my house from here!");
-        put("travel.stableworldgenend", "Edge of the world");
+//        put("travel.stableworldgenend", "Edge of the world");
         //stats
         put("stats.alldeaths", "PHD in dying");
         put("stats.voidout", "Wait, thats illegal");
@@ -101,4 +101,6 @@ public class Globals {
     public static final HashMap commands=new HashMap<String, Icommand>() {{
        // put("help", );
     }};
+
+    
 }
