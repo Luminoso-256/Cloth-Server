@@ -26,6 +26,7 @@ public class MinecraftServer
 
     public MinecraftServer()
     {
+
         field_6025_n = true;
         field_6032_g = false;
         field_9014_h = 0;
@@ -308,7 +309,7 @@ public class MinecraftServer
                             player.IsDead = true;
                            if(player.IsDead && player.HasRespawed == false){
                          //      System.out.println("IsDead:"+ player.IsDead+" HasRespawned:"+player.HasRespawed);
-                               PlayerStatsManager statsManager = new PlayerStatsManager();
+
                                //Hardcore mode
                                boolean IsHardcode = GameruleManager.getBooleanGamerule("preview_hardcoremode", false);
                                //statsManager.updateStat(player.username, "hardcore_is_spectator", "true");
@@ -317,7 +318,7 @@ public class MinecraftServer
 
                                //Stats
 
-                               String oldDeathStat = statsManager.getStat(player.username, "death.count");
+                               String oldDeathStat = playerStatsManager.getStat(player.username, "death.count");
                                System.out.println(oldDeathStat);
                                if(oldDeathStat == "none"){oldDeathStat = "0"; }
                                int deathsInt = Integer.parseInt(oldDeathStat);
@@ -325,7 +326,7 @@ public class MinecraftServer
                                deathsInt ++;
                                String finalStr = ""+deathsInt;
                                //System.out.println("finalstr "+finalStr);
-                               statsManager.updateStat(player.username, "death.count", finalStr);
+                               playerStatsManager.updateStat(player.username, "death.count", finalStr);
                                //Advancement
                                if(deathsInt >=100){
                                    grantAdvancement(player.username, "stats.hundreddeaths");
@@ -537,7 +538,6 @@ public class MinecraftServer
     }
 
     public void grantAdvancement(String username, String advancementID){
-        AdvancementManager advancementManager = new AdvancementManager();
         if(advancementManager.grantAdvancement(username,advancementID)){
             configManager.sendChatMessageToAllPlayers(username+"has made the advancement "+advancementNames.get(advancementID));
         }
@@ -1093,4 +1093,6 @@ public class MinecraftServer
     public int SleepVoteNoCount= 0;
     public String worldName;
 
+    public AdvancementManager advancementManager = new AdvancementManager();
+    public PlayerStatsManager playerStatsManager = new PlayerStatsManager();
 }
