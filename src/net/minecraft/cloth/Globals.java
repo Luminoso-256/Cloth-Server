@@ -13,7 +13,7 @@ public class Globals {
 
     //-------------------Release Information
     public static final boolean IS_PREVIEW = false; //I plan to release more early or test-specific releases now, so thisl be handy
-    public static final String VERSION_STRING = "Cloth Beta 1.0.0-rc3";
+    public static final String VERSION_STRING = "Cloth Beta 1.0.0-";
     public static final int STITCH_HOOK_VERSION = -10; //for plugin compat. As evidenced by the negative, not prod ready yet
     public static final String TARGET_FEATURE = "release";
 
