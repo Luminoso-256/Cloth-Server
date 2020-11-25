@@ -2,7 +2,7 @@ package src.net.minecraft;
 
 import src.net.minecraft.cloth.file.GameruleManager;
 import src.net.minecraft.cloth.plugins.stich.StitchLoader;
-import src.net.minecraft.src.*;
+import src.net.minecraft.core.*;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;

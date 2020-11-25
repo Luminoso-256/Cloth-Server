@@ -1,6 +1,6 @@
 package src.net.minecraft.cloth;
 
-import src.net.minecraft.src.PropertyManager;
+import src.net.minecraft.core.PropertyManager;
 
 import java.io.File;
 import java.util.Random;

@@ -9,7 +9,7 @@ import src.net.minecraft.cloth.file.AdvancementManager;
 import src.net.minecraft.cloth.file.BlockMappingsManager;
 import src.net.minecraft.cloth.file.GameruleManager;
 import src.net.minecraft.cloth.file.PlayerStatsManager;
-import src.net.minecraft.src.*;
+import src.net.minecraft.core.*;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;

@@ -1,8 +1,8 @@
 package src.net.minecraft.cloth.file;
 
 import src.net.minecraft.MinecraftServer;
-import src.net.minecraft.src.EntityPlayerMP;
-import src.net.minecraft.src.ItemStack;
+import src.net.minecraft.core.EntityPlayerMP;
+import src.net.minecraft.core.ItemStack;
 
 /**
  * Extended Player controlling class
