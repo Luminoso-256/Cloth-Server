@@ -1,4 +1,4 @@
-package src.net.minecraft.cloth.command;
+package net.minecraft.cloth.command;
 
 public class Command {
 }

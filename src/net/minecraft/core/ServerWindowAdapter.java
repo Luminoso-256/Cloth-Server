@@ -1,11 +1,11 @@
-package src.net.minecraft.core;
+package net.minecraft.core;
 // Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import src.net.minecraft.MinecraftServer;
+import net.minecraft.MinecraftServer;
 
 final class ServerWindowAdapter extends WindowAdapter
 {

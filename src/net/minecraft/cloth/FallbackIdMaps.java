@@ -1,4 +1,4 @@
-package src.net.minecraft.cloth;
+package net.minecraft.cloth;
 /**
  * Hard-coded fallback block mappings
  * @author Luminoso-256

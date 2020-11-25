@@ -1,7 +1,7 @@
-package src.net.minecraft.cloth;
+package net.minecraft.cloth;
 
-import src.net.minecraft.MinecraftServer;
-import src.net.minecraft.core.ICommandListener;
+import net.minecraft.MinecraftServer;
+import net.minecraft.core.ICommandListener;
 
 public class commandDispatcher {
 

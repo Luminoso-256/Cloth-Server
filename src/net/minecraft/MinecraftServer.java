@@ -2,14 +2,14 @@
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-package src.net.minecraft;
+package net.minecraft;
 
-import src.net.minecraft.cloth.*;
-import src.net.minecraft.cloth.file.AdvancementManager;
-import src.net.minecraft.cloth.file.BlockMappingsManager;
-import src.net.minecraft.cloth.file.GameruleManager;
-import src.net.minecraft.cloth.file.PlayerStatsManager;
-import src.net.minecraft.core.*;
+import net.minecraft.cloth.*;
+import net.minecraft.cloth.file.AdvancementManager;
+import net.minecraft.cloth.file.BlockMappingsManager;
+import net.minecraft.cloth.file.GameruleManager;
+import net.minecraft.cloth.file.PlayerStatsManager;
+import net.minecraft.core.*;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static src.net.minecraft.cloth.Globals.*;
+import static net.minecraft.cloth.Globals.*;
 
 public class MinecraftServer
     implements ICommandListener, Runnable
@@ -653,7 +653,7 @@ public class MinecraftServer
             }
             if(command.toLowerCase().startsWith("version")){
                 //WorldGenParams params = new WorldGenParams();
-                icommandlistener.log(VERSION_STRING+" Branch: "+BRANCH);
+                icommandlistener.log(VERSION_STRING+" Branch: "+ TARGET_FEATURE);
             }
             if(command.toLowerCase().startsWith("heal")){
              EntityPlayer player =  configManager.getPlayerEntity(username);

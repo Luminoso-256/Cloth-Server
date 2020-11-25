@@ -1,9 +1,9 @@
-package src.net.minecraft.cloth;
+package net.minecraft.cloth;
 
 //Cloth globals, in case they are needed outside of main. Better design
 
-import src.net.minecraft.cloth.command.Command;
-import src.net.minecraft.cloth.command.Icommand;
+import net.minecraft.cloth.command.Command;
+import net.minecraft.cloth.command.Icommand;
 
 import java.util.HashMap;
 
@@ -15,8 +15,7 @@ public class Globals {
     public static final boolean IS_PREVIEW = true; //I plan to release more early or test-specific releases now, so thisl be handy
     public static final String VERSION_STRING = "Cloth Beta 1.0.0-rc1";
     public static final int STITCH_HOOK_VERSION = -10; //for plugin compat. As evidenced by the negative, not prod ready yet
-    public static final String BRANCH = "the command update"; //not reffering to gh branches, but rather to features. ex: if a build was focused on nether testing this
-                                                // would be nether
+    public static final String TARGET_FEATURE = "https://tenor.com/view/on-fire-pizza-gif-6074641";
 
 
     //-------------------Easter-eggs/Tidbits

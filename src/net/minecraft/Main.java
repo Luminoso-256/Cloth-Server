@@ -1,8 +1,8 @@
-package src.net.minecraft;
+package net.minecraft;
 
-import src.net.minecraft.cloth.file.GameruleManager;
-import src.net.minecraft.cloth.plugins.stich.StitchLoader;
-import src.net.minecraft.core.*;
+import net.minecraft.cloth.file.GameruleManager;
+import net.minecraft.cloth.plugins.stich.StitchLoader;
+import net.minecraft.core.*;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
@@ -15,7 +15,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static src.net.minecraft.cloth.Globals.*;
+import static net.minecraft.cloth.Globals.*;
 
 /**
  * Custom Main class for stitch & convience
@@ -29,7 +29,7 @@ public class Main {
     public static void main(String[] args){
         Random random = new Random();
         logger.info("Welcome to "+VERSION_STRING+" - "+WELCOME_MSG[random.nextInt(WELCOME_MSG.length)]);
-        if(IS_PREVIEW){logger.warning("*********Warning: This is a pre-release build of Cloth. Issues may arise. Targeting feature: "+BRANCH);}
+        if(IS_PREVIEW){logger.warning("*********Warning: This is a pre-release build of Cloth. Issues may arise. Targeting feature: "+ TARGET_FEATURE);}
         logger.info("[Stitch] Loading stitch plugins from /plugins...");
         Globals _G = JsePlatform.standardGlobals();
         //Main classes

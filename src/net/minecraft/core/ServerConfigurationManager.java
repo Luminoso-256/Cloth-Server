@@ -1,4 +1,4 @@
-package src.net.minecraft.core;
+package net.minecraft.core;
 // Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
@@ -7,9 +7,9 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.Logger;
 
-import src.net.minecraft.cloth.ExploitUtils;
-import src.net.minecraft.cloth.file.GameruleManager;
-import src.net.minecraft.MinecraftServer;
+import net.minecraft.cloth.ExploitUtils;
+import net.minecraft.cloth.file.GameruleManager;
+import net.minecraft.MinecraftServer;
 
 public class ServerConfigurationManager
 {

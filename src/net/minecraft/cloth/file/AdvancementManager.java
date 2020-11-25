@@ -1,4 +1,4 @@
-package src.net.minecraft.cloth.file;
+package net.minecraft.cloth.file;
 
 
 import com.google.gson.Gson;

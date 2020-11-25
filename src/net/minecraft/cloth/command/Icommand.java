@@ -1,6 +1,6 @@
-package src.net.minecraft.cloth.command;
+package net.minecraft.cloth.command;
 
-import src.net.minecraft.MinecraftServer;
+import net.minecraft.MinecraftServer;
 public interface Icommand {
     public void runCommand(MinecraftServer server, String command, String username);
 }

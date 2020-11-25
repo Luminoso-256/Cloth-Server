@@ -1,4 +1,4 @@
-package src.net.minecraft.core;
+package net.minecraft.core;
 // Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import src.net.minecraft.MinecraftServer;
-import static src.net.minecraft.cloth.Globals.*;
+import net.minecraft.MinecraftServer;
+import static net.minecraft.cloth.Globals.*;
 public class ServerGUI extends JComponent
     implements ICommandListener
 {
@@ -23,7 +23,7 @@ public class ServerGUI extends JComponent
         }
         catch(Exception exception) { }
         ServerGUI servergui = new ServerGUI(minecraftserver);
-        JFrame jframe = new JFrame("Cloth-Server | "+VERSION_STRING+" - branch: "+BRANCH);
+        JFrame jframe = new JFrame("Cloth-Server | "+VERSION_STRING+" - branch: "+ TARGET_FEATURE);
         jframe.add(servergui);
         jframe.pack();
         jframe.setLocationRelativeTo(null);
