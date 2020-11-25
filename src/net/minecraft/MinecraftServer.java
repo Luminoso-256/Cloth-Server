@@ -546,30 +546,6 @@ public class MinecraftServer
             } else if (command.toLowerCase().startsWith("seed")) {
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:" + params.GetSeedFromPropertiesFile());
-            } else if (command.toLowerCase().startsWith("advancements")) {
-
-                ArrayList allAdvancements = new ArrayList<String>();
-                ArrayList missingAdvancements = new ArrayList<String>();
-                advancementNames.forEach((key,value) -> allAdvancements.add(key));
-                ArrayList<String> advancementsObtained = advancementManager.getAdvancementsForPlayer(username);
-
-                for(Object advancement:allAdvancements){
-                    String advString = advancement.toString();
-                    if(!advancementsObtained.contains(advString)){
-                        missingAdvancements.add(advString);
-                    }
-                }
-
-                for(String advancement:advancementsObtained){
-                    configManager.sendChatMessageToPlayer(username, "§a  ["+advancementNames.get(advancement)+"]");
-                }
-                for(Object advancement:missingAdvancements){
-                    String advancementString = advancement.toString();
-                    configManager.sendChatMessageToPlayer(username,"§9  ["+advancementNames.get(advancement)+"]");
-                }
-
-
-
             }
             else if (command.toLowerCase().startsWith("whitelist ") && GameruleManager.getBooleanGamerule("preview_keepinventorysystem", false)) {
                 String[] args = command.toLowerCase().split(" ");

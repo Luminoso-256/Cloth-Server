@@ -3,10 +3,14 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import net.minecraft.cloth.file.AdvancementManager;
 import net.minecraft.cloth.file.GameruleManager;
 import net.minecraft.MinecraftServer;
+
+import static net.minecraft.cloth.Globals.advancementNames;
 
 public class NetServerHandler extends NetHandler
     implements ICommandListener
@@ -379,9 +383,34 @@ public class NetServerHandler extends NetHandler
     {
         //PREPROCESS
         s = s.toLowerCase().replace("@p", playerEntity.username);
-
+        System.out.println(s);
         //END PREPROCESS
+        if (s.toLowerCase().startsWith("/advancements")) {
+            System.out.println("Adv list");
+            ArrayList allAdvancements = new ArrayList<String>();
+            ArrayList missingAdvancements = new ArrayList<String>();
+            advancementNames.forEach((key,value) -> allAdvancements.add(key));
+            ArrayList<String> advancementsObtained = mcServer.advancementManager.getAdvancementsForPlayer(playerEntity.username);
 
+            for(Object advancement:allAdvancements){
+                String advString = advancement.toString();
+                if(!advancementsObtained.contains(advString)){
+                    missingAdvancements.add(advString);
+                }
+            }
+
+            for(String advancement:advancementsObtained){
+                mcServer.configManager.sendChatMessageToPlayer(playerEntity.username, "§a  ["+advancementNames.get(advancement)+"]");
+            }
+            for(Object advancement:missingAdvancements){
+                String advancementString = advancement.toString();
+               mcServer.configManager.sendChatMessageToPlayer(playerEntity.username,"§9  ["+advancementNames.get(advancement)+"]");
+            }
+
+
+
+        }
+        else
         if(s.toLowerCase().startsWith("/sleepvote ")){
            // GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
             String[] Args = s.toLowerCase().split(" ");
@@ -400,6 +429,7 @@ public class NetServerHandler extends NetHandler
                 mcServer.configManager.sendChatMessageToAllPlayers(playerEntity.username+" votes no for sleeping");
             }
         }
+        else
         if(s.toLowerCase().startsWith("/me "))
         {
             s = (new StringBuilder()).append("* ").append(playerEntity.username).append(" ").append(s.substring(s.indexOf(" ")).trim()).toString();
@@ -562,5 +592,5 @@ public class NetServerHandler extends NetHandler
     private double field_9007_i;
     private boolean field_9006_j;
     private ItemStack field_10_k;
-
+ //   private AdvancementManager advancementManager();
 }
