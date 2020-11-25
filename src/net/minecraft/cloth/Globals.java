@@ -12,10 +12,10 @@ public class Globals {
     // [Cloth Release 1.0.0]
 
     //-------------------Release Information
-    public static final boolean IS_PREVIEW = true; //I plan to release more early or test-specific releases now, so thisl be handy
-    public static final String VERSION_STRING = "Cloth Beta 1.0.0-rc2";
+    public static final boolean IS_PREVIEW = false; //I plan to release more early or test-specific releases now, so thisl be handy
+    public static final String VERSION_STRING = "Cloth Beta 1.0.0-rc3";
     public static final int STITCH_HOOK_VERSION = -10; //for plugin compat. As evidenced by the negative, not prod ready yet
-    public static final String TARGET_FEATURE = "release-candidate";
+    public static final String TARGET_FEATURE = "release";
 
 
     //-------------------Easter-eggs/Tidbits
@@ -23,7 +23,7 @@ public class Globals {
             "Supporting alpha!", "Its in beta!", "Also check out MineOnline!",
             "Bugs are features!", "Report issues on github!", "Unobfuscated!",
             "Free for all!", "Open source!", "Fork me!", "Experimental shennigans!",
-            "With contributions from many", "Compatible with JRE14!",  "Why do these messages exist?",
+            "With contributions from many", "Compatible with JRE14! and JRE8!",  "Why do these messages exist?",
             "New flying pigmen!", "an uneasy alliance!", "buggy nether time!"};
 
     //-------------------Deaths

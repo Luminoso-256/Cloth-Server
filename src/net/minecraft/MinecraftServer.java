@@ -402,7 +402,7 @@ public class MinecraftServer
                                }
                                player.damageSources = new ArrayList<String>(); //reset the list
                                logger.info("Sending dmsg string"+DeathMsg);
-                                configManager.sendChatMessageToAllPlayers(DeathMsg);
+                                configManager.sendChatMessageToAllPlayers("§7"+DeathMsg);
 
                                 player.HasRespawed = true;
                          }
@@ -542,7 +542,7 @@ public class MinecraftServer
 
     public void grantAdvancement(String username, String advancementID){
         if(advancementManager.grantAdvancement(username,advancementID)){
-            configManager.sendChatMessageToAllPlayers(username+"has made the advancement "+advancementNames.get(advancementID));
+            configManager.sendChatMessageToAllPlayers(username+" has made the advancement §2["+advancementNames.get(advancementID)+"]");
         }
     }
 
