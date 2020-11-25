@@ -1,28 +1,34 @@
 package net.minecraft.clothutils;
 
-import org.yaml.snakeyaml.Yaml;
+
+import com.google.gson.Gson;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class AdvancementManager {
-    Yaml yaml = new Yaml();
+
     Logger logger = Logger.getLogger("Minecraft");
     public boolean grantAdvancement(String playerUsername, String advancementID){
         try {
-            File advancementsFile = new File("advancements.yml");
+            Gson gson = new Gson();
+            File advancementsFile = new File("advancements.json");
             if (advancementsFile.createNewFile()) {
-                logger.info("[Cloth] No advancements file exists. Creating new one.");
+                logger.info("[Cloth] No stats file exists. Creating new one.");
             } else {
-              //  logger.info("[Cloth] Loading advancements file...");
+                //   logger.info("[Cloth] Loading stats file...");
             }
             //we now safely have out file
-            InputStream fileInputStream = new FileInputStream(advancementsFile);
-            HashMap advancementMap = (HashMap) yaml.load(fileInputStream);
-            if(advancementMap == null){advancementMap = new HashMap<String, String>();} //prevent null access
+            Reader reader = Files.newBufferedReader(Paths.get(advancementsFile.getAbsolutePath()));
+            Map<String, ArrayList<String>> advancementMap = gson.fromJson(reader, Map.class);
+
+            //HashMap advancementMap = (HashMap) yaml.load(fileInputStream);
+            if(advancementMap == null){advancementMap = new HashMap<>();} //prevent null access
             if(!advancementMap.containsKey(playerUsername)){
                 ArrayList<String> advancements = new ArrayList<String>();
                 advancements.add(advancementID);
@@ -38,8 +44,9 @@ public class AdvancementManager {
                     return false;
                 }
             }
+
             //Save
-            String saveabledata = yaml.dump(advancementMap);
+            String saveabledata = gson.toJson(advancementMap);
             FileWriter writer = new FileWriter(advancementsFile);
             writer.write(saveabledata);
             writer.close();

@@ -10,9 +10,9 @@ public class Globals {
 
     //-------------------Release Information
     public static final boolean IS_PREVIEW = true; //I plan to release more early or test-specific releases now, so thisl be handy
-    public static final String VERSION_STRING = "Cloth Beta 1.0.0";
+    public static final String VERSION_STRING = "Cloth Beta 1.0.0-rc1";
     public static final int STITCH_HOOK_VERSION = -10; //for plugin compat. As evidenced by the negative, not prod ready yet
-    public static final String BRANCH = "debug-hardcoremode/spectator"; //not reffering to gh branches, but rather to features. ex: if a build was focused on nether testing this
+    public static final String BRANCH = "release"; //not reffering to gh branches, but rather to features. ex: if a build was focused on nether testing this
                                                 // would be nether
 
 

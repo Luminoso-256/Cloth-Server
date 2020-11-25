@@ -249,7 +249,7 @@ public class MinecraftServer
                                     //System.out.println("Checking item of id " + item + " for advancement criterion");
                                     //Log
                                     if (item.itemID == 17) {
-                                       // grantAdvancement(player.username, "inventory.log");
+                                        grantAdvancement(player.username, "inventory.log");
                                     }
                                     //cobble
                                     if (item.itemID == 4) {

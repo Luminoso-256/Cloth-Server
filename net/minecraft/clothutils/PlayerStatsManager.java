@@ -1,27 +1,36 @@
 package net.minecraft.clothutils;
 
-import org.yaml.snakeyaml.Yaml;
+
+import com.google.gson.Gson;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 public class PlayerStatsManager {
-    Yaml yaml = new Yaml();
+
     Logger logger = Logger.getLogger("Minecraft");
     public void updateStat(String playerUsername, String statID, String newStatValue){ //for now, only string statistics
+        Gson gson = new Gson();
         try {
-            File statsFile = new File("stats.yml");
+            File statsFile = new File("stats.json");
             if (statsFile.createNewFile()) {
                 logger.info("[Cloth] No stats file exists. Creating new one.");
             } else {
              //   logger.info("[Cloth] Loading stats file...");
             }
             //we now safely have out file
-            InputStream fileInputStream = new FileInputStream(statsFile);
-            HashMap statMap = (HashMap) yaml.load(fileInputStream);
-            if(statMap == null){statMap = new HashMap<String, String>();} //prevent null access
+            Reader reader = Files.newBufferedReader(Paths.get(statsFile.getAbsolutePath()));
+            Map<String, ArrayList<String>> statMap = gson.fromJson(reader, Map.class);
+            if(statMap == null){
+                statMap = new HashMap<String, ArrayList<String>>();
+            }
             if(!statMap.containsKey(playerUsername)){
                 ArrayList<String> stats = new ArrayList<String>();
 
@@ -45,7 +54,8 @@ public class PlayerStatsManager {
                     statMap.replace(playerUsername, newStats);
             }
             //Save
-            String saveabledata = yaml.dump(statMap);
+
+            String saveabledata = gson.toJson(statMap);
             FileWriter writer = new FileWriter(statsFile);
             writer.write(saveabledata);
             writer.close();
@@ -57,17 +67,19 @@ public class PlayerStatsManager {
 
     }
     public String getStat(String playerUsername, String statID){
+        Gson gson = new Gson();
         String statValue = "none";
         try{
-            File statsFile = new File("stats.yml");
+            File statsFile = new File("stats.json");
             if (statsFile.createNewFile()) {
                 logger.info("[Cloth] No stats file exists. Creating new one.");
             } else {
                // logger.info("[Cloth] Loading stats file...");
             }
-            InputStream fileInputStream = new FileInputStream(statsFile);
-            HashMap statMap = (HashMap) yaml.load(fileInputStream);
-            if(statMap == null){statMap = new HashMap<String, String>(); System.out.println("Error null stat hashmap");} //prevent null access
+            Reader reader = Files.newBufferedReader(Paths.get(statsFile.getAbsolutePath()));
+            Map<String, ArrayList<String>> statMap = gson.fromJson(reader, Map.class);
+
+            if(statMap == null){statMap = new HashMap<String, ArrayList<String>>(); System.out.println("Error null stat hashmap");} //prevent null access
             System.out.println(statMap);
             if(!statMap.containsKey(playerUsername)){
                 statValue="none";
