@@ -454,6 +454,21 @@ public class ServerConfigurationManager
 
     }
 
+    public void sendChatMessageToAllOps(String s)
+    {
+        Packet3Chat packet3chat = new Packet3Chat(s);
+        for(int i = 0; i < playerEntities.size(); i++)
+        {
+
+            EntityPlayerMP entityplayermp = (EntityPlayerMP)playerEntities.get(i);
+          //  System.out.println("Sending chat packet to "+entityplayermp.username);
+            if(isOp(entityplayermp.username))
+            {
+                entityplayermp.field_421_a.sendPacket(packet3chat);
+            }
+        }
+
+    }
     public void sendChatMessageToAllPlayers(String s)
     {
         Packet3Chat packet3chat = new Packet3Chat(s);
@@ -461,11 +476,9 @@ public class ServerConfigurationManager
         {
 
             EntityPlayerMP entityplayermp = (EntityPlayerMP)playerEntities.get(i);
-            System.out.println("Sending chat packet to "+entityplayermp.username);
-            if(isOp(entityplayermp.username))
-            {
-                entityplayermp.field_421_a.sendPacket(packet3chat);
-            }
+           // System.out.println("Sending chat packet to "+entityplayermp.username);
+            entityplayermp.field_421_a.sendPacket(packet3chat);
+
         }
 
     }

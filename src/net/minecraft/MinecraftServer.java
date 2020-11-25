@@ -341,7 +341,7 @@ public class MinecraftServer
                                // You WILL DIE PROPERLY
                                 player.setEntityDead();
                                 //And then we will announce it
-                               String DeathMsg = "[Cloth]Error! no death message!";
+                               String DeathMsg = player.username+" died in mysterious circumstances";
 
                                if(!GameruleManager.getBooleanGamerule("specificdeath", false)) {
                                    DeathMsg = player.username + " has died. Rest in Peace"; // eventually ill get more interesting- maybe have a registery of dmg sources?
