@@ -633,6 +633,9 @@ public class MinecraftServer
                 String[] args = command.split(" ");
                 grantAdvancement(username, args[1]);
             }
+
+            //-----------------Commannds below this line have not been swapped
+
             if(command.toLowerCase().startsWith("stats ")){
                 String[] args = command.split(" ");
                PlayerStatsManager statsManager = new PlayerStatsManager();
