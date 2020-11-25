@@ -9,7 +9,7 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import src.net.minecraft.server.MinecraftServer;
+import src.net.minecraft.MinecraftServer;
 
 public class NetworkListenThread
 {

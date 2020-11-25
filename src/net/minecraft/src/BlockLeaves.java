@@ -3,8 +3,6 @@ package src.net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import src.net.minecraft.clothutils.GameruleManager;
-
 import java.io.File;
 import java.util.Random;
 

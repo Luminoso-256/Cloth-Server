@@ -4,8 +4,8 @@ package src.net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import src.net.minecraft.server.MinecraftServer;
+
+import src.net.minecraft.MinecraftServer;
 
 class NetworkAcceptThread extends Thread
 {

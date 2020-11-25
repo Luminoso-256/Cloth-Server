@@ -4,7 +4,7 @@ package src.net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.util.*;
-import src.net.minecraft.server.MinecraftServer;
+import src.net.minecraft.MinecraftServer;
 
 public class EntityTracker
 {

@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import src.net.minecraft.server.MinecraftServer;
-import static src.net.minecraft.clothutils.Globals.*;
+import src.net.minecraft.MinecraftServer;
+import static src.net.minecraft.cloth.Globals.*;
 public class ServerGUI extends JComponent
     implements ICommandListener
 {

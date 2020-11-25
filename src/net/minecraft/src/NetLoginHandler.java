@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Random;
 import java.util.logging.Logger;
-import src.net.minecraft.server.MinecraftServer;
+import src.net.minecraft.MinecraftServer;
 
 public class NetLoginHandler extends NetHandler
 {

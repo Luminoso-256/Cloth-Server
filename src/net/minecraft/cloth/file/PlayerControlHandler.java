@@ -1,6 +1,6 @@
-package src.net.minecraft.clothutils;
+package src.net.minecraft.cloth.file;
 
-import src.net.minecraft.server.MinecraftServer;
+import src.net.minecraft.MinecraftServer;
 import src.net.minecraft.src.EntityPlayerMP;
 import src.net.minecraft.src.ItemStack;
 

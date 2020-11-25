@@ -5,8 +5,8 @@ package src.net.minecraft.src;
 
 import java.util.logging.Logger;
 
-import src.net.minecraft.clothutils.GameruleManager;
-import src.net.minecraft.server.MinecraftServer;
+import src.net.minecraft.cloth.file.GameruleManager;
+import src.net.minecraft.MinecraftServer;
 
 public class NetServerHandler extends NetHandler
     implements ICommandListener

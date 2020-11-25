@@ -6,7 +6,6 @@ package src.net.minecraft.src;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTextField;
-import src.net.minecraft.server.MinecraftServer;
 
 class ServerGuiCommandListener
     implements ActionListener

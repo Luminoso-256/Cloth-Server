@@ -2,10 +2,13 @@
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-package src.net.minecraft.server;
+package src.net.minecraft;
 
-import src.net.minecraft.clothutils.*;
-import src.net.minecraft.clothutils.plugins.stich.StitchLoader;
+import src.net.minecraft.cloth.*;
+import src.net.minecraft.cloth.file.AdvancementManager;
+import src.net.minecraft.cloth.file.BlockMappingsManager;
+import src.net.minecraft.cloth.file.GameruleManager;
+import src.net.minecraft.cloth.file.PlayerStatsManager;
 import src.net.minecraft.src.*;
 
 import java.awt.GraphicsEnvironment;
@@ -17,7 +20,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static src.net.minecraft.clothutils.Globals.*;
+import static src.net.minecraft.cloth.Globals.*;
 
 public class MinecraftServer
     implements ICommandListener, Runnable

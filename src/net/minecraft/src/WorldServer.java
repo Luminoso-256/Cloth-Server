@@ -5,7 +5,7 @@ package src.net.minecraft.src;
 
 import java.io.File;
 import java.util.*;
-import src.net.minecraft.server.MinecraftServer;
+import src.net.minecraft.MinecraftServer;
 
 public class WorldServer extends World
 {

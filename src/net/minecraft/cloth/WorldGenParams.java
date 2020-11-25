@@ -1,8 +1,7 @@
-package src.net.minecraft.clothutils;
+package src.net.minecraft.cloth;
 
 import src.net.minecraft.src.PropertyManager;
 
-import java.io.Console;
 import java.io.File;
 import java.util.Random;
 /**

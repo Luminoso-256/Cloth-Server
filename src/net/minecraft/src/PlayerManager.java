@@ -5,7 +5,7 @@ package src.net.minecraft.src;
 
 import java.util.ArrayList;
 import java.util.List;
-import src.net.minecraft.server.MinecraftServer;
+import src.net.minecraft.MinecraftServer;
 
 public class PlayerManager
 {

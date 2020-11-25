@@ -1,8 +1,7 @@
 package src.net.minecraft;
 
-import src.net.minecraft.clothutils.GameruleManager;
-import src.net.minecraft.clothutils.plugins.stich.StitchLoader;
-import src.net.minecraft.server.MinecraftServer;
+import src.net.minecraft.cloth.file.GameruleManager;
+import src.net.minecraft.cloth.plugins.stich.StitchLoader;
 import src.net.minecraft.src.*;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
@@ -16,7 +15,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static src.net.minecraft.clothutils.Globals.*;
+import static src.net.minecraft.cloth.Globals.*;
 
 /**
  * Custom Main class for stitch & convience

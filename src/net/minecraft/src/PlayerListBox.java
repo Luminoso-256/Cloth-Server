@@ -3,10 +3,9 @@ package src.net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.util.List;
 import java.util.Vector;
 import javax.swing.JList;
-import src.net.minecraft.server.MinecraftServer;
+import src.net.minecraft.MinecraftServer;
 
 public class PlayerListBox extends JList
     implements IUpdatePlayerListBox

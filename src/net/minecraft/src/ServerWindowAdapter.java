@@ -5,7 +5,7 @@ package src.net.minecraft.src;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import src.net.minecraft.server.MinecraftServer;
+import src.net.minecraft.MinecraftServer;
 
 final class ServerWindowAdapter extends WindowAdapter
 {
