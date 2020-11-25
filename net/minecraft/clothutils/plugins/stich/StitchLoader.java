@@ -57,7 +57,7 @@ public class StitchLoader {
      */
     private void RegisterPlugin(String plugin) throws IOException { //Yes, i know its impossible for there to not be a file passed in. Its java's fault this is here.
         String PluginFileRaw = "";
-        try (Scanner scanner = new Scanner(new File("./plugins/" + plugin), StandardCharsets.UTF_8)) {
+        try (Scanner scanner = new Scanner(new File("./plugins/" + plugin), String.valueOf(StandardCharsets.UTF_8))) {
             PluginFileRaw = scanner.useDelimiter("\\A").next();
         }
         //Add to hook lists
