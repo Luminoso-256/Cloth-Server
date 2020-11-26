@@ -4,6 +4,7 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 import net.minecraft.cloth.file.GameruleManager;
+//import net.minecraft.cloth.file.level.BiomeStorage;
 
 import java.util.Random;
 
@@ -215,6 +216,7 @@ public class ChunkProviderGenerate
         //}
         biomesForGeneration = worldObj.func_4077_a().loadBlockGeneratorData(biomesForGeneration, i * 16, j * 16, 16, 16);
         double ad[] = worldObj.func_4077_a().temperature;
+        //BiomeStorage.StoreBiome(i, j, ad);
         generateTerrain(i, j, abyte0, biomesForGeneration, ad);
         replaceBlocksForBiome(i, j, abyte0, biomesForGeneration);
         field_695_u.func_667_a(this, worldObj, i, j, abyte0);

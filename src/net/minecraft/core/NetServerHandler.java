@@ -463,6 +463,7 @@ public class NetServerHandler extends NetHandler
         } else
         {
             String s2 = s.substring(1);
+            sendPacket(new Packet3Chat("\247cError! You dont have sufficient permissions!"));
             logger.info((new StringBuilder()).append(playerEntity.username).append(" tried command: ").append(s2).toString());
         }
     }
