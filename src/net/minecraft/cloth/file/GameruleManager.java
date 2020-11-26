@@ -18,7 +18,6 @@ public class GameruleManager {
 	private Logger logger = Logger.getLogger("Minecraft");
 	private Properties serverGamerules = new Properties();
 	private Timer timer = new Timer();
-	private File gameruleFile = new File("server.gamerules");
 	private Path gamerulesPath = Paths.get("server.gamerules");
 	private File gamerulesFile = gamerulesPath.toFile();
 	private FileTime lastModified;
