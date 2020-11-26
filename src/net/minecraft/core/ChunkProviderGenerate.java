@@ -77,7 +77,7 @@ public class ChunkProviderGenerate
                                 int l2 = 0;
                                 if(k1 * 8 + l1 < byte1)
                                 {
-                                    if(gameruleManager.getGamerule("snowworld", true) | d17 < 0.5D && k1 * 8 + l1 >= byte1 - 1)
+                                    if(gameruleManager.getGamerule("snowworld", false) | d17 < 0.5D && k1 * 8 + l1 >= byte1 - 1)
                                     {
                                         l2 = Block.ice.blockID;
                                     } else
@@ -565,7 +565,7 @@ public class ChunkProviderGenerate
                 int j22 = l19 - (l + 8);
                 int k22 = worldObj.func_4075_e(i17, l19);
                 double d1 = field_4222_w[j21 * 16 + j22] - ((double)(k22 - 64) / 64D) * 0.29999999999999999D;
-                if(gameruleManager.getGamerule("snowworld", true) | d1 < 0.5D && k22 > 0 && k22 < 128 && worldObj.getBlockId(i17, k22, l19) == 0 && worldObj.getBlockMaterial(i17, k22 - 1, l19).func_218_c() && worldObj.getBlockMaterial(i17, k22 - 1, l19) != Material.ice)
+                if(gameruleManager.getGamerule("snowworld", false) | d1 < 0.5D && k22 > 0 && k22 < 128 && worldObj.getBlockId(i17, k22, l19) == 0 && worldObj.getBlockMaterial(i17, k22 - 1, l19).func_218_c() && worldObj.getBlockMaterial(i17, k22 - 1, l19) != Material.ice)
                 {
                     worldObj.setBlockWithNotify(i17, k22, l19, Block.snow.blockID);
                 }
