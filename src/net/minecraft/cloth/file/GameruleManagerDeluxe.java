@@ -1,4 +1,4 @@
-package net.minecraft.clothutils;
+package net.minecraft.cloth.file;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -12,15 +12,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GameruleManagerDeluxe {
+	private static GameruleManagerDeluxe instance;
 	
-	Logger logger = Logger.getLogger("Minecraft");
-	Properties serverGamerules = new Properties();
-	Timer timer = new Timer();
-	Path gamerulesPath = Path.of("server.gamerules");
-	File gamerulesFile = gamerulesPath.toFile();
-	FileTime lastModified;
+	private Logger logger = Logger.getLogger("Minecraft");
+	private Properties serverGamerules = new Properties();
+	private Timer timer = new Timer();
+	private Path gamerulesPath = Path.of("server.gamerules");
+	private File gamerulesFile = gamerulesPath.toFile();
+	private FileTime lastModified;
 	
-    public GameruleManagerDeluxe() {
+    private GameruleManagerDeluxe() {
         if(gamerulesFile.exists()) {
             try {
                 Reload();
@@ -35,6 +36,14 @@ public class GameruleManagerDeluxe {
             Save();
         }
         timer.schedule(new ReloadCheck(), 1000, 1000);
+    }
+    
+    static {
+        instance = new GameruleManagerDeluxe();
+    }
+    
+    public static GameruleManagerDeluxe getInstance() {
+        return instance;
     }
     
     class ReloadCheck extends TimerTask {
