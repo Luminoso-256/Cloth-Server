@@ -3,7 +3,7 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import net.minecraft.cloth.file.GameruleManager;
+import net.minecraft.cloth.file.GameruleManagerDeluxe;
 
 import java.util.*;
 
@@ -26,8 +26,8 @@ public final class SpawnerAnimals
         field_4311_a.clear();
 
        // GameruleManager gameruleManager =  new GameruleManager(new File("server.gamerules")); //We  are going to  hook you up to a gamerule!
-        int UpperSpawnRateBound = GameruleManager.getIntGamerule("inversespawnrate", 50);
-        int UpperJocketBound = GameruleManager.getIntGamerule("inverseskeletonjockeyrate", 100);
+        int UpperSpawnRateBound = gameruleManager.getGamerule("inversespawnrate", 50);
+        int UpperJocketBound = gameruleManager.getGamerule("inverseskeletonjockeyrate", 100);
 
         int var1;
         for(var1 = 0; var1 < world.playerEntities.size(); ++var1) {
@@ -127,4 +127,5 @@ public final class SpawnerAnimals
 
     private static Set field_4311_a = new HashSet();
 
+    private static GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
 }

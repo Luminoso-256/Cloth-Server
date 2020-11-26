@@ -1,9 +1,5 @@
 package net.minecraft.core;
 // Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) braces deadcode 
-
-import net.minecraft.cloth.file.GameruleManager;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -172,8 +168,7 @@ public class Block
 
     public int tickRate()
     {
-       // GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
-        return GameruleManager.getIntGamerule("BlockTickRate", 10);
+        return 10;
     }
 
     public void onBlockAdded(World world, int i, int j, int k)

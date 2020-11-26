@@ -7,7 +7,7 @@ package net.minecraft;
 import net.minecraft.cloth.*;
 import net.minecraft.cloth.file.AdvancementManager;
 import net.minecraft.cloth.file.BlockMappingsManager;
-import net.minecraft.cloth.file.GameruleManager;
+import net.minecraft.cloth.file.GameruleManagerDeluxe;
 import net.minecraft.cloth.file.PlayerStatsManager;
 import net.minecraft.core.*;
 
@@ -111,7 +111,7 @@ public class MinecraftServer
         overworld.func_4072_a(new WorldManager(this));
 
 
-        if (GameruleManager.getBooleanGamerule("preview_nether_worldgen", false)) {
+        if (gameruleManager.getGamerule("preview_nether_worldgen", false)) {
             logger.info("[Cloth] Starting nether init");
             netherWorld = new WorldServer(this, new File("."), worldName + "_nether", seed, -1);
             netherWorld.func_4072_a(new WorldManager(this));
@@ -214,7 +214,7 @@ public class MinecraftServer
                         EntityPlayer player = (EntityPlayer) configManager.playerEntities.get(i);
 
                         //--------Advancement
-                        if (GameruleManager.getBooleanGamerule("enableadvancements", false)) {
+                        if (gameruleManager.getGamerule("enableadvancements", false)) {
                             // System.out.println("Looping advancement inv checks");
                             InventoryPlayer inventory = player.inventory;
                             //inventory
@@ -277,7 +277,7 @@ public class MinecraftServer
 
                         if (player.damageSources.size() != 0) {
                         }
-                        if (GameruleManager.getBooleanGamerule("announcedeath", true) == true && player.health <= 0) {
+                        if (gameruleManager.getGamerule("announcedeath", true) == true && player.health <= 0) {
                             // your dead. Boohoo
 
                             player.IsDead = true;
@@ -285,7 +285,7 @@ public class MinecraftServer
                                 //      System.out.println("IsDead:"+ player.IsDead+" HasRespawned:"+player.HasRespawed);
 
                                 //Hardcore mode
-                                boolean IsHardcode = GameruleManager.getBooleanGamerule("preview_hardcoremode", false);
+                                boolean IsHardcode = gameruleManager.getGamerule("preview_hardcoremode", false);
                                 //statsManager.updateStat(player.username, "hardcore_is_spectator", "true");
 
 
@@ -313,7 +313,7 @@ public class MinecraftServer
                                 //And then we will announce it
                                 String DeathMsg = player.username + " died in mysterious circumstances";
 
-                                if (!GameruleManager.getBooleanGamerule("specificdeath", false)) {
+                                if (!gameruleManager.getGamerule("specificdeath", false)) {
                                     DeathMsg = player.username + " has died. Rest in Peace"; // eventually ill get more interesting- maybe have a registery of dmg sources?
                                 } else {
 
@@ -547,7 +547,7 @@ public class MinecraftServer
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:" + params.GetSeedFromPropertiesFile());
             }
-            else if (command.toLowerCase().startsWith("whitelist ") && GameruleManager.getBooleanGamerule("preview_keepinventorysystem", false)) {
+            else if (command.toLowerCase().startsWith("whitelist ") && gameruleManager.getGamerule("preview_keepinventorysystem", false)) {
                 String[] args = command.toLowerCase().split(" ");
                 if (args[1] == "add") {
                     configManager.whitelistPlayer(args[2]);
@@ -556,10 +556,10 @@ public class MinecraftServer
                     configManager.deWhitelistPlayer(args[2]);
                 }
                 if (args[1] == "on") {
-                    GameruleManager.setBooleanGamerule("usewhitelist", true);
+                	gameruleManager.setGamerule("usewhitelist", true);
                 }
                 if (args[1] == "off") {
-                    GameruleManager.setBooleanGamerule("usewhitelist", false);
+                	gameruleManager.setGamerule("usewhitelist", false);
                 }
             }
             if (command.toLowerCase().startsWith("grantadvancement ")) {
@@ -580,7 +580,7 @@ public class MinecraftServer
                 PlayerStatsManager statsManager = new PlayerStatsManager();
                 statsManager.updateStat(username, args[1], args[2]);
             }
-            if (command.toLowerCase().startsWith("nether") && GameruleManager.getBooleanGamerule("preview_nether_netherteleportcommand", false)) {
+            if (command.toLowerCase().startsWith("nether") && gameruleManager.getGamerule("preview_nether_netherteleportcommand", false)) {
                 EntityPlayerMP player = configManager.getPlayerEntity(username);
                 logger.info("[Debug] Attempting to send player " + player.username + " to the nether. Safe Travels!");
                 overworld.RemoveEntity(player);
@@ -624,10 +624,10 @@ public class MinecraftServer
             }
             if (command.toLowerCase().startsWith("keepinvadd ")) {
                 String commandparts[] = command.split(" ");
-                String keepinvlist = GameruleManager.getStringGamerule("keepinvlist", "");
+                String keepinvlist = gameruleManager.getGamerule("keepinvlist", "");
                 keepinvlist += "|"; //Pipe is seperator. Actual string would look something like Redbunny1|Redbunny2
                 keepinvlist += commandparts[1];
-                GameruleManager.setStringGamerule("keepinvlist", keepinvlist);
+                gameruleManager.setGamerule("keepinvlist", keepinvlist);
             }
             if (command.toLowerCase().startsWith("gamerule ")) {
                 //  GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
@@ -635,60 +635,60 @@ public class MinecraftServer
                 switch (commandparts[1]) {
                     case "announcedeath":
                         if (commandparts[2] == "true") {
-                            GameruleManager.setBooleanGamerule("announcedeath", true);
+                        	gameruleManager.setGamerule("announcedeath", true);
                         } else if (commandparts[2] == "false") {
-                            GameruleManager.setBooleanGamerule("announcedeath", false);
+                        	gameruleManager.setGamerule("announcedeath", false);
                         }
                         break;
                     case "inversemobspawnrate":
                         if (commandparts[2] == "reset") {
-                            GameruleManager.setIntGamerule("inversemobspawnrate", 50);
+                        	gameruleManager.setGamerule("inversemobspawnrate", 50);
                         } else {
                             int newVal = Integer.parseInt(commandparts[2]);
-                            GameruleManager.setIntGamerule("inversemobspawnrate", newVal);
+                            gameruleManager.setGamerule("inversemobspawnrate", newVal);
                         }
                         break;
                     case "domobgriefing":
                         if (commandparts[2] == "true") {
-                            GameruleManager.setBooleanGamerule("domobgriefing", true);
+                        	gameruleManager.setGamerule("domobgriefing", true);
                         } else if (commandparts[2] == "false") {
-                            GameruleManager.setBooleanGamerule("domobgriefing", false);
+                        	gameruleManager.setGamerule("domobgriefing", false);
                         }
                         break;
                     case "dosleepvote":
                         if (commandparts[2] == "true") {
-                            GameruleManager.setBooleanGamerule("dosleepvote", true);
+                        	gameruleManager.setGamerule("dosleepvote", true);
                         } else if (commandparts[2] == "false") {
-                            GameruleManager.setBooleanGamerule("dosleepvote", false);
+                        	gameruleManager.setGamerule("dosleepvote", false);
                         }
                         break;
                     case "inverseskeletonjockeyspawnrate":
                         if (commandparts[2] == "reset") {
-                            GameruleManager.setIntGamerule("inverseskeletonjockeyspawnrate", 50);
+                        	gameruleManager.setGamerule("inverseskeletonjockeyspawnrate", 50);
                         } else {
                             int newVal = Integer.parseInt(commandparts[2]);
-                            GameruleManager.setIntGamerule("inverseskeletonjockeyspawnrate", newVal);
+                            gameruleManager.setGamerule("inverseskeletonjockeyspawnrate", newVal);
                         }
                         break;
                     case "domoderntrample":
                         if (commandparts[2] == "true") {
-                            GameruleManager.setBooleanGamerule("domoderntrample", true);
+                        	gameruleManager.setGamerule("domoderntrample", true);
                         } else if (commandparts[2] == "false") {
-                            GameruleManager.setBooleanGamerule("domoderntrample", false);
+                        	gameruleManager.setGamerule("domoderntrample", false);
                         }
                         break;
                     case "usewhitelist":
                         if (commandparts[2] == "true") {
-                            GameruleManager.setBooleanGamerule("usewhitelist", true);
+                        	gameruleManager.setGamerule("usewhitelist", true);
                         } else if (commandparts[2] == "false") {
-                            GameruleManager.setBooleanGamerule("usewhitelist", false);
+                        	gameruleManager.setGamerule("usewhitelist", false);
                         }
                         break;
                     case "freezetime":
                         if (commandparts[2] == "true") {
-                            GameruleManager.setBooleanGamerule("freezetime", true);
+                        	gameruleManager.setGamerule("freezetime", true);
                         } else if (commandparts[2] == "false") {
-                            GameruleManager.setBooleanGamerule("freezetime", false);
+                            gameruleManager.setGamerule("freezetime", false);
                         }
                         break;
                 }
@@ -965,4 +965,5 @@ public class MinecraftServer
 
     public AdvancementManager advancementManager = new AdvancementManager();
     public PlayerStatsManager playerStatsManager = new PlayerStatsManager();
+    public GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
 }

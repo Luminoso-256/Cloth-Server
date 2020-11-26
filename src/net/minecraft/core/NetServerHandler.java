@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import net.minecraft.cloth.file.AdvancementManager;
-import net.minecraft.cloth.file.GameruleManager;
+import net.minecraft.cloth.file.GameruleManagerDeluxe;
 import net.minecraft.MinecraftServer;
 
 import static net.minecraft.cloth.Globals.advancementNames;
@@ -414,7 +414,7 @@ public class NetServerHandler extends NetHandler
         if(s.toLowerCase().startsWith("/sleepvote ")){
            // GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
             String[] Args = s.toLowerCase().split(" ");
-            if(Args[1].equals("start") && !mcServer.IsSleepVoteOngoing && GameruleManager.getBooleanGamerule("dosleepvote", false)){
+            if(Args[1].equals("start") && !mcServer.IsSleepVoteOngoing && gameruleManager.getGamerule("dosleepvote", false)){
                 //start a vote
                 mcServer.IsSleepVoteOngoing = true;
                // mcServer.SleepVoteRemainingTime = 60000;
@@ -592,5 +592,7 @@ public class NetServerHandler extends NetHandler
     private double field_9007_i;
     private boolean field_9006_j;
     private ItemStack field_10_k;
+    
  //   private AdvancementManager advancementManager();
+    private GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
 }

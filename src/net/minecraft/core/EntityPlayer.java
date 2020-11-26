@@ -3,7 +3,7 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import net.minecraft.cloth.file.GameruleManager;
+import net.minecraft.cloth.file.GameruleManagerDeluxe;
 
 import java.util.List;
 
@@ -117,7 +117,7 @@ public class EntityPlayer extends EntityLiving
 
         //KEEP INV
         //if(!gameruleManager.getBooleanGamerule("keepinventory", false)) {
-             String keepinvlist = GameruleManager.getStringGamerule("keepinvlist", "");
+             String keepinvlist = gameruleManager.getGamerule("keepinvlist", "");
            System.out.println("Checking list "+keepinvlist+" for user "+username);
             if(!keepinvlist.contains("|" + username + "|")){
                 inventory.dropAllItems();
@@ -347,4 +347,6 @@ public class EntityPlayer extends EntityLiving
     public boolean IsDead = false;
     public boolean HasRespawed =  true;
     public Entity lastDamagingEntity;
+    
+    private GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
 }

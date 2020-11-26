@@ -3,13 +3,13 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.cloth.file.GameruleManagerDeluxe;
+import net.minecraft.cloth.ExploitUtils;
+import net.minecraft.MinecraftServer;
+
 import java.io.*;
 import java.util.*;
 import java.util.logging.Logger;
-
-import net.minecraft.cloth.ExploitUtils;
-import net.minecraft.cloth.file.GameruleManager;
-import net.minecraft.MinecraftServer;
 
 public class ServerConfigurationManager
 {
@@ -63,7 +63,7 @@ public class ServerConfigurationManager
         playerManagerObj.func_9214_a(entityplayermp);
 
         //Check their invenotry for illageal items.
-        String itemIDBlacklist = GameruleManager.getStringGamerule("itemidblacklist", " ");
+        String itemIDBlacklist = gameruleManager.getGamerule("itemidblacklist", " ");
         boolean IsInvClean = true;
         int MainInvSize = 36;
         int CraftInvSize  = 4;
@@ -121,7 +121,7 @@ public class ServerConfigurationManager
             netloginhandler.kickUser("You are banned from this server!");
             return null;
         }
-        if(GameruleManager.getBooleanGamerule("usewhitelist", false) && !whitelist.contains(s.trim().toLowerCase())){
+        if(gameruleManager.getGamerule("usewhitelist", false) && !whitelist.contains(s.trim().toLowerCase())){
             //You arent whitelisted!
             netloginhandler.kickUser("You arent whitelisted on this server!");
         }
@@ -525,4 +525,5 @@ public class ServerConfigurationManager
     private File whitelistFile;
     private PlayerNBTManager playerNBTManagerObj;
 
+    private GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
 }

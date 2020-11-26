@@ -3,9 +3,9 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import net.minecraft.cloth.file.GameruleManager;
-
 import java.util.Random;
+
+import net.minecraft.cloth.file.GameruleManagerDeluxe;
 
 public class BlockSoil extends Block
 {
@@ -47,7 +47,7 @@ public class BlockSoil extends Block
 
     public void onEntityWalking(World world, int i, int j, int k, Entity entity)
     {
-        if(!GameruleManager.getBooleanGamerule("domoderntrample", true) && entity.IsPlayer || GameruleManager.getBooleanGamerule("domobtrample", true)) {
+        if(!gameruleManager.getGamerule("domoderntrample", true) && entity.IsPlayer || gameruleManager.getGamerule("domobtrample", true)) {
             if (world.rand.nextInt(4) == 0) {
                 world.setBlockWithNotify(i, j, k, Block.dirt.blockID);
             }
@@ -56,7 +56,7 @@ public class BlockSoil extends Block
     
     public void onEntityFallen(World world, int i, int j, int k, Entity entity, float f)
     {
-        if (!GameruleManager.getBooleanGamerule("domoderntrample", true) && world.rand.nextFloat() < f - 0.5F)
+        if (!gameruleManager.getGamerule("domoderntrample", true) && world.rand.nextFloat() < f - 0.5F)
         {
             world.setBlockWithNotify(i, j, k, Block.dirt.blockID);
         }
@@ -115,4 +115,6 @@ public class BlockSoil extends Block
     {
         return Block.dirt.idDropped(0, random);
     }
+    
+    private GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
 }

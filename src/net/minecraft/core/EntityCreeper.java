@@ -3,7 +3,7 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import net.minecraft.cloth.file.GameruleManager;
+import net.minecraft.cloth.file.GameruleManagerDeluxe;
 
 public class EntityCreeper extends EntityMobs
 {
@@ -112,7 +112,7 @@ public class EntityCreeper extends EntityMobs
             if(field_406_a == field_408_ad)
             {
               //  GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
-                if(GameruleManager.getBooleanGamerule("domobgriefing", true)) {
+                if(gameruleManager.getGamerule("domobgriefing", true)) {
                     worldObj.createExplosion(this, posX, posY, posZ, 3F);
                 }
                 setEntityDead();
@@ -131,4 +131,6 @@ public class EntityCreeper extends EntityMobs
     int field_408_ad;
     int field_407_ae;
     int field_12011_e;
+    
+    private GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
 }
