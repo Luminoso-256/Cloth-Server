@@ -1568,7 +1568,7 @@ public class World
             }
 
         }
-        if(gameruleManager.getGamerule("freezetime", false)) {
+        if(!gameruleManager.getGamerule("freezetime", false)) {
             worldTime++;
         }
         if(worldTime % (long)field_4277_j == 0L)
