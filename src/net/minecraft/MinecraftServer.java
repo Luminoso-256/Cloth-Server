@@ -651,6 +651,7 @@ public class MinecraftServer
             if (command.toLowerCase().startsWith("gamerule ")) {
                 //  GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
                 String commandparts[] = command.toLowerCase().split(" ");
+                configManager.sendChatMessageToPlayer(username,"§7Changing §2" + commandparts[1] + "§7 to §2" + commandparts[2]);
                 switch (commandparts[1]) {
                     case "announcedeath":
                         if (commandparts[2] == "true") {
@@ -712,7 +713,7 @@ public class MinecraftServer
                         break;
                 }
             }
-            if (command.toLowerCase().startsWith("timeset ")) {
+            if (command.toLowerCase().startsWith("time set ")) {
                 String targetTime = command.substring(command.indexOf(" ")).trim();
                 if (targetTime.equals("day")) {
                     overworld.worldTime = 1000;
