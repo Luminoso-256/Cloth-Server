@@ -13,9 +13,9 @@ public class Globals {
 
     //-------------------Release Information
     public static final boolean IS_PREVIEW = false; //I plan to release more early or test-specific releases now, so thisl be handy
-    public static final String VERSION_STRING = "Cloth Beta 1.0.2";
+    public static final String VERSION_STRING = "Cloth Beta 1.1.0";
     public static final int STITCH_HOOK_VERSION = 0; // 0
-    public static final String TARGET_FEATURE = "release";
+    public static final String TARGET_FEATURE = "Trello card: MOTD.txt";
 
 
     //-------------------Easter-eggs/Tidbits

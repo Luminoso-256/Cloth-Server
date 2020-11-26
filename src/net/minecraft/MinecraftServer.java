@@ -8,7 +8,7 @@ import net.minecraft.cloth.*;
 import net.minecraft.cloth.file.AdvancementManager;
 import net.minecraft.cloth.file.BlockMappingsManager;
 import net.minecraft.cloth.file.GameruleManager;
-import net.minecraft.cloth.file.PlayerStatsManager;
+import net.minecraft.cloth.file.PlayerDataManager;
 import net.minecraft.core.*;
 
 import java.awt.GraphicsEnvironment;
@@ -291,7 +291,7 @@ public class MinecraftServer
 
                                 //Stats
 
-                                String oldDeathStat = playerStatsManager.getStat(player.username, "death.count");
+                                String oldDeathStat = playerDataManager.getStat(player.username, "death.count");
                                 System.out.println(oldDeathStat);
                                 if (oldDeathStat == "none") {
                                     oldDeathStat = "0";
@@ -301,7 +301,7 @@ public class MinecraftServer
                                 deathsInt++;
                                 String finalStr = "" + deathsInt;
                                 //System.out.println("finalstr "+finalStr);
-                                playerStatsManager.updateStat(player.username, "death.count", finalStr);
+                                playerDataManager.updateStat(player.username, "death.count", finalStr);
                                 //Advancement
                                 if (deathsInt >= 100) {
                                     grantAdvancement(player.username, "stats.hundreddeaths");
@@ -577,7 +577,7 @@ public class MinecraftServer
 
             if (command.toLowerCase().startsWith("stats ")) {
                 String[] args = command.split(" ");
-                PlayerStatsManager statsManager = new PlayerStatsManager();
+                PlayerDataManager statsManager = new PlayerDataManager();
                 statsManager.updateStat(username, args[1], args[2]);
             }
             if (command.toLowerCase().startsWith("nether") && gameruleManager.getGamerule("preview_nether_netherteleportcommand", false)) {

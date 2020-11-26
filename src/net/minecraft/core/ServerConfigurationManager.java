@@ -8,6 +8,8 @@ import net.minecraft.cloth.ExploitUtils;
 import net.minecraft.MinecraftServer;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -94,8 +96,28 @@ public class ServerConfigurationManager
             else{System.out.println("Slot "+i+" contained null or nonextistant item");}
         }
         //MOTD
-        PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
-        String MOTD = propertyManager.getStringProperty("motd", "Welcome %player% to %world% ! ");
+        File tempFile = new File("motd.txt");
+        boolean exists = tempFile.exists();
+        String MOTD = null;
+        List<String> PossibleMOTDS = null;
+        Random random = new Random();
+        if(exists){
+            try {
+                PossibleMOTDS =  Files.readAllLines( Paths.get(tempFile.getAbsolutePath()) );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            for(String log:PossibleMOTDS){
+                logger.info(log);
+            }
+            MOTD = PossibleMOTDS.get(random.nextInt(PossibleMOTDS.size()));
+        }
+        else {
+            PropertyManager propertyManager = new PropertyManager(new File("server.properties"));
+            MOTD = propertyManager.getStringProperty("motd", "Welcome %player% to %world% ! ");
+
+        }
         String pnameReplace = MOTD.replace("%player%", entityplayermp.username);
         String finalMOTD = pnameReplace.replace("%world%", mcServer.worldName);
         sendChatMessageToPlayer(entityplayermp.username, finalMOTD);
@@ -114,9 +136,14 @@ public class ServerConfigurationManager
         playerManagerObj.func_9213_b(entityplayermp);
     }
 
-    public EntityPlayerMP login(NetLoginHandler netloginhandler, String s, String s1)
+    public EntityPlayerMP login(NetLoginHandler netloginhandler, String username, String s1)
     {
-        if(banList.contains(s.trim().toLowerCase()))
+        PlayerDataManager playerDataManager = new PlayerDataManager();
+        if(GameruleManager.getBooleanGamerule("preview_hardcore", false) && playerDataManager.getStat(username, "game.hardcorefailed") == "yes"){
+
+            netloginhandler.kickUser("You have failed the hardcore mode challenge, and the server has not reset!");
+        }
+        if(banList.contains(username.trim().toLowerCase()))
         {
             netloginhandler.kickUser("You are banned from this server!");
             return null;
@@ -141,13 +168,13 @@ public class ServerConfigurationManager
         for(int i = 0; i < playerEntities.size(); i++)
         {
             EntityPlayerMP entityplayermp = (EntityPlayerMP)playerEntities.get(i);
-            if(entityplayermp.username.equalsIgnoreCase(s))
+            if(entityplayermp.username.equalsIgnoreCase(username))
             {
                 entityplayermp.field_421_a.func_43_c("You logged in from another location");
             }
         }
 
-        return new EntityPlayerMP(mcServer, mcServer.overworld, s, new ItemInWorldManager(mcServer.overworld));
+        return new EntityPlayerMP(mcServer, mcServer.overworld, username, new ItemInWorldManager(mcServer.overworld));
     }
 
     public EntityPlayerMP func_9242_d(EntityPlayerMP entityplayermp)
