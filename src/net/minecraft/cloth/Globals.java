@@ -2,7 +2,6 @@ package net.minecraft.cloth;
 
 //Cloth globals, in case they are needed outside of main. Better design
 
-import net.minecraft.cloth.command.Command;
 import net.minecraft.cloth.command.Icommand;
 
 import java.util.HashMap;
