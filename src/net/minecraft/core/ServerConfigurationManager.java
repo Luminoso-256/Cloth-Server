@@ -3,7 +3,7 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import net.minecraft.cloth.file.GameruleManagerDeluxe;
+import net.minecraft.cloth.file.GameruleManager;
 import net.minecraft.cloth.ExploitUtils;
 import net.minecraft.MinecraftServer;
 
@@ -525,5 +525,5 @@ public class ServerConfigurationManager
     private File whitelistFile;
     private PlayerNBTManager playerNBTManagerObj;
 
-    private GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
+    private GameruleManager gameruleManager = GameruleManager.getInstance();
 }

@@ -5,7 +5,7 @@ package net.minecraft.core;
 
 import java.util.Random;
 
-import net.minecraft.cloth.file.GameruleManagerDeluxe;
+import net.minecraft.cloth.file.GameruleManager;
 
 public class BlockSoil extends Block
 {
@@ -116,5 +116,5 @@ public class BlockSoil extends Block
         return Block.dirt.idDropped(0, random);
     }
     
-    private GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
+    private GameruleManager gameruleManager = GameruleManager.getInstance();
 }

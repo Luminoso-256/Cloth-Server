@@ -3,7 +3,7 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import net.minecraft.cloth.file.GameruleManagerDeluxe;
+import net.minecraft.cloth.file.GameruleManager;
 
 public class EntityCreeper extends EntityMobs
 {
@@ -132,5 +132,5 @@ public class EntityCreeper extends EntityMobs
     int field_407_ae;
     int field_12011_e;
     
-    private GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
+    private GameruleManager gameruleManager = GameruleManager.getInstance();
 }

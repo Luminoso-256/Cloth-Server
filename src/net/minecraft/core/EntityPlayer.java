@@ -3,7 +3,7 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import net.minecraft.cloth.file.GameruleManagerDeluxe;
+import net.minecraft.cloth.file.GameruleManager;
 
 import java.util.List;
 
@@ -348,5 +348,5 @@ public class EntityPlayer extends EntityLiving
     public boolean HasRespawed =  true;
     public Entity lastDamagingEntity;
     
-    private GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
+    private GameruleManager gameruleManager = GameruleManager.getInstance();
 }

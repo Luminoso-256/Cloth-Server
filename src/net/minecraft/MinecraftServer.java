@@ -7,7 +7,7 @@ package net.minecraft;
 import net.minecraft.cloth.*;
 import net.minecraft.cloth.file.AdvancementManager;
 import net.minecraft.cloth.file.BlockMappingsManager;
-import net.minecraft.cloth.file.GameruleManagerDeluxe;
+import net.minecraft.cloth.file.GameruleManager;
 import net.minecraft.cloth.file.PlayerStatsManager;
 import net.minecraft.core.*;
 
@@ -965,5 +965,5 @@ public class MinecraftServer
 
     public AdvancementManager advancementManager = new AdvancementManager();
     public PlayerStatsManager playerStatsManager = new PlayerStatsManager();
-    public GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
+    public GameruleManager gameruleManager = GameruleManager.getInstance();
 }

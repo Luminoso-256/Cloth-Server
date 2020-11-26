@@ -11,8 +11,8 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GameruleManagerDeluxe {
-	private static GameruleManagerDeluxe instance;
+public class GameruleManager {
+	private static GameruleManager instance;
 	
 	private Logger logger = Logger.getLogger("Minecraft");
 	private Properties serverGamerules = new Properties();
@@ -21,7 +21,7 @@ public class GameruleManagerDeluxe {
 	private File gamerulesFile = gamerulesPath.toFile();
 	private FileTime lastModified;
 	
-    private GameruleManagerDeluxe() {
+    private GameruleManager() {
         if(gamerulesFile.exists()) {
             try {
                 Reload();
@@ -39,10 +39,10 @@ public class GameruleManagerDeluxe {
     }
     
     static {
-        instance = new GameruleManagerDeluxe();
+        instance = new GameruleManager();
     }
     
-    public static GameruleManagerDeluxe getInstance() {
+    public static GameruleManager getInstance() {
         return instance;
     }
     

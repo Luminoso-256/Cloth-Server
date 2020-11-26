@@ -3,7 +3,7 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import net.minecraft.cloth.file.GameruleManagerDeluxe;
+import net.minecraft.cloth.file.GameruleManager;
 
 import java.util.*;
 
@@ -199,5 +199,5 @@ class PlayerInstance
     private int field_1061_m;
     final PlayerManager field_1073_a; /* synthetic field */
     
-    private GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
+    private GameruleManager gameruleManager = GameruleManager.getInstance();
 }

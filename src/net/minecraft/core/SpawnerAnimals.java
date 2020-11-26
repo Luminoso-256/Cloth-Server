@@ -3,7 +3,7 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import net.minecraft.cloth.file.GameruleManagerDeluxe;
+import net.minecraft.cloth.file.GameruleManager;
 
 import java.util.*;
 
@@ -127,5 +127,5 @@ public final class SpawnerAnimals
 
     private static Set field_4311_a = new HashSet();
 
-    private static GameruleManagerDeluxe gameruleManager = GameruleManagerDeluxe.getInstance();
+    private static GameruleManager gameruleManager = GameruleManager.getInstance();
 }

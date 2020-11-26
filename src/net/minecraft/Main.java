@@ -1,6 +1,5 @@
 package net.minecraft;
 
-import net.minecraft.cloth.file.GameruleManagerDeluxe;
 import net.minecraft.cloth.plugins.stich.StitchLoader;
 import net.minecraft.core.*;
 import org.luaj.vm2.Globals;
@@ -37,7 +36,7 @@ public class Main {
         LuaValue ConfigManager = CoerceJavaToLua.coerce(minecraftServer.configManager);
         LuaValue WorldManager = CoerceJavaToLua.coerce(minecraftServer.overworld);
         LuaValue PropertyManager = CoerceJavaToLua.coerce(minecraftServer.propertyManagerObj);
-        LuaValue GameruleManager = CoerceJavaToLua.coerce(GameruleManagerDeluxe.getInstance());
+        LuaValue GameruleManager = CoerceJavaToLua.coerce(net.minecraft.cloth.file.GameruleManager.getInstance());
         //LuaValue Block = CoerceJavaToLua.coerce(new Block(0, Material.air));
 
 
