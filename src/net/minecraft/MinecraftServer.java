@@ -964,6 +964,6 @@ public class MinecraftServer
     public String worldName;
 
     public AdvancementManager advancementManager = new AdvancementManager();
-    public PlayerStatsManager playerStatsManager = new PlayerStatsManager();
+    public PlayerDataManager playerDataManager = new PlayerDataManager();
     public GameruleManager gameruleManager = GameruleManager.getInstance();
 }

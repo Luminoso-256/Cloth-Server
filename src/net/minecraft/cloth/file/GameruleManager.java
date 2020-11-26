@@ -3,6 +3,7 @@ package net.minecraft.cloth.file;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.Properties;
@@ -17,7 +18,8 @@ public class GameruleManager {
 	private Logger logger = Logger.getLogger("Minecraft");
 	private Properties serverGamerules = new Properties();
 	private Timer timer = new Timer();
-	private Path gamerulesPath = Path.of("server.gamerules");
+	private File gameruleFile = new File("server.gamerules");
+	private Path gamerulesPath = Paths.get("server.gamerules");
 	private File gamerulesFile = gamerulesPath.toFile();
 	private FileTime lastModified;
 	

@@ -6,6 +6,7 @@ package net.minecraft.core;
 import net.minecraft.cloth.file.GameruleManager;
 import net.minecraft.cloth.ExploitUtils;
 import net.minecraft.MinecraftServer;
+import net.minecraft.cloth.file.PlayerDataManager;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -139,7 +140,7 @@ public class ServerConfigurationManager
     public EntityPlayerMP login(NetLoginHandler netloginhandler, String username, String s1)
     {
         PlayerDataManager playerDataManager = new PlayerDataManager();
-        if(GameruleManager.getBooleanGamerule("preview_hardcore", false) && playerDataManager.getStat(username, "game.hardcorefailed") == "yes"){
+        if(gameruleManager.getGamerule("preview_hardcore", false) && playerDataManager.getStat(username, "game.hardcorefailed") == "yes"){
 
             netloginhandler.kickUser("You have failed the hardcore mode challenge, and the server has not reset!");
         }
@@ -148,7 +149,7 @@ public class ServerConfigurationManager
             netloginhandler.kickUser("You are banned from this server!");
             return null;
         }
-        if(gameruleManager.getGamerule("usewhitelist", false) && !whitelist.contains(s.trim().toLowerCase())){
+        if(gameruleManager.getGamerule("usewhitelist", false) && !whitelist.contains(username.trim().toLowerCase())){
             //You arent whitelisted!
             netloginhandler.kickUser("You arent whitelisted on this server!");
         }
