@@ -208,6 +208,11 @@ public class ChunkProviderGenerate
         rand.setSeed((long)i * 0x4f9939f508L + (long)j * 0x1ef1565bd5L);
         byte abyte0[] = new byte[32768];
         Chunk chunk = new Chunk(worldObj, abyte0, i, j);
+        GameruleManager gameruleManager = GameruleManager.getInstance();
+        //if(gameruleManager.getGamerule("singlechunkchallenge", false)){
+        //    System.out.println("Falsifying chunk gen for chunk "+i+","+j);
+        //    chunk = new Chunk(worldObj, abyte0, 1, 1);
+        //}
         biomesForGeneration = worldObj.func_4077_a().loadBlockGeneratorData(biomesForGeneration, i * 16, j * 16, 16, 16);
         double ad[] = worldObj.func_4077_a().temperature;
         generateTerrain(i, j, abyte0, biomesForGeneration, ad);

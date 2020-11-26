@@ -48,11 +48,11 @@ public class ChunkProviderServer
         field_725_a.remove(new ChunkCoordinates(i, j));
         Chunk chunk = (Chunk)field_728_e.get(chunkcoordinates);
         GameruleManager gameruleManager = GameruleManager.getInstance();
-        if(gameruleManager.getGamerule("singlechunkchallenge", false)){
-            System.out.println("Falsifying chunk grab for chunk "+i+","+j);
-            ChunkCoordinates fakeCords = new ChunkCoordinates(0, 0);
-            chunk = (Chunk)field_728_e.get(fakeCords);
-        }
+       // if(gameruleManager.getGamerule("singlechunkchallenge-d2", false)){
+       //     System.out.println("Falsifying chunk grab for chunk "+i+","+j);
+       //     ChunkCoordinates fakeCords = new ChunkCoordinates(3, 3);
+       //     chunk = (Chunk)field_728_e.get(fakeCords);
+      //  }
         if(chunk == null)
         {
             chunk = func_4063_e(i, j);
