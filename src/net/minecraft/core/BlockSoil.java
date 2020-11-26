@@ -47,7 +47,8 @@ public class BlockSoil extends Block
 
     public void onEntityWalking(World world, int i, int j, int k, Entity entity)
     {
-        if(!gameruleManager.getGamerule("domoderntrample", true) && entity.IsPlayer || gameruleManager.getGamerule("domobtrample", true)) {
+        if(!gameruleManager.getGamerule("domoderntrample", true) && entity.IsPlayer 
+        		|| gameruleManager.getGamerule("domobtrample", true)) {
             if (world.rand.nextInt(4) == 0) {
                 world.setBlockWithNotify(i, j, k, Block.dirt.blockID);
             }
@@ -56,7 +57,9 @@ public class BlockSoil extends Block
     
     public void onEntityFallen(World world, int i, int j, int k, Entity entity, float f)
     {
-        if (!gameruleManager.getGamerule("domoderntrample", true) && world.rand.nextFloat() < f - 0.5F)
+        if ((gameruleManager.getGamerule("domoderntrample", true) && entity.IsPlayer 
+        		|| gameruleManager.getGamerule("domobtrample", true)) 
+        		&& world.rand.nextFloat() < f - 0.5F)
         {
             world.setBlockWithNotify(i, j, k, Block.dirt.blockID);
         }
