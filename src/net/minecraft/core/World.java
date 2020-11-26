@@ -1630,7 +1630,7 @@ public class World
                 }
             }
             int l1 = 0;
-            while(l1 < 80)//how many updates per tick
+            while(l1 < gameruleManager.getGamerule("randomtickrate", 80))
             {
                 field_4279_g = field_4279_g * 3 + field_4278_h;
                 int k2 = field_4279_g >> 2;
