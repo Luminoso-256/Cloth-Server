@@ -3,6 +3,8 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.cloth.file.GameruleManager;
+
 import java.util.Random;
 
 public class ChunkProviderGenerate
@@ -26,6 +28,8 @@ public class ChunkProviderGenerate
         field_715_a = new NoiseGeneratorOctaves(rand, 10);
         field_714_b = new NoiseGeneratorOctaves(rand, 16);
         field_713_c = new NoiseGeneratorOctaves(rand, 8);
+
+
     }
 
     public void generateTerrain(int i, int j, byte abyte0[], MobSpawnerBase amobspawnerbase[], double ad[])
@@ -36,6 +40,7 @@ public class ChunkProviderGenerate
         byte byte2 = 17;
         int l = byte0 + 1;
         field_4224_q = func_4058_a(field_4224_q, i * byte0, 0, j * byte0, k, byte2, l);
+
         for(int i1 = 0; i1 < byte0; i1++)
         {
             for(int j1 = 0; j1 < byte0; j1++)
@@ -67,11 +72,12 @@ public class ChunkProviderGenerate
                             double d16 = (d11 - d10) * d14;
                             for(int k2 = 0; k2 < 4; k2++)
                             {
+                                GameruleManager gameruleManager = GameruleManager.getInstance();
                                 double d17 = ad[(i1 * 4 + i2) * 16 + (j1 * 4 + k2)];
                                 int l2 = 0;
                                 if(k1 * 8 + l1 < byte1)
                                 {
-                                    if(d17 < 0.5D && k1 * 8 + l1 >= byte1 - 1)
+                                    if(gameruleManager.getGamerule("snowworld", true) | d17 < 0.5D && k1 * 8 + l1 >= byte1 - 1)
                                     {
                                         l2 = Block.ice.blockID;
                                     } else
@@ -548,16 +554,18 @@ public class ChunkProviderGenerate
             (new WorldGenLiquids(Block.lavaStill.blockID)).generate(worldObj, rand, k19, i21, i22);
         }
 
+
         field_4222_w = worldObj.func_4077_a().getTemperatures(field_4222_w, k + 8, l + 8, 16, 16);
         for(int i17 = k + 8; i17 < k + 8 + 16; i17++)
         {
             for(int l19 = l + 8; l19 < l + 8 + 16; l19++)
             {
+                GameruleManager gameruleManager = GameruleManager.getInstance();
                 int j21 = i17 - (k + 8);
                 int j22 = l19 - (l + 8);
                 int k22 = worldObj.func_4075_e(i17, l19);
                 double d1 = field_4222_w[j21 * 16 + j22] - ((double)(k22 - 64) / 64D) * 0.29999999999999999D;
-                if(d1 < 0.5D && k22 > 0 && k22 < 128 && worldObj.getBlockId(i17, k22, l19) == 0 && worldObj.getBlockMaterial(i17, k22 - 1, l19).func_218_c() && worldObj.getBlockMaterial(i17, k22 - 1, l19) != Material.ice)
+                if(gameruleManager.getGamerule("snowworld", true) | d1 < 0.5D && k22 > 0 && k22 < 128 && worldObj.getBlockId(i17, k22, l19) == 0 && worldObj.getBlockMaterial(i17, k22 - 1, l19).func_218_c() && worldObj.getBlockMaterial(i17, k22 - 1, l19) != Material.ice)
                 {
                     worldObj.setBlockWithNotify(i17, k22, l19, Block.snow.blockID);
                 }
