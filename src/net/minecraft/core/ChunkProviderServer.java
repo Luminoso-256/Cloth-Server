@@ -3,6 +3,8 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.cloth.file.GameruleManager;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -45,6 +47,12 @@ public class ChunkProviderServer
         ChunkCoordinates chunkcoordinates = new ChunkCoordinates(i, j);
         field_725_a.remove(new ChunkCoordinates(i, j));
         Chunk chunk = (Chunk)field_728_e.get(chunkcoordinates);
+        GameruleManager gameruleManager = GameruleManager.getInstance();
+        if(gameruleManager.getGamerule("singlechunkchallenge", false)){
+            System.out.println("Falsifying chunk grab for chunk "+i+","+j);
+            ChunkCoordinates fakeCords = new ChunkCoordinates(0, 0);
+            chunk = (Chunk)field_728_e.get(fakeCords);
+        }
         if(chunk == null)
         {
             chunk = func_4063_e(i, j);

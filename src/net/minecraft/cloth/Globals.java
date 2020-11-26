@@ -12,10 +12,10 @@ public class Globals {
     // [Cloth Release 1.0.0]
 
     //-------------------Release Information
-    public static final boolean IS_PREVIEW = false; //I plan to release more early or test-specific releases now, so thisl be handy
+    public static final boolean IS_PREVIEW = true; //I plan to release more early or test-specific releases now, so thisl be handy
     public static final String VERSION_STRING = "Cloth Beta 1.1.0";
     public static final int STITCH_HOOK_VERSION = 0; // 0
-    public static final String TARGET_FEATURE = "Trello card: MOTD.txt";
+    public static final String TARGET_FEATURE = "Active development";
 
 
     //-------------------Easter-eggs/Tidbits
