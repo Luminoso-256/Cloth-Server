@@ -111,7 +111,7 @@ public class MinecraftServer
         overworld.func_4072_a(new WorldManager(this));
 
 
-        if (gameruleManager.getGamerule("preview_nether_worldgen", false)) {
+        if (gameruleManager.getGamerule("nether", true)) {
             logger.info("[Cloth] Starting nether init");
             netherWorld = new WorldServer(this, new File("."), worldName + "_nether", seed, -1);
             netherWorld.func_4072_a(new WorldManager(this));
@@ -547,6 +547,18 @@ public class MinecraftServer
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:" + params.GetSeedFromPropertiesFile());
             }
+            else if(command.toLowerCase().startsWith("createplayer ")){
+                String[] args = command.split(" ");
+                PlayerNBTManager playerNBTManagerObj = new PlayerNBTManager(new File("whotheheckcares.test"));
+                PlayerManager playerManagerObj = new PlayerManager(this);
+                EntityPlayerMP entityplayermp = new EntityPlayerMP(this, overworld, args[1],  new ItemInWorldManager(overworld));
+                configManager.playerEntities.add(entityplayermp);
+                playerNBTManagerObj.readPlayerData(entityplayermp);
+                overworld.chunkProvider.loadChunk((int)entityplayermp.posX >> 4, (int)entityplayermp.posZ >> 4);
+                for(; overworld.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) { }
+                overworld.entityJoinedWorld(entityplayermp);
+                playerManagerObj.func_9214_a(entityplayermp);
+            }
             else if (command.toLowerCase().startsWith("whitelist ") && gameruleManager.getGamerule("preview_keepinventorysystem", false)) {
                 String[] args = command.toLowerCase().split(" ");
                 if (args[1] == "add") {
@@ -580,14 +592,21 @@ public class MinecraftServer
                 PlayerDataManager statsManager = new PlayerDataManager();
                 statsManager.updateStat(username, args[1], args[2]);
             }
-            if (command.toLowerCase().startsWith("nether") && gameruleManager.getGamerule("preview_nether_netherteleportcommand", false)) {
+            if (command.toLowerCase().startsWith("nether") && gameruleManager.getGamerule("nether", true)) {
+
                 EntityPlayerMP player = configManager.getPlayerEntity(username);
                 logger.info("[Debug] Attempting to send player " + player.username + " to the nether. Safe Travels!");
                 overworld.RemoveEntity(player);
 
-                overworld.func_4074_a(player, false);
-                player.worldObj = netherWorld;
-                netherWorld.entityJoinedWorld(player);
+                PlayerNBTManager playerNBTManagerObj = new PlayerNBTManager(new File("/world/players/"+username+".dat"));
+                PlayerManager playerManagerObj = new PlayerManager(this);
+                EntityPlayerMP entityplayermp = new EntityPlayerMP(this, netherWorld, username,  new ItemInWorldManager(netherWorld));
+                configManager.playerEntities.add(entityplayermp);
+                playerNBTManagerObj.readPlayerData(entityplayermp);
+                netherWorld.chunkProvider.loadChunk((int)entityplayermp.posX >> 4, (int)entityplayermp.posZ >> 4);
+                for(; netherWorld.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) { }
+                netherWorld.entityJoinedWorld(entityplayermp);
+                playerManagerObj.func_9214_a(entityplayermp);
 
             }
             if (command.toLowerCase().startsWith("version")) {
