@@ -725,7 +725,8 @@ public class MinecraftServer
                 }
             }
             if (command.toLowerCase().startsWith("time set ")) {
-                String targetTime = command.substring(command.indexOf(" ")).trim();
+                String targetTime = command.toLowerCase().split(" ")[2];
+                configManager.sendChatMessageToPlayer(username,"§7Setting time to §a[" + targetTime + "]");
                 if (targetTime.equals("day")) {
                     overworld.worldTime = 1000;
                 } else if (targetTime.equals("night")) {
