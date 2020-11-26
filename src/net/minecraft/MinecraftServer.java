@@ -395,7 +395,7 @@ public class MinecraftServer
                     //Original MC main code
                     long l2 = System.currentTimeMillis();
                     long l3 = l2 - l;
-                    if (l3 > 2000L) {
+                    if (l3 > gameruleManager.getGamerule("cantkeepupwarn", 2000)) {
                         logger.warning("Can't keep up! Did the system time change, or is the server overloaded?");
                         l3 = 2000L;
                     }

@@ -22,9 +22,10 @@ public class Globals {
     public static final String[] WELCOME_MSG = {"Its itchy!", "Get stitching!",
             "Supporting alpha!", "Its in beta!", "Also check out MineOnline!",
             "Bugs are features!", "Report issues on github!", "Unobfuscated!",
-            "Free for all!", "Open source!", "Fork me!", "Experimental shennigans!",
+            "Free for all!", "Open source!", "Fork me!", "Experimental shenanigans!",
             "With contributions from many", "Compatible with JRE14! and JRE8!",  "Why do these messages exist?",
-            "New flying pigmen!", "an uneasy alliance!", "buggy nether time!"};
+            "New flying pigmen!", "an uneasy alliance!", "buggy nether time!", "We use Trello!",
+            "Check out classic-rs"};
 
     //-------------------Deaths
 
