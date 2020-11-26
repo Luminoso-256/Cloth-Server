@@ -1,15 +1,6 @@
-
-!/banned-ips.txt
-!/banned-players.txt
-!/minecraft_server.iml
-!/world/
 /out/
-!/server.log.lck
-!/server.log
-!/server.properties
-!/server.gamerules
-!/ops.txt
-!/.idea/
+/.idea/
+minecraft_server.iml
 *.class
 /bin/
 /.settings/

@@ -3,6 +3,9 @@
     <output-path>$PROJECT_DIR$/out</output-path>
     <root id="archive" name="minecraft_server.jar">
       <element id="module-output" name="minecraft_server" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/res/lib/gson-2.8.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/res/lib/luaj-jse-3.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/res/lib/luaj-jme-3.0.1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
