@@ -3,7 +3,7 @@
 
 A Modded server  for  minecraft alpha 1.2.6 back-porting modern minecraft server features to alpha 1.2.6
 
-##Features
+## Features
 
 #### QOL/Commands
 - backported lighting system from beta to lessen chunk lighting errors

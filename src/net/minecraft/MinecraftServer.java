@@ -651,7 +651,18 @@ public class MinecraftServer
             if (command.toLowerCase().startsWith("gamerule ")) {
                 //  GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
                 String commandparts[] = command.toLowerCase().split(" ");
-                configManager.sendChatMessageToPlayer(username,"§7Changing §2" + commandparts[1] + "§7 to §2" + commandparts[2]);
+                String prettyValue = commandparts[2];
+                switch (commandparts[2]) {
+                    case "true":
+                        prettyValue = "§a[true]";
+                        break;
+                    case "false":
+                        prettyValue = "§c[false]";
+                        break;
+                    default:
+                        prettyValue = ("§2["+commandparts[2] + "]");
+                }
+                configManager.sendChatMessageToPlayer(username,"§7Changing gamerule §2[" + commandparts[1] + "]§7 to " + prettyValue);
                 switch (commandparts[1]) {
                     case "announcedeath":
                         if (commandparts[2] == "true") {
