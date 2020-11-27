@@ -1,5 +1,6 @@
 package net.minecraft;
 
+import net.minecraft.cloth.plugins.ruleset.RulesetLoader;
 import net.minecraft.cloth.plugins.stich.StitchLoader;
 import net.minecraft.core.*;
 import org.luaj.vm2.Globals;
@@ -60,11 +61,16 @@ public class Main {
 
 
         StitchLoader stitch = new StitchLoader(_G);
-
         stitch.RegisterAllPlugins();
         logger.info("[Stitch] Calling initialization hook");
          List<String> DummyList = new ArrayList<>();
         stitch.CallHook("OnServerInit", DummyList);
+
+
+        RulesetLoader rulesetLoader = new RulesetLoader();
+        logger.info("[Rulesets] Registering all rulesets");
+        rulesetLoader.initializeRulesets();
+
 
         logger.info("[Cloth] Checking world seed");
         PropertyManager propertyManager = new PropertyManager(new File("server.properties"));

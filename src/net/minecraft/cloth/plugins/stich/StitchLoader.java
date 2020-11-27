@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 import org.luaj.vm2.*;
+import static net.minecraft.Globals.*;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
+import sun.rmi.runtime.Log;
 
 /**
  * Core stitch system
@@ -50,6 +52,7 @@ public class StitchLoader {
                 }
 
             }
+            System.out.println(OnServerTickHook);
         }
     }
 
@@ -65,17 +68,24 @@ public class StitchLoader {
         //}
         File fileRef = new File("./plugins/"+plugin);
         PluginFileRaw = new String ( Files.readAllBytes( Paths.get(fileRef.getAbsolutePath()) ) );
-        //Add to hook lists
-        if (PluginFileRaw.contains("OnServerInit")) {
+        //Add to hook lists if version is correct
+        if(PluginFileRaw.contains("CLOTH_STITCH_VERSION:"+STITCH_HOOK_VERSION)) {
+            if (PluginFileRaw.contains("OnServerInit")) {
 
-            OnServerInitHook.add(plugin); //Store a ref to the lua file so we can exec it later
+                OnServerInitHook.add(plugin); //Store a ref to the lua file so we can exec it later
+            }
+            if (PluginFileRaw.contains("OnBlockCreateBy")) {
+                OnBlockCreateByHook.add(plugin);
+            }
+            if (PluginFileRaw.contains("OnServerTick")) {
+                OnServerTickHook.add(plugin);
+            }
         }
-        if(PluginFileRaw.contains("OnBlockCreateBy")){
-            OnBlockCreateByHook.add(plugin);
+        else{
+            Logger logger = Logger.getLogger("Minecraft");
+            logger.info("[Stitch] Plugin file "+plugin+" was not loaded: Plugin is marked for a different version of stitch");
         }
-        if(PluginFileRaw.contains("OnServerTick")){
-            OnServerTickHook.add(plugin);
-        }
+
     }
 
     //HOOK CALL
@@ -88,7 +98,7 @@ public class StitchLoader {
             case "OnServerInit":
                 for (int i = 0; i < OnServerInitHook.size(); i++)
                     output = CallFunctionFromLuaFile(OnServerInitHook.get(i), "OnServerInit", Args); //No usage of the args list as this takes no params
-                logger.info("Called Hook: ServerInit With result " + output);
+              //  logger.info("Called Hook: ServerInit With result " + output);
                 break;
             case "OnServerTick":
                 for (int i = 0; i < OnServerTickHook.size(); i++)
@@ -97,7 +107,7 @@ public class StitchLoader {
             case "OnBlockCreateBy":
                 for (int i = 0; i < OnBlockCreateByHook.size(); i++)
                     output = CallFunctionFromLuaFile(OnBlockCreateByHook.get(i), "OnBlockCreateBy", Args);
-                logger.info("Called Hook: OnBlockCreateBy With result " + output);
+            //    logger.info("Called Hook: OnBlockCreateBy With result " + output);
                 break;
 
         }
