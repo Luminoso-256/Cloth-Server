@@ -93,7 +93,7 @@ public class StitchLoader {
             case "OnServerTick":
                 for (int i = 0; i < OnServerTickHook.size(); i++)
                     output = CallFunctionFromLuaFile(OnServerTickHook.get(i), "OnServerTick", Args); //No usage of the args list as this takes no params
-                logger.info("Called Hook: ServerTick With result " + output);
+                //logger.info("Called Hook: ServerTick With result " + output); - would be really spammy
             case "OnBlockCreateBy":
                 for (int i = 0; i < OnBlockCreateByHook.size(); i++)
                     output = CallFunctionFromLuaFile(OnBlockCreateByHook.get(i), "OnBlockCreateBy", Args);

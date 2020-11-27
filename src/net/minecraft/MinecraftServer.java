@@ -469,7 +469,7 @@ public class MinecraftServer
         }
         overworld.tick();
         netherWorld.tick();
-
+        stitch.CallHook("OnServerTick", DummyList);
         while (overworld.func_6156_d()) ;
         overworld.func_459_b();
         field_6036_c.func_715_a();
