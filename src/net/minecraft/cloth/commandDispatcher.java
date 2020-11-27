@@ -3,7 +3,7 @@ package net.minecraft.cloth;
 import net.minecraft.MinecraftServer;
 import net.minecraft.cloth.command.Icommand;
 import net.minecraft.core.ICommandListener;
-import static net.minecraft.cloth.Globals.*;
+import static net.minecraft.Globals.*;
 
 
 public class commandDispatcher {

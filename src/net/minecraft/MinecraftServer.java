@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static net.minecraft.cloth.Globals.*;
+import static net.minecraft.Globals.*;
 
 public class MinecraftServer
         implements ICommandListener, Runnable {
@@ -64,7 +64,7 @@ public class MinecraftServer
         long seed = hashSeed(seedString);
         onlineMode = propertyManagerObj.getBooleanProperty("online-mode", true);
         noAnimals = propertyManagerObj.getBooleanProperty("spawn-animals", true);
-        field_9011_n = propertyManagerObj.getBooleanProperty("pvp", true);
+        isPvpEnabled = propertyManagerObj.getBooleanProperty("pvp", true);
         InetAddress inetaddress = null;
         if (ip.length() > 0) {
             inetaddress = InetAddress.getByName(ip);
@@ -149,6 +149,11 @@ public class MinecraftServer
         logger.info("Saving chunks");
         overworld.saveWorld(true, null);
     }
+    private void saveNetherWorld() {
+        logger.info("[Nether] Saving chunks");
+        netherWorld.saveWorld(true, null);
+    }
+
 
     private void shutdown() {
         logger.info("Stopping server");
@@ -157,6 +162,9 @@ public class MinecraftServer
         }
         if (overworld != null) {
             saveServerWorld();
+        }
+        if(netherWorld != null){
+            saveNetherWorld();
         }
     }
 
@@ -382,13 +390,9 @@ public class MinecraftServer
 
 
                         } else {
-                            //your alive!
-                            //     System.out.println("Alive");
                             player.IsDead = false;
                             player.HasRespawed = false;
                         }
-
-                        //  System.out.println("PLAYER: "+player.username+" Health: "+player.health);
                     }
 
 
@@ -462,6 +466,7 @@ public class MinecraftServer
             configManager.sendPacketToAllPlayers(new Packet4UpdateTime(overworld.worldTime));
         }
         overworld.tick();
+        netherWorld.tick();
         while (overworld.func_6156_d()) ;
         overworld.func_459_b();
         field_6036_c.func_715_a();
@@ -605,16 +610,17 @@ public class MinecraftServer
                 EntityPlayerMP player = configManager.getPlayerEntity(username);
                 logger.info("[Debug] Attempting to send player " + player.username + " to the nether. Safe Travels!");
                 overworld.RemoveEntity(player);
-
-                PlayerNBTManager playerNBTManagerObj = new PlayerNBTManager(new File("/world/players/" + username + ".dat"));
+                logger.info("overworld entities:"+ overworld.playerEntities);
+                PlayerNBTManager playerNBTManagerObj = new PlayerNBTManager(new File("/world/players/" + username));
                 PlayerManager playerManagerObj = new PlayerManager(this);
-                EntityPlayerMP entityplayermp = new EntityPlayerMP(this, netherWorld, username, new ItemInWorldManager(netherWorld));
+                EntityPlayerMP entityplayermp = new EntityPlayerMP(this, netherWorld, username, new ItemInWorldManager(overworld));
                 configManager.playerEntities.add(entityplayermp);
                 playerNBTManagerObj.readPlayerData(entityplayermp);
                 netherWorld.chunkProvider.loadChunk((int) entityplayermp.posX >> 4, (int) entityplayermp.posZ >> 4);
                 for (; netherWorld.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) {
                 }
                 netherWorld.entityJoinedWorld(entityplayermp);
+                logger.info("netherworld entities:"+ netherWorld.playerEntities);
                 playerManagerObj.func_9214_a(entityplayermp);
 
             }
@@ -996,7 +1002,7 @@ public class MinecraftServer
     public EntityTracker field_6028_k;
     public boolean onlineMode;
     public boolean noAnimals;
-    public boolean field_9011_n;
+    public boolean isPvpEnabled;
     //Sleep vote
     public boolean IsSleepVoteOngoing = false;
     //  public int SleepVoteRemainingTime = 0;

@@ -51,7 +51,7 @@ public class EntityPlayerMP extends EntityPlayer
         {
             return false;
         }
-        if(!mcServer.field_9011_n)
+        if(!mcServer.isPvpEnabled)
         {
             if(entity instanceof EntityPlayer)
             {

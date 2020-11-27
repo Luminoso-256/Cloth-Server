@@ -10,7 +10,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import net.minecraft.MinecraftServer;
-import static net.minecraft.cloth.Globals.*;
+import static net.minecraft.Globals.*;
 public class ServerGUI extends JComponent
     implements ICommandListener
 {

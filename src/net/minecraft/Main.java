@@ -14,7 +14,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static net.minecraft.cloth.Globals.*;
+import static net.minecraft.Globals.*;
 
 /**
  * Custom Main class for stitch & convience

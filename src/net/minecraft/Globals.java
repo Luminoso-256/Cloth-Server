@@ -1,4 +1,4 @@
-package net.minecraft.cloth;
+package net.minecraft;
 
 //Cloth globals, in case they are needed outside of main. Better design
 
@@ -24,7 +24,7 @@ public class Globals {
             "Free for all!", "Open source!", "Fork me!", "Experimental shenanigans!",
             "With contributions from many", "Compatible with JRE14! and JRE8!",  "Why do these messages exist?",
             "New flying pigmen!", "an uneasy alliance!", "buggy nether time!", "We use Trello!",
-            "Check out classic-rs"};
+            "Check out classic-rs", "ᒲᔑ↸ᒷ ʖ|| l⚍ᒲ╎リ\uD835\uDE79ᓭ\uD835\uDE79"};
 
     //-------------------Deaths
 
@@ -102,5 +102,6 @@ public class Globals {
        // put("help", );
     }};
 
+    //-------------------
 
 }

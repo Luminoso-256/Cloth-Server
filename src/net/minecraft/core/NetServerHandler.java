@@ -6,11 +6,10 @@ package net.minecraft.core;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import net.minecraft.cloth.file.AdvancementManager;
 import net.minecraft.cloth.file.GameruleManager;
 import net.minecraft.MinecraftServer;
 
-import static net.minecraft.cloth.Globals.advancementNames;
+import static net.minecraft.Globals.advancementNames;
 
 public class NetServerHandler extends NetHandler
     implements ICommandListener
