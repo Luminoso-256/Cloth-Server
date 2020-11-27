@@ -342,6 +342,7 @@ public class ChunkProviderGenerate
         int k = i * 16;
         int l = j * 16;
         MobSpawnerBase mobspawnerbase = worldObj.func_4077_a().func_4067_a(k + 16, l + 16);
+        GameruleManager gameruleManager = GameruleManager.getInstance();
         rand.setSeed(worldObj.randomSeed);
         long l1 = (rand.nextLong() / 2L) * 2L + 1L;
         long l2 = (rand.nextLong() / 2L) * 2L + 1L;
@@ -472,7 +473,7 @@ public class ChunkProviderGenerate
             j7 -= 20;
         }
         Object obj = new WorldGenTrees();
-        if(rand.nextInt(10) == 0)
+        if(!gameruleManager.getGamerule("nobigtree", false) & rand.nextInt(10) == 0)
         {
             obj = new WorldGenBigTree();
         }
@@ -567,7 +568,7 @@ public class ChunkProviderGenerate
         {
             for(int l19 = l + 8; l19 < l + 8 + 16; l19++)
             {
-                GameruleManager gameruleManager = GameruleManager.getInstance();
+
                 int j21 = i17 - (k + 8);
                 int j22 = l19 - (l + 8);
                 int k22 = worldObj.func_4075_e(i17, l19);
