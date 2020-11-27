@@ -17,7 +17,8 @@ public class HookToArgMappings {
                 break;
             case "OnEntitySpawn":
                 ArgMapping = "EntityType,X,Y,Z";
-
+            case "OnServerTick":
+                ArgMapping = "None";
         }
         return ArgMapping;
 

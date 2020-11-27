@@ -1,4 +1,4 @@
-package net.minecraft.cloth.file;
+package net.minecraft.cloth;
 
 import net.minecraft.MinecraftServer;
 import net.minecraft.core.EntityPlayerMP;

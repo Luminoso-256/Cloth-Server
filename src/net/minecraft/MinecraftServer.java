@@ -10,6 +10,7 @@ import net.minecraft.cloth.file.BlockMappingsManager;
 import net.minecraft.cloth.file.GameruleManager;
 import net.minecraft.cloth.file.PlayerDataManager;
 import net.minecraft.cloth.nether.Teleporter;
+import net.minecraft.cloth.plugins.stich.StitchLoader;
 import net.minecraft.core.*;
 
 import java.awt.GraphicsEnvironment;
@@ -25,10 +26,10 @@ import static net.minecraft.Globals.*;
 
 public class MinecraftServer
         implements ICommandListener, Runnable {
-
+    public static MinecraftServer singleton;
 
     public MinecraftServer() {
-
+        singleton = this;
         field_6025_n = true;
         field_6032_g = false;
         field_9014_h = 0;
@@ -468,6 +469,7 @@ public class MinecraftServer
         }
         overworld.tick();
         netherWorld.tick();
+
         while (overworld.func_6156_d()) ;
         overworld.func_459_b();
         field_6036_c.func_715_a();
@@ -964,18 +966,6 @@ public class MinecraftServer
         field_9010_p.add(iupdateplayerlistbox);
     }
 
-    public static void main(String args[]) {
-        try {
-            MinecraftServer minecraftserver = new MinecraftServer();
-            if (!GraphicsEnvironment.isHeadless() && (args.length <= 0 || !args[0].equals("nogui"))) {
-                ServerGUI.initGui(minecraftserver);
-            }
-            (new ThreadServerApplication("Server thread", minecraftserver)).start();
-        } catch (Exception exception) {
-            logger.log(Level.SEVERE, "Failed to start the minecraft server", exception);
-        }
-    }
-
     public File getFile(String s) {
         return new File(s);
     }
@@ -1020,4 +1010,6 @@ public class MinecraftServer
     public AdvancementManager advancementManager = new AdvancementManager();
     public PlayerDataManager playerDataManager = new PlayerDataManager();
     public GameruleManager gameruleManager = GameruleManager.getInstance();
+    public StitchLoader stitch;
+    private List<String> DummyList = new ArrayList<>();
 }

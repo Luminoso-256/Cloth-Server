@@ -7,6 +7,7 @@ import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,15 @@ public class Main {
         logger.info("[Cloth] Cloth init complete. Deffering to MinecraftServer class ");
         try {
            // net.minecraft.server.MinecraftServer.main(args);
-            minecraftServer.main(args);
+            minecraftServer.stitch = stitch;
+            try {
+                if (!GraphicsEnvironment.isHeadless() && (args.length <= 0 || !args[0].equals("nogui"))) {
+                    ServerGUI.initGui(minecraftServer);
+                }
+                (new ThreadServerApplication("Server thread", minecraftServer)).start();
+            } catch (Exception exception) {
+                logger.log(Level.SEVERE, "Failed to start the minecraft server", exception);
+            }
         } catch (Throwable t) {
             logger.log(Level.SEVERE, null, t);
         }

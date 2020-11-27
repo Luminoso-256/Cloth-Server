@@ -4,7 +4,10 @@ package net.minecraft.cloth.plugins.stich;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -36,7 +39,7 @@ public class StitchLoader {
         String[] PluginFiles = PluginsDirectory.list();
         if(PluginFiles != null) {
             for (int i = 0; i < PluginFiles.length; i++) {
-                logger.info("Found File: " + PluginFiles[i]);
+                logger.info("[Stitch] Found File: " + PluginFiles[i]);
 
                 try {
                     RegisterPlugin(PluginFiles[i]);
@@ -60,7 +63,8 @@ public class StitchLoader {
       //  try (Scanner scanner = new Scanner(new File("./plugins/" + plugin), String.valueOf(StandardCharsets.UTF_8))) {
           //  PluginFileRaw = scanner.useDelimiter("\\A").next();
         //}
-        PluginFileRaw = "broken dont use - will fix soon";
+        File fileRef = new File("./plugins/"+plugin);
+        PluginFileRaw = new String ( Files.readAllBytes( Paths.get(fileRef.getAbsolutePath()) ) );
         //Add to hook lists
         if (PluginFileRaw.contains("OnServerInit")) {
 
@@ -68,6 +72,9 @@ public class StitchLoader {
         }
         if(PluginFileRaw.contains("OnBlockCreateBy")){
             OnBlockCreateByHook.add(plugin);
+        }
+        if(PluginFileRaw.contains("OnServerTick")){
+            OnServerTickHook.add(plugin);
         }
     }
 
@@ -83,6 +90,10 @@ public class StitchLoader {
                     output = CallFunctionFromLuaFile(OnServerInitHook.get(i), "OnServerInit", Args); //No usage of the args list as this takes no params
                 logger.info("Called Hook: ServerInit With result " + output);
                 break;
+            case "OnServerTick":
+                for (int i = 0; i < OnServerTickHook.size(); i++)
+                    output = CallFunctionFromLuaFile(OnServerTickHook.get(i), "OnServerTick", Args); //No usage of the args list as this takes no params
+                logger.info("Called Hook: ServerTick With result " + output);
             case "OnBlockCreateBy":
                 for (int i = 0; i < OnBlockCreateByHook.size(); i++)
                     output = CallFunctionFromLuaFile(OnBlockCreateByHook.get(i), "OnBlockCreateBy", Args);
@@ -137,6 +148,7 @@ public class StitchLoader {
     public List<String> OnServerInitHook = new ArrayList<String>();
     public List<String> OnBlockDestroyHook = new ArrayList<String>();
     public List<String> OnBlockCreateByHook = new ArrayList<String>();
+    public List<String> OnServerTickHook = new ArrayList<String>();
 
 
 }

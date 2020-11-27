@@ -13,7 +13,8 @@ public class Globals {
     //-------------------Release Information
     public static final boolean IS_PREVIEW = true; //I plan to release more early or test-specific releases now, so thisl be handy
     public static final String VERSION_STRING = "Cloth Beta 1.1.0";
-    public static final int STITCH_HOOK_VERSION = 0; // 0
+    public static final int STITCH_HOOK_VERSION = 1112;// Phase|Major|Minor|Incremental
+    public static final int RULESET_FILE_VERSION = 1112; // Phase|Major|Minor|Incremental
     public static final String TARGET_FEATURE = "Active development";
 
 
@@ -24,7 +25,7 @@ public class Globals {
             "Free for all!", "Open source!", "Fork me!", "Experimental shenanigans!",
             "With contributions from many", "Compatible with JRE14! and JRE8!",  "Why do these messages exist?",
             "New flying pigmen!", "an uneasy alliance!", "buggy nether time!", "We use Trello!",
-            "Check out classic-rs", "ᒲᔑ↸ᒷ ʖ|| l⚍ᒲ╎リ\uD835\uDE79ᓭ\uD835\uDE79"};
+            "Check out classic-rs", "rulesets!", "thanks for downloading!"};
 
     //-------------------Deaths
 
@@ -102,6 +103,9 @@ public class Globals {
        // put("help", );
     }};
 
-    //-------------------
+
+
+
+    //-------------------Stitch
 
 }
