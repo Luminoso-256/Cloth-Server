@@ -1071,18 +1071,18 @@ public class World
             Entity entity1 = (Entity) EntityList.get(k);
             if(entity1.field_327_g != null)
             {
-                if(!entity1.field_327_g.field_304_B && entity1.field_327_g.field_328_f == entity1)
+                if(!entity1.field_327_g.isDead && entity1.field_327_g.field_328_f == entity1)
                 {
                     continue;
                 }
                 entity1.field_327_g.field_328_f = null;
                 entity1.field_327_g = null;
             }
-            if(!entity1.field_304_B)
+            if(!entity1.isDead)
             {
                 func_520_e(entity1);
             }
-            if(!entity1.field_304_B)
+            if(!entity1.isDead)
             {
                 continue;
             }
@@ -1173,7 +1173,7 @@ public class World
         }
         if(flag && entity.field_276_Z && entity.field_328_f != null)
         {
-            if(entity.field_328_f.field_304_B || entity.field_328_f.field_327_g != entity)
+            if(entity.field_328_f.isDead || entity.field_328_f.field_327_g != entity)
             {
                 entity.field_328_f.field_327_g = null;
                 entity.field_328_f = null;
@@ -1190,7 +1190,7 @@ public class World
         for(int i = 0; i < list.size(); i++)
         {
             Entity entity = (Entity)list.get(i);
-            if(!entity.field_304_B && entity.field_329_e)
+            if(!entity.isDead && entity.field_329_e)
             {
                 return false;
             }

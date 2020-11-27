@@ -59,7 +59,7 @@ public class EntityMinecart extends Entity
 
     public boolean attackEntity(Entity entity, int i)
     {
-        if(worldObj.multiplayerWorld || field_304_B)
+        if(worldObj.multiplayerWorld || isDead)
         {
             return true;
         }
@@ -85,7 +85,7 @@ public class EntityMinecart extends Entity
 
     public boolean func_129_c_()
     {
-        return !field_304_B;
+        return !isDead;
     }
 
     public void setEntityDead()
@@ -402,7 +402,7 @@ label0:
             }
 
         }
-        if(field_328_f != null && field_328_f.field_304_B)
+        if(field_328_f != null && field_328_f.isDead)
         {
             field_328_f = null;
         }

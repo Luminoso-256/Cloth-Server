@@ -52,7 +52,7 @@ public class EntityGhast extends EntityFlying
                 field_4102_d = posZ;
             }
         }
-        if(field_4097_ai != null && field_4097_ai.field_304_B)
+        if(field_4097_ai != null && field_4097_ai.isDead)
         {
             field_4097_ai = null;
         }

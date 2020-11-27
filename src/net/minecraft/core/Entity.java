@@ -20,7 +20,7 @@ public abstract class Entity
         field_9080_D = false;
         field_9078_E = false;
         field_9077_F = true;
-        field_304_B = false;
+        isDead = false;
         yOffset = 0.0F;
         width = 0.6F;
         height = 1.8F;
@@ -68,7 +68,7 @@ public abstract class Entity
 
     public void setEntityDead()
     {
-        field_304_B = true;
+        isDead = true;
     }
 
     protected void setSize(float f, float f1)
@@ -100,7 +100,7 @@ public abstract class Entity
 
     public void func_84_k()
     {
-        if(field_327_g != null && field_327_g.field_304_B)
+        if(field_327_g != null && field_327_g.isDead)
         {
             field_327_g = null;
         }
@@ -688,7 +688,7 @@ public abstract class Entity
     public boolean func_95_c(NBTTagCompound nbttagcompound)
     {
         String s = func_109_s();
-        if(field_304_B || s == null)
+        if(isDead || s == null)
         {
             return false;
         } else
@@ -792,7 +792,7 @@ public abstract class Entity
 
     public boolean func_120_t()
     {
-        return !field_304_B;
+        return !isDead;
     }
 
     public boolean func_91_u()
@@ -815,7 +815,7 @@ public abstract class Entity
 
     public void func_115_v()
     {
-        if(field_327_g.field_304_B)
+        if(field_327_g.isDead)
         {
             field_327_g = null;
             return;
@@ -938,7 +938,7 @@ public abstract class Entity
     public boolean field_9080_D;
     public boolean field_9078_E;
     public boolean field_9077_F;
-    public boolean field_304_B;
+    public boolean isDead;
     public float yOffset;
     public float width;
     public float height;

@@ -53,12 +53,12 @@ public class EntityLiving extends Entity
 
     public boolean func_129_c_()
     {
-        return !field_304_B;
+        return !isDead;
     }
 
     public boolean func_124_r()
     {
-        return !field_304_B;
+        return !isDead;
     }
 
     public float func_104_p()
@@ -514,7 +514,7 @@ public class EntityLiving extends Entity
 
     public boolean func_120_t()
     {
-        return !field_304_B && health > 0;
+        return !isDead && health > 0;
     }
 
     public void onLivingUpdate()
@@ -628,7 +628,7 @@ public class EntityLiving extends Entity
         if(field_4098_b != null)
         {
             func_147_b(field_4098_b, 10F);
-            if(field_4104_c-- <= 0 || field_4098_b.field_304_B || field_4098_b.getDistanceSqToEntity(this) > (double)(f * f))
+            if(field_4104_c-- <= 0 || field_4098_b.isDead || field_4098_b.getDistanceSqToEntity(this) > (double)(f * f))
             {
                 field_4098_b = null;
             }

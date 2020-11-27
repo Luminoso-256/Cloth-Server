@@ -9,6 +9,7 @@ import net.minecraft.cloth.file.AdvancementManager;
 import net.minecraft.cloth.file.BlockMappingsManager;
 import net.minecraft.cloth.file.GameruleManager;
 import net.minecraft.cloth.file.PlayerDataManager;
+import net.minecraft.cloth.nether.Teleporter;
 import net.minecraft.core.*;
 
 import java.awt.GraphicsEnvironment;
@@ -113,7 +114,7 @@ public class MinecraftServer
 
         if (gameruleManager.getGamerule("nether", true)) {
             logger.info("[Cloth] Starting nether init");
-            netherWorld = new WorldServer(this, new File("."), worldName + "_nether", seed, -1);
+            netherWorld = new WorldServer(this, new File("."), worldName+"_nether", seed, -1);
             netherWorld.func_4072_a(new WorldManager(this));
             logger.info("[Debug] created nether object with seed " + netherWorld.randomSeed);
         }
@@ -610,18 +611,24 @@ public class MinecraftServer
                 EntityPlayerMP player = configManager.getPlayerEntity(username);
                 logger.info("[Debug] Attempting to send player " + player.username + " to the nether. Safe Travels!");
                 overworld.RemoveEntity(player);
-                logger.info("overworld entities:"+ overworld.playerEntities);
-                PlayerNBTManager playerNBTManagerObj = new PlayerNBTManager(new File("/world/players/" + username));
-                PlayerManager playerManagerObj = new PlayerManager(this);
-                EntityPlayerMP entityplayermp = new EntityPlayerMP(this, netherWorld, username, new ItemInWorldManager(overworld));
-                configManager.playerEntities.add(entityplayermp);
-                playerNBTManagerObj.readPlayerData(entityplayermp);
-                netherWorld.chunkProvider.loadChunk((int) entityplayermp.posX >> 4, (int) entityplayermp.posZ >> 4);
-                for (; netherWorld.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) {
-                }
-                netherWorld.entityJoinedWorld(entityplayermp);
-                logger.info("netherworld entities:"+ netherWorld.playerEntities);
-                playerManagerObj.func_9214_a(entityplayermp);
+                System.out.println(overworld.playerEntities);
+              //Block 1 - SP minecraft.java line 1176
+                player.setEntityDead();
+                player.isDead = false;
+                overworld.func_4074_a(player, false);
+                //func_6256_a(netherWorld, "Entering the Nether", player);
+
+                //Replacing func_6256
+                player.worldObj = netherWorld;
+                netherWorld.entityJoinedWorld(player);
+
+               //block 2, same file, line 1191
+
+
+                netherWorld.func_4074_a(player, false);
+                (new Teleporter()).func_4107_a(overworld, player);
+                System.gc();
+                
 
             }
             if (command.toLowerCase().startsWith("version")) {

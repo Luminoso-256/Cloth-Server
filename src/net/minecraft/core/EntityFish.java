@@ -94,7 +94,7 @@ public class EntityFish extends Entity
         if(!worldObj.multiplayerWorld)
         {
             ItemStack itemstack = field_6151_b.func_172_B();
-            if(field_6151_b.field_304_B || !field_6151_b.func_120_t() || itemstack == null || itemstack.getItem() != Item.fishingRod || getDistanceSqToEntity(field_6151_b) > 1024D)
+            if(field_6151_b.isDead || !field_6151_b.func_120_t() || itemstack == null || itemstack.getItem() != Item.fishingRod || getDistanceSqToEntity(field_6151_b) > 1024D)
             {
                 setEntityDead();
                 field_6151_b.field_6124_at = null;
@@ -102,7 +102,7 @@ public class EntityFish extends Entity
             }
             if(field_4131_c != null)
             {
-                if(field_4131_c.field_304_B)
+                if(field_4131_c.isDead)
                 {
                     field_4131_c = null;
                 } else

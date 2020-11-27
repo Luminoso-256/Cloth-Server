@@ -33,7 +33,7 @@ public class EntityTNTPrimed extends Entity
 
     public boolean func_129_c_()
     {
-        return !field_304_B;
+        return !isDead;
     }
 
     public void onUpdate()

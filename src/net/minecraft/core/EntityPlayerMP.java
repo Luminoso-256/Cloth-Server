@@ -130,7 +130,7 @@ public class EntityPlayerMP extends EntityPlayer
 
     public void func_163_c(Entity entity, int i)
     {
-        if(!entity.field_304_B)
+        if(!entity.isDead)
         {
             if(entity instanceof EntityItem)
             {
