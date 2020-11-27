@@ -99,50 +99,6 @@ public class Chunk
 
     public void func_4053_c()
     {
-        byte byte0 = 32;
-        for(int i = 0; i < 16; i++)
-        {
-            for(int j = 0; j < 16; j++)
-            {
-                int k = i << 11 | j << 7;
-                for(int l = 0; l < 128; l++)
-                {
-                    int j1 = Block.lightValue[blocks[k + l]];
-                    if(j1 > 0)
-                    {
-                        blocklightMap.setNibble(i, l, j, j1);
-                    }
-                }
-
-                int i1 = 15;
-                for(int k1 = byte0 - 2; k1 < 128 && i1 > 0;)
-                {
-                    k1++;
-                    byte byte1 = blocks[k + k1];
-                    int l1 = Block.lightOpacity[byte1];
-                    int i2 = Block.lightValue[byte1];
-                    if(l1 == 0)
-                    {
-                        l1 = 1;
-                    }
-                    i1 -= l1;
-                    if(i2 > i1)
-                    {
-                        i1 = i2;
-                    }
-                    if(i1 < 0)
-                    {
-                        i1 = 0;
-                    }
-                    blocklightMap.setNibble(i, k1, j, i1);
-                }
-
-            }
-
-        }
-
-        worldObj.func_483_a(EnumSkyBlock.Block, xPosition * 16, byte0 - 1, zPosition * 16, xPosition * 16 + 16, byte0 + 1, zPosition * 16 + 16);
-        isModified = true;
     }
 
     private void func_333_c(int i, int j)

@@ -373,7 +373,7 @@ public class MinecraftServer
                                 logger.info("Sending dmsg string" + DeathMsg);
                                 //Server console
                                 String truncDeathMsg = DeathMsg.replace(player.username, "");
-                                logger.info("<"+player.username+"> **Died:** "+truncDeathMsg);
+                                logger.info("<" + player.username + "> **Died:** " + truncDeathMsg);
                                 //Ingame
                                 configManager.sendChatMessageToAllPlayers("§7" + DeathMsg);
 
@@ -484,7 +484,7 @@ public class MinecraftServer
 
     public void grantAdvancement(String username, String advancementID) {
         if (advancementManager.grantAdvancement(username, advancementID)) {
-            logger.info("<"+username+"> **Got advancement: ** "+advancementNames.get(advancementID));
+            logger.info("<" + username + "> **Got advancement: ** " + advancementNames.get(advancementID));
             configManager.sendChatMessageToAllPlayers(username + " has made the advancement §2[" + advancementNames.get(advancementID) + "]");
         }
     }
@@ -546,20 +546,28 @@ public class MinecraftServer
             } else if (command.toLowerCase().startsWith("seed")) {
                 WorldGenParams params = new WorldGenParams();
                 icommandlistener.log("Seed for this world is:" + params.GetSeedFromPropertiesFile());
-            }
-            else if(command.toLowerCase().startsWith("createplayer ")){
+            } else if (command.toLowerCase().startsWith("create ")) {
                 String[] args = command.split(" ");
-                PlayerNBTManager playerNBTManagerObj = new PlayerNBTManager(new File("whotheheckcares.test"));
-                PlayerManager playerManagerObj = new PlayerManager(this);
-                EntityPlayerMP entityplayermp = new EntityPlayerMP(this, overworld, args[1],  new ItemInWorldManager(overworld));
-                configManager.playerEntities.add(entityplayermp);
-                playerNBTManagerObj.readPlayerData(entityplayermp);
-                overworld.chunkProvider.loadChunk((int)entityplayermp.posX >> 4, (int)entityplayermp.posZ >> 4);
-                for(; overworld.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) { }
-                overworld.entityJoinedWorld(entityplayermp);
-                playerManagerObj.func_9214_a(entityplayermp);
-            }
-            else if (command.toLowerCase().startsWith("whitelist ") && gameruleManager.getGamerule("preview_keepinventorysystem", false)) {
+                switch (args[1]) {
+                    case "player":
+                        PlayerNBTManager playerNBTManagerObj = new PlayerNBTManager(new File("_create_player_cmd"));
+                        PlayerManager playerManagerObj = new PlayerManager(this);
+                        EntityPlayerMP entityplayermp = new EntityPlayerMP(this, overworld, args[2], new ItemInWorldManager(overworld));
+                        configManager.playerEntities.add(entityplayermp);
+                        playerNBTManagerObj.readPlayerData(entityplayermp);
+                        overworld.chunkProvider.loadChunk((int) entityplayermp.posX >> 4, (int) entityplayermp.posZ >> 4);
+                        for (; overworld.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) {
+                        }
+                        overworld.entityJoinedWorld(entityplayermp);
+                        configManager.playerEntities.add(entityplayermp);
+                        playerManagerObj.func_9214_a(entityplayermp);
+                        break;
+                    case "zombie":
+                        EntityZombie zombie = new EntityZombie(overworld);
+                        overworld.entityJoinedWorld(zombie);
+
+                }
+            } else if (command.toLowerCase().startsWith("whitelist ") && gameruleManager.getGamerule("preview_keepinventorysystem", false)) {
                 String[] args = command.toLowerCase().split(" ");
                 if (args[1] == "add") {
                     configManager.whitelistPlayer(args[2]);
@@ -568,10 +576,10 @@ public class MinecraftServer
                     configManager.deWhitelistPlayer(args[2]);
                 }
                 if (args[1] == "on") {
-                	gameruleManager.setGamerule("usewhitelist", true);
+                    gameruleManager.setGamerule("usewhitelist", true);
                 }
                 if (args[1] == "off") {
-                	gameruleManager.setGamerule("usewhitelist", false);
+                    gameruleManager.setGamerule("usewhitelist", false);
                 }
             }
             if (command.toLowerCase().startsWith("grantadvancement ")) {
@@ -581,7 +589,7 @@ public class MinecraftServer
             if (command.toLowerCase().startsWith("grantadvancementall ")) {
                 String[] args = command.split(" ");
 
-                for(Object player:configManager.playerEntities) {
+                for (Object player : configManager.playerEntities) {
                     EntityPlayer playerEntity = (EntityPlayerMP) player;
                     grantAdvancement(playerEntity.username, args[1]);
                 }
@@ -598,13 +606,14 @@ public class MinecraftServer
                 logger.info("[Debug] Attempting to send player " + player.username + " to the nether. Safe Travels!");
                 overworld.RemoveEntity(player);
 
-                PlayerNBTManager playerNBTManagerObj = new PlayerNBTManager(new File("/world/players/"+username+".dat"));
+                PlayerNBTManager playerNBTManagerObj = new PlayerNBTManager(new File("/world/players/" + username + ".dat"));
                 PlayerManager playerManagerObj = new PlayerManager(this);
-                EntityPlayerMP entityplayermp = new EntityPlayerMP(this, netherWorld, username,  new ItemInWorldManager(netherWorld));
+                EntityPlayerMP entityplayermp = new EntityPlayerMP(this, netherWorld, username, new ItemInWorldManager(netherWorld));
                 configManager.playerEntities.add(entityplayermp);
                 playerNBTManagerObj.readPlayerData(entityplayermp);
-                netherWorld.chunkProvider.loadChunk((int)entityplayermp.posX >> 4, (int)entityplayermp.posZ >> 4);
-                for(; netherWorld.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) { }
+                netherWorld.chunkProvider.loadChunk((int) entityplayermp.posX >> 4, (int) entityplayermp.posZ >> 4);
+                for (; netherWorld.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) {
+                }
                 netherWorld.entityJoinedWorld(entityplayermp);
                 playerManagerObj.func_9214_a(entityplayermp);
 
@@ -660,20 +669,20 @@ public class MinecraftServer
                         prettyValue = "§c[false]";
                         break;
                     default:
-                        prettyValue = ("§2["+commandparts[2] + "]");
+                        prettyValue = ("§2[" + commandparts[2] + "]");
                 }
-                configManager.sendChatMessageToPlayer(username,"§7Changing gamerule §2[" + commandparts[1] + "]§7 to " + prettyValue);
+                configManager.sendChatMessageToPlayer(username, "§7Changing gamerule §2[" + commandparts[1] + "]§7 to " + prettyValue);
                 switch (commandparts[1]) {
                     case "announcedeath":
                         if (commandparts[2] == "true") {
-                        	gameruleManager.setGamerule("announcedeath", true);
+                            gameruleManager.setGamerule("announcedeath", true);
                         } else if (commandparts[2] == "false") {
-                        	gameruleManager.setGamerule("announcedeath", false);
+                            gameruleManager.setGamerule("announcedeath", false);
                         }
                         break;
                     case "inversemobspawnrate":
                         if (commandparts[2] == "reset") {
-                        	gameruleManager.setGamerule("inversemobspawnrate", 50);
+                            gameruleManager.setGamerule("inversemobspawnrate", 50);
                         } else {
                             int newVal = Integer.parseInt(commandparts[2]);
                             gameruleManager.setGamerule("inversemobspawnrate", newVal);
@@ -681,21 +690,21 @@ public class MinecraftServer
                         break;
                     case "domobgriefing":
                         if (commandparts[2] == "true") {
-                        	gameruleManager.setGamerule("domobgriefing", true);
+                            gameruleManager.setGamerule("domobgriefing", true);
                         } else if (commandparts[2] == "false") {
-                        	gameruleManager.setGamerule("domobgriefing", false);
+                            gameruleManager.setGamerule("domobgriefing", false);
                         }
                         break;
                     case "dosleepvote":
                         if (commandparts[2] == "true") {
-                        	gameruleManager.setGamerule("dosleepvote", true);
+                            gameruleManager.setGamerule("dosleepvote", true);
                         } else if (commandparts[2] == "false") {
-                        	gameruleManager.setGamerule("dosleepvote", false);
+                            gameruleManager.setGamerule("dosleepvote", false);
                         }
                         break;
                     case "inverseskeletonjockeyspawnrate":
                         if (commandparts[2] == "reset") {
-                        	gameruleManager.setGamerule("inverseskeletonjockeyspawnrate", 50);
+                            gameruleManager.setGamerule("inverseskeletonjockeyspawnrate", 50);
                         } else {
                             int newVal = Integer.parseInt(commandparts[2]);
                             gameruleManager.setGamerule("inverseskeletonjockeyspawnrate", newVal);
@@ -703,21 +712,21 @@ public class MinecraftServer
                         break;
                     case "domoderntrample":
                         if (commandparts[2] == "true") {
-                        	gameruleManager.setGamerule("domoderntrample", true);
+                            gameruleManager.setGamerule("domoderntrample", true);
                         } else if (commandparts[2] == "false") {
-                        	gameruleManager.setGamerule("domoderntrample", false);
+                            gameruleManager.setGamerule("domoderntrample", false);
                         }
                         break;
                     case "usewhitelist":
                         if (commandparts[2] == "true") {
-                        	gameruleManager.setGamerule("usewhitelist", true);
+                            gameruleManager.setGamerule("usewhitelist", true);
                         } else if (commandparts[2] == "false") {
-                        	gameruleManager.setGamerule("usewhitelist", false);
+                            gameruleManager.setGamerule("usewhitelist", false);
                         }
                         break;
                     case "freezetime":
                         if (commandparts[2] == "true") {
-                        	gameruleManager.setGamerule("freezetime", true);
+                            gameruleManager.setGamerule("freezetime", true);
                         } else if (commandparts[2] == "false") {
                             gameruleManager.setGamerule("freezetime", false);
                         }
@@ -726,7 +735,7 @@ public class MinecraftServer
             }
             if (command.toLowerCase().startsWith("time set ")) {
                 String targetTime = command.toLowerCase().split(" ")[2];
-                configManager.sendChatMessageToPlayer(username,"§7Setting time to §a[" + targetTime + "]");
+                configManager.sendChatMessageToPlayer(username, "§7Setting time to §a[" + targetTime + "]");
                 if (targetTime.equals("day")) {
                     overworld.worldTime = 1000;
                 } else if (targetTime.equals("night")) {
