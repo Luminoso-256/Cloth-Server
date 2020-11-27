@@ -4,6 +4,8 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
+import net.minecraft.cloth.file.GameruleManager;
+
 public class BlockPumpkin extends Block
 {
 
@@ -13,6 +15,19 @@ public class BlockPumpkin extends Block
         blockIndexInTexture = j;
         setTickOnLoad(true);
         field_4086_a = flag;
+    }
+
+    public void onNeighborBlockChange(World world, int i, int j, int k, int l)
+    {
+        GameruleManager gameruleman = GameruleManager.getInstance();
+        if(gameruleman.getGamerule("doPumpkinLights",false) & l > 0 && Block.blocksList[l].canProvidePower() && world.isBlockIndirectlyGettingPowered(i, j, k))
+        {
+            world.setBlockWithNotify(i, j, k, Block.jackolantern.blockID);
+        }
+        if(gameruleman.getGamerule("doPumpkinLights",false) & l > 0 && Block.blocksList[l].canProvidePower() && !world.isBlockIndirectlyGettingPowered(i, j, k))
+        {
+            world.setBlockWithNotify(i, j, k, Block.pumpkin.blockID);
+        }
     }
 
     public int getBlockTextureFromSide(int i)

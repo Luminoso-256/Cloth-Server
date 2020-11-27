@@ -557,7 +557,7 @@ public class Block
     public static final Block lightStone;
    // public static final Block stoneModded;
     public static final BlockPortal portal;
-    public static final Block field_9035_bf;
+    public static final Block jackolantern;
     public int blockIndexInTexture;
     public final int blockID;
     protected float blockHardness;
@@ -661,7 +661,7 @@ public class Block
         slowSand = (new BlockSlowSand(88, 104)).setHardness(0.5F).setStepSound(soundSandFootstep);
         lightStone = (new BlockLightStone(89, 105, Material.field_4216_o)).setHardness(0.3F).setStepSound(soundGlassFootstep).setLightValue(1.0F);
         portal = (BlockPortal)(new BlockPortal(90, 14)).setHardness(-1F).setStepSound(soundGlassFootstep).setLightValue(0.75F);
-        field_9035_bf = (new BlockPumpkin(91, 102, true)).setHardness(1.0F).setStepSound(soundWoodFootstep).setLightValue(1.0F);
+        jackolantern = (new BlockPumpkin(91, 102, true)).setHardness(1.0F).setStepSound(soundWoodFootstep).setLightValue(1.0F);
         for(int i = 0; i < 256; i++)
         {
             if(blocksList[i] != null)
