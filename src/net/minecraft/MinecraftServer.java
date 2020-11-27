@@ -914,7 +914,7 @@ public class MinecraftServer
             } else if (command.toLowerCase().startsWith("say ")) {
                 command = command.substring(command.indexOf(" ")).trim();
                 logger.info((new StringBuilder()).append("[").append(username).append("] ").append(command).toString());
-                configManager.sendPacketToAllPlayers(new Packet3Chat((new StringBuilder()).append("\247d[Server] ").append(command).toString()));
+                configManager.sendPacketToAllPlayers(new Packet3Chat((new StringBuilder()).append(command).toString()));
             } else if (command.toLowerCase().startsWith("tell ")) {
                 String as2[] = command.split(" ");
                 if (as2.length >= 3) {

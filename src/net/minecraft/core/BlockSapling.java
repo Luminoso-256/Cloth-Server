@@ -3,6 +3,8 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.cloth.file.GameruleManager;
+
 import java.util.Random;
 
 public class BlockSapling extends BlockFlower
@@ -28,7 +30,8 @@ public class BlockSapling extends BlockFlower
             {
                 world.setBlock(i, j, k, 0);
                 Object obj = new WorldGenTrees();
-                if(random.nextInt(10) == 0)
+                GameruleManager gameruleManager = GameruleManager.getInstance();
+                if(!gameruleManager.getGamerule("nobigtree", false) & random.nextInt(10) == 0)
                 {
                     obj = new WorldGenBigTree();
                 }
