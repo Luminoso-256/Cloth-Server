@@ -20,11 +20,11 @@ public class BlockPumpkin extends Block
     public void onNeighborBlockChange(World world, int i, int j, int k, int l)
     {
         GameruleManager gameruleman = GameruleManager.getInstance();
-        if(gameruleman.getGamerule("doPumpkinLights",false) & l > 0 && Block.blocksList[l].canProvidePower() && world.isBlockIndirectlyGettingPowered(i, j, k))
+        if(gameruleman.getGamerule("dopumpkinlights",false) & l > 0 && Block.blocksList[l].canProvidePower() && world.isBlockIndirectlyGettingPowered(i, j, k))
         {
             world.setBlockWithNotify(i, j, k, Block.jackolantern.blockID);
         }
-        if(gameruleman.getGamerule("doPumpkinLights",false) & l > 0 && Block.blocksList[l].canProvidePower() && !world.isBlockIndirectlyGettingPowered(i, j, k))
+        if(gameruleman.getGamerule("dopumpkinlights",false) & l > 0 && Block.blocksList[l].canProvidePower() && !world.isBlockIndirectlyGettingPowered(i, j, k))
         {
             world.setBlockWithNotify(i, j, k, Block.pumpkin.blockID);
         }
