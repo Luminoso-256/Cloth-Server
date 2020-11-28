@@ -231,46 +231,22 @@ public class MinecraftServer
                             for (int slot = 0; slot < inventory.getInventorySize(); slot++) {
                                 ItemStack item = inventory.getStackInSlot(slot);
                                 if (item != null) {
-                                    //System.out.println("Checking item of id " + item + " for advancement criterion");
-                                    //Log
-                                    if (item.itemID == 17) {
-                                        grantAdvancement(player.username, "inventory.log");
-                                    }
-                                    //cobble
-                                    if (item.itemID == 4) {
-                                        grantAdvancement(player.username, "inventory.stone");
-                                    }
-                                    //Iron
-                                    if (item.itemID == 265) {
-                                        grantAdvancement(player.username, "inventory.iron");
-                                    }
-                                    //Diamond
-                                    if (item.itemID == 264) {
-                                        grantAdvancement(player.username, "inventory.diamond");
-                                    }
-                                    //Diamondhoe
-                                    if (item.itemID == 293) {
-                                        grantAdvancement(player.username, "inventory.diamondhoe");
-                                    }
-                                    //Furnace
-                                    if (item.itemID == 61) {
-                                        grantAdvancement(player.username, "inventory.furnace");
-                                    }
-                                    //ironpickaxe
-                                    if (item.itemID == 257) {
-                                        grantAdvancement(player.username, "inventory.ironpickaxe");
-                                    }
-                                    //diamondpickaxe
-                                    if (item.itemID == 278) {
-                                        grantAdvancement(player.username, "inventory.diamondpickaxe");
-                                    }
-                                    //mossycobblestone
-                                    if (item.itemID == 48) {
-                                        grantAdvancement(player.username, "inventory.mossycobblestone");
-                                    }
-                                    //sponge
-                                    if (item.itemID == 19) {
-                                        grantAdvancement(player.username, "inventory.sponge");
+                                    //Custom check
+                                    for (Map.Entry<String, String> entry : advancementCriterion.entrySet()) {
+                                        String criterion = entry.getKey();
+                                       // String advName = entry.getValue();
+
+                                        if(criterion.contains("inventory.")){
+                                            String[] tSplit = criterion.split("\\.");
+                                           // System.out.println(tSplit);
+                                            String Item = tSplit[1];
+                                            //letsa grab the id
+                                            int itemID = blockMaps.getIdForString(Item, fallbackBlockMaps.GetIDForNamespacedBlockName(Item));
+                                            if(item.itemID == itemID){
+                                                grantAdvancement(player.username, criterion); //criterion also happens to be the internal name
+                                            }
+
+                                        }
                                     }
                                 }
                             }
@@ -492,8 +468,8 @@ public class MinecraftServer
 
     public void grantAdvancement(String username, String advancementID) {
         if (advancementManager.grantAdvancement(username, advancementID)) {
-            logger.info("<" + username + "> **Got advancement: ** " + advancementNames.get(advancementID));
-            configManager.sendChatMessageToAllPlayers(username + " has made the advancement §2[" + advancementNames.get(advancementID) + "]");
+            logger.info("<" + username + "> **Got advancement: ** " + advancementCriterion.get(advancementID));
+            configManager.sendChatMessageToAllPlayers(username + " has made the advancement §2[" + advancementCriterion.get(advancementID) + "]");
         }
     }
 
@@ -1010,6 +986,9 @@ public class MinecraftServer
     public AdvancementManager advancementManager = new AdvancementManager();
     public PlayerDataManager playerDataManager = new PlayerDataManager();
     public GameruleManager gameruleManager = GameruleManager.getInstance();
+    public BlockMappingsManager blockMaps = new BlockMappingsManager(new File("blocks.mappings"));
+    FallbackIdMaps fallbackBlockMaps = new FallbackIdMaps();
     public StitchLoader stitch;
+    public HashMap<String, String> advancementCriterion;
     private List<String> DummyList = new ArrayList<>();
 }

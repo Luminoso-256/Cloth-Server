@@ -1,5 +1,6 @@
 package net.minecraft;
 
+import net.minecraft.cloth.file.AdvancementCriterionLoader;
 import net.minecraft.cloth.plugins.ruleset.RulesetLoader;
 import net.minecraft.cloth.plugins.stich.StitchLoader;
 import net.minecraft.core.*;
@@ -11,6 +12,7 @@ import org.luaj.vm2.lib.jse.JsePlatform;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -80,6 +82,7 @@ public class Main {
         try {
            // net.minecraft.server.MinecraftServer.main(args);
             minecraftServer.stitch = stitch;
+            minecraftServer.advancementCriterion = (HashMap<String, String>) AdvancementCriterionLoader.loadAdvancementCriterion();
             try {
                 if (!GraphicsEnvironment.isHeadless() && (args.length <= 0 || !args[0].equals("nogui"))) {
                     ServerGUI.initGui(minecraftServer);

@@ -4,8 +4,10 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
+import net.minecraft.cloth.file.AdvancementCriterionLoader;
 import net.minecraft.cloth.file.GameruleManager;
 import net.minecraft.MinecraftServer;
 
@@ -388,7 +390,9 @@ public class NetServerHandler extends NetHandler
             System.out.println("Adv list");
             ArrayList allAdvancements = new ArrayList<String>();
             ArrayList missingAdvancements = new ArrayList<String>();
-            advancementNames.forEach((key,value) -> allAdvancements.add(key));
+
+
+           AdvancementCriterionLoader.loadAdvancementCriterion().forEach((key,value) -> allAdvancements.add(key));
             ArrayList<String> advancementsObtained = mcServer.advancementManager.getAdvancementsForPlayer(playerEntity.username);
 
             for(Object advancement:allAdvancements){
@@ -399,11 +403,11 @@ public class NetServerHandler extends NetHandler
             }
 
             for(String advancement:advancementsObtained){
-                mcServer.configManager.sendChatMessageToPlayer(playerEntity.username, "§a  ["+advancementNames.get(advancement)+"]");
+                mcServer.configManager.sendChatMessageToPlayer(playerEntity.username, "§a  ["+AdvancementCriterionLoader.loadAdvancementCriterion().get(advancement)+"]");
             }
             for(Object advancement:missingAdvancements){
                 String advancementString = advancement.toString();
-               mcServer.configManager.sendChatMessageToPlayer(playerEntity.username,"§9  ["+advancementNames.get(advancement)+"]");
+               mcServer.configManager.sendChatMessageToPlayer(playerEntity.username,"§9  ["+AdvancementCriterionLoader.loadAdvancementCriterion().get(advancement)+"]");
             }
 
 
