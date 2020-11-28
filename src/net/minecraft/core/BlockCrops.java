@@ -3,6 +3,8 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.cloth.file.GameruleManager;
+
 import java.util.Random;
 
 public class BlockCrops extends BlockFlower
@@ -87,11 +89,12 @@ public class BlockCrops extends BlockFlower
     public void onBlockDestroyedByPlayer(World world, int i, int j, int k, int l)
     {
         super.onBlockDestroyedByPlayer(world, i, j, k, l);
+        GameruleManager seedrate = GameruleManager.getInstance();
         if(!world.multiplayerWorld)
         {
             for(int i1 = 0; i1 < 3; i1++)
             {
-                if(world.rand.nextInt(15) <= l)
+                if(world.rand.nextInt(seedrate.getGamerule("seedrate", 15)) <= l)
                 {
                     float f = 0.7F;
                     float f1 = world.rand.nextFloat() * f + (1.0F - f) * 0.5F;

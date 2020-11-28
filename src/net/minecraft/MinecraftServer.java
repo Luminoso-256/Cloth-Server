@@ -675,6 +675,7 @@ public class MinecraftServer
             if (command.toLowerCase().startsWith("gamerule ")) {
                 //  GameruleManager gameruleManager = new GameruleManager(new File("server.gamerules"));
                 String commandparts[] = command.toLowerCase().split(" ");
+
                 String prettyValue = commandparts[2];
                 switch (commandparts[2]) {
                     case "true":
@@ -686,17 +687,18 @@ public class MinecraftServer
                     default:
                         prettyValue = ("§2[" + commandparts[2] + "]");
                 }
+
                 configManager.sendChatMessageToPlayer(username, "§7Changing gamerule §2[" + commandparts[1] + "]§7 to " + prettyValue);
                 switch (commandparts[1]) {
                     case "announcedeath":
-                        if (commandparts[2] == "true") {
+                        if (commandparts[2].equals("true")) {
                             gameruleManager.setGamerule("announcedeath", true);
-                        } else if (commandparts[2] == "false") {
+                        } else if (commandparts[2].equals("false")) {
                             gameruleManager.setGamerule("announcedeath", false);
                         }
                         break;
                     case "inversemobspawnrate":
-                        if (commandparts[2] == "reset") {
+                        if (commandparts[2].equals("reset")) {
                             gameruleManager.setGamerule("inversemobspawnrate", 50);
                         } else {
                             int newVal = Integer.parseInt(commandparts[2]);
@@ -704,21 +706,21 @@ public class MinecraftServer
                         }
                         break;
                     case "domobgriefing":
-                        if (commandparts[2] == "true") {
+                        if (commandparts[2].equals("true")) {
                             gameruleManager.setGamerule("domobgriefing", true);
                         } else if (commandparts[2] == "false") {
                             gameruleManager.setGamerule("domobgriefing", false);
                         }
                         break;
                     case "dosleepvote":
-                        if (commandparts[2] == "true") {
+                        if (commandparts[2].equals("true")) {
                             gameruleManager.setGamerule("dosleepvote", true);
-                        } else if (commandparts[2] == "false") {
+                        } else if (commandparts[2].equals("false")) {
                             gameruleManager.setGamerule("dosleepvote", false);
                         }
                         break;
                     case "inverseskeletonjockeyspawnrate":
-                        if (commandparts[2] == "reset") {
+                        if (commandparts[2].equals("reset")) {
                             gameruleManager.setGamerule("inverseskeletonjockeyspawnrate", 50);
                         } else {
                             int newVal = Integer.parseInt(commandparts[2]);
@@ -726,24 +728,49 @@ public class MinecraftServer
                         }
                         break;
                     case "domoderntrample":
-                        if (commandparts[2] == "true") {
+                        if (commandparts[2].equals("true")) {
                             gameruleManager.setGamerule("domoderntrample", true);
-                        } else if (commandparts[2] == "false") {
+                        } else if (commandparts[2].equals("false")) {
                             gameruleManager.setGamerule("domoderntrample", false);
                         }
                         break;
                     case "usewhitelist":
-                        if (commandparts[2] == "true") {
+                        if (commandparts[2].equals("true")) {
                             gameruleManager.setGamerule("usewhitelist", true);
-                        } else if (commandparts[2] == "false") {
+                        } else if (commandparts[2].equals("false")) {
                             gameruleManager.setGamerule("usewhitelist", false);
                         }
                         break;
                     case "freezetime":
-                        if (commandparts[2] == "true") {
+                        if (commandparts[2].equals("true")) {
                             gameruleManager.setGamerule("freezetime", true);
-                        } else if (commandparts[2] == "false") {
+                        } else if (commandparts[2].equals("false")) {
                             gameruleManager.setGamerule("freezetime", false);
+                        }
+                    case "snowworld":
+                        if (commandparts[2].equals("true")) {
+                            gameruleManager.setGamerule("snowworld", true);
+                        } else if (commandparts[2].equals("false")) {
+                            gameruleManager.setGamerule("snowworld", false);
+                        }
+                    case "nobigtrees":
+                        if (commandparts[2].equals("true")) {
+                            gameruleManager.setGamerule("nobigtrees", true);
+                        } else if (commandparts[2].equals("false")) {
+                            gameruleManager.setGamerule("nobigtrees", false);
+                        }
+                    case "dopumpkinlights":
+                        if (commandparts[2].equals("true")) {
+                            gameruleManager.setGamerule("dopumpkinlights", true);
+                        } else if (commandparts[2].equals("false")) {
+                            gameruleManager.setGamerule("dopumpkinlights", false);
+                        }
+                    case "seedrate":
+                        if (commandparts[2].equals("reset")) {
+                            gameruleManager.setGamerule("seedrate", 15);
+                        } else {
+                            int newVal = Integer.parseInt(commandparts[2]);
+                            gameruleManager.setGamerule("seedrate", newVal);
                         }
                         break;
                 }
@@ -873,7 +900,7 @@ public class MinecraftServer
                         // logger.info("Inputed name:"+as1[2]);
                         // logger.info("Processed ID:"+j);
                         if (Item.itemsList[j] != null) {
-                            func_6014_a(username, (new StringBuilder()).append("Giving ").append(entityplayermp4.username).append(" " + as1[3] + "").append(as1[2]).toString());
+                            func_6014_a(username, (new StringBuilder()).append("Giving ").append(entityplayermp4.username).append(" " + as1[3] + " ").append(as1[2]).toString());
                             int k = 1;
                             if (as1.length > 3) {
                                 k = func_6020_b(as1[3], 1);
