@@ -40,6 +40,10 @@ Cloth adds another property file to the game called `server.gamerules`. Gamerule
 - itemidblacklist <string> : Contains a string of blocked item ids, seperated by spaces.
 - domoderntrample <boolean> : if crop trampling should work like it does in modern versions.
 - freezetime <boolean> : if cloth should freeze time
+- snowworld <boolean> : if cloth should generate the world covered in snow and ice
+- nobigtrees <boolean> : if cloth should prevent big trees from spawning/generating
+- dopumpkinlight <boolean> : if cloth should make pumpkin behave like redstone lamps (While receiving redstone power, turn into jack-o-lanterns)
+- seedrate <integer> : Dictates the drop rate of seeds from wheat, 15 is vanilla, and 1 is the highest spawnrate, guaranteeing 3 seeds on every plant
 
 - Check out the Wiki for more information, and a list matching the latest non-release commits!
 
