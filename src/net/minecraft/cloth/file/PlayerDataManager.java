@@ -2,6 +2,8 @@ package net.minecraft.cloth.file;
 
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -69,6 +71,53 @@ public class PlayerDataManager {
         }
 
     }
+
+    public PlayerData getPlayerData(String username){
+        Gson gson = new Gson();
+
+        try {
+            File playerDataFile = new File("players/"+username+".json");
+            if (playerDataFile.createNewFile()) {
+                logger.info("[Cloth] No playerData file exists. Creating new one.");
+            }
+
+            Reader reader = Files.newBufferedReader(Paths.get(playerDataFile.getAbsolutePath()));
+            PlayerData playerDataObj = gson.fromJson(reader, PlayerData.class);
+            reader.close();
+
+            return playerDataObj;
+
+        } catch (IOException e) {
+            System.out.println("[Cloth] Error attempting to access playerData file: ");
+
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void setPlayerData(String username, PlayerData newPlayerData){
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
+
+        try {
+            File playerDataFile = new File("players/"+username+".json");
+            if (playerDataFile.createNewFile()) {
+                logger.info("[Cloth] No playerData file exists. Creating new one.");
+            }
+
+            String saveabledata = gson.toJson(newPlayerData);
+            FileWriter writer = new FileWriter(playerDataFile);
+            writer.write(saveabledata);
+            writer.close();
+
+        } catch (IOException e) {
+            System.out.println("[Cloth] Error attempting to access playerData file: ");
+
+            e.printStackTrace();
+        }
+    }
+
     public String getStat(String playerUsername, String statID){
         Gson gson = new Gson();
         String statValue = "none";
@@ -86,7 +135,7 @@ public class PlayerDataManager {
             System.out.println(statMap);
             if(!statMap.containsKey(playerUsername)){
                 statValue="none";
-                System.out.println("playerData doesnt contai player username");
+                System.out.println("playerData doesn't contain player username");
             }
             else{
                 ArrayList<String> playerData = (ArrayList<String>) statMap.get(playerUsername);
