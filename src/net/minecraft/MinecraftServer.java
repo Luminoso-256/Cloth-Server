@@ -581,6 +581,16 @@ public class MinecraftServer
                 PlayerDataManager statsManager = new PlayerDataManager();
                 statsManager.updateStat(username, args[1], args[2]);
             }
+            if (command.toLowerCase().startsWith("stitchcall")){
+                String[] args = command.split(" ");
+                ArrayList<Object> hookArgs = new ArrayList<>();
+                int i;
+                for (i = 0; i < args.length; i++) {
+                    if(i>=2){hookArgs.add(args[i]);}
+                }
+
+                stitch.CallHook(args[1], hookArgs);
+            }
             if (command.toLowerCase().startsWith("nether") && gameruleManager.getGamerule("nether", true)) {
 
                 EntityPlayerMP player = configManager.getPlayerEntity(username);
