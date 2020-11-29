@@ -5,10 +5,7 @@
 package net.minecraft;
 
 import net.minecraft.cloth.*;
-import net.minecraft.cloth.file.AdvancementManager;
-import net.minecraft.cloth.file.BlockMappingsManager;
-import net.minecraft.cloth.file.GameruleManager;
-import net.minecraft.cloth.file.PlayerDataManager;
+import net.minecraft.cloth.file.*;
 import net.minecraft.cloth.nether.Teleporter;
 import net.minecraft.cloth.plugins.stich.StitchLoader;
 import net.minecraft.core.*;
@@ -764,6 +761,67 @@ public class MinecraftServer
                 }
             }
 
+            if (command.toLowerCase().startsWith("sethome")) {
+                String[] commandspart = command.split(" ");
+                String locationName = "home";
+
+                if (!commandspart[commandspart.length - 1].equals("sethome")){
+                    locationName = commandspart[commandspart.length-1];
+                }
+
+                PlayerDataManager pdm = new PlayerDataManager();
+                PlayerData pdata = new PlayerData();
+                EntityPlayerMP entityplayer = configManager.getPlayerEntity(username);
+                if(pdm.getPlayerData(username) != null){
+                    pdata = pdm.getPlayerData(username);
+                }
+                ArrayList<Location> plocs = pdata.getLocations();
+                if (pdata.getLocation(locationName, plocs) == null){
+                    Location newHome = new Location();
+                    newHome.setName(locationName);
+                    newHome.setLookVector(entityplayer.rotationYaw, entityplayer.rotationPitch);
+                    newHome.setLocationVector(entityplayer.posX, entityplayer.posY, entityplayer.posZ);
+                    pdata.addLocation(newHome);
+                    pdm.setPlayerData(username, pdata);
+                    configManager.sendChatMessageToPlayer(username, "§7Home §a["+ locationName +"]§7 set!");
+                } else {
+                    Location oldLocation = pdata.getLocation(locationName, plocs);
+                    oldLocation.setLookVector(entityplayer.rotationYaw, entityplayer.rotationPitch);
+                    oldLocation.setLocationVector(entityplayer.posX, entityplayer.posY, entityplayer.posZ);
+                    pdm.setPlayerData(username, pdata);
+                    configManager.sendChatMessageToPlayer(username, "§7Home §a["+ locationName +"]§7 changed!");
+                }
+            }
+
+            if (command.toLowerCase().startsWith("home")) {
+                String[] commandspart = command.split(" ");
+                String locationName = "home";
+
+                if (!commandspart[commandspart.length - 1].equals("home")){
+                    locationName = commandspart[commandspart.length-1];
+                }
+
+                PlayerDataManager pdm = new PlayerDataManager();
+                PlayerData pdata = new PlayerData();
+                EntityPlayerMP entityplayer = configManager.getPlayerEntity(username);
+                if(pdm.getPlayerData(username) != null){
+                    pdata = pdm.getPlayerData(username);
+                }
+                ArrayList<Location> plocs = pdata.getLocations();
+                if (pdata.getLocation(locationName, plocs) != null){
+                    Location target = pdata.getLocation(locationName, plocs);
+                    Vector<Double> locvec = target.getLocationVector();
+                    Vector<Float> lookvec = target.getLookVector();
+                    String name = target.getName();
+                    entityplayer.field_421_a.func_41_a(locvec.elementAt(0), locvec.elementAt(1), locvec.elementAt(2), lookvec.elementAt(0), lookvec.elementAt(1));
+                    //System.out.println(locvec.get(0) + locvec.get(1) + locvec.get(2) + lookvec.get(0) + lookvec.get(1));
+
+                    configManager.sendChatMessageToPlayer(username, "§7Returning to §a["+ name +"]");
+                } else {
+                    configManager.sendChatMessageToPlayer(username, "§7Home location §a["+ locationName +"]§7 doesn't exist!");
+                }
+            }
+
             if (command.toLowerCase().startsWith("list")) {
                 icommandlistener.log((new StringBuilder()).append("Connected players: ").append(configManager.getPlayerList()).toString());
             } else if (command.toLowerCase().startsWith("stop")) {
@@ -839,7 +897,7 @@ public class MinecraftServer
                         func_6014_a(username, (new StringBuilder()).append("Teleporting ").append(as[1]).append(" to ").append(as[2]).append(".").toString());
                     }
                 } else {
-                    icommandlistener.log("Syntax error, please provice a source and a target.");
+                    icommandlistener.log("Syntax error, please provide a source and a target.");
                 }
             } else if (command.toLowerCase().startsWith("tpcord ")) {
                 String as[] = command.split(" ");
