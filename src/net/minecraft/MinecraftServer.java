@@ -288,11 +288,12 @@ public class MinecraftServer
                                 boolean IsHardcode = gameruleManager.getGamerule("preview_hardcoremode", false);
                                 //statsManager.updateStat(player.username, "hardcore_is_spectator", "true");
 
-
                                 //Player Data Version of Stats
 
                                 PlayerData pd = playerDataManager.getPlayerData(player.username);
                                 pd.addDeath();
+                                pd.resetBackUsages();
+                                pd.setLastDeathLocation( player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
                                 int deathsInt = pd.getDeaths();
                                 playerDataManager.setPlayerData(player.username, pd);
 
@@ -832,15 +833,39 @@ public class MinecraftServer
                 ArrayList<Location> plocs = pdata.getLocations();
                 if (pdata.getLocation(locationName, plocs) != null){
                     Location target = pdata.getLocation(locationName, plocs);
-                    Vector<Double> locvec = target.getLocationVector();
-                    Vector<Float> lookvec = target.getLookVector();
+                    Vector3d locvec = target.getLocationVector();
+                    Vector3f lookvec = target.getLookVector();
                     String name = target.getName();
-                    entityplayer.field_421_a.func_41_a(locvec.elementAt(0), locvec.elementAt(1), locvec.elementAt(2), lookvec.elementAt(0), lookvec.elementAt(1));
+                    entityplayer.field_421_a.func_41_a(locvec.getX(), locvec.getY(), locvec.getZ(), lookvec.getYaw(), lookvec.getPitch());
                     //System.out.println(locvec.get(0) + locvec.get(1) + locvec.get(2) + lookvec.get(0) + lookvec.get(1));
 
                     configManager.sendChatMessageToPlayer(username, "§7Returning to §a["+ name +"]");
                 } else {
                     configManager.sendChatMessageToPlayer(username, "§7Home location §a["+ locationName +"]§7 doesn't exist!");
+                }
+            }
+
+            if (command.toLowerCase().startsWith("back")) {
+                PlayerDataManager pdm = new PlayerDataManager();
+                PlayerData pdata = pdm.getPlayerData(username);
+                if(pdata.getBackUsages() < GameruleManager.getInstance().getGamerule("maxbacks", 1)) {
+                    EntityPlayerMP entityplayer = configManager.getPlayerEntity(username);
+                    if (pdm.getPlayerData(username) != null) {
+                        pdata = pdm.getPlayerData(username);
+                    }
+                    if (pdata.getLastDeathLocation() != null) {
+                        Location target = pdata.getLastDeathLocation();
+                        Vector3d locvec = target.getLocationVector();
+                        Vector3f lookvec = target.getLookVector();
+                        entityplayer.field_421_a.func_41_a(locvec.getX(), locvec.getY(), locvec.getZ(), lookvec.getYaw(), lookvec.getPitch());
+                        pdata.addBackUsage();
+                        pdm.setPlayerData(username, pdata);
+                        configManager.sendChatMessageToPlayer(username, "§7Returning to the last place you died...");
+                    } else {
+                        configManager.sendChatMessageToPlayer(username, "§7Something broke!");
+                    }
+                } else {
+                    configManager.sendChatMessageToPlayer(username, "§7Sorry! You can only do that " + GameruleManager.getInstance().getGamerule("maxbacks", 1) + " times per life on this server..");
                 }
             }
 

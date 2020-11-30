@@ -2,13 +2,16 @@ package net.minecraft.cloth.file;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class PlayerData {
 
     // The different types of data you can store for any given player
     private int deaths = 0;
+    private int backuses = 0;
     private boolean hasFailedHardcore = false;
     private List<Location> locations = new ArrayList<Location>();
+    private Location lastDeathLocation = new Location();
 
     // Return a location with a matching name
     public Location getLocation(String locationName, ArrayList<Location> Locations){
@@ -40,6 +43,12 @@ public class PlayerData {
         return (ArrayList<Location>) locations;
     }
 
+    // Return the location of the players last death
+    public Location getLastDeathLocation(){ return this.lastDeathLocation; }
+
+    // Set the location of the players last death
+    public void setLastDeathLocation( Double deathX, Double deathY, Double deathZ, Float deathLookYaw, Float deathLookPitch ){ this.lastDeathLocation.setName("Last Death Location"); this.lastDeathLocation.setLocationVector( deathX, deathY, deathZ ); this.lastDeathLocation.setLookVector( deathLookYaw, deathLookPitch ); }
+
     // Check if a player has failed harcore
     public boolean hasFailedHardcore() { return this.hasFailedHardcore; }
 
@@ -55,17 +64,19 @@ public class PlayerData {
         }
     }
 
-    // Return the amount of deaths the player has endured
     public int getDeaths(){
         return deaths;
     }
-
-    // Add to the that list
     public void addDeath(){
         deaths = deaths + 1;
     }
-
     public void setDeath(int newDeaths){
         deaths = newDeaths;
     }
+
+    public int getBackUsages(){ return backuses; }
+    public void addBackUsage(){
+        backuses = backuses + 1;
+    }
+    public void resetBackUsages(){ backuses = 0; }
 }
