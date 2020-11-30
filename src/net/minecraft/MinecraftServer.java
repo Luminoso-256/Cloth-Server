@@ -82,7 +82,7 @@ public class MinecraftServer
             logger.warning("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
             logger.warning("The server will make no attempt to authenticate usernames. Beware.");
             logger.warning("While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.");
-            logger.warning("To change this, set \"online-mode\" to \"true\" in the server.settings file.");
+            logger.warning("To change this, set \"online-mode\" to \"true\" in the server.settings file. ");
         }
         configManager = new ServerConfigurationManager(this);
         field_6028_k = new EntityTracker(this);
@@ -272,19 +272,13 @@ public class MinecraftServer
                                 //statsManager.updateStat(player.username, "hardcore_is_spectator", "true");
 
 
-                                //Stats
+                                //Player Data Version of Stats
 
-                                String oldDeathStat = playerDataManager.getStat(player.username, "death.count");
-                                System.out.println(oldDeathStat);
-                                if (oldDeathStat == "none") {
-                                    oldDeathStat = "0";
-                                }
-                                int deathsInt = Integer.parseInt(oldDeathStat);
-                                //System.out.println("Olddeathint "+deathsInt);
-                                deathsInt++;
-                                String finalStr = "" + deathsInt;
-                                //System.out.println("finalstr "+finalStr);
-                                playerDataManager.updateStat(player.username, "death.count", finalStr);
+                                PlayerData pd = playerDataManager.getPlayerData(player.username);
+                                pd.addDeath();
+                                int deathsInt = pd.getDeaths();
+                                playerDataManager.setPlayerData(player.username, pd);
+
                                 //Advancement
                                 if (deathsInt >= 100) {
                                     grantAdvancement(player.username, "stats.hundreddeaths");
@@ -293,8 +287,14 @@ public class MinecraftServer
 
                                 // You WILL DIE PROPERLY
                                 player.setEntityDead();
+                                String DeathMsg;
                                 //And then we will announce it
-                                String DeathMsg = player.username + " died in mysterious circumstances";
+                                if(overworld.rand.nextInt(15) <= 1){
+                                    DeathMsg = player.username + " is going ghost!";
+                                } else{
+                                    DeathMsg = player.username + " died in mysterious circumstances";
+                                }
+
 
                                 if (!gameruleManager.getGamerule("specificdeath", false)) {
                                     DeathMsg = player.username + " has died. Rest in Peace"; // eventually ill get more interesting- maybe have a registery of dmg sources?
@@ -576,11 +576,6 @@ public class MinecraftServer
                 }
             }
 
-            if (command.toLowerCase().startsWith("stats ")) {
-                String[] args = command.split(" ");
-                PlayerDataManager statsManager = new PlayerDataManager();
-                statsManager.updateStat(username, args[1], args[2]);
-            }
             if (command.toLowerCase().startsWith("stitchcall")){
                 String[] args = command.split(" ");
                 ArrayList<Object> hookArgs = new ArrayList<>();
@@ -831,6 +826,28 @@ public class MinecraftServer
                     configManager.sendChatMessageToPlayer(username, "§7Home location §a["+ locationName +"]§7 doesn't exist!");
                 }
             }
+
+            if (command.toLowerCase().startsWith("delhome")){
+                PlayerDataManager pdm = new PlayerDataManager();
+                PlayerData pd = new PlayerDataManager().getPlayerData(username);
+                if (command.toLowerCase().startsWith("delhomes")){
+                    pd.clearLocations();
+                    configManager.sendChatMessageToPlayer(username, "§7Cleared all saved homes!");
+                } else {
+                    String[] commandspart = command.split(" ");
+                    String badHome = commandspart[commandspart.length - 1];
+                    ArrayList<Location> plocs = pd.getLocations();
+                    if (pd.getLocation(badHome, plocs) != null){
+                        Location badLocation = pd.getLocation(badHome, plocs);
+                        pd.removeLocation(badLocation);
+                        configManager.sendChatMessageToPlayer(username, "§7Removed home §a[" + badHome + "]!");
+                    } else {
+                        configManager.sendChatMessageToPlayer(username, "§7Could not find home §a[" + badHome + "]!");
+                    }
+                }
+                pdm.setPlayerData(username, pd);
+            }
+
 
             if (command.toLowerCase().startsWith("list")) {
                 icommandlistener.log((new StringBuilder()).append("Connected players: ").append(configManager.getPlayerList()).toString());

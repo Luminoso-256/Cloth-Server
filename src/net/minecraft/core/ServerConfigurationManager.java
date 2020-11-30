@@ -6,6 +6,7 @@ package net.minecraft.core;
 import net.minecraft.cloth.file.GameruleManager;
 import net.minecraft.cloth.ExploitUtils;
 import net.minecraft.MinecraftServer;
+import net.minecraft.cloth.file.PlayerData;
 import net.minecraft.cloth.file.PlayerDataManager;
 
 import java.io.*;
@@ -140,7 +141,8 @@ public class ServerConfigurationManager
     public EntityPlayerMP login(NetLoginHandler netloginhandler, String username, String s1)
     {
         PlayerDataManager playerDataManager = new PlayerDataManager();
-        if(gameruleManager.getGamerule("preview_hardcore", false) && playerDataManager.getStat(username, "game.hardcorefailed") == "yes"){
+        PlayerData pd = playerDataManager.getPlayerData(username);
+        if(gameruleManager.getGamerule("preview_hardcore", false) && pd.hasFailedHardcore()){
 
             netloginhandler.kickUser("You have failed the hardcore mode challenge, and the server has not reset!");
         }

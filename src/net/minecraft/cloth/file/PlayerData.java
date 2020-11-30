@@ -7,6 +7,7 @@ public class PlayerData {
 
     // The different types of data you can store for any given player
     private int deaths = 0;
+    private boolean hasFailedHardcore = false;
     private List<Location> locations = new ArrayList<Location>();
 
     // Return a location with a matching name
@@ -24,10 +25,26 @@ public class PlayerData {
         locations.add(newLocation);
     }
 
+    // Remove a specific location
+    public void removeLocation(Location newLocation){
+        locations.remove(newLocation);
+    }
+
+    // Remove all locations
+    public void clearLocations(){
+        this.locations.clear();
+    }
+
     // Return the full list of locations as an ArrayList
     public ArrayList<Location> getLocations(){
         return (ArrayList<Location>) locations;
     }
+
+    // Check if a player has failed harcore
+    public boolean hasFailedHardcore() { return this.hasFailedHardcore; }
+
+    // set if a player has failed the hardcore challenge or not
+    public void setHasFailedHardcore(boolean failState) { this.hasFailedHardcore = failState; }
 
     // Remove a location from the list based on name
     public void removeLocation(String locationName, ArrayList<Location> Locations){
@@ -45,7 +62,7 @@ public class PlayerData {
 
     // Add to the that list
     public void addDeath(){
-        deaths =+ 1;
+        deaths = deaths + 1;
     }
 
     public void setDeath(int newDeaths){
