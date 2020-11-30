@@ -20,7 +20,7 @@ public class AdvancementManager {
             Gson gson = new Gson();
             File advancementsFile = new File("advancements.json");
             if (advancementsFile.createNewFile()) {
-                logger.info("[Cloth] No stats file exists. Creating new one.");
+                logger.info("[Cloth] No advancements file exists. Creating new one.");
             }
             //we now safely have out file
             Reader reader = Files.newBufferedReader(Paths.get(advancementsFile.getAbsolutePath()));
@@ -64,7 +64,7 @@ public class AdvancementManager {
         File advancementsFile = new File("advancements.json");
         try {
             if (advancementsFile.createNewFile()) {
-                logger.info("[Cloth] No stats file exists. Creating new one.");
+                logger.info("[Cloth] No advancements file exists. Creating new one.");
             }
             //we now safely have out file
             Reader reader = Files.newBufferedReader(Paths.get(advancementsFile.getAbsolutePath()));

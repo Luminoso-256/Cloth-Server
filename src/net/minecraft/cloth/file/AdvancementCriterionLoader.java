@@ -21,7 +21,6 @@ public class AdvancementCriterionLoader {
 
     public static Map loadAdvancementCriterion() {
         Logger logger = Logger.getLogger("Minecraft");
-        ArrayList<String> advancements = new ArrayList<String>();
         Gson gson = new Gson();
         Map<String, String> advancementCriterionMap = null;
         File advancementCriterionFile = new File("advancementCriterion.json");
@@ -43,7 +42,9 @@ public class AdvancementCriterionLoader {
         if(advancementCriterionFile != null) {
             return advancementCriterionMap;
         }
-        else return advancementNames;
+        else {
+            return advancementNames;
+        }
 
     }
 }

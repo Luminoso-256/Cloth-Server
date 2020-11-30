@@ -247,13 +247,30 @@ public class MinecraftServer
                                     }
                                 }
                             }
-                            //movement
-                            if (player.posY >= 128) {
-                                grantAdvancement(player.username, "travel.buildlimit");
+                            for (Map.Entry<String, String> entry : advancementCriterion.entrySet()) {
+                                String criterion = entry.getKey();
+                                // String advName = entry.getValue();
+
+
+                                //with this format buildlimit advancement looks like this:
+                                //travel.y.128
+
+                                if(criterion.contains("travel.")){
+                                    String[] tSplit = criterion.split("\\.");
+                                    switch(tSplit[1]){
+                                        case "x":
+                                            if(player.posX == Integer.parseInt(tSplit[2])){grantAdvancement(player.username, criterion);}
+                                            break;
+                                        case "y":
+                                            if(player.posY == Integer.parseInt(tSplit[2])){grantAdvancement(player.username, criterion);}
+                                            break;
+                                        case "z":
+                                            if(player.posZ == Integer.parseInt(tSplit[2])){grantAdvancement(player.username, criterion);}
+                                            break;
+                                    }
+                                }
                             }
-                            if (player.posY <= 0) {
-                                grantAdvancement(player.username, "stats.voidout");
-                            }
+
                         }
 
                         //--------Death

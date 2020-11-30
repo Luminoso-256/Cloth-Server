@@ -12,10 +12,10 @@ public class Globals {
 
     //-------------------Release Information
     public static final boolean IS_PREVIEW = true; //I plan to release more early or test-specific releases now, so thisl be handy
-    public static final String VERSION_STRING = "Cloth Beta 1.1.0-dev build 2";
-    public static final int STITCH_HOOK_VERSION = 1112;// Phase|Major|Minor|Incremental
-    public static final int RULESET_FILE_VERSION = 1112; // Phase|Major|Minor|Incremental
-    public static final String TARGET_FEATURE = "Plugins/Rulesets";
+    public static final String VERSION_STRING = "Cloth Beta 1.1.0-rc1";
+    public static final int STITCH_HOOK_VERSION = 1114;// Phase|Major|Minor|Incremental
+    public static final int RULESET_FILE_VERSION = 1114; // Phase|Major|Minor|Incremental
+    public static final String TARGET_FEATURE = "Test-Build/Release-Candidate";
 
 
     //-------------------Easter-eggs/Tidbits
@@ -75,7 +75,7 @@ public class Globals {
         //inventory
         put("inventory.log", "Punch a tree!");
         put("inventory.stone", "Stone age");
-        put("inventory.iron", "Aquire Hardware");
+        put("inventory.ironingot", "Aquire Hardware");
         put("inventory.diamond", "Diamonds!");
         put("inventory.diamondhoe", "Fool me once...");
         put("inventory.furnace", "Smelting time");
@@ -87,8 +87,11 @@ public class Globals {
 
 
         //travel
-        put("travel.nether", "getting buggier...");
-        put("travel.buildlimit", "I can see my house from here!");
+      //  put("travel.nether", "getting buggier...");
+     //   put("travel.buildlimit", "I can see my house from here!");
+        put("travel.y.128", "I can see my house from here!");
+
+
 //        put("travel.stableworldgenend", "Edge of the world");
         //stats
         put("stats.alldeaths", "PHD in dying");
