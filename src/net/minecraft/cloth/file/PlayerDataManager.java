@@ -30,7 +30,11 @@ public class PlayerDataManager {
             Reader reader = Files.newBufferedReader(Paths.get(playerDataFile.getAbsolutePath()));
             PlayerData playerDataObj = gson.fromJson(reader, PlayerData.class);
             reader.close();
-            return playerDataObj;
+            if (playerDataObj == null){
+                PlayerData npd = new PlayerData();
+                setPlayerData(username, npd);
+                return npd;
+            } else { return playerDataObj; }
         } catch (IOException e) {
             System.out.println("[Cloth] Error attempting to access playerData file: ");
             e.printStackTrace();
