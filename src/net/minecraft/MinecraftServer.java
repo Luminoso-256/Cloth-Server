@@ -11,6 +11,7 @@ import net.minecraft.cloth.plugins.stich.StitchLoader;
 import net.minecraft.core.*;
 
 import java.awt.GraphicsEnvironment;
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -219,16 +220,42 @@ public class MinecraftServer
                     for (int i = 0; i < configManager.playerEntities.size(); i++) {
                         //Important
                         EntityPlayer player = (EntityPlayer) configManager.playerEntities.get(i);
+                        InventoryPlayer inventory = player.inventory;
+
+                        //--------Anti-Cheat
+                        ItemStack fallback = new ItemStack(1);
+                        for (int slot = 0; slot < inventory.getInventorySize(); slot++) {
+                            ItemStack currentItem = inventory.getStackInSlot(slot);
+                            if(currentItem != null && GameruleManager.getInstance().getGamerule("doinventoryitemcheck", true)) {
+                               // System.out.println(slot);
+                                ExploitUtils exploitUtils = new ExploitUtils();
+                                if (!exploitUtils.IsIdValid(currentItem.itemID) && !configManager.isOp(player.username)) {
+                                    //   configManager.sendChatMessageToAllPlayers("ALERT: "+player.username+" obtained an illegal item!");
+                                  //  System.out.println("Setting slot " + i + " to stone");
+                                    EntityPlayerMP entityplayermp1 = null;
+                                    for (int iteratorIDK = 0; iteratorIDK < configManager.playerEntities.size(); iteratorIDK++) {
+                                        EntityPlayerMP entityplayermp5 = (EntityPlayerMP) configManager.playerEntities.get(iteratorIDK);
+                                        if (entityplayermp5.username.equalsIgnoreCase(player.username)) {
+                                            entityplayermp1 = entityplayermp5;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+
 
                         //--------Advancement
                         if (gameruleManager.getGamerule("enableadvancements", false)) {
                             // System.out.println("Looping advancement inv checks");
-                            InventoryPlayer inventory = player.inventory;
+
                             //inventory
                             for (int slot = 0; slot < inventory.getInventorySize(); slot++) {
                                 ItemStack item = inventory.getStackInSlot(slot);
+                               // System.out.println(slot);
                                 if (item != null) {
-                                    //Custom check
+
+                                    //Advancements check
                                     for (Map.Entry<String, String> entry : advancementCriterion.entrySet()) {
                                         String criterion = entry.getKey();
                                        // String advName = entry.getValue();
@@ -291,7 +318,10 @@ public class MinecraftServer
                                 //Player Data Version of Stats
 
                                 PlayerData pd = playerDataManager.getPlayerData(player.username);
-                                pd.addDeath();
+                                if(pd != null) {
+                                    pd.addDeath();
+
+                                }
                                 pd.resetBackUsages();
                                 pd.setLastDeathLocation( player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
                                 int deathsInt = pd.getDeaths();
