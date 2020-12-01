@@ -3,6 +3,9 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.cloth.ExploitUtils;
+import net.minecraft.cloth.file.GameruleManager;
+
 import java.util.*;
 
 public class EntityTrackerEntry
@@ -238,11 +241,15 @@ public class EntityTrackerEntry
         if(field_909_a instanceof EntityItem)
         {
             EntityItem entityitem = (EntityItem)field_909_a;
-            Packet21PickupSpawn packet21pickupspawn = new Packet21PickupSpawn(entityitem);
-            entityitem.posX = (double)packet21pickupspawn.xPosition / 32D;
-            entityitem.posY = (double)packet21pickupspawn.yPosition / 32D;
-            entityitem.posZ = (double)packet21pickupspawn.zPosition / 32D;
-            return packet21pickupspawn;
+            ExploitUtils eu = new ExploitUtils();
+            if(eu.IsIdValid(entityitem.item.itemID) || GameruleManager.getInstance().getGamerule("InvalidDroppedItemProtection", true)) {
+                Packet21PickupSpawn packet21pickupspawn = new Packet21PickupSpawn(entityitem);
+                entityitem.posX = (double) packet21pickupspawn.xPosition / 32D;
+                entityitem.posY = (double) packet21pickupspawn.yPosition / 32D;
+                entityitem.posZ = (double) packet21pickupspawn.zPosition / 32D;
+                return packet21pickupspawn;
+            }
+
         }
         if(field_909_a instanceof EntityPlayerMP)
         {

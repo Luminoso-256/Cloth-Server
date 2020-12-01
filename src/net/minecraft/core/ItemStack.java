@@ -65,12 +65,18 @@ public final class ItemStack
 
     public float getStrVsBlock(Block block)
     {
-        return getItem().getStrVsBlock(this, block);
+        if(getItem() != null) {
+            return getItem().getStrVsBlock(this, block);
+        }
+        return 1.0f;
     }
 
     public ItemStack useItemRightClick(World world, EntityPlayer entityplayer)
     {
-        return getItem().onItemRightClick(this, world, entityplayer);
+        if(getItem() != null) {
+            return getItem().onItemRightClick(this, world, entityplayer);
+        }
+        return new ItemStack(1);
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound)
@@ -90,7 +96,11 @@ public final class ItemStack
 
     public int getMaxStackSize()
     {
-        return getItem().getItemStackLimit();
+       // int testForNull = getItem().getItemStackLimit();
+        if(getItem() != null){
+            return getItem().getItemStackLimit();
+        }
+        return 64;
     }
 
     public int getMaxDamage()
@@ -119,7 +129,9 @@ public final class ItemStack
 
     public void hitBlock(int i, int j, int k, int l)
     {
-        Item.itemsList[itemID].hitBlock(this, i, j, k, l);
+        if(Item.itemsList[itemID] != null) {
+            Item.itemsList[itemID].hitBlock(this, i, j, k, l);
+        }
     }
 
     public int func_9218_a(Entity entity)
