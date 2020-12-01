@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+import net.minecraft.cloth.ExploitUtils;
 import net.minecraft.cloth.file.AdvancementCriterionLoader;
 import net.minecraft.cloth.file.GameruleManager;
 import net.minecraft.MinecraftServer;
@@ -255,8 +256,11 @@ public class NetServerHandler extends NetHandler
         boolean flag = mcServer.overworld.field_819_z = mcServer.configManager.isOp(playerEntity.username);
         if(packet15place.direction == 255)
         {
-            ItemStack itemstack = packet15place.id < 0 ? null : new ItemStack(packet15place.id);
-            playerEntity.field_425_ad.func_6154_a(playerEntity, mcServer.overworld, itemstack);
+            ExploitUtils ep = new ExploitUtils();
+            if(ep.IsIdValid(packet15place.id)) {
+                ItemStack itemstack = packet15place.id < 0 ? null : new ItemStack(packet15place.id);
+                playerEntity.field_425_ad.func_6154_a(playerEntity, mcServer.overworld, itemstack);
+            }
         } else
         {
             int i = packet15place.xPosition;
@@ -271,8 +275,11 @@ public class NetServerHandler extends NetHandler
             }
             if(j1 > 16 || flag)
             {
-                ItemStack itemstack1 = packet15place.id < 0 ? null : new ItemStack(packet15place.id);
-                playerEntity.field_425_ad.func_327_a(playerEntity, mcServer.overworld, itemstack1, i, j, k, l);
+                ExploitUtils ep = new ExploitUtils();
+                if(ep.IsIdValid(packet15place.id)) {
+                    ItemStack itemstack1 = packet15place.id < 0 ? null : new ItemStack(packet15place.id);
+                    playerEntity.field_425_ad.func_327_a(playerEntity, mcServer.overworld, itemstack1, i, j, k, l);
+                }
             }
             playerEntity.field_421_a.sendPacket(new Packet53BlockChange(i, j, k, mcServer.overworld));
             if(l == 0)

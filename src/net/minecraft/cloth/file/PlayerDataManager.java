@@ -16,6 +16,7 @@ public class PlayerDataManager {
     // Location objects are 2 vectors (Location <Double>), (Look <Float>), and a Name string
     // lastDeathLocation  (Location)
     // hasFailedHardcore  (Boolean)
+    // playerServerInventory (Hashmap<Integer, Integer>)
     //
 
     Logger logger = Logger.getLogger("Minecraft");
