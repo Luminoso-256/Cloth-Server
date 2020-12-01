@@ -1,6 +1,7 @@
 package net.minecraft.cloth.file;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
@@ -12,6 +13,7 @@ public class PlayerData {
     private boolean hasFailedHardcore = false;
     private List<Location> locations = new ArrayList<Location>();
     private Location lastDeathLocation = new Location();
+    private HashMap<Integer, Integer> playerServerInventory = new HashMap<Integer, Integer>();
 
     // Return a location with a matching name
     public Location getLocation(String locationName, ArrayList<Location> Locations){
@@ -79,4 +81,26 @@ public class PlayerData {
         backuses = backuses + 1;
     }
     public void resetBackUsages(){ backuses = 0; }
+
+    public HashMap<Integer, Integer> getPlayerServerInventory(){return playerServerInventory;}
+    public void addToServerSideInventory(int ItemID, int StackSize){
+        if(!playerServerInventory.containsKey(ItemID)) {
+            playerServerInventory.put(ItemID, StackSize);
+        }
+        else{
+            playerServerInventory.replace(ItemID, playerServerInventory.get(ItemID)+StackSize);
+        }
+    }
+    public void removeFromServerSideInventory(int ItemID, int StackSize){
+        if(playerServerInventory.containsKey(ItemID)) {
+          if(playerServerInventory.get(ItemID) == StackSize){
+            playerServerInventory.remove(ItemID);
+          }
+          else{
+            playerServerInventory.replace(ItemID, playerServerInventory.get(ItemID) - StackSize);
+          }
+        }
+    }
+
+
 }

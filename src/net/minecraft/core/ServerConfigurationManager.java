@@ -141,11 +141,7 @@ public class ServerConfigurationManager
     public EntityPlayerMP login(NetLoginHandler netloginhandler, String username, String s1)
     {
         PlayerDataManager playerDataManager = new PlayerDataManager();
-        PlayerData pd = playerDataManager.getPlayerData(username);
-        if(gameruleManager.getGamerule("preview_hardcore", false) && pd.hasFailedHardcore()){
-
-            netloginhandler.kickUser("You have failed the hardcore mode challenge, and the server has not reset!");
-        }
+      //  PlayerData pd = playerDataManager.getPlayerData(username);
         if(banList.contains(username.trim().toLowerCase()))
         {
             netloginhandler.kickUser("You are banned from this server!");
