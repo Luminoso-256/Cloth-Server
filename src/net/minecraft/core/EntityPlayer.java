@@ -3,6 +3,7 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.cloth.ExploitUtils;
 import net.minecraft.cloth.file.GameruleManager;
 
 import java.util.List;
@@ -179,7 +180,10 @@ public class EntityPlayer extends EntityLiving
 
     protected void dropItem(EntityItem entityitem)
     {
-        worldObj.entityJoinedWorld(entityitem);
+        ExploitUtils exploitUtils = new ExploitUtils();
+        if (exploitUtils.IsIdValid( entityitem.item.itemID)) {
+            worldObj.entityJoinedWorld(entityitem);
+        }
     }
 
     public float getCurrentPlayerStrVsBlock(Block block)

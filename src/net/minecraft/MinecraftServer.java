@@ -222,26 +222,7 @@ public class MinecraftServer
                         EntityPlayer player = (EntityPlayer) configManager.playerEntities.get(i);
                         InventoryPlayer inventory = player.inventory;
 
-                        //--------Anti-Cheat
-                        ItemStack fallback = new ItemStack(1);
-                        for (int slot = 0; slot < inventory.getInventorySize(); slot++) {
-                            ItemStack currentItem = inventory.getStackInSlot(slot);
-                            if(currentItem != null && GameruleManager.getInstance().getGamerule("doinventoryitemcheck", true)) {
-                               // System.out.println(slot);
-                                ExploitUtils exploitUtils = new ExploitUtils();
-                                if (!exploitUtils.IsIdValid(currentItem.itemID) && !configManager.isOp(player.username)) {
-                                    //   configManager.sendChatMessageToAllPlayers("ALERT: "+player.username+" obtained an illegal item!");
-                                  //  System.out.println("Setting slot " + i + " to stone");
-                                    EntityPlayerMP entityplayermp1 = null;
-                                    for (int iteratorIDK = 0; iteratorIDK < configManager.playerEntities.size(); iteratorIDK++) {
-                                        EntityPlayerMP entityplayermp5 = (EntityPlayerMP) configManager.playerEntities.get(iteratorIDK);
-                                        if (entityplayermp5.username.equalsIgnoreCase(player.username)) {
-                                            entityplayermp1 = entityplayermp5;
-                                        }
-                                    }
-                                }
-                            }
-                        }
+
 
 
 

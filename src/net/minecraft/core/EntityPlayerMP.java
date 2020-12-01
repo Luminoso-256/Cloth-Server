@@ -5,6 +5,7 @@ package net.minecraft.core;
 
 import java.util.*;
 import net.minecraft.MinecraftServer;
+import net.minecraft.cloth.ExploitUtils;
 
 public class EntityPlayerMP extends EntityPlayer
 {
@@ -134,6 +135,8 @@ public class EntityPlayerMP extends EntityPlayer
         {
             if(entity instanceof EntityItem)
             {
+                ExploitUtils ep = new ExploitUtils();
+             //   if(((EntityItem)entity).item.itemID )
                 field_421_a.sendPacket(new Packet17AddToInventory(((EntityItem)entity).item, i));
                 mcServer.field_6028_k.func_12021_a(entity, new Packet22Collect(entity.field_331_c, field_331_c));
             }

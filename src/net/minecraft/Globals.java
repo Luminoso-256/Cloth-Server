@@ -12,10 +12,10 @@ public class Globals {
 
     //-------------------Release Information
     public static final boolean IS_PREVIEW = true; //I plan to release more early or test-specific releases now, so thisl be handy
-    public static final String VERSION_STRING = "Cloth Beta 1.1.0-rc1";
-    public static final int STITCH_HOOK_VERSION = 1114;// Phase|Major|Minor|Incremental
-    public static final int RULESET_FILE_VERSION = 1114; // Phase|Major|Minor|Incremental
-    public static final String TARGET_FEATURE = "Test-Build/Release-Candidate";
+    public static final String VERSION_STRING = "Cloth Beta 1.1.0-dev";
+    public static final int STITCH_HOOK_VERSION = 1115;// Phase|Major|Minor|Incremental
+    public static final int RULESET_FILE_VERSION = 1115; // Phase|Major|Minor|Incremental
+    public static final String TARGET_FEATURE = "Anti-Cheat: Items/Inventory";
 
 
     //-------------------Easter-eggs/Tidbits

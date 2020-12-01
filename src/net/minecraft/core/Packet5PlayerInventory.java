@@ -3,6 +3,8 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.cloth.ExploitUtils;
+
 import java.io.*;
 
 public class Packet5PlayerInventory extends Packet
@@ -15,6 +17,8 @@ public class Packet5PlayerInventory extends Packet
     public Packet5PlayerInventory(int i, ItemStack aitemstack[])
     {
         type = i;
+
+
         stacks = new ItemStack[aitemstack.length];
         for(int j = 0; j < stacks.length; j++)
         {
@@ -26,6 +30,10 @@ public class Packet5PlayerInventory extends Packet
     public void readPacketData(DataInputStream datainputstream) throws IOException
     {
         type = datainputstream.readInt();
+        ExploitUtils exploitUtils = new ExploitUtils();
+        if(!exploitUtils.IsIdValid(type)){
+            type = 1;
+        }
         short word0 = datainputstream.readShort();
         stacks = new ItemStack[word0];
         for(int i = 0; i < word0; i++)
@@ -43,6 +51,10 @@ public class Packet5PlayerInventory extends Packet
 
     public void writePacketData(DataOutputStream dataoutputstream) throws IOException
     {
+        ExploitUtils exploitUtils = new ExploitUtils();
+        if(!exploitUtils.IsIdValid(type)){
+            type = 1;
+        }
         dataoutputstream.writeInt(type);
         dataoutputstream.writeShort(stacks.length);
         for(int i = 0; i < stacks.length; i++)

@@ -3,6 +3,8 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
+import net.minecraft.cloth.ExploitUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -779,12 +781,23 @@ public abstract class Entity
 
     public EntityItem dropItem(int i, int j, int damage)
     {
-        return dropItemWithOffset(i, j, damage, 0.0F);
+        ExploitUtils exploitUtils = new ExploitUtils();
+        if(exploitUtils.IsIdValid(i)) {
+            return dropItemWithOffset(i, j, damage, 0.0F);
+        }
+        return dropItemWithOffset(1, j, damage, 0.0F);
     }
 
     public EntityItem dropItemWithOffset(int i, int j, int damage, float f)
     {
-        EntityItem entityitem = new EntityItem(worldObj, posX, posY + (double)f, posZ, new ItemStack(i, j, damage));
+        ExploitUtils exploitUtils= new ExploitUtils();
+        EntityItem entityitem;
+        if(exploitUtils.IsIdValid(i)) {
+         entityitem = new EntityItem(worldObj, posX, posY + (double) f, posZ, new ItemStack(i, j, damage));
+        }
+        else{
+            entityitem = new EntityItem(worldObj, posX, posY + (double) f, posZ, new ItemStack(1, j, damage));
+        }
         entityitem.field_433_ad = 10;
         worldObj.entityJoinedWorld(entityitem);
         return entityitem;
