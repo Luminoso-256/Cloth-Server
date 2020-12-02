@@ -755,24 +755,28 @@ public class MinecraftServer
                         } else if (commandparts[2].equals("false")) {
                             gameruleManager.setGamerule("freezetime", false);
                         }
+                        break;
                     case "snowworld":
                         if (commandparts[2].equals("true")) {
                             gameruleManager.setGamerule("snowworld", true);
                         } else if (commandparts[2].equals("false")) {
                             gameruleManager.setGamerule("snowworld", false);
                         }
+                        break;
                     case "nobigtrees":
                         if (commandparts[2].equals("true")) {
-                            gameruleManager.setGamerule("nobigtrees", true);
+                            gameruleManager.setGamerule("nobigtree", true);
                         } else if (commandparts[2].equals("false")) {
-                            gameruleManager.setGamerule("nobigtrees", false);
+                            gameruleManager.setGamerule("nobigtree", false);
                         }
+                        break;
                     case "dopumpkinlights":
                         if (commandparts[2].equals("true")) {
                             gameruleManager.setGamerule("dopumpkinlights", true);
                         } else if (commandparts[2].equals("false")) {
                             gameruleManager.setGamerule("dopumpkinlights", false);
                         }
+                        break;
                     case "seedrate":
                         if (commandparts[2].equals("reset")) {
                             gameruleManager.setGamerule("seedrate", 15);
