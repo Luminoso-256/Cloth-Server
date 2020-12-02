@@ -149,6 +149,7 @@ public class ServerConfigurationManager
         if(gameruleManager.getGamerule("usewhitelist", false) && !whitelist.contains(username.trim().toLowerCase())){
             //You arent whitelisted!
             netloginhandler.kickUser("You arent whitelisted on this server!");
+            return null;
         }
         String s2 = netloginhandler.netManager.getRemoteAddress().toString();
         s2 = s2.substring(s2.indexOf("/") + 1);
