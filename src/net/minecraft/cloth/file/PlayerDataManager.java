@@ -2,6 +2,7 @@ package net.minecraft.cloth.file;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minecraft.core.PlayerManager;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -22,7 +23,14 @@ public class PlayerDataManager {
     // hasFailedHardcore  (Boolean)
     // playerServerInventory (Hashmap<Integer, Integer>)
     //
+    private static PlayerDataManager instance;
 
+    static {
+        instance = new PlayerDataManager();
+    }
+    public static PlayerDataManager getInstance() {
+        return instance;
+    }
     Logger logger = Logger.getLogger("Minecraft");
 
     // gets a players PlayerData object from their username

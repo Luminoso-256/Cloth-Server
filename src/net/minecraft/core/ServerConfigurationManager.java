@@ -138,7 +138,7 @@ public class ServerConfigurationManager {
     }
 
     public EntityPlayerMP login(NetLoginHandler netloginhandler, String username, String s1) {
-        PlayerDataManager playerDataManager = new PlayerDataManager();
+        PlayerDataManager playerDataManager = PlayerDataManager.getInstance();
         //  PlayerData pd = playerDataManager.getPlayerData(username);
         if (banList.contains(username.trim().toLowerCase())) {
             netloginhandler.kickUser("You are banned from this server!");

@@ -45,7 +45,7 @@ public class MinecraftServer
     public int SleepVoteNoCount = 0;
     public String worldName;
     public AdvancementManager advancementManager = new AdvancementManager();
-    public PlayerDataManager playerDataManager = new PlayerDataManager();
+    public PlayerDataManager playerDataManager = PlayerDataManager.getInstance();
     public GameruleManager gameruleManager = GameruleManager.getInstance();
     public BlockMappingsManager blockMaps = new BlockMappingsManager(new File("blocks.mappings"));
     public StitchLoader stitch;
@@ -847,7 +847,7 @@ public class MinecraftServer
                     locationName = commandspart[commandspart.length - 1];
                 }
 
-                PlayerDataManager pdm = new PlayerDataManager();
+                PlayerDataManager pdm = PlayerDataManager.getInstance();
                 PlayerData pdata = new PlayerData();
                 EntityPlayerMP entityplayer = configManager.getPlayerEntity(username);
                 if (pdm.getPlayerData(username) != null) {
@@ -879,7 +879,7 @@ public class MinecraftServer
                     locationName = commandspart[commandspart.length - 1];
                 }
 
-                PlayerDataManager pdm = new PlayerDataManager();
+                PlayerDataManager pdm = PlayerDataManager.getInstance();
                 PlayerData pdata = new PlayerData();
                 EntityPlayerMP entityplayer = configManager.getPlayerEntity(username);
                 if (pdm.getPlayerData(username) != null) {
@@ -901,7 +901,7 @@ public class MinecraftServer
             }
 
             if (command.toLowerCase().startsWith("back")) {
-                PlayerDataManager pdm = new PlayerDataManager();
+                PlayerDataManager pdm = PlayerDataManager.getInstance();
                 PlayerData pdata = pdm.getPlayerData(username);
                 if (pdata.getBackUsages() < GameruleManager.getInstance().getGamerule("maxbacks", 1)) {
                     EntityPlayerMP entityplayer = configManager.getPlayerEntity(username);
@@ -925,8 +925,8 @@ public class MinecraftServer
             }
 
             if (command.toLowerCase().startsWith("delhome")) {
-                PlayerDataManager pdm = new PlayerDataManager();
-                PlayerData pd = new PlayerDataManager().getPlayerData(username);
+                PlayerDataManager pdm = PlayerDataManager.getInstance();
+                PlayerData pd = pdm.getPlayerData(username);
                 if (command.toLowerCase().startsWith("delhomes")) {
                     pd.clearLocations();
                     configManager.sendChatMessageToPlayer(username, "§7Cleared all saved homes!");

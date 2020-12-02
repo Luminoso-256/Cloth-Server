@@ -105,10 +105,10 @@ public class GameruleManager {
             FileTime newModified;
             try {
                 newModified = Files.readAttributes(gamerulesPath, BasicFileAttributes.class).lastModifiedTime();
-                System.out.println("[GRM] FileTimeOld:" + lastModified + "FileTimeNew:" + newModified);
+              //  System.out.println("[GRM] FileTimeOld:" + lastModified + "FileTimeNew:" + newModified);
 
                 // System.out.println();
-                System.out.println(newModified.compareTo(lastModified) == 0);
+             //   System.out.println(newModified.compareTo(lastModified) == 0);
                 if (newModified.compareTo(lastModified) != 0) {
                     Reload();
                 }
