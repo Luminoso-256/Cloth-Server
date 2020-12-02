@@ -79,11 +79,10 @@ public class ServerConfigurationManager
             if(item != null){
                 System.out.println("Slot contains item of ID: "+item.itemID);
                 //Whitelist
-                ExploitUtils exploitUtils = new ExploitUtils();
-                if(exploitUtils.IsIdValid(item.itemID)) {
+                if(ExploitUtils.IsIdValid(item.itemID)) {
 
                     //Whatever makes it through whitelist check gets processed by Blacklist Check
-                    if (itemIDBlacklist.contains(Integer.toString(item.itemID))) {
+                 if (itemIDBlacklist.contains(Integer.toString(item.itemID))) {
 
                         entityplayermp.inventory.setInventorySlotContents(i, fallbackItem);
                     }

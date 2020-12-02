@@ -30,8 +30,8 @@ public class Packet17AddToInventory extends Packet
     {
 
         id = datainputstream.readShort();
-        ExploitUtils exploitUtils = new ExploitUtils();
-        if(!exploitUtils.IsIdValid(id)){
+
+        if(!ExploitUtils.IsIdValid(id)){
             id = 1;
         }
         count = datainputstream.readByte();
@@ -40,8 +40,8 @@ public class Packet17AddToInventory extends Packet
 
     public void writePacketData(DataOutputStream dataoutputstream) throws IOException
     {
-        ExploitUtils exploitUtils = new ExploitUtils();
-        if(!exploitUtils.IsIdValid(id)){
+       // ExploitUtils exploitUtils = new ExploitUtils();
+        if(!ExploitUtils.IsIdValid(id)){
             id = 1;
         }
         dataoutputstream.writeShort(id);

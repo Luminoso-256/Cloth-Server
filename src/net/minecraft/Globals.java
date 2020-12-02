@@ -25,7 +25,8 @@ public class Globals {
             "Free for all!", "Open source!", "Fork me!", "Experimental shenanigans!",
             "With contributions from many", "Compatible with JRE14! and JRE8!",  "Why do these messages exist?",
             "New flying pigmen!", "an uneasy alliance!", "buggy nether time!", "We use Trello!",
-            "Check out classic-rs", "rulesets!", "thanks for downloading!"};
+            "Check out classic-rs", "rulesets!", "thanks for downloading!",
+            "Now with anticheat!"};
 
     //-------------------Deaths
 

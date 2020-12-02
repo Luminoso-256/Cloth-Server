@@ -30,8 +30,8 @@ public class Packet5PlayerInventory extends Packet
     public void readPacketData(DataInputStream datainputstream) throws IOException
     {
         type = datainputstream.readInt();
-        ExploitUtils exploitUtils = new ExploitUtils();
-        if(!exploitUtils.IsIdValid(type)){
+
+        if(!ExploitUtils.IsIdValid(type)){
             type = 1;
         }
         short word0 = datainputstream.readShort();
@@ -51,8 +51,7 @@ public class Packet5PlayerInventory extends Packet
 
     public void writePacketData(DataOutputStream dataoutputstream) throws IOException
     {
-        ExploitUtils exploitUtils = new ExploitUtils();
-        if(!exploitUtils.IsIdValid(type)){
+        if(!ExploitUtils.IsIdValid(type)){
             type = 1;
         }
         dataoutputstream.writeInt(type);

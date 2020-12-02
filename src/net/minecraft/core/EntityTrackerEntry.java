@@ -241,8 +241,7 @@ public class EntityTrackerEntry
         if(field_909_a instanceof EntityItem)
         {
             EntityItem entityitem = (EntityItem)field_909_a;
-            ExploitUtils eu = new ExploitUtils();
-            if(eu.IsIdValid(entityitem.item.itemID) || GameruleManager.getInstance().getGamerule("InvalidDroppedItemProtection", true)) {
+            if(ExploitUtils.IsIdValid(entityitem.item.itemID) || GameruleManager.getInstance().getGamerule("InvalidDroppedItemProtection", true)) {
                 Packet21PickupSpawn packet21pickupspawn = new Packet21PickupSpawn(entityitem);
                 entityitem.posX = (double) packet21pickupspawn.xPosition / 32D;
                 entityitem.posY = (double) packet21pickupspawn.yPosition / 32D;

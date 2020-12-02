@@ -180,8 +180,7 @@ public class EntityPlayer extends EntityLiving
 
     protected void dropItem(EntityItem entityitem)
     {
-        ExploitUtils exploitUtils = new ExploitUtils();
-        if (exploitUtils.IsIdValid( entityitem.item.itemID)) {
+        if (ExploitUtils.IsIdValid( entityitem.item.itemID)) {
             worldObj.entityJoinedWorld(entityitem);
         }
     }

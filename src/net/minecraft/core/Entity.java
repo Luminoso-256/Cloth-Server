@@ -781,8 +781,8 @@ public abstract class Entity
 
     public EntityItem dropItem(int i, int j, int damage)
     {
-        ExploitUtils exploitUtils = new ExploitUtils();
-        if(exploitUtils.IsIdValid(i)) {
+
+        if(ExploitUtils.IsIdValid(i)) {
             return dropItemWithOffset(i, j, damage, 0.0F);
         }
         return dropItemWithOffset(1, j, damage, 0.0F);
