@@ -48,12 +48,16 @@ public class GameruleManager {
 
     public void Reload() throws FileNotFoundException, IOException {
         System.out.println("Gamerule File re-load. If no changes were made, this is a serious bug!");
-        serverGamerules.load(new FileInputStream(gamerulesFile));
+        FileInputStream input = new FileInputStream(gamerulesFile);
+        serverGamerules.load(input);
+        input.close();
     }
 
     public void Save() {
         try {
-            serverGamerules.store(new FileOutputStream(gamerulesFile), "Cloth Gamerule Data");
+        	FileOutputStream output = new FileOutputStream(gamerulesFile);
+            serverGamerules.store(output, "Cloth Gamerule Data");
+            output.close();
         } catch (Exception exception) {
             logger.log(Level.WARNING, "Failed to save gamerules", exception);
         }
