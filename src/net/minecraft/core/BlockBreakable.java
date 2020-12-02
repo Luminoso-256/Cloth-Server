@@ -4,31 +4,25 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class BlockBreakable extends Block
-{
+public class BlockBreakable extends Block {
 
-    protected BlockBreakable(int i, int j, Material material, boolean flag)
-    {
+    private boolean field_6084_a;
+
+    protected BlockBreakable(int i, int j, Material material, boolean flag) {
         super(i, j, material);
         field_6084_a = flag;
     }
 
-    public boolean allowsAttachment()
-    {
+    public boolean allowsAttachment() {
         return false;
     }
 
-    public boolean isSideInsideCoordinate(IBlockAccess iblockaccess, int i, int j, int k, int l)
-    {
+    public boolean isSideInsideCoordinate(IBlockAccess iblockaccess, int i, int j, int k, int l) {
         int i1 = iblockaccess.getBlockId(i, j, k);
-        if(!field_6084_a && i1 == blockID)
-        {
+        if (!field_6084_a && i1 == blockID) {
             return false;
-        } else
-        {
+        } else {
             return super.isSideInsideCoordinate(iblockaccess, i, j, k, l);
         }
     }
-
-    private boolean field_6084_a;
 }

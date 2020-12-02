@@ -3,17 +3,22 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet15Place extends Packet
-{
+public class Packet15Place extends Packet {
 
-    public Packet15Place()
-    {
+    public int id;
+    public int xPosition;
+    public int yPosition;
+    public int zPosition;
+    public int direction;
+
+    public Packet15Place() {
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
         id = datainputstream.readShort();
         xPosition = datainputstream.readInt();
         yPosition = datainputstream.read();
@@ -21,8 +26,7 @@ public class Packet15Place extends Packet
         direction = datainputstream.read();
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeShort(id);
         dataoutputstream.writeInt(xPosition);
         dataoutputstream.write(yPosition);
@@ -30,19 +34,11 @@ public class Packet15Place extends Packet
         dataoutputstream.write(direction);
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
         nethandler.handlePlace(this);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return 12;
     }
-
-    public int id;
-    public int xPosition;
-    public int yPosition;
-    public int zPosition;
-    public int direction;
 }

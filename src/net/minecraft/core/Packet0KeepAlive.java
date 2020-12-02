@@ -3,29 +3,25 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet0KeepAlive extends Packet
-{
+public class Packet0KeepAlive extends Packet {
 
-    public Packet0KeepAlive()
-    {
+    public Packet0KeepAlive() {
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return 0;
     }
 }

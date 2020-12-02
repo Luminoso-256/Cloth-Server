@@ -4,52 +4,42 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class ItemPickaxe extends ItemTool
-{
+public class ItemPickaxe extends ItemTool {
 
-    public ItemPickaxe(int i, int j)
-    {
+    private static Block field_4209_bb[];
+
+    static {
+        field_4209_bb = (new Block[]{
+                Block.cobblestone, Block.stairDouble, Block.stairSingle, Block.stone, Block.cobblestoneMossy, Block.oreIron, Block.blockSteel, Block.oreCoal, Block.blockGold, Block.oreGold,
+                Block.oreDiamond, Block.blockDiamond, Block.ice, Block.bloodStone
+        });
+    }
+
+    private int field_4208_bc;
+    public ItemPickaxe(int i, int j) {
         super(i, 2, j, field_4209_bb);
         field_4208_bc = j;
     }
 
-    public boolean canHarvestBlock(Block block)
-    {
-        if(block == Block.obsidian)
-        {
+    public boolean canHarvestBlock(Block block) {
+        if (block == Block.obsidian) {
             return field_4208_bc == 3;
         }
-        if(block == Block.blockDiamond || block == Block.oreDiamond)
-        {
+        if (block == Block.blockDiamond || block == Block.oreDiamond) {
             return field_4208_bc >= 2;
         }
-        if(block == Block.blockGold || block == Block.oreGold)
-        {
+        if (block == Block.blockGold || block == Block.oreGold) {
             return field_4208_bc >= 2;
         }
-        if(block == Block.blockSteel || block == Block.oreIron)
-        {
+        if (block == Block.blockSteel || block == Block.oreIron) {
             return field_4208_bc >= 1;
         }
-        if(block == Block.oreRedstone || block == Block.oreRedstoneGlowing)
-        {
+        if (block == Block.oreRedstone || block == Block.oreRedstoneGlowing) {
             return field_4208_bc >= 2;
         }
-        if(block.blockMaterial == Material.rock)
-        {
+        if (block.blockMaterial == Material.rock) {
             return true;
         }
         return block.blockMaterial == Material.iron;
-    }
-
-    private static Block field_4209_bb[];
-    private int field_4208_bc;
-
-    static 
-    {
-        field_4209_bb = (new Block[] {
-            Block.cobblestone, Block.stairDouble, Block.stairSingle, Block.stone, Block.cobblestoneMossy, Block.oreIron, Block.blockSteel, Block.oreCoal, Block.blockGold, Block.oreGold, 
-            Block.oreDiamond, Block.blockDiamond, Block.ice, Block.bloodStone
-        });
     }
 }

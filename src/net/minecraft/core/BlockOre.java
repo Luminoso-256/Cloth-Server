@@ -5,31 +5,24 @@ package net.minecraft.core;
 
 import java.util.Random;
 
-public class BlockOre extends Block
-{
+public class BlockOre extends Block {
 
-    public BlockOre(int i, int j)
-    {
+    public BlockOre(int i, int j) {
         super(i, j, Material.rock);
     }
 
-    public int idDropped(int i, Random random)
-    {
-        if(blockID == Block.oreCoal.blockID)
-        {
+    public int idDropped(int i, Random random) {
+        if (blockID == Block.oreCoal.blockID) {
             return Item.coal.swiftedIndex;
         }
-        if(blockID == Block.oreDiamond.blockID)
-        {
+        if (blockID == Block.oreDiamond.blockID) {
             return Item.diamond.swiftedIndex;
-        } else
-        {
+        } else {
             return blockID;
         }
     }
 
-    public int quantityDropped(Random random)
-    {
+    public int quantityDropped(Random random) {
         return 1;
     }
 }

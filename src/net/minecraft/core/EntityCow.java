@@ -4,64 +4,52 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class EntityCow extends EntityAnimals
-{
+public class EntityCow extends EntityAnimals {
 
-    public EntityCow(World world)
-    {
+    public boolean unusedBoolean;
+
+    public EntityCow(World world) {
         super(world);
         unusedBoolean = false;
         field_9119_aG = "/mob/cow.png";
         setSize(0.9F, 1.3F);
     }
 
-    public void writeEntityToNBT(NBTTagCompound nbttagcompound)
-    {
+    public void writeEntityToNBT(NBTTagCompound nbttagcompound) {
         super.writeEntityToNBT(nbttagcompound);
     }
 
-    public void readEntityFromNBT(NBTTagCompound nbttagcompound)
-    {
+    public void readEntityFromNBT(NBTTagCompound nbttagcompound) {
         super.readEntityFromNBT(nbttagcompound);
     }
 
-    protected String getLivingSound()
-    {
+    protected String getLivingSound() {
         return "mob.cow";
     }
 
-    protected String getHurtSound()
-    {
+    protected String getHurtSound() {
         return "mob.cowhurt";
     }
 
-    protected String getDeathSound()
-    {
+    protected String getDeathSound() {
         return "mob.cowhurt";
     }
 
-    protected float getSoundVolume()
-    {
+    protected float getSoundVolume() {
         return 0.4F;
     }
 
-    protected int getDropItemId()
-    {
+    protected int getDropItemId() {
         return Item.leather.swiftedIndex;
     }
 
-    public boolean func_6092_a(EntityPlayer entityplayer)
-    {
+    public boolean func_6092_a(EntityPlayer entityplayer) {
         ItemStack itemstack = entityplayer.inventory.getCurrentItem();
-        if(itemstack != null && itemstack.itemID == Item.bucketEmpty.swiftedIndex)
-        {
+        if (itemstack != null && itemstack.itemID == Item.bucketEmpty.swiftedIndex) {
             entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, new ItemStack(Item.bucketMilk));
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
-
-    public boolean unusedBoolean;
 }

@@ -4,17 +4,17 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class EntityFallingSand extends Entity
-{
+public class EntityFallingSand extends Entity {
 
-    public EntityFallingSand(World world)
-    {
+    public int field_427_a;
+    public int field_426_b;
+
+    public EntityFallingSand(World world) {
         super(world);
         field_426_b = 0;
     }
 
-    public EntityFallingSand(World world, float f, float f1, float f2, int i)
-    {
+    public EntityFallingSand(World world, float f, float f1, float f2, int i) {
         super(world);
         field_426_b = 0;
         field_427_a = i;
@@ -31,15 +31,12 @@ public class EntityFallingSand extends Entity
         prevPosZ = f2;
     }
 
-    public boolean func_129_c_()
-    {
+    public boolean func_129_c_() {
         return !isDead;
     }
 
-    public void onUpdate()
-    {
-        if(field_427_a == 0)
-        {
+    public void onUpdate() {
+        if (field_427_a == 0) {
             setEntityDead();
             return;
         }
@@ -55,38 +52,28 @@ public class EntityFallingSand extends Entity
         int i = MathHelper.floor_double(posX);
         int j = MathHelper.floor_double(posY);
         int k = MathHelper.floor_double(posZ);
-        if(worldObj.getBlockId(i, j, k) == field_427_a)
-        {
+        if (worldObj.getBlockId(i, j, k) == field_427_a) {
             worldObj.setBlockWithNotify(i, j, k, 0);
         }
-        if(onGround)
-        {
+        if (onGround) {
             motionX *= 0.69999998807907104D;
             motionZ *= 0.69999998807907104D;
             motionY *= -0.5D;
             setEntityDead();
-            if(!worldObj.func_516_a(field_427_a, i, j, k, true) || !worldObj.setBlockWithNotify(i, j, k, field_427_a))
-            {
-                dropItem(field_427_a, 1,0);
+            if (!worldObj.func_516_a(field_427_a, i, j, k, true) || !worldObj.setBlockWithNotify(i, j, k, field_427_a)) {
+                dropItem(field_427_a, 1, 0);
             }
-        } else
-        if(field_426_b > 100)
-        {
-            dropItem(field_427_a, 1,0);
+        } else if (field_426_b > 100) {
+            dropItem(field_427_a, 1, 0);
             setEntityDead();
         }
     }
 
-    protected void writeEntityToNBT(NBTTagCompound nbttagcompound)
-    {
-        nbttagcompound.setByte("Tile", (byte)field_427_a);
+    protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
+        nbttagcompound.setByte("Tile", (byte) field_427_a);
     }
 
-    protected void readEntityFromNBT(NBTTagCompound nbttagcompound)
-    {
+    protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
         field_427_a = nbttagcompound.getByte("Tile") & 0xff;
     }
-
-    public int field_427_a;
-    public int field_426_b;
 }

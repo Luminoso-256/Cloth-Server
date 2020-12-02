@@ -4,30 +4,23 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-class ThreadMonitorConnection extends Thread
-{
+class ThreadMonitorConnection extends Thread {
 
-    ThreadMonitorConnection(NetworkManager networkmanager)
-    {
+    final NetworkManager netManager; /* synthetic field */
+
+    ThreadMonitorConnection(NetworkManager networkmanager) {
         netManager = networkmanager;
     }
 
-    public void run()
-    {
-        try
-        {
+    public void run() {
+        try {
             Thread.sleep(2000L);
-            if(NetworkManager.isRunning(netManager))
-            {
+            if (NetworkManager.isRunning(netManager)) {
                 NetworkManager.getWriteThread(netManager).interrupt();
                 netManager.networkShutdown("Connection closed");
             }
-        }
-        catch(Exception exception)
-        {
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
-
-    final NetworkManager netManager; /* synthetic field */
 }

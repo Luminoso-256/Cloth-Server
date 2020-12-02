@@ -3,39 +3,34 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet255KickDisconnect extends Packet
-{
+public class Packet255KickDisconnect extends Packet {
 
-    public Packet255KickDisconnect()
-    {
+    public String reason;
+
+    public Packet255KickDisconnect() {
     }
 
-    public Packet255KickDisconnect(String s)
-    {
+    public Packet255KickDisconnect(String s) {
         reason = s;
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
         reason = datainputstream.readUTF();
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeUTF(reason);
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
         nethandler.handleKickDisconnect(this);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return reason.length();
     }
-
-    public String reason;
 }

@@ -4,8 +4,7 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public interface IChunkProvider
-{
+public interface IChunkProvider {
 
     public abstract boolean chunkExists(int i, int j);
 

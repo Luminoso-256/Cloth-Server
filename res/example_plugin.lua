@@ -6,5 +6,4 @@ function OnServerInit()
 end
 
 function OnBlockPlace()
-
 end

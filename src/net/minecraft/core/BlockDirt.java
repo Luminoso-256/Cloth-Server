@@ -4,11 +4,9 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class BlockDirt extends Block
-{
+public class BlockDirt extends Block {
 
-    protected BlockDirt(int i, int j)
-    {
+    protected BlockDirt(int i, int j) {
         super(i, j, Material.ground);
     }
 }

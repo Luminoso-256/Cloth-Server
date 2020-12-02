@@ -3,34 +3,11 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet10Flying extends Packet
-{
-
-    public Packet10Flying()
-    {
-    }
-
-    public void processPacket(NetHandler nethandler)
-    {
-        nethandler.handleFlying(this);
-    }
-
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
-        onGround = datainputstream.read() != 0;
-    }
-
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
-        dataoutputstream.write(onGround ? 1 : 0);
-    }
-
-    public int getPacketSize()
-    {
-        return 1;
-    }
+public class Packet10Flying extends Packet {
 
     public double xPosition;
     public double yPosition;
@@ -41,4 +18,22 @@ public class Packet10Flying extends Packet
     public boolean onGround;
     public boolean moving;
     public boolean rotating;
+    public Packet10Flying() {
+    }
+
+    public void processPacket(NetHandler nethandler) {
+        nethandler.handleFlying(this);
+    }
+
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
+        onGround = datainputstream.read() != 0;
+    }
+
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
+        dataoutputstream.write(onGround ? 1 : 0);
+    }
+
+    public int getPacketSize() {
+        return 1;
+    }
 }

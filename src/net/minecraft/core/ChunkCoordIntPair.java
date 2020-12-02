@@ -4,35 +4,30 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class ChunkCoordIntPair
-{
+public class ChunkCoordIntPair {
 
-    public ChunkCoordIntPair(int i, int j)
-    {
+    public int field_152_a;
+    public int field_151_b;
+
+    public ChunkCoordIntPair(int i, int j) {
         field_152_a = i;
         field_151_b = j;
     }
 
-    public int hashCode()
-    {
+    public int hashCode() {
         return field_152_a << 8 | field_151_b;
     }
 
-    public boolean equals(Object obj)
-    {
-        ChunkCoordIntPair chunkcoordintpair = (ChunkCoordIntPair)obj;
+    public boolean equals(Object obj) {
+        ChunkCoordIntPair chunkcoordintpair = (ChunkCoordIntPair) obj;
         return chunkcoordintpair.field_152_a == field_152_a && chunkcoordintpair.field_151_b == field_151_b;
     }
 
-    public double func_73_a(Entity entity)
-    {
+    public double func_73_a(Entity entity) {
         double d = field_152_a * 16 + 8;
         double d1 = field_151_b * 16 + 8;
         double d2 = d - entity.posX;
         double d3 = d1 - entity.posZ;
         return d2 * d2 + d3 * d3;
     }
-
-    public int field_152_a;
-    public int field_151_b;
 }

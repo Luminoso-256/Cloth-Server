@@ -5,11 +5,9 @@ package net.minecraft.core;
 
 import java.util.Random;
 
-public class BlockReed extends Block
-{
+public class BlockReed extends Block {
 
-    protected BlockReed(int i, int j)
-    {
+    protected BlockReed(int i, int j) {
         super(i, Material.plants);
         blockIndexInTexture = j;
         float f = 0.375F;
@@ -17,84 +15,67 @@ public class BlockReed extends Block
         setTickOnLoad(true);
     }
 
-    public void updateTick(World world, int i, int j, int k, Random random)
-    {
-        if(world.getBlockId(i, j + 1, k) == 0)
-        {
+    public void updateTick(World world, int i, int j, int k, Random random) {
+        if (world.getBlockId(i, j + 1, k) == 0) {
             int l;
-            for(l = 1; world.getBlockId(i, j - l, k) == blockID; l++) { }
-            if(l < 3)
-            {
+            for (l = 1; world.getBlockId(i, j - l, k) == blockID; l++) {
+            }
+            if (l < 3) {
                 int i1 = world.getBlockMetadata(i, j, k);
-                if(i1 == 15)
-                {
+                if (i1 == 15) {
                     world.setBlockWithNotify(i, j + 1, k, blockID);
                     world.setBlockMetadataWithNotify(i, j, k, 0);
-                } else
-                {
+                } else {
                     world.setBlockMetadataWithNotify(i, j, k, i1 + 1);
                 }
             }
         }
     }
 
-    public boolean canPlaceBlockAt(World world, int i, int j, int k)
-    {
+    public boolean canPlaceBlockAt(World world, int i, int j, int k) {
         int l = world.getBlockId(i, j - 1, k);
-        if(l == blockID)
-        {
+        if (l == blockID) {
             return true;
         }
-        if(l != Block.grass.blockID && l != Block.dirt.blockID)
-        {
+        if (l != Block.grass.blockID && l != Block.dirt.blockID) {
             return false;
         }
-        if(world.getBlockMaterial(i - 1, j - 1, k) == Material.water)
-        {
+        if (world.getBlockMaterial(i - 1, j - 1, k) == Material.water) {
             return true;
         }
-        if(world.getBlockMaterial(i + 1, j - 1, k) == Material.water)
-        {
+        if (world.getBlockMaterial(i + 1, j - 1, k) == Material.water) {
             return true;
         }
-        if(world.getBlockMaterial(i, j - 1, k - 1) == Material.water)
-        {
+        if (world.getBlockMaterial(i, j - 1, k - 1) == Material.water) {
             return true;
         }
         return world.getBlockMaterial(i, j - 1, k + 1) == Material.water;
     }
 
-    public void onNeighborBlockChange(World world, int i, int j, int k, int l)
-    {
+    public void onNeighborBlockChange(World world, int i, int j, int k, int l) {
         func_4037_g(world, i, j, k);
     }
 
-    protected final void func_4037_g(World world, int i, int j, int k)
-    {
-        if(!canBlockStay(world, i, j, k))
-        {
+    protected final void func_4037_g(World world, int i, int j, int k) {
+        if (!canBlockStay(world, i, j, k)) {
             dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k));
             world.setBlockWithNotify(i, j, k, 0);
         }
     }
 
-    public boolean canBlockStay(World world, int i, int j, int k)
-    {
+    public boolean canBlockStay(World world, int i, int j, int k) {
         return canPlaceBlockAt(world, i, j, k);
     }
 
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int i, int j, int k)
-    {
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int i, int j, int k) {
         return null;
     }
 
-    public int idDropped(int i, Random random)
-    {
+    public int idDropped(int i, Random random) {
         return Item.reed.swiftedIndex;
     }
 
-    public boolean allowsAttachment()
-    {
+    public boolean allowsAttachment() {
         return false;
     }
 }

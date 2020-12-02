@@ -5,21 +5,16 @@ package net.minecraft.core;
 
 import java.util.Random;
 
-public class BlockGravel extends BlockSand
-{
+public class BlockGravel extends BlockSand {
 
-    public BlockGravel(int i, int j)
-    {
+    public BlockGravel(int i, int j) {
         super(i, j);
     }
 
-    public int idDropped(int i, Random random)
-    {
-        if(random.nextInt(10) == 0)
-        {
+    public int idDropped(int i, Random random) {
+        if (random.nextInt(10) == 0) {
             return Item.flint.swiftedIndex;
-        } else
-        {
+        } else {
             return blockID;
         }
     }

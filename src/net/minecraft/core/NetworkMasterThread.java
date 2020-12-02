@@ -4,41 +4,31 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-class NetworkMasterThread extends Thread
-{
+class NetworkMasterThread extends Thread {
 
-    NetworkMasterThread(NetworkManager networkmanager)
-    {
+    final NetworkManager netManager; /* synthetic field */
+
+    NetworkMasterThread(NetworkManager networkmanager) {
         netManager = networkmanager;
     }
 
-    public void run()
-    {
-        try
-        {
+    public void run() {
+        try {
             Thread.sleep(5000L);
-            if(NetworkManager.getReadThread(netManager).isAlive())
-            {
-                try
-                {
+            if (NetworkManager.getReadThread(netManager).isAlive()) {
+                try {
                     NetworkManager.getReadThread(netManager).stop();
+                } catch (Throwable throwable) {
                 }
-                catch(Throwable throwable) { }
             }
-            if(NetworkManager.getWriteThread(netManager).isAlive())
-            {
-                try
-                {
+            if (NetworkManager.getWriteThread(netManager).isAlive()) {
+                try {
                     NetworkManager.getWriteThread(netManager).stop();
+                } catch (Throwable throwable1) {
                 }
-                catch(Throwable throwable1) { }
             }
-        }
-        catch(InterruptedException interruptedexception)
-        {
+        } catch (InterruptedException interruptedexception) {
             interruptedexception.printStackTrace();
         }
     }
-
-    final NetworkManager netManager; /* synthetic field */
 }

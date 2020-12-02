@@ -4,13 +4,11 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class MobSpawnerHell extends MobSpawnerBase
-{
+public class MobSpawnerHell extends MobSpawnerBase {
 
-    public MobSpawnerHell()
-    {
-        biomeMonsters = (new Class[] {
-            EntityGhast.class, EntityPigZombie.class
+    public MobSpawnerHell() {
+        biomeMonsters = (new Class[]{
+                EntityGhast.class, EntityPigZombie.class
         });
         biomeCreatures = new Class[0];
     }

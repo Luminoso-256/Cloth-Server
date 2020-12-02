@@ -7,18 +7,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 class GuiStatsListener
-    implements ActionListener
-{
+        implements ActionListener {
 
-    GuiStatsListener(GuiStatsComponent guistatscomponent)
-    {
+    final GuiStatsComponent statsComponent; /* synthetic field */
+
+    GuiStatsListener(GuiStatsComponent guistatscomponent) {
         statsComponent = guistatscomponent;
     }
 
-    public void actionPerformed(ActionEvent actionevent)
-    {
+    public void actionPerformed(ActionEvent actionevent) {
         GuiStatsComponent.update(statsComponent);
     }
-
-    final GuiStatsComponent statsComponent; /* synthetic field */
 }

@@ -4,6 +4,5 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public interface IAnimals
-{
+public interface IAnimals {
 }

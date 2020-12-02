@@ -22,6 +22,7 @@ import static net.minecraft.Globals.*;
 
 /**
  * Custom Main class for stitch & convience
+ *
  * @author Luminoso-256
  */
 public class Main {
@@ -29,10 +30,13 @@ public class Main {
 
     public static final Logger logger = Logger.getLogger("Minecraft");
     public static final MinecraftServer minecraftServer = new MinecraftServer(); //Get a reference to our lovely MC server class
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         Random random = new Random();
-        logger.info("Welcome to "+VERSION_STRING+" - "+WELCOME_MSG[random.nextInt(WELCOME_MSG.length)]);
-        if(IS_PREVIEW){logger.warning("*********Warning: This is a pre-release build of Cloth. Issues may arise. Targeting feature: "+ TARGET_FEATURE);}
+        logger.info("Welcome to " + VERSION_STRING + " - " + WELCOME_MSG[random.nextInt(WELCOME_MSG.length)]);
+        if (IS_PREVIEW) {
+            logger.warning("*********Warning: This is a pre-release build of Cloth. Issues may arise. Targeting feature: " + TARGET_FEATURE);
+        }
         logger.info("[Stitch] Loading stitch plugins from /plugins...");
         Globals _G = JsePlatform.standardGlobals();
         //Main classes
@@ -65,7 +69,7 @@ public class Main {
         StitchLoader stitch = new StitchLoader(_G);
         stitch.RegisterAllPlugins();
         logger.info("[Stitch] Calling initialization hook");
-         List<String> DummyList = new ArrayList<>();
+        List<String> DummyList = new ArrayList<>();
         stitch.CallHook("OnServerInit", DummyList);
 
 
@@ -80,7 +84,7 @@ public class Main {
 
         logger.info("[Cloth] Cloth init complete. Deffering to MinecraftServer class ");
         try {
-           // net.minecraft.server.MinecraftServer.main(args);
+            // net.minecraft.server.MinecraftServer.main(args);
             minecraftServer.stitch = stitch;
             minecraftServer.advancementCriterion = (HashMap<String, String>) AdvancementCriterionLoader.loadAdvancementCriterion();
             try {

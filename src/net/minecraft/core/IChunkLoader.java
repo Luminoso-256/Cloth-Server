@@ -5,8 +5,7 @@ package net.minecraft.core;
 
 import java.io.IOException;
 
-public interface IChunkLoader
-{
+public interface IChunkLoader {
 
     public abstract Chunk func_659_a(World world, int i, int j) throws IOException;
 

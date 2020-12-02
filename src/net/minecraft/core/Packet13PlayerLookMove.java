@@ -3,19 +3,18 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet13PlayerLookMove extends Packet10Flying
-{
+public class Packet13PlayerLookMove extends Packet10Flying {
 
-    public Packet13PlayerLookMove()
-    {
+    public Packet13PlayerLookMove() {
         rotating = true;
         moving = true;
     }
 
-    public Packet13PlayerLookMove(double d, double d1, double d2, double d3, float f, float f1, boolean flag)
-    {
+    public Packet13PlayerLookMove(double d, double d1, double d2, double d3, float f, float f1, boolean flag) {
         xPosition = d;
         yPosition = d1;
         stance = d2;
@@ -27,8 +26,7 @@ public class Packet13PlayerLookMove extends Packet10Flying
         moving = true;
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
         xPosition = datainputstream.readDouble();
         yPosition = datainputstream.readDouble();
         stance = datainputstream.readDouble();
@@ -38,8 +36,7 @@ public class Packet13PlayerLookMove extends Packet10Flying
         super.readPacketData(datainputstream);
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeDouble(xPosition);
         dataoutputstream.writeDouble(yPosition);
         dataoutputstream.writeDouble(stance);
@@ -49,8 +46,7 @@ public class Packet13PlayerLookMove extends Packet10Flying
         super.writePacketData(dataoutputstream);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return 41;
     }
 }

@@ -3,18 +3,23 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet53BlockChange extends Packet
-{
+public class Packet53BlockChange extends Packet {
 
-    public Packet53BlockChange()
-    {
+    public int xPosition;
+    public int yPosition;
+    public int zPosition;
+    public int type;
+    public int metadata;
+
+    public Packet53BlockChange() {
         isChunkDataPacket = true;
     }
 
-    public Packet53BlockChange(int i, int j, int k, World world)
-    {
+    public Packet53BlockChange(int i, int j, int k, World world) {
         isChunkDataPacket = true;
         xPosition = i;
         yPosition = j;
@@ -23,8 +28,7 @@ public class Packet53BlockChange extends Packet
         metadata = world.getBlockMetadata(i, j, k);
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
         xPosition = datainputstream.readInt();
         yPosition = datainputstream.read();
         zPosition = datainputstream.readInt();
@@ -32,8 +36,7 @@ public class Packet53BlockChange extends Packet
         metadata = datainputstream.read();
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeInt(xPosition);
         dataoutputstream.write(yPosition);
         dataoutputstream.writeInt(zPosition);
@@ -41,19 +44,11 @@ public class Packet53BlockChange extends Packet
         dataoutputstream.write(metadata);
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
         nethandler.handleBlockChange(this);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return 11;
     }
-
-    public int xPosition;
-    public int yPosition;
-    public int zPosition;
-    public int type;
-    public int metadata;
 }

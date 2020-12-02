@@ -4,8 +4,7 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public enum EnumArt
-{
+public enum EnumArt {
     Kebab("Kebab", 16, 16, 0, 0),
     Aztec("Aztec", 16, 16, 16, 0),
     Alban("Alban", 16, 16, 32, 0),
@@ -30,56 +29,56 @@ public enum EnumArt
     Pigscene("Pigscene", 64, 64, 64, 192),
     Skeleton("Skeleton", 64, 48, 192, 64),
     DonkeyKong("DonkeyKong", 64, 48, 192, 112);
-/*
-    public static EnumArt[] func_580_values()
-    {
-        return (EnumArt[])field_863_D.clone();
-    }
 
-    public static EnumArt valueOf(String s)
-    {
-        return (EnumArt)Enum.valueOf(EnumArt.class, s);
-    }
-*/
-    private EnumArt(String s1, int j, int k, int l, int i1)
-    {
+    /*
+        public static final EnumArt Kebab;
+        public static final EnumArt Aztec;
+        public static final EnumArt Alban;
+        public static final EnumArt Aztec2;
+        public static final EnumArt Bomb;
+        public static final EnumArt Plant;
+        public static final EnumArt Wasteland;
+        public static final EnumArt Pool;
+        public static final EnumArt Courbet;
+        public static final EnumArt Sea;
+        public static final EnumArt Sunset;
+        public static final EnumArt Creebet;
+        public static final EnumArt Wanderer;
+        public static final EnumArt Graham;
+        public static final EnumArt Match;
+        public static final EnumArt Bust;
+        public static final EnumArt Stage;
+        public static final EnumArt Void;
+        public static final EnumArt SkullAndRoses;
+        public static final EnumArt Fighters;
+        public static final EnumArt Pointer;
+        public static final EnumArt Pigscene;
+        public static final EnumArt Skeleton;
+        public static final EnumArt DonkeyKong;
+    */
+    public final String field_857_y;
+    public final int field_856_z;
+    public final int field_869_A;
+    public final int field_867_B;
+    public final int field_865_C;
+    /*
+        public static EnumArt[] func_580_values()
+        {
+            return (EnumArt[])field_863_D.clone();
+        }
+
+        public static EnumArt valueOf(String s)
+        {
+            return (EnumArt)Enum.valueOf(EnumArt.class, s);
+        }
+    */
+    private EnumArt(String s1, int j, int k, int l, int i1) {
         field_857_y = s1;
         field_856_z = j;
         field_869_A = k;
         field_867_B = l;
         field_865_C = i1;
     }
-/*
-    public static final EnumArt Kebab;
-    public static final EnumArt Aztec;
-    public static final EnumArt Alban;
-    public static final EnumArt Aztec2;
-    public static final EnumArt Bomb;
-    public static final EnumArt Plant;
-    public static final EnumArt Wasteland;
-    public static final EnumArt Pool;
-    public static final EnumArt Courbet;
-    public static final EnumArt Sea;
-    public static final EnumArt Sunset;
-    public static final EnumArt Creebet;
-    public static final EnumArt Wanderer;
-    public static final EnumArt Graham;
-    public static final EnumArt Match;
-    public static final EnumArt Bust;
-    public static final EnumArt Stage;
-    public static final EnumArt Void;
-    public static final EnumArt SkullAndRoses;
-    public static final EnumArt Fighters;
-    public static final EnumArt Pointer;
-    public static final EnumArt Pigscene;
-    public static final EnumArt Skeleton;
-    public static final EnumArt DonkeyKong;
-*/
-    public final String field_857_y;
-    public final int field_856_z;
-    public final int field_869_A;
-    public final int field_867_B;
-    public final int field_865_C;
 /*
     private static final EnumArt field_863_D[]; /* synthetic field */
 /*

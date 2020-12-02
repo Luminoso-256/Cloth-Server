@@ -3,41 +3,11 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet30Entity extends Packet
-{
-
-    public Packet30Entity()
-    {
-        rotating = false;
-    }
-
-    public Packet30Entity(int i)
-    {
-        rotating = false;
-        entityId = i;
-    }
-
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
-        entityId = datainputstream.readInt();
-    }
-
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
-        dataoutputstream.writeInt(entityId);
-    }
-
-    public void processPacket(NetHandler nethandler)
-    {
-        nethandler.handleEntity(this);
-    }
-
-    public int getPacketSize()
-    {
-        return 4;
-    }
+public class Packet30Entity extends Packet {
 
     public int entityId;
     public byte xPosition;
@@ -46,4 +16,27 @@ public class Packet30Entity extends Packet
     public byte yaw;
     public byte pitch;
     public boolean rotating;
+    public Packet30Entity() {
+        rotating = false;
+    }
+    public Packet30Entity(int i) {
+        rotating = false;
+        entityId = i;
+    }
+
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
+        entityId = datainputstream.readInt();
+    }
+
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
+        dataoutputstream.writeInt(entityId);
+    }
+
+    public void processPacket(NetHandler nethandler) {
+        nethandler.handleEntity(this);
+    }
+
+    public int getPacketSize() {
+        return 4;
+    }
 }

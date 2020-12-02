@@ -4,33 +4,26 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-class NetworkWriterThread extends Thread
-{
+class NetworkWriterThread extends Thread {
 
-    NetworkWriterThread(NetworkManager networkmanager, String s)
-    {
+    final NetworkManager netManager; /* synthetic field */
+
+    NetworkWriterThread(NetworkManager networkmanager, String s) {
         super(s);
         netManager = networkmanager;
     }
 
-    public void run()
-    {
-        synchronized(NetworkManager.threadSyncObject)
-        {
+    public void run() {
+        synchronized (NetworkManager.threadSyncObject) {
             NetworkManager.numWriteThreads++;
         }
-        try
-        {
-            for(; NetworkManager.isRunning(netManager); NetworkManager.sendNetworkPacket(netManager)) { }
-        }
-        finally
-        {
-            synchronized(NetworkManager.threadSyncObject)
-            {
+        try {
+            for (; NetworkManager.isRunning(netManager); NetworkManager.sendNetworkPacket(netManager)) {
+            }
+        } finally {
+            synchronized (NetworkManager.threadSyncObject) {
                 NetworkManager.numWriteThreads--;
             }
         }
     }
-
-    final NetworkManager netManager; /* synthetic field */
 }

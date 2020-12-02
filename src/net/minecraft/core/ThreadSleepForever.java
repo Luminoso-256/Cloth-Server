@@ -5,27 +5,22 @@ package net.minecraft.core;
 
 import net.minecraft.MinecraftServer;
 
-public class ThreadSleepForever extends Thread
-{
+public class ThreadSleepForever extends Thread {
 
-    public ThreadSleepForever(MinecraftServer minecraftserver)
-    {
+    final MinecraftServer mc; /* synthetic field */
+
+    public ThreadSleepForever(MinecraftServer minecraftserver) {
         mc = minecraftserver;
         setDaemon(true);
         start();
     }
 
-    public void run()
-    {
-        do
-        {
-            try
-            {
+    public void run() {
+        do {
+            try {
                 Thread.sleep(0x7fffffffL);
+            } catch (InterruptedException interruptedexception) {
             }
-            catch(InterruptedException interruptedexception) { }
-        } while(true);
+        } while (true);
     }
-
-    final MinecraftServer mc; /* synthetic field */
 }

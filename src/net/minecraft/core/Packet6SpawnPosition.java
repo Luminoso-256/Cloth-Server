@@ -3,47 +3,42 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet6SpawnPosition extends Packet
-{
+public class Packet6SpawnPosition extends Packet {
 
-    public Packet6SpawnPosition()
-    {
+    public int xPosition;
+    public int yPosition;
+    public int zPosition;
+
+    public Packet6SpawnPosition() {
     }
 
-    public Packet6SpawnPosition(int i, int j, int k)
-    {
+    public Packet6SpawnPosition(int i, int j, int k) {
         xPosition = i;
         yPosition = j;
         zPosition = k;
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
         xPosition = datainputstream.readInt();
         yPosition = datainputstream.readInt();
         zPosition = datainputstream.readInt();
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeInt(xPosition);
         dataoutputstream.writeInt(yPosition);
         dataoutputstream.writeInt(zPosition);
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
         nethandler.handleSpawnPosition(this);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return 12;
     }
-
-    public int xPosition;
-    public int yPosition;
-    public int zPosition;
 }

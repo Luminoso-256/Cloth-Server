@@ -3,111 +3,18 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Packet
-{
-
-    public Packet()
-    {
-        isChunkDataPacket = false;
-    }
-
-    static void addIdClassMapping(int i, Class class1)
-    {
-        if(packetIdToClassMap.containsKey(Integer.valueOf(i)))
-        {
-            throw new IllegalArgumentException((new StringBuilder()).append("Duplicate packet id:").append(i).toString());
-        }
-        if(packetClassToIdMap.containsKey(class1))
-        {
-            throw new IllegalArgumentException((new StringBuilder()).append("Duplicate packet class:").append(class1).toString());
-        } else
-        {
-            packetIdToClassMap.put(Integer.valueOf(i), class1);
-            packetClassToIdMap.put(class1, Integer.valueOf(i));
-            return;
-        }
-    }
-
-    public static Packet getNewPacket(int i)
-    {
-        try
-        {
-            Class class1 = (Class)packetIdToClassMap.get(Integer.valueOf(i));
-            if(class1 == null)
-            {
-                return null;
-            } else
-            {
-                return (Packet)class1.newInstance();
-            }
-        }
-        catch(Exception exception)
-        {
-            exception.printStackTrace();
-        }
-        System.out.println((new StringBuilder()).append("Skipping packet with id ").append(i).toString());
-        return null;
-    }
-
-    public final int getPacketId()
-    {
-        return ((Integer)packetClassToIdMap.get(getClass())).intValue();
-    }
-
-    public static Packet readPacket(DataInputStream datainputstream) throws IOException
-    {
-        int i = datainputstream.read();
-        if(i == -1)
-        {
-            return null;
-        }
-        Packet packet = getNewPacket(i);
-        if(packet == null)
-        {
-            throw new IOException((new StringBuilder()).append("Bad packet id ").append(i).toString());
-        } else
-        {
-            packet.readPacketData(datainputstream);
-            return packet;
-        }
-    }
-
-    public static void writePacket(Packet packet, DataOutputStream dataoutputstream) throws IOException
-    {
-        dataoutputstream.write(packet.getPacketId());
-        packet.writePacketData(dataoutputstream);
-    }
-
-    public abstract void readPacketData(DataInputStream datainputstream) throws IOException;
-
-    public abstract void writePacketData(DataOutputStream dataoutputstream) throws IOException;
-
-    public abstract void processPacket(NetHandler nethandler);
-
-    public abstract int getPacketSize();
-
-    static Class _mthclass$(String s)
-    {
-        try
-        {
-            return Class.forName(s);
-        }
-        catch(ClassNotFoundException classnotfoundexception)
-        {
-            throw new NoClassDefFoundError(classnotfoundexception.getMessage());
-        }
-    }
+public abstract class Packet {
 
     private static Map packetIdToClassMap = new HashMap();
     private static Map packetClassToIdMap = new HashMap();
-    public boolean isChunkDataPacket;
 
-    static 
-    {
+    static {
         addIdClassMapping(0, Packet0KeepAlive.class);
         addIdClassMapping(1, Packet1Login.class);
         addIdClassMapping(2, Packet2Handshake.class);
@@ -149,4 +56,77 @@ public abstract class Packet
         addIdClassMapping(60, Packet60.class);
         addIdClassMapping(255, Packet255KickDisconnect.class);
     }
+
+    public boolean isChunkDataPacket;
+
+    public Packet() {
+        isChunkDataPacket = false;
+    }
+
+    static void addIdClassMapping(int i, Class class1) {
+        if (packetIdToClassMap.containsKey(Integer.valueOf(i))) {
+            throw new IllegalArgumentException((new StringBuilder()).append("Duplicate packet id:").append(i).toString());
+        }
+        if (packetClassToIdMap.containsKey(class1)) {
+            throw new IllegalArgumentException((new StringBuilder()).append("Duplicate packet class:").append(class1).toString());
+        } else {
+            packetIdToClassMap.put(Integer.valueOf(i), class1);
+            packetClassToIdMap.put(class1, Integer.valueOf(i));
+            return;
+        }
+    }
+
+    public static Packet getNewPacket(int i) {
+        try {
+            Class class1 = (Class) packetIdToClassMap.get(Integer.valueOf(i));
+            if (class1 == null) {
+                return null;
+            } else {
+                return (Packet) class1.newInstance();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        System.out.println((new StringBuilder()).append("Skipping packet with id ").append(i).toString());
+        return null;
+    }
+
+    public static Packet readPacket(DataInputStream datainputstream) throws IOException {
+        int i = datainputstream.read();
+        if (i == -1) {
+            return null;
+        }
+        Packet packet = getNewPacket(i);
+        if (packet == null) {
+            throw new IOException((new StringBuilder()).append("Bad packet id ").append(i).toString());
+        } else {
+            packet.readPacketData(datainputstream);
+            return packet;
+        }
+    }
+
+    public static void writePacket(Packet packet, DataOutputStream dataoutputstream) throws IOException {
+        dataoutputstream.write(packet.getPacketId());
+        packet.writePacketData(dataoutputstream);
+    }
+
+    static Class _mthclass$(String s) {
+        try {
+            return Class.forName(s);
+        } catch (ClassNotFoundException classnotfoundexception) {
+            throw new NoClassDefFoundError(classnotfoundexception.getMessage());
+        }
+    }
+
+    public final int getPacketId() {
+        return ((Integer) packetClassToIdMap.get(getClass())).intValue();
+    }
+
+    public abstract void readPacketData(DataInputStream datainputstream) throws IOException;
+
+    public abstract void writePacketData(DataOutputStream dataoutputstream) throws IOException;
+
+    public abstract void processPacket(NetHandler nethandler);
+
+    public abstract int getPacketSize();
 }

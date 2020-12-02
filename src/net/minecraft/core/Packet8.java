@@ -3,39 +3,34 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet8 extends Packet
-{
+public class Packet8 extends Packet {
 
-    public Packet8()
-    {
+    public int field_9017_a;
+
+    public Packet8() {
     }
 
-    public Packet8(int i)
-    {
+    public Packet8(int i) {
         field_9017_a = i;
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
         field_9017_a = datainputstream.readByte();
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeByte(field_9017_a);
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
         nethandler.func_9003_a(this);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return 1;
     }
-
-    public int field_9017_a;
 }

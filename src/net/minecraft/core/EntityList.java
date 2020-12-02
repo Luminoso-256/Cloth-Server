@@ -6,89 +6,14 @@ package net.minecraft.core;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EntityList
-{
-
-    public EntityList()
-    {
-    }
-
-    private static void func_563_a(Class class1, String s, int i)
-    {
-        field_849_a.put(s, class1);
-        field_848_b.put(class1, s);
-        field_851_c.put(Integer.valueOf(i), class1);
-        field_850_d.put(class1, Integer.valueOf(i));
-    }
-
-    public static Entity func_567_a(String s, World world)
-    {
-        Entity entity = null;
-        try
-        {
-            Class class1 = (Class)field_849_a.get(s);
-            if(class1 != null)
-            {
-                entity = (Entity)class1.getConstructor(new Class[] {
-                    World.class
-                }).newInstance(new Object[] {
-                    world
-                });
-            }
-        }
-        catch(Exception exception)
-        {
-            exception.printStackTrace();
-        }
-        return entity;
-    }
-
-    public static Entity func_566_a(NBTTagCompound nbttagcompound, World world)
-    {
-        Entity entity = null;
-        try
-        {
-            Class class1 = (Class)field_849_a.get(nbttagcompound.getString("id"));
-            if(class1 != null)
-            {
-                entity = (Entity)class1.getConstructor(new Class[] {
-                    World.class
-                }).newInstance(new Object[] {
-                    world
-                });
-            }
-        }
-        catch(Exception exception)
-        {
-            exception.printStackTrace();
-        }
-        if(entity != null)
-        {
-            entity.readFromNBT(nbttagcompound);
-        } else
-        {
-            System.out.println((new StringBuilder()).append("Skipping Entity with id ").append(nbttagcompound.getString("id")).toString());
-        }
-        return entity;
-    }
-
-    public static int func_565_a(Entity entity)
-    {
-        return ((Integer)field_850_d.get(entity.getClass())).intValue();
-    }
-
-    public static String func_564_b(Entity entity)
-    {
-        return (String)field_848_b.get(entity.getClass());
-    }
+public class EntityList {
 
     private static Map field_849_a = new HashMap();
     private static Map field_848_b = new HashMap();
     private static Map field_851_c = new HashMap();
     private static Map field_850_d = new HashMap();
 
-    static 
-    {
+    static {
         func_563_a(EntityArrow.class, "Arrow", 10);
         func_563_a(EntitySnowball.class, "Snowball", 11);
         func_563_a(EntityItem.class, "Item", 1);
@@ -111,5 +36,62 @@ public class EntityList
         func_563_a(EntityFallingSand.class, "FallingSand", 21);
         func_563_a(EntityMinecart.class, "Minecart", 40);
         func_563_a(EntityBoat.class, "Boat", 41);
+    }
+
+    public EntityList() {
+    }
+
+    private static void func_563_a(Class class1, String s, int i) {
+        field_849_a.put(s, class1);
+        field_848_b.put(class1, s);
+        field_851_c.put(Integer.valueOf(i), class1);
+        field_850_d.put(class1, Integer.valueOf(i));
+    }
+
+    public static Entity func_567_a(String s, World world) {
+        Entity entity = null;
+        try {
+            Class class1 = (Class) field_849_a.get(s);
+            if (class1 != null) {
+                entity = (Entity) class1.getConstructor(new Class[]{
+                        World.class
+                }).newInstance(new Object[]{
+                        world
+                });
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return entity;
+    }
+
+    public static Entity func_566_a(NBTTagCompound nbttagcompound, World world) {
+        Entity entity = null;
+        try {
+            Class class1 = (Class) field_849_a.get(nbttagcompound.getString("id"));
+            if (class1 != null) {
+                entity = (Entity) class1.getConstructor(new Class[]{
+                        World.class
+                }).newInstance(new Object[]{
+                        world
+                });
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        if (entity != null) {
+            entity.readFromNBT(nbttagcompound);
+        } else {
+            System.out.println((new StringBuilder()).append("Skipping Entity with id ").append(nbttagcompound.getString("id")).toString());
+        }
+        return entity;
+    }
+
+    public static int func_565_a(Entity entity) {
+        return ((Integer) field_850_d.get(entity.getClass())).intValue();
+    }
+
+    public static String func_564_b(Entity entity) {
+        return (String) field_848_b.get(entity.getClass());
     }
 }

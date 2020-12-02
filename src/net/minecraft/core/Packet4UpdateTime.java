@@ -3,39 +3,34 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet4UpdateTime extends Packet
-{
+public class Packet4UpdateTime extends Packet {
 
-    public Packet4UpdateTime()
-    {
+    public long time;
+
+    public Packet4UpdateTime() {
     }
 
-    public Packet4UpdateTime(long l)
-    {
+    public Packet4UpdateTime(long l) {
         time = l;
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
         time = datainputstream.readLong();
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeLong(time);
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
         nethandler.handleUpdateTime(this);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return 8;
     }
-
-    public long time;
 }

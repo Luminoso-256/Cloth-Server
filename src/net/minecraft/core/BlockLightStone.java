@@ -5,16 +5,13 @@ package net.minecraft.core;
 
 import java.util.Random;
 
-public class BlockLightStone extends Block
-{
+public class BlockLightStone extends Block {
 
-    public BlockLightStone(int i, int j, Material material)
-    {
+    public BlockLightStone(int i, int j, Material material) {
         super(i, j, material);
     }
 
-    public int idDropped(int i, Random random)
-    {
+    public int idDropped(int i, Random random) {
         return Item.lightStoneDust.swiftedIndex;
     }
 }

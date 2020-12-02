@@ -3,22 +3,17 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-public class ItemBow extends Item
-{
+public class ItemBow extends Item {
 
-    public ItemBow(int i)
-    {
+    public ItemBow(int i) {
         super(i);
         maxStackSize = 1;
     }
 
-    public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer)
-    {
-        if(entityplayer.inventory.func_6127_b(Item.arrow.swiftedIndex))
-        {
+    public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
+        if (entityplayer.inventory.func_6127_b(Item.arrow.swiftedIndex)) {
             world.playSoundAtEntity(entityplayer, "random.bow", 1.0F, 1.0F / (rand.nextFloat() * 0.4F + 0.8F));
-            if(!world.multiplayerWorld)
-            {
+            if (!world.multiplayerWorld) {
                 world.entityJoinedWorld(new EntityArrow(world, entityplayer));
             }
         }

@@ -4,15 +4,12 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class ServerCommand
-{
-
-    public ServerCommand(String s, ICommandListener icommandlistener)
-    {
-        command = s;
-        commandListener = icommandlistener;
-    }
+public class ServerCommand {
 
     public final String command;
     public final ICommandListener commandListener;
+    public ServerCommand(String s, ICommandListener icommandlistener) {
+        command = s;
+        commandListener = icommandlistener;
+    }
 }

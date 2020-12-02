@@ -4,11 +4,9 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class BlockBloodStone extends Block
-{
+public class BlockBloodStone extends Block {
 
-    public BlockBloodStone(int i, int j)
-    {
+    public BlockBloodStone(int i, int j) {
         super(i, j, Material.rock);
     }
 }

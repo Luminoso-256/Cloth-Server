@@ -3,28 +3,32 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet24MobSpawn extends Packet
-{
+public class Packet24MobSpawn extends Packet {
 
-    public Packet24MobSpawn()
-    {
+    public int entityId;
+    public byte type;
+    public int xPosition;
+    public int yPosition;
+    public int zPosition;
+    public byte yaw;
+    public byte pitch;
+    public Packet24MobSpawn() {
     }
-
-    public Packet24MobSpawn(EntityLiving entityliving)
-    {
+    public Packet24MobSpawn(EntityLiving entityliving) {
         entityId = entityliving.field_331_c;
-        type = (byte)EntityList.func_565_a(entityliving);
+        type = (byte) EntityList.func_565_a(entityliving);
         xPosition = MathHelper.floor_double(entityliving.posX * 32D);
         yPosition = MathHelper.floor_double(entityliving.posY * 32D);
         zPosition = MathHelper.floor_double(entityliving.posZ * 32D);
-        yaw = (byte)(int)((entityliving.rotationYaw * 256F) / 360F);
-        pitch = (byte)(int)((entityliving.rotationPitch * 256F) / 360F);
+        yaw = (byte) (int) ((entityliving.rotationYaw * 256F) / 360F);
+        pitch = (byte) (int) ((entityliving.rotationPitch * 256F) / 360F);
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
         entityId = datainputstream.readInt();
         type = datainputstream.readByte();
         xPosition = datainputstream.readInt();
@@ -34,8 +38,7 @@ public class Packet24MobSpawn extends Packet
         pitch = datainputstream.readByte();
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeInt(entityId);
         dataoutputstream.writeByte(type);
         dataoutputstream.writeInt(xPosition);
@@ -45,21 +48,11 @@ public class Packet24MobSpawn extends Packet
         dataoutputstream.writeByte(pitch);
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
         nethandler.handleMobSpawn(this);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return 19;
     }
-
-    public int entityId;
-    public byte type;
-    public int xPosition;
-    public int yPosition;
-    public int zPosition;
-    public byte yaw;
-    public byte pitch;
 }

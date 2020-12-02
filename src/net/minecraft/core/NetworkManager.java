@@ -3,16 +3,39 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class NetworkManager
-{
+public class NetworkManager {
 
-    public NetworkManager(Socket socket, String s, NetHandler nethandler) throws IOException
-    {
+    public static final Object threadSyncObject = new Object();
+    public static int numReadThreads;
+    public static int numWriteThreads;
+    private final SocketAddress field_12032_f;
+    private Object sendQueueLock;
+    private Socket networkSocket;
+    private DataInputStream socketInputStream;
+    private DataOutputStream socketOutputStream;
+    private boolean isRunning;
+    private List readPackets;
+    private List dataPackets;
+    private List chunkDataPackets;
+    private NetHandler netHandler;
+    private boolean isServerTerminating;
+    private Thread writeThread;
+    private Thread readThread;
+    private boolean isTerminating;
+    private String terminationReason;
+    private int timeSinceLastRead;
+    private int sendQueueByteLength;
+    private int chunkDataSendCounter;
+    public NetworkManager(Socket socket, String s, NetHandler nethandler) throws IOException {
         sendQueueLock = new Object();
         isRunning = true;
         readPackets = Collections.synchronizedList(new ArrayList());
@@ -36,226 +59,159 @@ public class NetworkManager
         writeThread.start();
     }
 
-    public void setNetHandler(NetHandler nethandler)
-    {
+    static boolean isRunning(NetworkManager networkmanager) {
+        return networkmanager.isRunning;
+    }
+
+    static boolean isServerTerminating(NetworkManager networkmanager) {
+        return networkmanager.isServerTerminating;
+    }
+
+    static void readNetworkPacket(NetworkManager networkmanager) {
+        networkmanager.readPacket();
+    }
+
+    static void sendNetworkPacket(NetworkManager networkmanager) {
+        networkmanager.sendPacket();
+    }
+
+    static Thread getReadThread(NetworkManager networkmanager) {
+        return networkmanager.readThread;
+    }
+
+    static Thread getWriteThread(NetworkManager networkmanager) {
+        return networkmanager.writeThread;
+    }
+
+    public void setNetHandler(NetHandler nethandler) {
         netHandler = nethandler;
     }
 
-    public void addToSendQueue(Packet packet)
-    {
-        if(isServerTerminating)
-        {
+    public void addToSendQueue(Packet packet) {
+        if (isServerTerminating) {
             return;
         }
-        synchronized(sendQueueLock)
-        {
+        synchronized (sendQueueLock) {
             sendQueueByteLength += packet.getPacketSize() + 1;
-            if(packet.isChunkDataPacket)
-            {
+            if (packet.isChunkDataPacket) {
                 chunkDataPackets.add(packet);
-            } else
-            {
+            } else {
                 dataPackets.add(packet);
             }
         }
     }
 
-    private void sendPacket()
-    {
-        try
-        {
+    private void sendPacket() {
+        try {
             boolean flag = true;
-            if(!dataPackets.isEmpty())
-            {
+            if (!dataPackets.isEmpty()) {
                 flag = false;
                 Packet packet;
-                synchronized(sendQueueLock)
-                {
-                    packet = (Packet)dataPackets.remove(0);
+                synchronized (sendQueueLock) {
+                    packet = (Packet) dataPackets.remove(0);
                     sendQueueByteLength -= packet.getPacketSize() + 1;
                 }
                 Packet.writePacket(packet, socketOutputStream);
             }
-            if((flag || chunkDataSendCounter-- <= 0) && !chunkDataPackets.isEmpty())
-            {
+            if ((flag || chunkDataSendCounter-- <= 0) && !chunkDataPackets.isEmpty()) {
                 flag = false;
                 Packet packet1;
-                synchronized(sendQueueLock)
-                {
-                    packet1 = (Packet)chunkDataPackets.remove(0);
+                synchronized (sendQueueLock) {
+                    packet1 = (Packet) chunkDataPackets.remove(0);
                     sendQueueByteLength -= packet1.getPacketSize() + 1;
                 }
                 Packet.writePacket(packet1, socketOutputStream);
                 chunkDataSendCounter = 50;
             }
-            if(flag)
-            {
+            if (flag) {
                 Thread.sleep(10L);
             }
-        }
-        catch(InterruptedException interruptedexception) { }
-        catch(Exception exception)
-        {
-            if(!isTerminating)
-            {
+        } catch (InterruptedException interruptedexception) {
+        } catch (Exception exception) {
+            if (!isTerminating) {
                 onNetworkError(exception);
             }
         }
     }
 
-    private void readPacket()
-    {
-        try
-        {
+    private void readPacket() {
+        try {
             Packet packet = Packet.readPacket(socketInputStream);
-            if(packet != null)
-            {
+            if (packet != null) {
                 readPackets.add(packet);
-            } else
-            {
+            } else {
                 networkShutdown("End of stream");
             }
-        }
-        catch(Exception exception)
-        {
-            if(!isTerminating)
-            {
+        } catch (Exception exception) {
+            if (!isTerminating) {
                 onNetworkError(exception);
             }
         }
     }
 
-    private void onNetworkError(Exception exception)
-    {
+    private void onNetworkError(Exception exception) {
         exception.printStackTrace();
         networkShutdown((new StringBuilder()).append("Internal exception: ").append(exception.toString()).toString());
     }
 
-    public void networkShutdown(String s)
-    {
-        if(!isRunning)
-        {
+    public void networkShutdown(String s) {
+        if (!isRunning) {
             return;
         }
         isTerminating = true;
         terminationReason = s;
         (new NetworkMasterThread(this)).start();
         isRunning = false;
-        try
-        {
+        try {
             socketInputStream.close();
             socketInputStream = null;
+        } catch (Throwable throwable) {
         }
-        catch(Throwable throwable) { }
-        try
-        {
+        try {
             socketOutputStream.close();
             socketOutputStream = null;
+        } catch (Throwable throwable1) {
         }
-        catch(Throwable throwable1) { }
-        try
-        {
+        try {
             networkSocket.close();
             networkSocket = null;
+        } catch (Throwable throwable2) {
         }
-        catch(Throwable throwable2) { }
     }
 
-    public void processReadPackets()
-    {
-        if(sendQueueByteLength > 0x100000)
-        {
+    public void processReadPackets() {
+        if (sendQueueByteLength > 0x100000) {
             networkShutdown("Send buffer overflow");
         }
-        if(readPackets.isEmpty())
-        {
-            if(timeSinceLastRead++ == 1200)
-            {
+        if (readPackets.isEmpty()) {
+            if (timeSinceLastRead++ == 1200) {
                 networkShutdown("Timed out");
             }
-        } else
-        {
+        } else {
             timeSinceLastRead = 0;
         }
         Packet packet;
-        for(int i = 100; !readPackets.isEmpty() && i-- >= 0; packet.processPacket(netHandler))
-        {
-            packet = (Packet)readPackets.remove(0);
+        for (int i = 100; !readPackets.isEmpty() && i-- >= 0; packet.processPacket(netHandler)) {
+            packet = (Packet) readPackets.remove(0);
         }
 
-        if(isTerminating && readPackets.isEmpty())
-        {
+        if (isTerminating && readPackets.isEmpty()) {
             netHandler.handleErrorMessage(terminationReason);
         }
     }
 
-    public SocketAddress getRemoteAddress()
-    {
+    public SocketAddress getRemoteAddress() {
         return field_12032_f;
     }
 
-    public void serverShutdown()
-    {
+    public void serverShutdown() {
         isServerTerminating = true;
         readThread.interrupt();
         (new ThreadMonitorConnection(this)).start();
     }
 
-    public int getNumChunkDataPackets()
-    {
+    public int getNumChunkDataPackets() {
         return chunkDataPackets.size();
     }
-
-    static boolean isRunning(NetworkManager networkmanager)
-    {
-        return networkmanager.isRunning;
-    }
-
-    static boolean isServerTerminating(NetworkManager networkmanager)
-    {
-        return networkmanager.isServerTerminating;
-    }
-
-    static void readNetworkPacket(NetworkManager networkmanager)
-    {
-        networkmanager.readPacket();
-    }
-
-    static void sendNetworkPacket(NetworkManager networkmanager)
-    {
-        networkmanager.sendPacket();
-    }
-
-    static Thread getReadThread(NetworkManager networkmanager)
-    {
-        return networkmanager.readThread;
-    }
-
-    static Thread getWriteThread(NetworkManager networkmanager)
-    {
-        return networkmanager.writeThread;
-    }
-
-    public static final Object threadSyncObject = new Object();
-    public static int numReadThreads;
-    public static int numWriteThreads;
-    private Object sendQueueLock;
-    private Socket networkSocket;
-    private final SocketAddress field_12032_f;
-    private DataInputStream socketInputStream;
-    private DataOutputStream socketOutputStream;
-    private boolean isRunning;
-    private List readPackets;
-    private List dataPackets;
-    private List chunkDataPackets;
-    private NetHandler netHandler;
-    private boolean isServerTerminating;
-    private Thread writeThread;
-    private Thread readThread;
-    private boolean isTerminating;
-    private String terminationReason;
-    private int timeSinceLastRead;
-    private int sendQueueByteLength;
-    private int chunkDataSendCounter;
 
 }

@@ -5,29 +5,23 @@ package net.minecraft.core;
 
 import java.util.Random;
 
-public class BlockLog extends Block
-{
+public class BlockLog extends Block {
 
-    protected BlockLog(int i)
-    {
+    protected BlockLog(int i) {
         super(i, Material.wood);
         blockIndexInTexture = 20;
     }
 
-    public int quantityDropped(Random random)
-    {
+    public int quantityDropped(Random random) {
         return 1;
     }
 
-    public int idDropped(int i, Random random)
-    {
+    public int idDropped(int i, Random random) {
         return Block.wood.blockID;
     }
 
-    public int getBlockTextureFromSide(int i)
-    {
-        if(i == 1)
-        {
+    public int getBlockTextureFromSide(int i) {
+        if (i == 1) {
             return 21;
         }
         return i != 0 ? 20 : 21;

@@ -5,82 +5,8 @@ package net.minecraft.core;
 
 import java.util.Random;
 
-public class Item
-{
+public class Item {
 
-    protected Item(int i)
-    {
-        maxStackSize = 64;
-        maxDamage = 32;
-        bFull3D = false;
-        swiftedIndex = 256 + i;
-        if(itemsList[256 + i] != null)
-        {
-            System.out.println((new StringBuilder()).append("CONFLICT @ ").append(i).toString());
-        }
-        itemsList[256 + i] = this;
-    }
-
-    public Item setIconIndex(int i)
-    {
-        iconIndex = i;
-        return this;
-    }
-
-    public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
-    {
-        return false;
-    }
-
-    public float getStrVsBlock(ItemStack itemstack, Block block)
-    {
-        return 1.0F;
-    }
-
-    public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer)
-    {
-        return itemstack;
-    }
-
-    public int getItemStackLimit()
-    {
-        return maxStackSize;
-    }
-
-    public int getMaxDamage()
-    {
-        return maxDamage;
-    }
-
-    public void func_9201_a(ItemStack itemstack, EntityLiving entityliving)
-    {
-    }
-
-    public void hitBlock(ItemStack itemstack, int i, int j, int k, int l)
-    {
-    }
-
-    public int func_9203_a(Entity entity)
-    {
-        return 1;
-    }
-
-    public boolean canHarvestBlock(Block block)
-    {
-        return false;
-    }
-
-    public void func_9202_b(ItemStack itemstack, EntityLiving entityliving)
-    {
-    }
-
-    public Item setFull3D()
-    {
-        bFull3D = true;
-        return this;
-    }
-
-    protected static Random rand = new Random();
     public static Item itemsList[] = new Item[32000];
     public static Item shovelSteel = (new ItemSpade(0, 2)).setIconIndex(82);
     public static Item pickaxeSteel = (new ItemPickaxe(1, 2)).setIconIndex(98);
@@ -179,19 +105,77 @@ public class Item
     public static Item fishCooked = (new ItemFood(94, 5)).setIconIndex(90);
     public static Item record13 = (new ItemRecord(2000, "13")).setIconIndex(240);
     public static Item recordCat = (new ItemRecord(2001, "cat")).setIconIndex(241);
-    public final int swiftedIndex;
-    protected int maxStackSize;
-    protected int maxDamage;
-    protected int iconIndex;
-    protected boolean bFull3D;
+    protected static Random rand = new Random();
 
-    static 
-    {
+    static {
         seeds = (new ItemSeeds(39, Block.crops.blockID)).setIconIndex(9);
         doorWood = (new ItemDoor(68, Material.wood)).setIconIndex(43);
         bucketWater = (new ItemBucket(70, Block.waterStill.blockID)).setIconIndex(75);
         bucketLava = (new ItemBucket(71, Block.lavaStill.blockID)).setIconIndex(76);
         doorSteel = (new ItemDoor(74, Material.iron)).setIconIndex(44);
         reed = (new ItemReed(82, Block.reed)).setIconIndex(27);
+    }
+
+    public final int swiftedIndex;
+    protected int maxStackSize;
+    protected int maxDamage;
+    protected int iconIndex;
+    protected boolean bFull3D;
+    protected Item(int i) {
+        maxStackSize = 64;
+        maxDamage = 32;
+        bFull3D = false;
+        swiftedIndex = 256 + i;
+        if (itemsList[256 + i] != null) {
+            System.out.println((new StringBuilder()).append("CONFLICT @ ").append(i).toString());
+        }
+        itemsList[256 + i] = this;
+    }
+
+    public Item setIconIndex(int i) {
+        iconIndex = i;
+        return this;
+    }
+
+    public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l) {
+        return false;
+    }
+
+    public float getStrVsBlock(ItemStack itemstack, Block block) {
+        return 1.0F;
+    }
+
+    public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
+        return itemstack;
+    }
+
+    public int getItemStackLimit() {
+        return maxStackSize;
+    }
+
+    public int getMaxDamage() {
+        return maxDamage;
+    }
+
+    public void func_9201_a(ItemStack itemstack, EntityLiving entityliving) {
+    }
+
+    public void hitBlock(ItemStack itemstack, int i, int j, int k, int l) {
+    }
+
+    public int func_9203_a(Entity entity) {
+        return 1;
+    }
+
+    public boolean canHarvestBlock(Block block) {
+        return false;
+    }
+
+    public void func_9202_b(ItemStack itemstack, EntityLiving entityliving) {
+    }
+
+    public Item setFull3D() {
+        bFull3D = true;
+        return this;
     }
 }

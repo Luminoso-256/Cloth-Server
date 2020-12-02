@@ -3,39 +3,34 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 
-public class NBTTagInt extends NBTBase
-{
+public class NBTTagInt extends NBTBase {
 
-    public NBTTagInt()
-    {
+    public int intValue;
+
+    public NBTTagInt() {
     }
 
-    public NBTTagInt(int i)
-    {
+    public NBTTagInt(int i) {
         intValue = i;
     }
 
-    void writeTagContents(DataOutput dataoutput) throws IOException
-    {
+    void writeTagContents(DataOutput dataoutput) throws IOException {
         dataoutput.writeInt(intValue);
     }
 
-    void readTagContents(DataInput datainput) throws IOException
-    {
+    void readTagContents(DataInput datainput) throws IOException {
         intValue = datainput.readInt();
     }
 
-    public byte getType()
-    {
+    public byte getType() {
         return 3;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return (new StringBuilder()).append("").append(intValue).toString();
     }
-
-    public int intValue;
 }

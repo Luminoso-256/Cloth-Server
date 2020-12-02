@@ -3,36 +3,37 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet59ComplexEntity extends Packet
-{
+public class Packet59ComplexEntity extends Packet {
 
-    public Packet59ComplexEntity()
-    {
+    public int xPosition;
+    public int yPosition;
+    public int zPosition;
+    public byte entityData[];
+    public NBTTagCompound entityNBT;
+
+    public Packet59ComplexEntity() {
         isChunkDataPacket = true;
     }
 
-    public Packet59ComplexEntity(int i, int j, int k, TileEntity tileentity)
-    {
+    public Packet59ComplexEntity(int i, int j, int k, TileEntity tileentity) {
         isChunkDataPacket = true;
         xPosition = i;
         yPosition = j;
         zPosition = k;
         entityNBT = new NBTTagCompound();
         tileentity.writeToNBT(entityNBT);
-        try
-        {
+        try {
             entityData = CompressedStreamTools.func_772_a(entityNBT);
-        }
-        catch(IOException ioexception)
-        {
+        } catch (IOException ioexception) {
             ioexception.printStackTrace();
         }
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
         xPosition = datainputstream.readInt();
         yPosition = datainputstream.readShort();
         zPosition = datainputstream.readInt();
@@ -42,28 +43,19 @@ public class Packet59ComplexEntity extends Packet
         entityNBT = CompressedStreamTools.func_773_a(entityData);
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeInt(xPosition);
         dataoutputstream.writeShort(yPosition);
         dataoutputstream.writeInt(zPosition);
-        dataoutputstream.writeShort((short)entityData.length);
+        dataoutputstream.writeShort((short) entityData.length);
         dataoutputstream.write(entityData);
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
         nethandler.handleComplexEntity(this);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return entityData.length + 2 + 10;
     }
-
-    public int xPosition;
-    public int yPosition;
-    public int zPosition;
-    public byte entityData[];
-    public NBTTagCompound entityNBT;
 }

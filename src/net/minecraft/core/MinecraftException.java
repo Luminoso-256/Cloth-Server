@@ -4,11 +4,9 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class MinecraftException extends RuntimeException
-{
+public class MinecraftException extends RuntimeException {
 
-    public MinecraftException(String s)
-    {
+    public MinecraftException(String s) {
         super(s);
     }
 }

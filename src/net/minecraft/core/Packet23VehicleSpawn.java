@@ -3,17 +3,22 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet23VehicleSpawn extends Packet
-{
+public class Packet23VehicleSpawn extends Packet {
 
-    public Packet23VehicleSpawn()
-    {
+    public int entityId;
+    public int xPosition;
+    public int yPosition;
+    public int zPosition;
+    public int type;
+
+    public Packet23VehicleSpawn() {
     }
 
-    public Packet23VehicleSpawn(Entity entity, int i)
-    {
+    public Packet23VehicleSpawn(Entity entity, int i) {
         entityId = entity.field_331_c;
         xPosition = MathHelper.floor_double(entity.posX * 32D);
         yPosition = MathHelper.floor_double(entity.posY * 32D);
@@ -21,8 +26,7 @@ public class Packet23VehicleSpawn extends Packet
         type = i;
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
         entityId = datainputstream.readInt();
         type = datainputstream.readByte();
         xPosition = datainputstream.readInt();
@@ -30,8 +34,7 @@ public class Packet23VehicleSpawn extends Packet
         zPosition = datainputstream.readInt();
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeInt(entityId);
         dataoutputstream.writeByte(type);
         dataoutputstream.writeInt(xPosition);
@@ -39,19 +42,11 @@ public class Packet23VehicleSpawn extends Packet
         dataoutputstream.writeInt(zPosition);
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
         nethandler.handleVehicleSpawn(this);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return 17;
     }
-
-    public int entityId;
-    public int xPosition;
-    public int yPosition;
-    public int zPosition;
-    public int type;
 }

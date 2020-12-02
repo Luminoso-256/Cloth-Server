@@ -4,25 +4,7 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class MovingObjectPosition
-{
-
-    public MovingObjectPosition(int i, int j, int k, int l, Vec3D vec3d)
-    {
-        typeOfHit = 0;
-        blockX = i;
-        blockY = j;
-        blockZ = k;
-        sideHit = l;
-        hitVec = Vec3D.createVector(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
-    }
-
-    public MovingObjectPosition(Entity entity)
-    {
-        typeOfHit = 1;
-        entityHit = entity;
-        hitVec = Vec3D.createVector(entity.posX, entity.posY, entity.posZ);
-    }
+public class MovingObjectPosition {
 
     public int typeOfHit;
     public int blockX;
@@ -31,4 +13,17 @@ public class MovingObjectPosition
     public int sideHit;
     public Vec3D hitVec;
     public Entity entityHit;
+    public MovingObjectPosition(int i, int j, int k, int l, Vec3D vec3d) {
+        typeOfHit = 0;
+        blockX = i;
+        blockY = j;
+        blockZ = k;
+        sideHit = l;
+        hitVec = Vec3D.createVector(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
+    }
+    public MovingObjectPosition(Entity entity) {
+        typeOfHit = 1;
+        entityHit = entity;
+        hitVec = Vec3D.createVector(entity.posX, entity.posY, entity.posZ);
+    }
 }

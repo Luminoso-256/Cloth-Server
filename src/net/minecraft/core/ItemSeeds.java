@@ -4,32 +4,26 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class ItemSeeds extends Item
-{
+public class ItemSeeds extends Item {
 
-    public ItemSeeds(int i, int j)
-    {
+    private int field_271_a;
+
+    public ItemSeeds(int i, int j) {
         super(i);
         field_271_a = j;
     }
 
-    public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
-    {
-        if(l != 1)
-        {
+    public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l) {
+        if (l != 1) {
             return false;
         }
         int i1 = world.getBlockId(i, j, k);
-        if(i1 == Block.tilledField.blockID)
-        {
+        if (i1 == Block.tilledField.blockID) {
             world.setBlockWithNotify(i, j + 1, k, field_271_a);
             itemstack.stackSize--;
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
-
-    private int field_271_a;
 }

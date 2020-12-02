@@ -4,63 +4,49 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class ItemReed extends Item
-{
+public class ItemReed extends Item {
 
-    public ItemReed(int i, Block block)
-    {
+    private int field_253_a;
+
+    public ItemReed(int i, Block block) {
         super(i);
         field_253_a = block.blockID;
     }
 
-    public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
-    {
-        if(world.getBlockId(i, j, k) == Block.snow.blockID)
-        {
+    public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l) {
+        if (world.getBlockId(i, j, k) == Block.snow.blockID) {
             l = 0;
-        } else
-        {
-            if(l == 0)
-            {
+        } else {
+            if (l == 0) {
                 j--;
             }
-            if(l == 1)
-            {
+            if (l == 1) {
                 j++;
             }
-            if(l == 2)
-            {
+            if (l == 2) {
                 k--;
             }
-            if(l == 3)
-            {
+            if (l == 3) {
                 k++;
             }
-            if(l == 4)
-            {
+            if (l == 4) {
                 i--;
             }
-            if(l == 5)
-            {
+            if (l == 5) {
                 i++;
             }
         }
-        if(itemstack.stackSize == 0)
-        {
+        if (itemstack.stackSize == 0) {
             return false;
         }
-        if(world.func_516_a(field_253_a, i, j, k, false))
-        {
+        if (world.func_516_a(field_253_a, i, j, k, false)) {
             Block block = Block.blocksList[field_253_a];
-            if(world.setBlockWithNotify(i, j, k, field_253_a))
-            {
+            if (world.setBlockWithNotify(i, j, k, field_253_a)) {
                 Block.blocksList[field_253_a].onBlockPlaced(world, i, j, k, l);
-                world.playSoundEffect((float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, block.stepSound.func_737_c(), (block.stepSound.func_738_a() + 1.0F) / 2.0F, block.stepSound.func_739_b() * 0.8F);
+                world.playSoundEffect((float) i + 0.5F, (float) j + 0.5F, (float) k + 0.5F, block.stepSound.func_737_c(), (block.stepSound.func_738_a() + 1.0F) / 2.0F, block.stepSound.func_739_b() * 0.8F);
                 itemstack.stackSize--;
             }
         }
         return true;
     }
-
-    private int field_253_a;
 }

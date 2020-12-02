@@ -4,19 +4,16 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-class RedstoneUpdateInfo
-{
-
-    public RedstoneUpdateInfo(int i, int j, int k, long l)
-    {
-        field_775_a = i;
-        field_774_b = j;
-        field_777_c = k;
-        field_776_d = l;
-    }
+class RedstoneUpdateInfo {
 
     int field_775_a;
     int field_774_b;
     int field_777_c;
     long field_776_d;
+    public RedstoneUpdateInfo(int i, int j, int k, long l) {
+        field_775_a = i;
+        field_774_b = j;
+        field_777_c = k;
+        field_776_d = l;
+    }
 }

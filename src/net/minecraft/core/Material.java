@@ -4,43 +4,7 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class Material
-{
-
-    public Material()
-    {
-    }
-
-    public boolean getIsLiquid()
-    {
-        return false;
-    }
-
-    public boolean func_216_a()
-    {
-        return true;
-    }
-
-    public boolean getCanBlockGrass()
-    {
-        return true;
-    }
-
-    public boolean func_218_c()
-    {
-        return true;
-    }
-
-    private Material setBurning()
-    {
-        canBurn = true;
-        return this;
-    }
-
-    public boolean getBurning()
-    {
-        return canBurn;
-    }
+public class Material {
 
     public static final Material air = new MaterialTransparent();
     public static final Material ground = new Material();
@@ -67,5 +31,32 @@ public class Material
     public static final Material field_4213_w = new Material();
     public static final Material field_4212_x = new Material();
     private boolean canBurn;
+    public Material() {
+    }
+
+    public boolean getIsLiquid() {
+        return false;
+    }
+
+    public boolean func_216_a() {
+        return true;
+    }
+
+    public boolean getCanBlockGrass() {
+        return true;
+    }
+
+    public boolean func_218_c() {
+        return true;
+    }
+
+    private Material setBurning() {
+        canBurn = true;
+        return this;
+    }
+
+    public boolean getBurning() {
+        return canBurn;
+    }
 
 }

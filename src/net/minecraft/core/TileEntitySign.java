@@ -4,16 +4,18 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class TileEntitySign extends TileEntity
-{
+public class TileEntitySign extends TileEntity {
 
-    public TileEntitySign()
-    {
+    public String signText[] = {
+            "", "", "", ""
+    };
+    public int lineBeingEdited;
+
+    public TileEntitySign() {
         lineBeingEdited = -1;
     }
 
-    public void writeToNBT(NBTTagCompound nbttagcompound)
-    {
+    public void writeToNBT(NBTTagCompound nbttagcompound) {
         super.writeToNBT(nbttagcompound);
         nbttagcompound.setString("Text1", signText[0]);
         nbttagcompound.setString("Text2", signText[1]);
@@ -21,22 +23,14 @@ public class TileEntitySign extends TileEntity
         nbttagcompound.setString("Text4", signText[3]);
     }
 
-    public void readFromNBT(NBTTagCompound nbttagcompound)
-    {
+    public void readFromNBT(NBTTagCompound nbttagcompound) {
         super.readFromNBT(nbttagcompound);
-        for(int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             signText[i] = nbttagcompound.getString((new StringBuilder()).append("Text").append(i + 1).toString());
-            if(signText[i].length() > 15)
-            {
+            if (signText[i].length() > 15) {
                 signText[i] = signText[i].substring(0, 15);
             }
         }
 
     }
-
-    public String signText[] = {
-        "", "", "", ""
-    };
-    public int lineBeingEdited;
 }

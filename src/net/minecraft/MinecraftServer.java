@@ -4,14 +4,13 @@
 
 package net.minecraft;
 
-import net.minecraft.cloth.*;
+import net.minecraft.cloth.FallbackIdMaps;
+import net.minecraft.cloth.WorldGenParams;
 import net.minecraft.cloth.file.*;
 import net.minecraft.cloth.nether.Teleporter;
 import net.minecraft.cloth.plugins.stich.StitchLoader;
 import net.minecraft.core.*;
 
-import java.awt.GraphicsEnvironment;
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -25,7 +24,38 @@ import static net.minecraft.Globals.*;
 public class MinecraftServer
         implements ICommandListener, Runnable {
     public static MinecraftServer singleton;
-
+    public static Logger logger = Logger.getLogger("Minecraft");
+    public static HashMap field_6037_b = new HashMap();
+    public NetworkListenThread field_6036_c;
+    public PropertyManager propertyManagerObj;
+    public WorldServer overworld;
+    public WorldServer netherWorld;
+    public ServerConfigurationManager configManager;
+    public boolean field_6032_g;
+    public String field_9013_i;
+    public int field_9012_j;
+    public EntityTracker field_6028_k;
+    public boolean onlineMode;
+    public boolean noAnimals;
+    public boolean isPvpEnabled;
+    //Sleep vote
+    public boolean IsSleepVoteOngoing = false;
+    //  public int SleepVoteRemainingTime = 0;
+    public int SleepVoteYesCount = 0;
+    public int SleepVoteNoCount = 0;
+    public String worldName;
+    public AdvancementManager advancementManager = new AdvancementManager();
+    public PlayerDataManager playerDataManager = new PlayerDataManager();
+    public GameruleManager gameruleManager = GameruleManager.getInstance();
+    public BlockMappingsManager blockMaps = new BlockMappingsManager(new File("blocks.mappings"));
+    public StitchLoader stitch;
+    public HashMap<String, String> advancementCriterion;
+    int field_9014_h;
+    FallbackIdMaps fallbackBlockMaps = new FallbackIdMaps();
+    private boolean field_6025_n;
+    private java.util.List field_9010_p;
+    private java.util.List commands;
+    private List<String> DummyList = new ArrayList<>();
     public MinecraftServer() {
         singleton = this;
         field_6025_n = true;
@@ -36,10 +66,13 @@ public class MinecraftServer
         new ThreadSleepForever(this);
     }
 
+    public static boolean func_6015_a(MinecraftServer minecraftserver) {
+        return minecraftserver.field_6025_n;
+    }
+
     public void log(String text, String originator) {
         logger.info("[" + originator + "]" + ": " + text);
     }
-
 
     private boolean serverInit() throws UnknownHostException {
 
@@ -113,7 +146,7 @@ public class MinecraftServer
 
         if (gameruleManager.getGamerule("nether", true)) {
             logger.info("[Cloth] Starting nether init");
-            netherWorld = new WorldServer(this, new File("."), worldName+"_nether", seed, -1);
+            netherWorld = new WorldServer(this, new File("."), worldName + "_nether", seed, -1);
             netherWorld.func_4072_a(new WorldManager(this));
             logger.info("[Debug] created nether object with seed " + netherWorld.randomSeed);
         }
@@ -149,11 +182,11 @@ public class MinecraftServer
         logger.info("Saving chunks");
         overworld.saveWorld(true, null);
     }
+
     private void saveNetherWorld() {
         logger.info("[Nether] Saving chunks");
         netherWorld.saveWorld(true, null);
     }
-
 
     private void shutdown() {
         logger.info("Stopping server");
@@ -163,7 +196,7 @@ public class MinecraftServer
         if (overworld != null) {
             saveServerWorld();
         }
-        if(netherWorld != null){
+        if (netherWorld != null) {
             saveNetherWorld();
         }
     }
@@ -183,7 +216,6 @@ public class MinecraftServer
         }
         return players;
     }
-
 
     public void run() {
         //List<EntityPlayer> PlayerOld = new List<EntityPlayer>() {}
@@ -223,7 +255,6 @@ public class MinecraftServer
                         InventoryPlayer inventory = player.inventory;
 
 
-
                         //--------Advancement
                         if (gameruleManager.getGamerule("enableadvancements", false)) {
                             // System.out.println("Looping advancement inv checks");
@@ -231,21 +262,21 @@ public class MinecraftServer
                             //inventory
                             for (int slot = 0; slot < inventory.getInventorySize(); slot++) {
                                 ItemStack item = inventory.getStackInSlot(slot);
-                               // System.out.println(slot);
+                                // System.out.println(slot);
                                 if (item != null) {
 
                                     //Advancements check
                                     for (Map.Entry<String, String> entry : advancementCriterion.entrySet()) {
                                         String criterion = entry.getKey();
-                                       // String advName = entry.getValue();
+                                        // String advName = entry.getValue();
 
-                                        if(criterion.contains("inventory.")){
+                                        if (criterion.contains("inventory.")) {
                                             String[] tSplit = criterion.split("\\.");
-                                           // System.out.println(tSplit);
+                                            // System.out.println(tSplit);
                                             String Item = tSplit[1];
                                             //letsa grab the id
                                             int itemID = blockMaps.getIdForString(Item, fallbackBlockMaps.GetIDForNamespacedBlockName(Item));
-                                            if(item.itemID == itemID){
+                                            if (item.itemID == itemID) {
                                                 grantAdvancement(player.username, criterion); //criterion also happens to be the internal name
                                             }
 
@@ -261,17 +292,23 @@ public class MinecraftServer
                                 //with this format buildlimit advancement looks like this:
                                 //travel.y.128
 
-                                if(criterion.contains("travel.")){
+                                if (criterion.contains("travel.")) {
                                     String[] tSplit = criterion.split("\\.");
-                                    switch(tSplit[1]){
+                                    switch (tSplit[1]) {
                                         case "x":
-                                            if(player.posX == Integer.parseInt(tSplit[2])){grantAdvancement(player.username, criterion);}
+                                            if (player.posX == Integer.parseInt(tSplit[2])) {
+                                                grantAdvancement(player.username, criterion);
+                                            }
                                             break;
                                         case "y":
-                                            if(player.posY == Integer.parseInt(tSplit[2])){grantAdvancement(player.username, criterion);}
+                                            if (player.posY == Integer.parseInt(tSplit[2])) {
+                                                grantAdvancement(player.username, criterion);
+                                            }
                                             break;
                                         case "z":
-                                            if(player.posZ == Integer.parseInt(tSplit[2])){grantAdvancement(player.username, criterion);}
+                                            if (player.posZ == Integer.parseInt(tSplit[2])) {
+                                                grantAdvancement(player.username, criterion);
+                                            }
                                             break;
                                     }
                                 }
@@ -297,12 +334,12 @@ public class MinecraftServer
                                 //Player Data Version of Stats
 
                                 PlayerData pd = playerDataManager.getPlayerData(player.username);
-                                if(pd != null) {
+                                if (pd != null) {
                                     pd.addDeath();
 
                                 }
                                 pd.resetBackUsages();
-                                pd.setLastDeathLocation( player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
+                                pd.setLastDeathLocation(player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
                                 int deathsInt = pd.getDeaths();
                                 playerDataManager.setPlayerData(player.username, pd);
 
@@ -316,9 +353,9 @@ public class MinecraftServer
                                 player.setEntityDead();
                                 String DeathMsg;
                                 //And then we will announce it
-                                if(overworld.rand.nextInt(15) <= 1){
+                                if (overworld.rand.nextInt(15) <= 1) {
                                     DeathMsg = player.username + " is going ghost!";
-                                } else{
+                                } else {
                                     DeathMsg = player.username + " died in mysterious circumstances";
                                 }
 
@@ -603,12 +640,14 @@ public class MinecraftServer
                 }
             }
 
-            if (command.toLowerCase().startsWith("stitchcall")){
+            if (command.toLowerCase().startsWith("stitchcall")) {
                 String[] args = command.split(" ");
                 ArrayList<Object> hookArgs = new ArrayList<>();
                 int i;
                 for (i = 0; i < args.length; i++) {
-                    if(i>=2){hookArgs.add(args[i]);}
+                    if (i >= 2) {
+                        hookArgs.add(args[i]);
+                    }
                 }
 
                 stitch.CallHook(args[1], hookArgs);
@@ -619,7 +658,7 @@ public class MinecraftServer
                 logger.info("[Debug] Attempting to send player " + player.username + " to the nether. Safe Travels!");
                 overworld.RemoveEntity(player);
                 System.out.println(overworld.playerEntities);
-              //Block 1 - SP minecraft.java line 1176
+                //Block 1 - SP minecraft.java line 1176
                 player.setEntityDead();
                 player.isDead = false;
                 overworld.func_4074_a(player, false);
@@ -629,21 +668,21 @@ public class MinecraftServer
                 player.worldObj = netherWorld;
                 netherWorld.entityJoinedWorld(player);
 
-               //block 2, same file, line 1191
+                //block 2, same file, line 1191
 
 
                 netherWorld.func_4074_a(player, false);
                 (new Teleporter()).func_4107_a(overworld, player);
                 System.gc();
-                
+
 
             }
             if (command.toLowerCase().startsWith("version")) {
                 //WorldGenParams params = new WorldGenParams();
                 icommandlistener.log(VERSION_STRING + " Branch: " + TARGET_FEATURE);
             }
-            if(command.toLowerCase().startsWith("debugstat")){
-                icommandlistener.log("PlayerEntities: "+configManager.playerEntities+" player list:"+configManager.getPlayerList());
+            if (command.toLowerCase().startsWith("debugstat")) {
+                icommandlistener.log("PlayerEntities: " + configManager.playerEntities + " player list:" + configManager.getPlayerList());
             }
             if (command.toLowerCase().startsWith("heal")) {
                 EntityPlayer player = configManager.getPlayerEntity(username);
@@ -804,31 +843,31 @@ public class MinecraftServer
                 String[] commandspart = command.split(" ");
                 String locationName = "home";
 
-                if (!commandspart[commandspart.length - 1].equals("sethome")){
-                    locationName = commandspart[commandspart.length-1];
+                if (!commandspart[commandspart.length - 1].equals("sethome")) {
+                    locationName = commandspart[commandspart.length - 1];
                 }
 
                 PlayerDataManager pdm = new PlayerDataManager();
                 PlayerData pdata = new PlayerData();
                 EntityPlayerMP entityplayer = configManager.getPlayerEntity(username);
-                if(pdm.getPlayerData(username) != null){
+                if (pdm.getPlayerData(username) != null) {
                     pdata = pdm.getPlayerData(username);
                 }
                 ArrayList<Location> plocs = pdata.getLocations();
-                if (pdata.getLocation(locationName, plocs) == null){
+                if (pdata.getLocation(locationName, plocs) == null) {
                     Location newHome = new Location();
                     newHome.setName(locationName);
                     newHome.setLookVector(entityplayer.rotationYaw, entityplayer.rotationPitch);
                     newHome.setLocationVector(entityplayer.posX, entityplayer.posY, entityplayer.posZ);
                     pdata.addLocation(newHome);
                     pdm.setPlayerData(username, pdata);
-                    configManager.sendChatMessageToPlayer(username, "§7Home §a["+ locationName +"]§7 set!");
+                    configManager.sendChatMessageToPlayer(username, "§7Home §a[" + locationName + "]§7 set!");
                 } else {
                     Location oldLocation = pdata.getLocation(locationName, plocs);
                     oldLocation.setLookVector(entityplayer.rotationYaw, entityplayer.rotationPitch);
                     oldLocation.setLocationVector(entityplayer.posX, entityplayer.posY, entityplayer.posZ);
                     pdm.setPlayerData(username, pdata);
-                    configManager.sendChatMessageToPlayer(username, "§7Home §a["+ locationName +"]§7 changed!");
+                    configManager.sendChatMessageToPlayer(username, "§7Home §a[" + locationName + "]§7 changed!");
                 }
             }
 
@@ -836,18 +875,18 @@ public class MinecraftServer
                 String[] commandspart = command.split(" ");
                 String locationName = "home";
 
-                if (!commandspart[commandspart.length - 1].equals("home")){
-                    locationName = commandspart[commandspart.length-1];
+                if (!commandspart[commandspart.length - 1].equals("home")) {
+                    locationName = commandspart[commandspart.length - 1];
                 }
 
                 PlayerDataManager pdm = new PlayerDataManager();
                 PlayerData pdata = new PlayerData();
                 EntityPlayerMP entityplayer = configManager.getPlayerEntity(username);
-                if(pdm.getPlayerData(username) != null){
+                if (pdm.getPlayerData(username) != null) {
                     pdata = pdm.getPlayerData(username);
                 }
                 ArrayList<Location> plocs = pdata.getLocations();
-                if (pdata.getLocation(locationName, plocs) != null){
+                if (pdata.getLocation(locationName, plocs) != null) {
                     Location target = pdata.getLocation(locationName, plocs);
                     Vector3d locvec = target.getLocationVector();
                     Vector3f lookvec = target.getLookVector();
@@ -855,16 +894,16 @@ public class MinecraftServer
                     entityplayer.field_421_a.func_41_a(locvec.getX(), locvec.getY(), locvec.getZ(), lookvec.getYaw(), lookvec.getPitch());
                     //System.out.println(locvec.get(0) + locvec.get(1) + locvec.get(2) + lookvec.get(0) + lookvec.get(1));
 
-                    configManager.sendChatMessageToPlayer(username, "§7Returning to §a["+ name +"]");
+                    configManager.sendChatMessageToPlayer(username, "§7Returning to §a[" + name + "]");
                 } else {
-                    configManager.sendChatMessageToPlayer(username, "§7Home location §a["+ locationName +"]§7 doesn't exist!");
+                    configManager.sendChatMessageToPlayer(username, "§7Home location §a[" + locationName + "]§7 doesn't exist!");
                 }
             }
 
             if (command.toLowerCase().startsWith("back")) {
                 PlayerDataManager pdm = new PlayerDataManager();
                 PlayerData pdata = pdm.getPlayerData(username);
-                if(pdata.getBackUsages() < GameruleManager.getInstance().getGamerule("maxbacks", 1)) {
+                if (pdata.getBackUsages() < GameruleManager.getInstance().getGamerule("maxbacks", 1)) {
                     EntityPlayerMP entityplayer = configManager.getPlayerEntity(username);
                     if (pdm.getPlayerData(username) != null) {
                         pdata = pdm.getPlayerData(username);
@@ -885,17 +924,17 @@ public class MinecraftServer
                 }
             }
 
-            if (command.toLowerCase().startsWith("delhome")){
+            if (command.toLowerCase().startsWith("delhome")) {
                 PlayerDataManager pdm = new PlayerDataManager();
                 PlayerData pd = new PlayerDataManager().getPlayerData(username);
-                if (command.toLowerCase().startsWith("delhomes")){
+                if (command.toLowerCase().startsWith("delhomes")) {
                     pd.clearLocations();
                     configManager.sendChatMessageToPlayer(username, "§7Cleared all saved homes!");
                 } else {
                     String[] commandspart = command.split(" ");
                     String badHome = commandspart[commandspart.length - 1];
                     ArrayList<Location> plocs = pd.getLocations();
-                    if (pd.getLocation(badHome, plocs) != null){
+                    if (pd.getLocation(badHome, plocs) != null) {
                         Location badLocation = pd.getLocation(badHome, plocs);
                         pd.removeLocation(badLocation);
                         configManager.sendChatMessageToPlayer(username, "§7Removed home §a[" + badHome + "]!");
@@ -1123,42 +1162,4 @@ public class MinecraftServer
     public String getUsername() {
         return "CONSOLE";
     }
-
-    public static boolean func_6015_a(MinecraftServer minecraftserver) {
-        return minecraftserver.field_6025_n;
-    }
-
-    public static Logger logger = Logger.getLogger("Minecraft");
-    public static HashMap field_6037_b = new HashMap();
-    public NetworkListenThread field_6036_c;
-    public PropertyManager propertyManagerObj;
-    public WorldServer overworld;
-    public WorldServer netherWorld;
-    public ServerConfigurationManager configManager;
-    private boolean field_6025_n;
-    public boolean field_6032_g;
-    int field_9014_h;
-    public String field_9013_i;
-    public int field_9012_j;
-    private java.util.List field_9010_p;
-    private java.util.List commands;
-    public EntityTracker field_6028_k;
-    public boolean onlineMode;
-    public boolean noAnimals;
-    public boolean isPvpEnabled;
-    //Sleep vote
-    public boolean IsSleepVoteOngoing = false;
-    //  public int SleepVoteRemainingTime = 0;
-    public int SleepVoteYesCount = 0;
-    public int SleepVoteNoCount = 0;
-    public String worldName;
-
-    public AdvancementManager advancementManager = new AdvancementManager();
-    public PlayerDataManager playerDataManager = new PlayerDataManager();
-    public GameruleManager gameruleManager = GameruleManager.getInstance();
-    public BlockMappingsManager blockMaps = new BlockMappingsManager(new File("blocks.mappings"));
-    FallbackIdMaps fallbackBlockMaps = new FallbackIdMaps();
-    public StitchLoader stitch;
-    public HashMap<String, String> advancementCriterion;
-    private List<String> DummyList = new ArrayList<>();
 }

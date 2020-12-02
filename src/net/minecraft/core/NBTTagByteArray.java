@@ -3,42 +3,37 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 
-public class NBTTagByteArray extends NBTBase
-{
+public class NBTTagByteArray extends NBTBase {
 
-    public NBTTagByteArray()
-    {
+    public byte byteArray[];
+
+    public NBTTagByteArray() {
     }
 
-    public NBTTagByteArray(byte abyte0[])
-    {
+    public NBTTagByteArray(byte abyte0[]) {
         byteArray = abyte0;
     }
 
-    void writeTagContents(DataOutput dataoutput) throws IOException
-    {
+    void writeTagContents(DataOutput dataoutput) throws IOException {
         dataoutput.writeInt(byteArray.length);
         dataoutput.write(byteArray);
     }
 
-    void readTagContents(DataInput datainput) throws IOException
-    {
+    void readTagContents(DataInput datainput) throws IOException {
         int i = datainput.readInt();
         byteArray = new byte[i];
         datainput.readFully(byteArray);
     }
 
-    public byte getType()
-    {
+    public byte getType() {
         return 7;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return (new StringBuilder()).append("[").append(byteArray.length).append(" bytes]").toString();
     }
-
-    public byte byteArray[];
 }

@@ -5,16 +5,13 @@ package net.minecraft.core;
 
 import java.util.Random;
 
-public class BlockStone extends Block
-{
+public class BlockStone extends Block {
 
-    public BlockStone(int i, int j)
-    {
+    public BlockStone(int i, int j) {
         super(i, j, Material.rock);
     }
 
-    public int idDropped(int i, Random random)
-    {
+    public int idDropped(int i, Random random) {
         return Block.cobblestone.blockID;
     }
 }

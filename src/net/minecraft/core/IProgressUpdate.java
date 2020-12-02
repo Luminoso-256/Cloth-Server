@@ -4,8 +4,7 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public interface IProgressUpdate
-{
+public interface IProgressUpdate {
 
     public abstract void func_438_a(String s);
 

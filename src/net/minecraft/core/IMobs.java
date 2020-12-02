@@ -5,6 +5,5 @@ package net.minecraft.core;
 
 
 public interface IMobs
-    extends IAnimals
-{
+        extends IAnimals {
 }

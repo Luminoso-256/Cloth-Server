@@ -4,8 +4,7 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public enum EnumMobType
-{
+public enum EnumMobType {
     everything,
     mobs,
     players;

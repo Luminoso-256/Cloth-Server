@@ -4,17 +4,14 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class BlockOreBlock extends Block
-{
+public class BlockOreBlock extends Block {
 
-    public BlockOreBlock(int i, int j)
-    {
+    public BlockOreBlock(int i, int j) {
         super(i, Material.iron);
         blockIndexInTexture = j;
     }
 
-    public int getBlockTextureFromSide(int i)
-    {
+    public int getBlockTextureFromSide(int i) {
         return blockIndexInTexture - 16;
     }
 }

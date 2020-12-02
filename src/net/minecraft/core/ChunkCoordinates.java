@@ -4,32 +4,26 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-final class ChunkCoordinates
-{
+final class ChunkCoordinates {
 
-    public ChunkCoordinates(int i, int j)
-    {
+    public final int field_529_a;
+    public final int field_528_b;
+
+    public ChunkCoordinates(int i, int j) {
         field_529_a = i;
         field_528_b = j;
     }
 
-    public boolean equals(Object obj)
-    {
-        if(obj instanceof ChunkCoordinates)
-        {
-            ChunkCoordinates chunkcoordinates = (ChunkCoordinates)obj;
+    public boolean equals(Object obj) {
+        if (obj instanceof ChunkCoordinates) {
+            ChunkCoordinates chunkcoordinates = (ChunkCoordinates) obj;
             return field_529_a == chunkcoordinates.field_529_a && field_528_b == chunkcoordinates.field_528_b;
-        } else
-        {
+        } else {
             return false;
         }
     }
 
-    public int hashCode()
-    {
+    public int hashCode() {
         return field_529_a << 16 ^ field_528_b;
     }
-
-    public final int field_529_a;
-    public final int field_528_b;
 }

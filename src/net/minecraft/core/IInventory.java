@@ -4,8 +4,7 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public interface IInventory
-{
+public interface IInventory {
 
     public abstract int getInventorySize();
 

@@ -4,30 +4,30 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public enum EnumSkyBlock
-{
+public enum EnumSkyBlock {
     Sky(15),
     Block(0);
-/*
-    public static EnumSkyBlock[] func_4109_values()
-    {
-        return (EnumSkyBlock[])field_983_d.clone();
-    }
 
-    public static EnumSkyBlock valueOf(String s)
-    {
-        return (EnumSkyBlock)Enum.valueOf(EnumSkyBlock.class, s);
-    }
-*/
-    private EnumSkyBlock(int j)
-    {
+    /*
+        public static final EnumSkyBlock Sky;
+        public static final EnumSkyBlock Block;
+    */
+    public final int field_984_c;
+
+    /*
+        public static EnumSkyBlock[] func_4109_values()
+        {
+            return (EnumSkyBlock[])field_983_d.clone();
+        }
+
+        public static EnumSkyBlock valueOf(String s)
+        {
+            return (EnumSkyBlock)Enum.valueOf(EnumSkyBlock.class, s);
+        }
+    */
+    private EnumSkyBlock(int j) {
         field_984_c = j;
     }
-/*
-    public static final EnumSkyBlock Sky;
-    public static final EnumSkyBlock Block;
-*/
-    public final int field_984_c;
 /*
     private static final EnumSkyBlock field_983_d[]; /* synthetic field */
 /*

@@ -5,36 +5,28 @@ package net.minecraft.core;
 
 import java.util.ArrayList;
 
-public class BlockFence extends Block
-{
+public class BlockFence extends Block {
 
-    public BlockFence(int i, int j)
-    {
+    public BlockFence(int i, int j) {
         super(i, j, Material.wood);
     }
 
-    public void getCollidingBoundingBoxes(World world, int i, int j, int k, AxisAlignedBB axisalignedbb, ArrayList arraylist)
-    {
-        arraylist.add(AxisAlignedBB.getBoundingBoxFromPool(i, j, k, i + 1, (double)j + 1.5D, k + 1));
+    public void getCollidingBoundingBoxes(World world, int i, int j, int k, AxisAlignedBB axisalignedbb, ArrayList arraylist) {
+        arraylist.add(AxisAlignedBB.getBoundingBoxFromPool(i, j, k, i + 1, (double) j + 1.5D, k + 1));
     }
 
-    public boolean canPlaceBlockAt(World world, int i, int j, int k)
-    {
-        if(world.getBlockId(i, j - 1, k) == blockID)
-        {
+    public boolean canPlaceBlockAt(World world, int i, int j, int k) {
+        if (world.getBlockId(i, j - 1, k) == blockID) {
             return false;
         }
-        if(!world.getBlockMaterial(i, j - 1, k).func_216_a())
-        {
+        if (!world.getBlockMaterial(i, j - 1, k).func_216_a()) {
             return false;
-        } else
-        {
+        } else {
             return super.canPlaceBlockAt(world, i, j, k);
         }
     }
 
-    public boolean allowsAttachment()
-    {
+    public boolean allowsAttachment() {
         return false;
     }
 }

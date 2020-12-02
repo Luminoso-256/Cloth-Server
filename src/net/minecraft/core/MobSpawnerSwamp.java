@@ -4,10 +4,8 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class MobSpawnerSwamp extends MobSpawnerBase
-{
+public class MobSpawnerSwamp extends MobSpawnerBase {
 
-    public MobSpawnerSwamp()
-    {
+    public MobSpawnerSwamp() {
     }
 }

@@ -4,31 +4,25 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class BlockLeavesBase extends Block
-{
+public class BlockLeavesBase extends Block {
 
-    protected BlockLeavesBase(int i, int j, Material material, boolean flag)
-    {
+    protected boolean graphicsLevel;
+
+    protected BlockLeavesBase(int i, int j, Material material, boolean flag) {
         super(i, j, material);
         graphicsLevel = flag;
     }
 
-    public boolean allowsAttachment()
-    {
+    public boolean allowsAttachment() {
         return false;
     }
 
-    public boolean isSideInsideCoordinate(IBlockAccess iblockaccess, int i, int j, int k, int l)
-    {
+    public boolean isSideInsideCoordinate(IBlockAccess iblockaccess, int i, int j, int k, int l) {
         int i1 = iblockaccess.getBlockId(i, j, k);
-        if(!graphicsLevel && i1 == blockID)
-        {
+        if (!graphicsLevel && i1 == blockID) {
             return false;
-        } else
-        {
+        } else {
             return super.isSideInsideCoordinate(iblockaccess, i, j, k, l);
         }
     }
-
-    protected boolean graphicsLevel;
 }

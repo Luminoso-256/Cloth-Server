@@ -3,18 +3,23 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet52MultiBlockChange extends Packet
-{
+public class Packet52MultiBlockChange extends Packet {
 
-    public Packet52MultiBlockChange()
-    {
+    public int xPosition;
+    public int zPosition;
+    public short coordinateArray[];
+    public byte typeArray[];
+    public byte metadataArray[];
+    public int size;
+
+    public Packet52MultiBlockChange() {
         isChunkDataPacket = true;
     }
-
-    public Packet52MultiBlockChange(int i, int j, short aword0[], int k, World world)
-    {
+    public Packet52MultiBlockChange(int i, int j, short aword0[], int k, World world) {
         isChunkDataPacket = true;
         xPosition = i;
         zPosition = j;
@@ -23,28 +28,25 @@ public class Packet52MultiBlockChange extends Packet
         typeArray = new byte[k];
         metadataArray = new byte[k];
         Chunk chunk = world.getChunkFromChunkCoords(i, j);
-        for(int l = 0; l < k; l++)
-        {
+        for (int l = 0; l < k; l++) {
             int i1 = aword0[l] >> 12 & 0xf;
             int j1 = aword0[l] >> 8 & 0xf;
             int k1 = aword0[l] & 0xff;
             coordinateArray[l] = aword0[l];
-            typeArray[l] = (byte)chunk.getBlockID(i1, k1, j1);
-            metadataArray[l] = (byte)chunk.getBlockMetadata(i1, k1, j1);
+            typeArray[l] = (byte) chunk.getBlockID(i1, k1, j1);
+            metadataArray[l] = (byte) chunk.getBlockMetadata(i1, k1, j1);
         }
 
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
         xPosition = datainputstream.readInt();
         zPosition = datainputstream.readInt();
         size = datainputstream.readShort() & 0xffff;
         coordinateArray = new short[size];
         typeArray = new byte[size];
         metadataArray = new byte[size];
-        for(int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             coordinateArray[i] = datainputstream.readShort();
         }
 
@@ -52,13 +54,11 @@ public class Packet52MultiBlockChange extends Packet
         datainputstream.readFully(metadataArray);
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeInt(xPosition);
         dataoutputstream.writeInt(zPosition);
-        dataoutputstream.writeShort((short)size);
-        for(int i = 0; i < size; i++)
-        {
+        dataoutputstream.writeShort((short) size);
+        for (int i = 0; i < size; i++) {
             dataoutputstream.writeShort(coordinateArray[i]);
         }
 
@@ -66,20 +66,11 @@ public class Packet52MultiBlockChange extends Packet
         dataoutputstream.write(metadataArray);
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
         nethandler.handleMultiBlockChange(this);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return 10 + size * 4;
     }
-
-    public int xPosition;
-    public int zPosition;
-    public short coordinateArray[];
-    public byte typeArray[];
-    public byte metadataArray[];
-    public int size;
 }

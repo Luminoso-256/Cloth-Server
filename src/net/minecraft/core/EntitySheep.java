@@ -3,26 +3,23 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-public class EntitySheep extends EntityAnimals
-{
+public class EntitySheep extends EntityAnimals {
 
-    public EntitySheep(World world)
-    {
+    public boolean sheared;
+
+    public EntitySheep(World world) {
         super(world);
         sheared = false;
         field_9119_aG = "/mob/sheep.png";
         setSize(0.9F, 1.3F);
     }
 
-    public boolean attackEntity(Entity entity, int i)
-    {
-        if(!worldObj.multiplayerWorld && !sheared && (entity instanceof EntityLiving))
-        {
+    public boolean attackEntity(Entity entity, int i) {
+        if (!worldObj.multiplayerWorld && !sheared && (entity instanceof EntityLiving)) {
             sheared = true;
             int j = 1 + random.nextInt(3);
-            for(int k = 0; k < j; k++)
-            {
-                EntityItem entityitem = dropItemWithOffset(Block.cloth.blockID, 1, 0,  1.0F);
+            for (int k = 0; k < j; k++) {
+                EntityItem entityitem = dropItemWithOffset(Block.cloth.blockID, 1, 0, 1.0F);
                 entityitem.motionY += random.nextFloat() * 0.05F;
                 entityitem.motionX += (random.nextFloat() - random.nextFloat()) * 0.1F;
                 entityitem.motionZ += (random.nextFloat() - random.nextFloat()) * 0.1F;
@@ -32,32 +29,25 @@ public class EntitySheep extends EntityAnimals
         return super.attackEntity(entity, i);
     }
 
-    public void writeEntityToNBT(NBTTagCompound nbttagcompound)
-    {
+    public void writeEntityToNBT(NBTTagCompound nbttagcompound) {
         super.writeEntityToNBT(nbttagcompound);
         nbttagcompound.setBoolean("Sheared", sheared);
     }
 
-    public void readEntityFromNBT(NBTTagCompound nbttagcompound)
-    {
+    public void readEntityFromNBT(NBTTagCompound nbttagcompound) {
         super.readEntityFromNBT(nbttagcompound);
         sheared = nbttagcompound.getBoolean("Sheared");
     }
 
-    protected String getLivingSound()
-    {
+    protected String getLivingSound() {
         return "mob.sheep";
     }
 
-    protected String getHurtSound()
-    {
+    protected String getHurtSound() {
         return "mob.sheep";
     }
 
-    protected String getDeathSound()
-    {
+    protected String getDeathSound() {
         return "mob.sheep";
     }
-
-    public boolean sheared;
 }

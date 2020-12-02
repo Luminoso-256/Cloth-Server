@@ -5,33 +5,27 @@ package net.minecraft.core;
 
 
 public class InventoryLargeChest
-    implements IInventory
-{
+        implements IInventory {
 
-    public InventoryLargeChest(String s, IInventory iinventory, IInventory iinventory1)
-    {
+    private String name;
+    private IInventory upperChest;
+    private IInventory lowerChest;
+
+    public InventoryLargeChest(String s, IInventory iinventory, IInventory iinventory1) {
         name = s;
         upperChest = iinventory;
         lowerChest = iinventory1;
     }
 
-    public int getInventorySize()
-    {
+    public int getInventorySize() {
         return upperChest.getInventorySize() + lowerChest.getInventorySize();
     }
 
-    public ItemStack getStackInSlot(int i)
-    {
-        if(i >= upperChest.getInventorySize())
-        {
+    public ItemStack getStackInSlot(int i) {
+        if (i >= upperChest.getInventorySize()) {
             return lowerChest.getStackInSlot(i - upperChest.getInventorySize());
-        } else
-        {
+        } else {
             return upperChest.getStackInSlot(i);
         }
     }
-
-    private String name;
-    private IInventory upperChest;
-    private IInventory lowerChest;
 }

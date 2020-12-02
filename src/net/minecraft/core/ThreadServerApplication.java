@@ -5,19 +5,16 @@ package net.minecraft.core;
 
 import net.minecraft.MinecraftServer;
 
-public final class ThreadServerApplication extends Thread
-{
+public final class ThreadServerApplication extends Thread {
 
-    public ThreadServerApplication(String s, MinecraftServer minecraftserver)
-    {
+    final MinecraftServer mcServer; /* synthetic field */
+
+    public ThreadServerApplication(String s, MinecraftServer minecraftserver) {
         super(s);
         mcServer = minecraftserver;
     }
 
-    public void run()
-    {
+    public void run() {
         mcServer.run();
     }
-
-    final MinecraftServer mcServer; /* synthetic field */
 }

@@ -4,10 +4,8 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public abstract class NoiseGenerator
-{
+public abstract class NoiseGenerator {
 
-    public NoiseGenerator()
-    {
+    public NoiseGenerator() {
     }
 }

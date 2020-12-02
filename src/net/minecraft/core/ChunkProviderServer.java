@@ -9,11 +9,17 @@ import java.io.IOException;
 import java.util.*;
 
 public class ChunkProviderServer
-    implements IChunkProvider
-{
+        implements IChunkProvider {
 
-    public ChunkProviderServer(WorldServer worldserver, IChunkLoader ichunkloader, IChunkProvider ichunkprovider)
-    {
+    private Set field_725_a;
+    private Chunk field_724_b;
+    private IChunkProvider field_730_c;
+    private IChunkLoader field_729_d;
+    private Map field_728_e;
+    private List field_727_f;
+    private WorldServer field_726_g;
+
+    public ChunkProviderServer(WorldServer worldserver, IChunkLoader ichunkloader, IChunkProvider ichunkprovider) {
         field_725_a = new HashSet();
         field_728_e = new HashMap();
         field_727_f = new ArrayList();
@@ -25,188 +31,144 @@ public class ChunkProviderServer
         field_730_c = ichunkprovider;
     }
 
-    public boolean chunkExists(int i, int j)
-    {
+    public boolean chunkExists(int i, int j) {
         ChunkCoordinates chunkcoordinates = new ChunkCoordinates(i, j);
         return field_728_e.containsKey(chunkcoordinates);
     }
 
-    public void func_374_c(int i, int j)
-    {
+    public void func_374_c(int i, int j) {
         int k = (i * 16 + 8) - field_726_g.spawnX;
         int l = (j * 16 + 8) - field_726_g.spawnZ;
         char c = '\200';
-        if(k < -c || k > c || l < -c || l > c)
-        {
+        if (k < -c || k > c || l < -c || l > c) {
             field_725_a.add(new ChunkCoordinates(i, j));
         }
     }
 
-    public Chunk loadChunk(int i, int j)
-    {
+    public Chunk loadChunk(int i, int j) {
         ChunkCoordinates chunkcoordinates = new ChunkCoordinates(i, j);
         field_725_a.remove(new ChunkCoordinates(i, j));
-        Chunk chunk = (Chunk)field_728_e.get(chunkcoordinates);
+        Chunk chunk = (Chunk) field_728_e.get(chunkcoordinates);
         GameruleManager gameruleManager = GameruleManager.getInstance();
-       // if(gameruleManager.getGamerule("singlechunkchallenge-d2", false)){
-       //     System.out.println("Falsifying chunk grab for chunk "+i+","+j);
-       //     ChunkCoordinates fakeCords = new ChunkCoordinates(3, 3);
-       //     chunk = (Chunk)field_728_e.get(fakeCords);
-      //  }
-        if(chunk == null)
-        {
+        // if(gameruleManager.getGamerule("singlechunkchallenge-d2", false)){
+        //     System.out.println("Falsifying chunk grab for chunk "+i+","+j);
+        //     ChunkCoordinates fakeCords = new ChunkCoordinates(3, 3);
+        //     chunk = (Chunk)field_728_e.get(fakeCords);
+        //  }
+        if (chunk == null) {
             chunk = func_4063_e(i, j);
-            if(chunk == null)
-            {
-                if(field_730_c == null)
-                {
+            if (chunk == null) {
+                if (field_730_c == null) {
                     chunk = field_724_b;
-                } else
-                {
+                } else {
                     chunk = field_730_c.func_363_b(i, j);
                 }
             }
             field_728_e.put(chunkcoordinates, chunk);
             field_727_f.add(chunk);
             chunk.func_4053_c();
-            if(chunk != null)
-            {
+            if (chunk != null) {
                 chunk.func_358_c();
             }
-            if(!chunk.isTerrainPopulated && chunkExists(i + 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i + 1, j))
-            {
+            if (!chunk.isTerrainPopulated && chunkExists(i + 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i + 1, j)) {
                 populate(this, i, j);
             }
-            if(chunkExists(i - 1, j) && !func_363_b(i - 1, j).isTerrainPopulated && chunkExists(i - 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i - 1, j))
-            {
+            if (chunkExists(i - 1, j) && !func_363_b(i - 1, j).isTerrainPopulated && chunkExists(i - 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i - 1, j)) {
                 populate(this, i - 1, j);
             }
-            if(chunkExists(i, j - 1) && !func_363_b(i, j - 1).isTerrainPopulated && chunkExists(i + 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i + 1, j))
-            {
+            if (chunkExists(i, j - 1) && !func_363_b(i, j - 1).isTerrainPopulated && chunkExists(i + 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i + 1, j)) {
                 populate(this, i, j - 1);
             }
-            if(chunkExists(i - 1, j - 1) && !func_363_b(i - 1, j - 1).isTerrainPopulated && chunkExists(i - 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i - 1, j))
-            {
+            if (chunkExists(i - 1, j - 1) && !func_363_b(i - 1, j - 1).isTerrainPopulated && chunkExists(i - 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i - 1, j)) {
                 populate(this, i - 1, j - 1);
             }
         }
         return chunk;
     }
 
-    public Chunk func_363_b(int i, int j)
-    {
+    public Chunk func_363_b(int i, int j) {
         ChunkCoordinates chunkcoordinates = new ChunkCoordinates(i, j);
-        Chunk chunk = (Chunk)field_728_e.get(chunkcoordinates);
-        if(chunk == null)
-        {
-            if(field_726_g.field_9209_x)
-            {
+        Chunk chunk = (Chunk) field_728_e.get(chunkcoordinates);
+        if (chunk == null) {
+            if (field_726_g.field_9209_x) {
                 return loadChunk(i, j);
-            } else
-            {
+            } else {
                 return field_724_b;
             }
-        } else
-        {
+        } else {
             return chunk;
         }
     }
 
-    private Chunk func_4063_e(int i, int j)
-    {
-        if(field_729_d == null)
-        {
+    private Chunk func_4063_e(int i, int j) {
+        if (field_729_d == null) {
             return null;
         }
-        try
-        {
+        try {
             Chunk chunk = field_729_d.func_659_a(field_726_g, i, j);
-            if(chunk != null)
-            {
+            if (chunk != null) {
                 chunk.field_676_s = field_726_g.worldTime;
             }
             return chunk;
-        }
-        catch(Exception exception)
-        {
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
         return null;
     }
 
-    private void func_375_a(Chunk chunk)
-    {
-        if(field_729_d == null)
-        {
+    private void func_375_a(Chunk chunk) {
+        if (field_729_d == null) {
             return;
         }
-        try
-        {
+        try {
             field_729_d.func_4104_b(field_726_g, chunk);
-        }
-        catch(Exception exception)
-        {
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 
-    private void func_373_b(Chunk chunk)
-    {
-        if(field_729_d == null)
-        {
+    private void func_373_b(Chunk chunk) {
+        if (field_729_d == null) {
             return;
         }
-        try
-        {
+        try {
             chunk.field_676_s = field_726_g.worldTime;
             field_729_d.func_662_a(field_726_g, chunk);
-        }
-        catch(IOException ioexception)
-        {
+        } catch (IOException ioexception) {
             ioexception.printStackTrace();
         }
     }
 
-    public void populate(IChunkProvider ichunkprovider, int i, int j)
-    {
+    public void populate(IChunkProvider ichunkprovider, int i, int j) {
         Chunk chunk = func_363_b(i, j);
-        if(!chunk.isTerrainPopulated)
-        {
+        if (!chunk.isTerrainPopulated) {
             chunk.isTerrainPopulated = true;
-            if(field_730_c != null)
-            {
+            if (field_730_c != null) {
                 field_730_c.populate(ichunkprovider, i, j);
                 chunk.func_336_e();
             }
         }
     }
 
-    public boolean saveWorld(boolean flag, IProgressUpdate iprogressupdate)
-    {
+    public boolean saveWorld(boolean flag, IProgressUpdate iprogressupdate) {
         int i = 0;
-        for(int j = 0; j < field_727_f.size(); j++)
-        {
-            Chunk chunk = (Chunk)field_727_f.get(j);
-            if(flag && !chunk.field_679_p)
-            {
+        for (int j = 0; j < field_727_f.size(); j++) {
+            Chunk chunk = (Chunk) field_727_f.get(j);
+            if (flag && !chunk.field_679_p) {
                 func_375_a(chunk);
             }
-            if(!chunk.func_347_a(flag))
-            {
+            if (!chunk.func_347_a(flag)) {
                 continue;
             }
             func_373_b(chunk);
             chunk.isModified = false;
-            if(++i == 32 && !flag)
-            {
+            if (++i == 32 && !flag) {
                 return false;
             }
         }
 
-        if(flag)
-        {
-            if(field_729_d == null)
-            {
+        if (flag) {
+            if (field_729_d == null) {
                 return true;
             }
             field_729_d.func_660_b();
@@ -214,15 +176,11 @@ public class ChunkProviderServer
         return true;
     }
 
-    public boolean func_361_a()
-    {
-        if(!field_726_g.field_816_A)
-        {
-            for(int i = 0; i < 100; i++)
-            {
-                if(!field_725_a.isEmpty())
-                {
-                    ChunkCoordinates chunkcoordinates = (ChunkCoordinates)field_725_a.iterator().next();
+    public boolean func_361_a() {
+        if (!field_726_g.field_816_A) {
+            for (int i = 0; i < 100; i++) {
+                if (!field_725_a.isEmpty()) {
+                    ChunkCoordinates chunkcoordinates = (ChunkCoordinates) field_725_a.iterator().next();
                     Chunk chunk = func_363_b(chunkcoordinates.field_529_a, chunkcoordinates.field_528_b);
                     chunk.func_331_d();
                     func_373_b(chunk);
@@ -233,24 +191,14 @@ public class ChunkProviderServer
                 }
             }
 
-            if(field_729_d != null)
-            {
+            if (field_729_d != null) {
                 field_729_d.func_661_a();
             }
         }
         return field_730_c.func_361_a();
     }
 
-    public boolean func_364_b()
-    {
+    public boolean func_364_b() {
         return !field_726_g.field_816_A;
     }
-
-    private Set field_725_a;
-    private Chunk field_724_b;
-    private IChunkProvider field_730_c;
-    private IChunkLoader field_729_d;
-    private Map field_728_e;
-    private List field_727_f;
-    private WorldServer field_726_g;
 }

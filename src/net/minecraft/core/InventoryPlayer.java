@@ -5,11 +5,16 @@ package net.minecraft.core;
 
 
 public class InventoryPlayer
-    implements IInventory
-{
+        implements IInventory {
 
-    public InventoryPlayer(EntityPlayer entityplayer)
-    {
+    public ItemStack mainInventory[];
+    public ItemStack armorInventory[];
+    public ItemStack craftingInventory[];
+    public int currentItem;
+    public boolean field_498_e;
+    private EntityPlayer player;
+
+    public InventoryPlayer(EntityPlayer entityplayer) {
         mainInventory = new ItemStack[37];
         armorInventory = new ItemStack[4];
         craftingInventory = new ItemStack[4];
@@ -18,17 +23,13 @@ public class InventoryPlayer
         player = entityplayer;
     }
 
-    public ItemStack getCurrentItem()
-    {
+    public ItemStack getCurrentItem() {
         return mainInventory[currentItem];
     }
 
-    private int func_6126_d(int i)
-    {
-        for(int j = 0; j < mainInventory.length; j++)
-        {
-            if(mainInventory[j] != null && mainInventory[j].itemID == i)
-            {
+    private int func_6126_d(int i) {
+        for (int j = 0; j < mainInventory.length; j++) {
+            if (mainInventory[j] != null && mainInventory[j].itemID == i) {
                 return j;
             }
         }
@@ -36,12 +37,9 @@ public class InventoryPlayer
         return -1;
     }
 
-    private int getFirstPartialMatchingStack(int i)
-    {
-        for(int j = 0; j < mainInventory.length; j++)
-        {
-            if(mainInventory[j] != null && mainInventory[j].itemID == i && mainInventory[j].stackSize < mainInventory[j].getMaxStackSize() && mainInventory[j].stackSize < getInventoryStackLimit())
-            {
+    private int getFirstPartialMatchingStack(int i) {
+        for (int j = 0; j < mainInventory.length; j++) {
+            if (mainInventory[j] != null && mainInventory[j].itemID == i && mainInventory[j].stackSize < mainInventory[j].getMaxStackSize() && mainInventory[j].stackSize < getInventoryStackLimit()) {
                 return j;
             }
         }
@@ -49,12 +47,9 @@ public class InventoryPlayer
         return -1;
     }
 
-    private int getFirstEmptyStack()
-    {
-        for(int i = 0; i < mainInventory.length; i++)
-        {
-            if(mainInventory[i] == null)
-            {
+    private int getFirstEmptyStack() {
+        for (int i = 0; i < mainInventory.length; i++) {
+            if (mainInventory[i] == null) {
                 return i;
             }
         }
@@ -62,35 +57,27 @@ public class InventoryPlayer
         return -1;
     }
 
-    private int addItemsToInventory(int i, int j)
-    {
+    private int addItemsToInventory(int i, int j) {
         int k = getFirstPartialMatchingStack(i);
-        if(k < 0)
-        {
+        if (k < 0) {
             k = getFirstEmptyStack();
         }
-        if(k < 0)
-        {
+        if (k < 0) {
             return j;
         }
-        if(mainInventory[k] == null)
-        {
+        if (mainInventory[k] == null) {
             mainInventory[k] = new ItemStack(i, 0);
         }
         int l = j;
-        if(l > mainInventory[k].getMaxStackSize() - mainInventory[k].stackSize)
-        {
+        if (l > mainInventory[k].getMaxStackSize() - mainInventory[k].stackSize) {
             l = mainInventory[k].getMaxStackSize() - mainInventory[k].stackSize;
         }
-        if(l > getInventoryStackLimit() - mainInventory[k].stackSize)
-        {
+        if (l > getInventoryStackLimit() - mainInventory[k].stackSize) {
             l = getInventoryStackLimit() - mainInventory[k].stackSize;
         }
-        if(l == 0)
-        {
+        if (l == 0) {
             return j;
-        } else
-        {
+        } else {
             j -= l;
             mainInventory[k].stackSize += l;
             mainInventory[k].animationsToGo = 5;
@@ -98,110 +85,87 @@ public class InventoryPlayer
         }
     }
 
-    public void decrementAnimations()
-    {
-        for(int i = 0; i < mainInventory.length; i++)
-        {
-            if(mainInventory[i] != null && mainInventory[i].animationsToGo > 0)
-            {
+    public void decrementAnimations() {
+        for (int i = 0; i < mainInventory.length; i++) {
+            if (mainInventory[i] != null && mainInventory[i].animationsToGo > 0) {
                 mainInventory[i].animationsToGo--;
             }
         }
 
     }
 
-    public boolean func_6127_b(int i)
-    {
+    public boolean func_6127_b(int i) {
         int j = func_6126_d(i);
-        if(j < 0)
-        {
+        if (j < 0) {
             return false;
         }
-        if(--mainInventory[j].stackSize <= 0)
-        {
+        if (--mainInventory[j].stackSize <= 0) {
             mainInventory[j] = null;
         }
         return true;
     }
 
-    public boolean addItemStackToInventory(ItemStack itemstack)
-    {
-        if(itemstack.itemDamage == 0)
-        {
+    public boolean addItemStackToInventory(ItemStack itemstack) {
+        if (itemstack.itemDamage == 0) {
             itemstack.stackSize = addItemsToInventory(itemstack.itemID, itemstack.stackSize);
-            if(itemstack.stackSize == 0)
-            {
+            if (itemstack.stackSize == 0) {
                 return true;
             }
         }
         int i = getFirstEmptyStack();
-        if(i >= 0)
-        {
+        if (i >= 0) {
             mainInventory[i] = itemstack;
             mainInventory[i].animationsToGo = 5;
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
 
-    public void setInventorySlotContents(int i, ItemStack itemstack)
-    {
+    public void setInventorySlotContents(int i, ItemStack itemstack) {
         ItemStack aitemstack[] = mainInventory;
-        if(i >= aitemstack.length)
-        {
+        if (i >= aitemstack.length) {
             i -= aitemstack.length;
             aitemstack = armorInventory;
         }
-        if(i >= aitemstack.length)
-        {
+        if (i >= aitemstack.length) {
             i -= aitemstack.length;
             aitemstack = craftingInventory;
         }
         aitemstack[i] = itemstack;
     }
 
-    public float getStrVsBlock(Block block)
-    {
+    public float getStrVsBlock(Block block) {
         float f = 1.0F;
-        if(mainInventory[currentItem] != null)
-        {
+        if (mainInventory[currentItem] != null) {
             f *= mainInventory[currentItem].getStrVsBlock(block);
         }
         return f;
     }
 
-    public NBTTagList writeToNBT(NBTTagList nbttaglist)
-    {
-        for(int i = 0; i < mainInventory.length; i++)
-        {
-            if(mainInventory[i] != null)
-            {
+    public NBTTagList writeToNBT(NBTTagList nbttaglist) {
+        for (int i = 0; i < mainInventory.length; i++) {
+            if (mainInventory[i] != null) {
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setByte("Slot", (byte)i);
+                nbttagcompound.setByte("Slot", (byte) i);
                 mainInventory[i].writeToNBT(nbttagcompound);
                 nbttaglist.setTag(nbttagcompound);
             }
         }
 
-        for(int j = 0; j < armorInventory.length; j++)
-        {
-            if(armorInventory[j] != null)
-            {
+        for (int j = 0; j < armorInventory.length; j++) {
+            if (armorInventory[j] != null) {
                 NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-                nbttagcompound1.setByte("Slot", (byte)(j + 100));
+                nbttagcompound1.setByte("Slot", (byte) (j + 100));
                 armorInventory[j].writeToNBT(nbttagcompound1);
                 nbttaglist.setTag(nbttagcompound1);
             }
         }
 
-        for(int k = 0; k < craftingInventory.length; k++)
-        {
-            if(craftingInventory[k] != null)
-            {
+        for (int k = 0; k < craftingInventory.length; k++) {
+            if (craftingInventory[k] != null) {
                 NBTTagCompound nbttagcompound2 = new NBTTagCompound();
-                nbttagcompound2.setByte("Slot", (byte)(k + 80));
+                nbttagcompound2.setByte("Slot", (byte) (k + 80));
                 craftingInventory[k].writeToNBT(nbttagcompound2);
                 nbttaglist.setTag(nbttagcompound2);
             }
@@ -210,128 +174,102 @@ public class InventoryPlayer
         return nbttaglist;
     }
 
-    public void readFromNBT(NBTTagList nbttaglist)
-    {
+    public void readFromNBT(NBTTagList nbttaglist) {
         mainInventory = new ItemStack[36];
         armorInventory = new ItemStack[4];
         craftingInventory = new ItemStack[4];
-        for(int i = 0; i < nbttaglist.tagCount(); i++)
-        {
-            NBTTagCompound nbttagcompound = (NBTTagCompound)nbttaglist.tagAt(i);
+        for (int i = 0; i < nbttaglist.tagCount(); i++) {
+            NBTTagCompound nbttagcompound = (NBTTagCompound) nbttaglist.tagAt(i);
             int j = nbttagcompound.getByte("Slot") & 0xff;
-            if(j >= 0 && j < mainInventory.length)
-            {
+            if (j >= 0 && j < mainInventory.length) {
                 mainInventory[j] = new ItemStack(nbttagcompound);
             }
-            if(j >= 80 && j < craftingInventory.length + 80)
-            {
+            if (j >= 80 && j < craftingInventory.length + 80) {
                 craftingInventory[j - 80] = new ItemStack(nbttagcompound);
             }
-            if(j >= 100 && j < armorInventory.length + 100)
-            {
+            if (j >= 100 && j < armorInventory.length + 100) {
                 armorInventory[j - 100] = new ItemStack(nbttagcompound);
             }
         }
 
     }
 
-    public int getInventorySize()
-    {
+    public int getInventorySize() {
         return mainInventory.length + 4;
     }
 
-    public ItemStack getStackInSlot(int i)
-    {
-       // System.out.println("getting slot "+i);
+    public ItemStack getStackInSlot(int i) {
+        // System.out.println("getting slot "+i);
         ItemStack aitemstack[] = mainInventory;
-        if(i >= aitemstack.length)
-        {
-       //     System.out.println("Swapping inv to armor inv");
+        if (i >= aitemstack.length) {
+            //     System.out.println("Swapping inv to armor inv");
             i -= aitemstack.length;
             aitemstack = armorInventory;
         }
-        if(i >= aitemstack.length)
-        {
-         //   System.out.println("Swapping to crafting inv");
+        if (i >= aitemstack.length) {
+            //   System.out.println("Swapping to crafting inv");
             i -= aitemstack.length;
             aitemstack = craftingInventory;
         }
-      //  System.out.println("Out: "+aitemstack[i]);
+        //  System.out.println("Out: "+aitemstack[i]);
         return aitemstack[i];
     }
 
-    public int getInventoryStackLimit()
-    {
+    public int getInventoryStackLimit() {
         return 64;
     }
 
-    public int func_9157_a(Entity entity)
-    {
+    public int func_9157_a(Entity entity) {
         ItemStack itemstack = getStackInSlot(currentItem);
-        if(itemstack != null)
-        {
+        if (itemstack != null) {
             return itemstack.func_9218_a(entity);
-        } else
-        {
+        } else {
             return 1;
         }
     }
 
-    public boolean canHarvestBlock(Block block)
-    {
-        if(block.blockMaterial != Material.rock && block.blockMaterial != Material.iron && block.blockMaterial != Material.builtSnow && block.blockMaterial != Material.snow)
-        {
+    public boolean canHarvestBlock(Block block) {
+        if (block.blockMaterial != Material.rock && block.blockMaterial != Material.iron && block.blockMaterial != Material.builtSnow && block.blockMaterial != Material.snow) {
             return true;
         }
         ItemStack itemstack = getStackInSlot(currentItem);
-        if(itemstack != null)
-        {
+        if (itemstack != null) {
             return itemstack.func_573_b(block);
-        } else
-        {
+        } else {
             return false;
         }
     }
 
-    public int getTotalArmorValue()
-    {
+    public int getTotalArmorValue() {
         int i = 0;
         int j = 0;
         int k = 0;
-        for(int l = 0; l < armorInventory.length; l++)
-        {
-            if(armorInventory[l] != null && (armorInventory[l].getItem() instanceof ItemArmor))
-            {
+        for (int l = 0; l < armorInventory.length; l++) {
+            if (armorInventory[l] != null && (armorInventory[l].getItem() instanceof ItemArmor)) {
                 int i1 = armorInventory[l].getMaxDamage();
                 int j1 = armorInventory[l].itemDamage;
                 int k1 = i1 - j1;
                 j += k1;
                 k += i1;
-                int l1 = ((ItemArmor)armorInventory[l].getItem()).field_256_aY;
+                int l1 = ((ItemArmor) armorInventory[l].getItem()).field_256_aY;
                 i += l1;
             }
         }
 
-        if(k == 0)
-        {
+        if (k == 0) {
             return 0;
-        } else
-        {
+        } else {
             return ((i - 1) * j) / k + 1;
         }
     }
 
-    public void damageArmor(int i)
-    {
-        for(int j = 0; j < armorInventory.length; j++)
-        {
-            if(armorInventory[j] == null || !(armorInventory[j].getItem() instanceof ItemArmor))
-            {
+    public void damageArmor(int i) {
+        for (int j = 0; j < armorInventory.length; j++) {
+            if (armorInventory[j] == null || !(armorInventory[j].getItem() instanceof ItemArmor)) {
                 continue;
             }
             armorInventory[j].damageItem(i);
-            if(armorInventory[j].stackSize == 0)
-            {
+            if (armorInventory[j].stackSize == 0) {
                 armorInventory[j].func_577_a(player);
                 armorInventory[j] = null;
             }
@@ -339,32 +277,20 @@ public class InventoryPlayer
 
     }
 
-    public void dropAllItems()
-    {
-        for(int i = 0; i < mainInventory.length; i++)
-        {
-            if(mainInventory[i] != null)
-            {
+    public void dropAllItems() {
+        for (int i = 0; i < mainInventory.length; i++) {
+            if (mainInventory[i] != null) {
                 player.func_169_a(mainInventory[i], true);
                 mainInventory[i] = null;
             }
         }
 
-        for(int j = 0; j < armorInventory.length; j++)
-        {
-            if(armorInventory[j] != null)
-            {
+        for (int j = 0; j < armorInventory.length; j++) {
+            if (armorInventory[j] != null) {
                 player.func_169_a(armorInventory[j], true);
                 armorInventory[j] = null;
             }
         }
 
     }
-
-    public ItemStack mainInventory[];
-    public ItemStack armorInventory[];
-    public ItemStack craftingInventory[];
-    public int currentItem;
-    private EntityPlayer player;
-    public boolean field_498_e;
 }

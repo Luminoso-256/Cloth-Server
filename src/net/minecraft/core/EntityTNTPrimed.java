@@ -4,11 +4,11 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class EntityTNTPrimed extends Entity
-{
+public class EntityTNTPrimed extends Entity {
 
-    public EntityTNTPrimed(World world)
-    {
+    public int fuse;
+
+    public EntityTNTPrimed(World world) {
         super(world);
         fuse = 0;
         field_329_e = true;
@@ -16,11 +16,10 @@ public class EntityTNTPrimed extends Entity
         yOffset = height / 2.0F;
     }
 
-    public EntityTNTPrimed(World world, double d, double d1, double d2)
-    {
+    public EntityTNTPrimed(World world, double d, double d1, double d2) {
         this(world);
         setPosition(d, d1, d2);
-        float f = (float)(Math.random() * 3.1415927410125732D * 2D);
+        float f = (float) (Math.random() * 3.1415927410125732D * 2D);
         motionX = -MathHelper.sin((f * 3.141593F) / 180F) * 0.02F;
         motionY = 0.20000000298023224D;
         motionZ = -MathHelper.cos((f * 3.141593F) / 180F) * 0.02F;
@@ -31,13 +30,11 @@ public class EntityTNTPrimed extends Entity
         prevPosZ = d2;
     }
 
-    public boolean func_129_c_()
-    {
+    public boolean func_129_c_() {
         return !isDead;
     }
 
-    public void onUpdate()
-    {
+    public void onUpdate() {
         prevPosX = posX;
         prevPosY = posY;
         prevPosZ = posZ;
@@ -46,37 +43,29 @@ public class EntityTNTPrimed extends Entity
         motionX *= 0.98000001907348633D;
         motionY *= 0.98000001907348633D;
         motionZ *= 0.98000001907348633D;
-        if(onGround)
-        {
+        if (onGround) {
             motionX *= 0.69999998807907104D;
             motionZ *= 0.69999998807907104D;
             motionY *= -0.5D;
         }
-        if(fuse-- <= 0)
-        {
+        if (fuse-- <= 0) {
             setEntityDead();
             explode();
-        } else
-        {
+        } else {
             worldObj.spawnParticle("smoke", posX, posY + 0.5D, posZ, 0.0D, 0.0D, 0.0D);
         }
     }
 
-    private void explode()
-    {
+    private void explode() {
         float f = 4F;
         worldObj.createExplosion(null, posX, posY, posZ, f);
     }
 
-    protected void writeEntityToNBT(NBTTagCompound nbttagcompound)
-    {
-        nbttagcompound.setByte("Fuse", (byte)fuse);
+    protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
+        nbttagcompound.setByte("Fuse", (byte) fuse);
     }
 
-    protected void readEntityFromNBT(NBTTagCompound nbttagcompound)
-    {
+    protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
         fuse = nbttagcompound.getByte("Fuse");
     }
-
-    public int fuse;
 }

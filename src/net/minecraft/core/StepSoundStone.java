@@ -4,11 +4,9 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-final class StepSoundStone extends StepSound
-{
+final class StepSoundStone extends StepSound {
 
-    StepSoundStone(String s, float f, float f1)
-    {
+    StepSoundStone(String s, float f, float f1) {
         super(s, f, f1);
     }
 }

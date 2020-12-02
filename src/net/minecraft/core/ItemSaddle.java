@@ -4,31 +4,25 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class ItemSaddle extends Item
-{
+public class ItemSaddle extends Item {
 
-    public ItemSaddle(int i)
-    {
+    public ItemSaddle(int i) {
         super(i);
         maxStackSize = 1;
         maxDamage = 64;
     }
 
-    public void func_9202_b(ItemStack itemstack, EntityLiving entityliving)
-    {
-        if(entityliving instanceof EntityPig)
-        {
-            EntityPig entitypig = (EntityPig)entityliving;
-            if(!entitypig.rideable)
-            {
+    public void func_9202_b(ItemStack itemstack, EntityLiving entityliving) {
+        if (entityliving instanceof EntityPig) {
+            EntityPig entitypig = (EntityPig) entityliving;
+            if (!entitypig.rideable) {
                 entitypig.rideable = true;
                 itemstack.stackSize--;
             }
         }
     }
 
-    public void func_9201_a(ItemStack itemstack, EntityLiving entityliving)
-    {
+    public void func_9201_a(ItemStack itemstack, EntityLiving entityliving) {
         func_9202_b(itemstack, entityliving);
     }
 }

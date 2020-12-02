@@ -4,8 +4,7 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public interface ICommandListener
-{
+public interface ICommandListener {
 
     public abstract void log(String s);
 

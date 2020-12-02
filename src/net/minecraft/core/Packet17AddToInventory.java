@@ -5,43 +5,43 @@ package net.minecraft.core;
 
 import net.minecraft.cloth.ExploitUtils;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet17AddToInventory extends Packet
-{
+public class Packet17AddToInventory extends Packet {
 
-    public Packet17AddToInventory()
-    {
+    public int id;
+    public int count;
+    public int durability;
+
+    public Packet17AddToInventory() {
     }
 
-    public Packet17AddToInventory(ItemStack itemstack, int i)
-    {
+    public Packet17AddToInventory(ItemStack itemstack, int i) {
         id = itemstack.itemID;
         count = i;
         durability = itemstack.itemDamage;
-        if(i == 0)
-        {
+        if (i == 0) {
             i = 1;
         }
 
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
 
         id = datainputstream.readShort();
 
-        if(!ExploitUtils.IsIdValid(id)){
+        if (!ExploitUtils.IsIdValid(id)) {
             id = 1;
         }
         count = datainputstream.readByte();
         durability = datainputstream.readShort();
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
-       // ExploitUtils exploitUtils = new ExploitUtils();
-        if(!ExploitUtils.IsIdValid(id)){
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
+        // ExploitUtils exploitUtils = new ExploitUtils();
+        if (!ExploitUtils.IsIdValid(id)) {
             id = 1;
         }
         dataoutputstream.writeShort(id);
@@ -49,17 +49,11 @@ public class Packet17AddToInventory extends Packet
         dataoutputstream.writeShort(durability);
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
         nethandler.handleAddToInventory(this);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return 5;
     }
-
-    public int id;
-    public int count;
-    public int durability;
 }

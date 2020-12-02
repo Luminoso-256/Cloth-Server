@@ -3,9 +3,9 @@ package net.minecraft.cloth.plugins.stich;
 
 public class HookToArgMappings {
 
-    public static String GetArgsListForHook(String HookName){
+    public static String GetArgsListForHook(String HookName) {
         String ArgMapping = "Error";
-        switch(HookName){
+        switch (HookName) {
             case "OnServerInit":
                 ArgMapping = "None";
                 break;

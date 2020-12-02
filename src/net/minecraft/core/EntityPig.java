@@ -4,11 +4,11 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class EntityPig extends EntityAnimals
-{
+public class EntityPig extends EntityAnimals {
 
-    public EntityPig(World world)
-    {
+    public boolean rideable;
+
+    public EntityPig(World world) {
         super(world);
         rideable = false;
         field_9119_aG = "/mob/pig.png";
@@ -16,49 +16,38 @@ public class EntityPig extends EntityAnimals
         rideable = false;
     }
 
-    public void writeEntityToNBT(NBTTagCompound nbttagcompound)
-    {
+    public void writeEntityToNBT(NBTTagCompound nbttagcompound) {
         super.writeEntityToNBT(nbttagcompound);
         nbttagcompound.setBoolean("Saddle", rideable);
     }
 
-    public void readEntityFromNBT(NBTTagCompound nbttagcompound)
-    {
+    public void readEntityFromNBT(NBTTagCompound nbttagcompound) {
         super.readEntityFromNBT(nbttagcompound);
         rideable = nbttagcompound.getBoolean("Saddle");
     }
 
-    protected String getLivingSound()
-    {
+    protected String getLivingSound() {
         return "mob.pig";
     }
 
-    protected String getHurtSound()
-    {
+    protected String getHurtSound() {
         return "mob.pig";
     }
 
-    protected String getDeathSound()
-    {
+    protected String getDeathSound() {
         return "mob.pigdeath";
     }
 
-    public boolean func_6092_a(EntityPlayer entityplayer)
-    {
-        if(rideable)
-        {
+    public boolean func_6092_a(EntityPlayer entityplayer) {
+        if (rideable) {
             entityplayer.func_6094_e(this);
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
 
-    protected int getDropItemId()
-    {
+    protected int getDropItemId() {
         return Item.porkRaw.swiftedIndex;
     }
-
-    public boolean rideable;
 }

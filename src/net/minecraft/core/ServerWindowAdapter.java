@@ -3,34 +3,28 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import net.minecraft.MinecraftServer;
 
-final class ServerWindowAdapter extends WindowAdapter
-{
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-    ServerWindowAdapter(MinecraftServer minecraftserver)
-    {
+final class ServerWindowAdapter extends WindowAdapter {
+
+    final MinecraftServer mcServer; /* synthetic field */
+
+    ServerWindowAdapter(MinecraftServer minecraftserver) {
         mcServer = minecraftserver;
     }
 
-    public void windowClosing(WindowEvent windowevent)
-    {
+    public void windowClosing(WindowEvent windowevent) {
         mcServer.func_6016_a();
-        while(!mcServer.field_6032_g) 
-        {
-            try
-            {
+        while (!mcServer.field_6032_g) {
+            try {
                 Thread.sleep(100L);
-            }
-            catch(InterruptedException interruptedexception)
-            {
+            } catch (InterruptedException interruptedexception) {
                 interruptedexception.printStackTrace();
             }
         }
         System.exit(0);
     }
-
-    final MinecraftServer mcServer; /* synthetic field */
 }

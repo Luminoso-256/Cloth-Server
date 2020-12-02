@@ -4,19 +4,17 @@ package net.minecraft.cloth.file;
 import com.google.gson.Gson;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-import static net.minecraft.Globals.*;
+
+import static net.minecraft.Globals.advancementNames;
 
 public class AdvancementCriterionLoader {
-
 
 
     public static Map loadAdvancementCriterion() {
@@ -39,10 +37,9 @@ public class AdvancementCriterionLoader {
             e.printStackTrace();
 
         }
-        if(advancementCriterionFile != null) {
+        if (advancementCriterionFile != null) {
             return advancementCriterionMap;
-        }
-        else {
+        } else {
             return advancementNames;
         }
 

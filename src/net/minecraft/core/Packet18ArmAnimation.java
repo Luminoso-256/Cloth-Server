@@ -3,43 +3,38 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-public class Packet18ArmAnimation extends Packet
-{
+public class Packet18ArmAnimation extends Packet {
 
-    public Packet18ArmAnimation()
-    {
+    public int entityId;
+    public int animate;
+
+    public Packet18ArmAnimation() {
     }
 
-    public Packet18ArmAnimation(Entity entity, int i)
-    {
+    public Packet18ArmAnimation(Entity entity, int i) {
         entityId = entity.field_331_c;
         animate = i;
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
         entityId = datainputstream.readInt();
         animate = datainputstream.readByte();
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeInt(entityId);
         dataoutputstream.writeByte(animate);
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
         nethandler.handleArmAnimation(this);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return 5;
     }
-
-    public int entityId;
-    public int animate;
 }

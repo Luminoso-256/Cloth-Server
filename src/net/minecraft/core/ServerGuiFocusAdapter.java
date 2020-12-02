@@ -6,17 +6,14 @@ package net.minecraft.core;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-class ServerGuiFocusAdapter extends FocusAdapter
-{
+class ServerGuiFocusAdapter extends FocusAdapter {
 
-    ServerGuiFocusAdapter(ServerGUI servergui)
-    {
+    final ServerGUI mcServerGui; /* synthetic field */
+
+    ServerGuiFocusAdapter(ServerGUI servergui) {
         mcServerGui = servergui;
     }
 
-    public void focusGained(FocusEvent focusevent)
-    {
+    public void focusGained(FocusEvent focusevent) {
     }
-
-    final ServerGUI mcServerGui; /* synthetic field */
 }

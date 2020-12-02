@@ -4,25 +4,20 @@ package net.minecraft.core;
 // Decompiler options: packimports(3) braces deadcode 
 
 
-public class MaterialLiquid extends Material
-{
+public class MaterialLiquid extends Material {
 
-    public MaterialLiquid()
-    {
+    public MaterialLiquid() {
     }
 
-    public boolean getIsLiquid()
-    {
+    public boolean getIsLiquid() {
         return true;
     }
 
-    public boolean func_218_c()
-    {
+    public boolean func_218_c() {
         return false;
     }
 
-    public boolean func_216_a()
-    {
+    public boolean func_216_a() {
         return false;
     }
 }

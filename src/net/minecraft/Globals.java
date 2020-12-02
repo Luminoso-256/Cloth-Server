@@ -23,7 +23,7 @@ public class Globals {
             "Supporting alpha!", "Its in beta!", "Also check out MineOnline!",
             "Bugs are features!", "Report issues on github!", "Unobfuscated!",
             "Free for all!", "Open source!", "Fork me!", "Experimental shenanigans!",
-            "With contributions from many", "Compatible with JRE14! and JRE8!",  "Why do these messages exist?",
+            "With contributions from many", "Compatible with JRE14! and JRE8!", "Why do these messages exist?",
             "New flying pigmen!", "an uneasy alliance!", "buggy nether time!", "We use Trello!",
             "Check out classic-rs", "rulesets!", "thanks for downloading!",
             "Now with anticheat!"};
@@ -32,7 +32,7 @@ public class Globals {
 
 
     //Defines number of deathmessages for each source
-    public static final HashMap deathTypeMessageList=new HashMap<String, Integer>() {{
+    public static final HashMap deathTypeMessageList = new HashMap<String, Integer>() {{
         put("fall", 3);
         put("entity", 3);
         put("lava", 1);
@@ -45,7 +45,7 @@ public class Globals {
 
 
     //Cloth death system - registery of damage sources in player class. %player% =  player user name, %entity% = entity damage source if one existed, %world% = world name
-    public static final HashMap deathMsgNames=new HashMap<String, String>() {{
+    public static final HashMap deathMsgNames = new HashMap<String, String>() {{
         put("fall.1", "%player% fell from a high place");
         put("fall.2", "%player% hit the ground too hard");
         put("fall.3", "%player% went bungee jumping without the cord");
@@ -68,7 +68,7 @@ public class Globals {
     //-------------------Advancement
 
     //Eventually thisl be config
-    public static final HashMap advancementNames=new HashMap<String, String>() {{
+    public static final HashMap advancementNames = new HashMap<String, String>() {{
         //test
 //        put("test.clothdeveloperadvancement", "Eureka! The cloth advancement system works :)");
 //        put("test.duplicitadvancementcheck", "You got this again? yay anyway!");
@@ -86,10 +86,9 @@ public class Globals {
         put("inventory.sponge", "Developer time!");
 
 
-
         //travel
-      //  put("travel.nether", "getting buggier...");
-     //   put("travel.buildlimit", "I can see my house from here!");
+        //  put("travel.nether", "getting buggier...");
+        //   put("travel.buildlimit", "I can see my house from here!");
         put("travel.y.128", "I can see my house from here!");
 
 
@@ -103,11 +102,9 @@ public class Globals {
 
     }};
     //-------------------Commands
-    public static final HashMap commands=new HashMap<String, Icommand>() {{
-       // put("help", );
+    public static final HashMap commands = new HashMap<String, Icommand>() {{
+        // put("help", );
     }};
-
-
 
 
     //-------------------Stitch

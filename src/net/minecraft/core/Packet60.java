@@ -3,19 +3,26 @@ package net.minecraft.core;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
-import java.util.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
-public class Packet60 extends Packet
-{
+public class Packet60 extends Packet {
 
-    public Packet60()
-    {
+    public double field_12003_a;
+    public double field_12002_b;
+    public double field_12006_c;
+    public float field_12005_d;
+    public Set field_12004_e;
+
+    public Packet60() {
     }
 
-    public Packet60(double d, double d1, double d2, float f, 
-            Set set)
-    {
+    public Packet60(double d, double d1, double d2, float f,
+                    Set set) {
         field_12003_a = d;
         field_12002_b = d1;
         field_12006_c = d2;
@@ -23,19 +30,17 @@ public class Packet60 extends Packet
         field_12004_e = new HashSet(set);
     }
 
-    public void readPacketData(DataInputStream datainputstream) throws IOException
-    {
+    public void readPacketData(DataInputStream datainputstream) throws IOException {
         field_12003_a = datainputstream.readDouble();
         field_12002_b = datainputstream.readDouble();
         field_12006_c = datainputstream.readDouble();
         field_12005_d = datainputstream.readFloat();
         int i = datainputstream.readInt();
         field_12004_e = new HashSet();
-        int j = (int)field_12003_a;
-        int k = (int)field_12002_b;
-        int l = (int)field_12006_c;
-        for(int i1 = 0; i1 < i; i1++)
-        {
+        int j = (int) field_12003_a;
+        int k = (int) field_12002_b;
+        int l = (int) field_12006_c;
+        for (int i1 = 0; i1 < i; i1++) {
             int j1 = datainputstream.readByte() + j;
             int k1 = datainputstream.readByte() + k;
             int l1 = datainputstream.readByte() + l;
@@ -44,20 +49,18 @@ public class Packet60 extends Packet
 
     }
 
-    public void writePacketData(DataOutputStream dataoutputstream) throws IOException
-    {
+    public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeDouble(field_12003_a);
         dataoutputstream.writeDouble(field_12002_b);
         dataoutputstream.writeDouble(field_12006_c);
         dataoutputstream.writeFloat(field_12005_d);
         dataoutputstream.writeInt(field_12004_e.size());
-        int i = (int)field_12003_a;
-        int j = (int)field_12002_b;
-        int k = (int)field_12006_c;
+        int i = (int) field_12003_a;
+        int j = (int) field_12002_b;
+        int k = (int) field_12006_c;
         int j1;
-        for(Iterator iterator = field_12004_e.iterator(); iterator.hasNext(); dataoutputstream.writeByte(j1))
-        {
-            ChunkPosition chunkposition = (ChunkPosition)iterator.next();
+        for (Iterator iterator = field_12004_e.iterator(); iterator.hasNext(); dataoutputstream.writeByte(j1)) {
+            ChunkPosition chunkposition = (ChunkPosition) iterator.next();
             int l = chunkposition.field_846_a - i;
             int i1 = chunkposition.field_845_b - j;
             j1 = chunkposition.field_847_c - k;
@@ -67,19 +70,11 @@ public class Packet60 extends Packet
 
     }
 
-    public void processPacket(NetHandler nethandler)
-    {
+    public void processPacket(NetHandler nethandler) {
         nethandler.func_12001_a(this);
     }
 
-    public int getPacketSize()
-    {
+    public int getPacketSize() {
         return 32 + field_12004_e.size() * 3;
     }
-
-    public double field_12003_a;
-    public double field_12002_b;
-    public double field_12006_c;
-    public float field_12005_d;
-    public Set field_12004_e;
 }
