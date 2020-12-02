@@ -555,6 +555,10 @@ public class Block
     public static final Block bloodStone;
     public static final Block slowSand;
     public static final Block lightStone;
+
+    //Let us fight the alphax
+    public static final Block invalid;
+
    // public static final Block stoneModded;
     public static final BlockPortal portal;
     public static final Block jackolantern;
@@ -662,6 +666,8 @@ public class Block
         lightStone = (new BlockLightStone(89, 105, Material.field_4216_o)).setHardness(0.3F).setStepSound(soundGlassFootstep).setLightValue(1.0F);
         portal = (BlockPortal)(new BlockPortal(90, 14)).setHardness(-1F).setStepSound(soundGlassFootstep).setLightValue(0.75F);
         jackolantern = (new BlockPumpkin(91, 102, true)).setHardness(1.0F).setStepSound(soundWoodFootstep).setLightValue(1.0F);
+        //Invalid Block!
+        invalid = (new Block(36, 76, Material.rock)).setHardness(0.8F).setStepSound(soundClothFootstep);
         for(int i = 0; i < 256; i++)
         {
             if(blocksList[i] != null)
