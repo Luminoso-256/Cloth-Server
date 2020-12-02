@@ -222,21 +222,6 @@ public class MinecraftServer
                         EntityPlayer player = (EntityPlayer) configManager.playerEntities.get(i);
                         InventoryPlayer inventory = player.inventory;
 
-                        //--------Anti-Cheat
-                        ItemStack fallback = new ItemStack(7);
-                        for (int slot = 0; slot < inventory.getInventorySize(); slot++) {
-                            ItemStack currentItem = inventory.getStackInSlot(slot);
-                            if(currentItem != null && GameruleManager.getInstance().getGamerule("doinventoryitemcheck", true)) {
-                               // System.out.println(slot);
-                                ExploitUtils exploitUtils = new ExploitUtils();
-                                if (!exploitUtils.IsIdValid(currentItem.itemID) && !configManager.isOp(player.username)) {
-                                       configManager.sendChatMessageToAllPlayers("ALERT: "+player.username+" obtained an illegal item!");
-
-
-                                }
-                            }
-                        }
-
 
 
                         //--------Advancement
@@ -590,7 +575,7 @@ public class MinecraftServer
                         overworld.entityJoinedWorld(zombie);
 
                 }
-            } else if (command.toLowerCase().startsWith("whitelist ") && gameruleManager.getGamerule("preview_keepinventorysystem", false)) {
+            } else if (command.toLowerCase().startsWith("whitelist ") && gameruleManager.getGamerule("whitelist", false)) {
                 String[] args = command.toLowerCase().split(" ");
                 if (args[1] == "add") {
                     configManager.whitelistPlayer(args[2]);
@@ -656,6 +641,9 @@ public class MinecraftServer
             if (command.toLowerCase().startsWith("version")) {
                 //WorldGenParams params = new WorldGenParams();
                 icommandlistener.log(VERSION_STRING + " Branch: " + TARGET_FEATURE);
+            }
+            if(command.toLowerCase().startsWith("debugstat")){
+                icommandlistener.log("PlayerEntities: "+configManager.playerEntities+" player list:"+configManager.getPlayerList());
             }
             if (command.toLowerCase().startsWith("heal")) {
                 EntityPlayer player = configManager.getPlayerEntity(username);

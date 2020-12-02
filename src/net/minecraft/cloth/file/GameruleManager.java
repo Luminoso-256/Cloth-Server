@@ -52,7 +52,11 @@ public class GameruleManager {
     		FileTime newModified;
     		try {
                 newModified = Files.readAttributes(gamerulesPath, BasicFileAttributes.class).lastModifiedTime();
-                if(newModified != lastModified) Reload();
+                System.out.println("[GRM] FileTimeOld:"+lastModified+"FileTimeNew:"+newModified);
+
+               // System.out.println();
+                System.out.println(newModified.compareTo(lastModified) == 0);
+              if(newModified.compareTo(lastModified) != 0){ Reload();}
             }
             catch(Exception exception) {
                 logger.log(Level.WARNING, "couldn't read gamerule timestamp", exception);
@@ -61,6 +65,7 @@ public class GameruleManager {
     }
     
     public void Reload() throws FileNotFoundException, IOException {
+        System.out.println("Gamerule File re-load. If no changes were made, this is a serious bug!");
     	serverGamerules.load(new FileInputStream(gamerulesFile));
     }
     
