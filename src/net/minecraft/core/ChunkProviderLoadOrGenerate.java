@@ -40,7 +40,7 @@ public class ChunkProviderLoadOrGenerate
         }
     }
 
-    public Chunk func_363_b(int i, int j) {
+    public Chunk provideChunk(int i, int j) {
         if (i == field_717_a && j == field_716_b && field_718_h != null) {
             return field_718_h;
         }
@@ -58,7 +58,7 @@ public class ChunkProviderLoadOrGenerate
                 if (field_722_d == null) {
                     chunk = field_723_c;
                 } else {
-                    chunk = field_722_d.func_363_b(i, j);
+                    chunk = field_722_d.provideChunk(i, j);
                 }
             }
             chunks[i1] = chunk;
@@ -69,13 +69,13 @@ public class ChunkProviderLoadOrGenerate
             if (!chunks[i1].isTerrainPopulated && chunkExists(i + 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i + 1, j)) {
                 populate(this, i, j);
             }
-            if (chunkExists(i - 1, j) && !func_363_b(i - 1, j).isTerrainPopulated && chunkExists(i - 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i - 1, j)) {
+            if (chunkExists(i - 1, j) && !provideChunk(i - 1, j).isTerrainPopulated && chunkExists(i - 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i - 1, j)) {
                 populate(this, i - 1, j);
             }
-            if (chunkExists(i, j - 1) && !func_363_b(i, j - 1).isTerrainPopulated && chunkExists(i + 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i + 1, j)) {
+            if (chunkExists(i, j - 1) && !provideChunk(i, j - 1).isTerrainPopulated && chunkExists(i + 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i + 1, j)) {
                 populate(this, i, j - 1);
             }
-            if (chunkExists(i - 1, j - 1) && !func_363_b(i - 1, j - 1).isTerrainPopulated && chunkExists(i - 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i - 1, j)) {
+            if (chunkExists(i - 1, j - 1) && !provideChunk(i - 1, j - 1).isTerrainPopulated && chunkExists(i - 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i - 1, j)) {
                 populate(this, i - 1, j - 1);
             }
         }
@@ -125,7 +125,7 @@ public class ChunkProviderLoadOrGenerate
     }
 
     public void populate(IChunkProvider ichunkprovider, int i, int j) {
-        Chunk chunk = func_363_b(i, j);
+        Chunk chunk = provideChunk(i, j);
         if (!chunk.isTerrainPopulated) {
             chunk.isTerrainPopulated = true;
             if (field_722_d != null) {

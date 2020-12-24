@@ -32,25 +32,25 @@ class PlayerInstance {
         field_1071_c = i;
         field_1070_d = j;
         field_1069_e = new ChunkCoordIntPair(i, j);
-        PlayerManager.getMinecraftServer(playermanager).overworld.chunkProvider.loadChunk(i, j);
-        if (gameruleManager.getGamerule("preview_nether_playerinstanceload", false)) {
-            PlayerManager.getMinecraftServer(playermanager).netherWorld.chunkProvider.loadChunk(i, j);
-        }
+        playermanager.getMinecraftServer().chunkProvider.loadChunk(i, j);
+//        if (gameruleManager.getGamerule("preview_nether_playerinstanceload", false)) {
+//            PlayerManager.getMinecraftServer(playermanager).netherWorld.chunkProvider.loadChunk(i, j);
+//        }
     }
 
-    public void func_779_a(EntityPlayerMP entityplayermp) {
+    public void addPlayer(EntityPlayerMP entityplayermp) {
         if (field_1072_b.contains(entityplayermp)) {
             //kick em and rejoin em to the chunk then!
             field_1072_b.remove(entityplayermp);
-            func_779_a(entityplayermp);
+            addPlayer(entityplayermp);
             //throw new IllegalStateException((new StringBuilder()).append("Failed to add player. ").append(entityplayermp).append(" already is in chunk ").append(field_1071_c).append(", ").append(field_1070_d).toString());
         } else {
 
 
             entityplayermp.field_420_ah.add(field_1069_e);
-            entityplayermp.field_421_a.sendPacket(new Packet50PreChunk(field_1069_e.field_152_a, field_1069_e.field_151_b, true));
+            entityplayermp.playerNetServerHandler.sendPacket(new Packet50PreChunk(field_1069_e.field_152_a, field_1069_e.field_151_b, true));
             field_1072_b.add(entityplayermp);
-            entityplayermp.field_422_ag.add(field_1069_e);
+            entityplayermp.loadedChunks.add(field_1069_e);
             return;
         }
     }
@@ -67,11 +67,11 @@ class PlayerInstance {
             if (field_1067_g > 0) {
                 PlayerManager.func_533_c(field_1073_a).remove(this);
             }
-            PlayerManager.getMinecraftServer(field_1073_a).overworld.chunkProvider.func_374_c(field_1071_c, field_1070_d);
+            field_1073_a.getMinecraftServer().chunkProvider.func_374_c(field_1071_c, field_1070_d);
         }
-        entityplayermp.field_422_ag.remove(field_1069_e);
+        entityplayermp.loadedChunks.remove(field_1069_e);
         if (entityplayermp.field_420_ah.contains(field_1069_e)) {
-            entityplayermp.field_421_a.sendPacket(new Packet50PreChunk(field_1071_c, field_1070_d, false));
+            entityplayermp.playerNetServerHandler.sendPacket(new Packet50PreChunk(field_1071_c, field_1070_d, false));
         }
     }
 
@@ -116,7 +116,7 @@ class PlayerInstance {
         for (int i = 0; i < field_1072_b.size(); i++) {
             EntityPlayerMP entityplayermp = (EntityPlayerMP) field_1072_b.get(i);
             if (entityplayermp.field_420_ah.contains(field_1069_e)) {
-                entityplayermp.field_421_a.sendPacket(packet);
+                entityplayermp.playerNetServerHandler.sendPacket(packet);
             }
         }
 
@@ -130,9 +130,9 @@ class PlayerInstance {
             int i = field_1071_c * 16 + field_1066_h;
             int l = field_1064_j;
             int k1 = field_1070_d * 16 + field_1062_l;
-            func_776_a(new Packet53BlockChange(i, l, k1, PlayerManager.getMinecraftServer(field_1073_a).overworld));
-            if (Block.isBlockContainer[PlayerManager.getMinecraftServer(field_1073_a).overworld.getBlockId(i, l, k1)]) {
-                func_776_a(new Packet59ComplexEntity(i, l, k1, PlayerManager.getMinecraftServer(field_1073_a).overworld.getBlock(i, l, k1)));
+            func_776_a(new Packet53BlockChange(i, l, k1, field_1073_a.getMinecraftServer()));
+            if (Block.isBlockContainer[field_1073_a.getMinecraftServer().getBlockId(i, l, k1)]) {
+                func_776_a(new Packet59ComplexEntity(i, l, k1, field_1073_a.getMinecraftServer().getBlock(i, l, k1)));
             }
         } else if (field_1067_g == 10) {
             field_1064_j = (field_1064_j / 2) * 2;
@@ -143,21 +143,21 @@ class PlayerInstance {
             int j2 = (field_1065_i - field_1066_h) + 1;
             int l2 = (field_1063_k - field_1064_j) + 2;
             int i3 = (field_1061_m - field_1062_l) + 1;
-            func_776_a(new Packet51MapChunk(j, i1, l1, j2, l2, i3, PlayerManager.getMinecraftServer(field_1073_a).overworld));
-            List list = PlayerManager.getMinecraftServer(field_1073_a).overworld.func_532_d(j, i1, l1, j + j2, i1 + l2, l1 + i3);
+            func_776_a(new Packet51MapChunk(j, i1, l1, j2, l2, i3, field_1073_a.getMinecraftServer()));
+            List list = field_1073_a.getMinecraftServer().func_532_d(j, i1, l1, j + j2, i1 + l2, l1 + i3);
             for (int j3 = 0; j3 < list.size(); j3++) {
                 TileEntity tileentity = (TileEntity) list.get(j3);
                 func_776_a(new Packet59ComplexEntity(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord, tileentity));
             }
 
         } else {
-            func_776_a(new Packet52MultiBlockChange(field_1071_c, field_1070_d, field_1068_f, field_1067_g, PlayerManager.getMinecraftServer(field_1073_a).overworld));
+            func_776_a(new Packet52MultiBlockChange(field_1071_c, field_1070_d, field_1068_f, field_1067_g, field_1073_a.getMinecraftServer()));
             for (int k = 0; k < field_1067_g; k++) {
                 int j1 = field_1071_c * 16 + (field_1067_g >> 12 & 0xf);
                 int i2 = field_1067_g & 0xff;
                 int k2 = field_1070_d * 16 + (field_1067_g >> 8 & 0xf);
-                if (Block.isBlockContainer[PlayerManager.getMinecraftServer(field_1073_a).overworld.getBlockId(j1, i2, k2)]) {
-                    func_776_a(new Packet59ComplexEntity(j1, i2, k2, PlayerManager.getMinecraftServer(field_1073_a).overworld.getBlock(j1, i2, k2)));
+                if (Block.isBlockContainer[field_1073_a.getMinecraftServer().getBlockId(j1, i2, k2)]) {
+                    func_776_a(new Packet59ComplexEntity(j1, i2, k2, field_1073_a.getMinecraftServer().getBlock(j1, i2, k2)));
                 }
             }
 

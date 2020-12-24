@@ -7,15 +7,15 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class Packet39 extends Packet {
+public class Packet39AttachEntity extends Packet {
 
     public int field_6044_a;
     public int field_6043_b;
 
-    public Packet39() {
+    public Packet39AttachEntity() {
     }
 
-    public Packet39(Entity entity, Entity entity1) {
+    public Packet39AttachEntity(Entity entity, Entity entity1) {
         field_6044_a = entity.field_331_c;
         field_6043_b = entity1 == null ? -1 : entity1.field_331_c;
     }

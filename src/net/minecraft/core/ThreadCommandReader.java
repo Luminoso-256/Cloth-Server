@@ -21,7 +21,7 @@ public class ThreadCommandReader extends Thread {
         BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(System.in));
         String s = null;
         try {
-            while (!mcServer.field_6032_g && MinecraftServer.func_6015_a(mcServer) && (s = bufferedreader.readLine()) != null) {
+            while (!mcServer.serverRunning && MinecraftServer.func_6015_a(mcServer) && (s = bufferedreader.readLine()) != null) {
                 mcServer.addCommand(s, mcServer);
             }
         } catch (IOException ioexception) {

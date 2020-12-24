@@ -16,17 +16,19 @@ public class EntityTracker {
     private MCHashTable field_910_b;
     private MinecraftServer mcServer;
     private int field_912_d;
+    private int dimension;
 
-    public EntityTracker(MinecraftServer minecraftserver) {
+    public EntityTracker(MinecraftServer minecraftserver, int dimension) {
         field_911_a = new HashSet();
         field_910_b = new MCHashTable();
         mcServer = minecraftserver;
+        this.dimension = dimension;
         field_912_d = minecraftserver.configManager.func_640_a();
     }
 
-    public void func_611_a(Entity entity) {
+    public void trackEntity(Entity entity) {
         if (entity instanceof EntityPlayerMP) {
-            func_6187_a(entity, 512, 2);
+            trackEntity(entity, 512, 2);
             EntityPlayerMP entityplayermp = (EntityPlayerMP) entity;
             Iterator iterator = field_911_a.iterator();
             do {
@@ -34,34 +36,34 @@ public class EntityTracker {
                     break;
                 }
                 EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) iterator.next();
-                if (entitytrackerentry.field_909_a != entityplayermp) {
-                    entitytrackerentry.func_606_a(entityplayermp);
+                if (entitytrackerentry.trackedEntity != entityplayermp) {
+                    entitytrackerentry.updatePlayerEntity(entityplayermp);
                 }
             } while (true);
         } else if (entity instanceof EntityFish) {
-            func_6186_a(entity, 64, 5, true);
+            trackEntity(entity, 64, 5, true);
         } else if (entity instanceof EntityArrow) {
-            func_6186_a(entity, 64, 5, true);
+            trackEntity(entity, 64, 5, true);
         } else if (entity instanceof EntitySnowball) {
-            func_6186_a(entity, 64, 5, true);
+            trackEntity(entity, 64, 5, true);
         } else if (entity instanceof EntityItem) {
-            func_6186_a(entity, 64, 20, true);
+            trackEntity(entity, 64, 20, true);
         } else if (entity instanceof EntityMinecart) {
-            func_6186_a(entity, 160, 5, true);
+            trackEntity(entity, 160, 5, true);
         } else if (entity instanceof EntityBoat) {
-            func_6186_a(entity, 160, 5, true);
+            trackEntity(entity, 160, 5, true);
         } else if (entity instanceof IAnimals) {
-            func_6187_a(entity, 160, 3);
+            trackEntity(entity, 160, 3);
         } else if (entity instanceof EntityTNTPrimed) {
-            func_6186_a(entity, 160, 10, true);
+            trackEntity(entity, 160, 10, true);
         }
     }
 
-    public void func_6187_a(Entity entity, int i, int j) {
-        func_6186_a(entity, i, j, false);
+    public void trackEntity(Entity entity, int i, int j) {
+        trackEntity(entity, i, j, false);
     }
 
-    public void func_6186_a(Entity entity, int i, int j, boolean flag) {
+    public void trackEntity(Entity entity, int i, int j, boolean flag) {
         if (i > field_912_d) {
             i = field_912_d;
         }
@@ -71,7 +73,7 @@ public class EntityTracker {
             EntityTrackerEntry entitytrackerentry = new EntityTrackerEntry(entity, i, j, flag);
             field_911_a.add(entitytrackerentry);
             field_910_b.addKey(entity.field_331_c, entitytrackerentry);
-            entitytrackerentry.func_601_b(mcServer.overworld.playerEntities);
+            entitytrackerentry.func_601_b(mcServer.getWorldManager(dimension).playerEntities);
             return;
         }
     }
@@ -107,9 +109,9 @@ public class EntityTracker {
                 break;
             }
             EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) iterator.next();
-            entitytrackerentry.func_605_a(mcServer.overworld.playerEntities);
-            if (entitytrackerentry.field_900_j && (entitytrackerentry.field_909_a instanceof EntityPlayerMP)) {
-                arraylist.add((EntityPlayerMP) entitytrackerentry.field_909_a);
+            entitytrackerentry.func_605_a(mcServer.getWorldManager(dimension).playerEntities);
+            if (entitytrackerentry.field_900_j && (entitytrackerentry.trackedEntity instanceof EntityPlayerMP)) {
+                arraylist.add((EntityPlayerMP) entitytrackerentry.trackedEntity);
             }
         } while (true);
         label0:
@@ -121,8 +123,8 @@ public class EntityTracker {
                     continue label0;
                 }
                 EntityTrackerEntry entitytrackerentry1 = (EntityTrackerEntry) iterator1.next();
-                if (entitytrackerentry1.field_909_a != entityplayermp) {
-                    entitytrackerentry1.func_606_a(entityplayermp);
+                if (entitytrackerentry1.trackedEntity != entityplayermp) {
+                    entitytrackerentry1.updatePlayerEntity(entityplayermp);
                 }
             } while (true);
         }

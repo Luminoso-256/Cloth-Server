@@ -7,21 +7,21 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class Packet28 extends Packet {
+public class Packet28EntityVelocity extends Packet {
 
     public int field_6040_a;
     public int field_6039_b;
     public int field_6042_c;
     public int field_6041_d;
 
-    public Packet28() {
+    public Packet28EntityVelocity() {
     }
 
-    public Packet28(Entity entity) {
+    public Packet28EntityVelocity(Entity entity) {
         this(entity.field_331_c, entity.motionX, entity.motionY, entity.motionZ);
     }
 
-    public Packet28(int i, double d, double d1, double d2) {
+    public Packet28EntityVelocity(int i, double d, double d1, double d2) {
         field_6040_a = i;
         double d3 = 3.8999999999999999D;
         if (d < -d3) {

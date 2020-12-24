@@ -7,6 +7,7 @@ import net.minecraft.MinecraftServer;
 import net.minecraft.cloth.ExploitUtils;
 import net.minecraft.cloth.file.GameruleManager;
 import net.minecraft.cloth.file.PlayerDataManager;
+import net.minecraft.cloth.nether.Teleporter;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -18,7 +19,7 @@ public class ServerConfigurationManager {
 
     public static Logger logger = Logger.getLogger("Minecraft");
     public List playerEntities;
-    public PlayerManager playerManagerObj;
+    private PlayerManager playerManagerObj[];
     private MinecraftServer mcServer;
     private int maxPlayers;
     private Set banList;
@@ -31,6 +32,7 @@ public class ServerConfigurationManager {
     private File whitelistFile;
     private PlayerNBTManager playerNBTManagerObj;
     private GameruleManager gameruleManager = GameruleManager.getInstance();
+    private static Random random = new Random();
 
     public ServerConfigurationManager(MinecraftServer minecraftserver) {
         playerEntities = new ArrayList();
@@ -42,7 +44,11 @@ public class ServerConfigurationManager {
         ipBanFile = minecraftserver.getFile("banned-ips.txt");
         opFile = minecraftserver.getFile("ops.txt");
         whitelistFile = minecraftserver.getFile("whitelist.txt");
-        playerManagerObj = new PlayerManager(minecraftserver);
+        int viewDistance = minecraftserver.propertyManagerObj.getIntProperty("view-distance", 10);
+        playerManagerObj = new PlayerManager[3];
+        playerManagerObj[0] = new PlayerManager(minecraftserver, 0, viewDistance);
+        playerManagerObj[1] = new PlayerManager(minecraftserver, -1, viewDistance);
+        playerManagerObj[2] = new PlayerManager(minecraftserver, 1, viewDistance);
         maxPlayers = minecraftserver.propertyManagerObj.getIntProperty("max-players", 20);
         readBannedPlayers();
         loadBannedList();
@@ -52,12 +58,17 @@ public class ServerConfigurationManager {
         saveOps();
     }
 
-    public void setPlayerManager(WorldServer worldserver) {
-        playerNBTManagerObj = new PlayerNBTManager(new File(worldserver.field_797_s, "players"));
+    public void readPlayerDataFromFile(EntityPlayerMP entityplayermp)
+    {
+        playerNBTManagerObj.readPlayerData(entityplayermp);
+    }
+
+    public void setPlayerManager(WorldServer worldserver[]) {
+        playerNBTManagerObj = new PlayerNBTManager(new File(worldserver[0].field_797_s, "players"));
     }
 
     public int func_640_a() {
-        return playerManagerObj.func_542_b();
+        return playerManagerObj[0].func_542_b();
     }
 
     public void playerLoggedIn(EntityPlayerMP entityplayermp) {
@@ -66,11 +77,12 @@ public class ServerConfigurationManager {
         //Connect player to world
         playerEntities.add(entityplayermp);
         playerNBTManagerObj.readPlayerData(entityplayermp);
-        mcServer.overworld.chunkProvider.loadChunk((int) entityplayermp.posX >> 4, (int) entityplayermp.posZ >> 4);
-        for (; mcServer.overworld.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) {
+        WorldServer worldServer = mcServer.getWorldManager(entityplayermp.dimension);
+        worldServer.chunkProvider.loadChunk((int) entityplayermp.posX >> 4, (int) entityplayermp.posZ >> 4);
+        for (; worldServer.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) {
         }
-        mcServer.overworld.entityJoinedWorld(entityplayermp);
-        playerManagerObj.func_9214_a(entityplayermp);
+        worldServer.entityJoinedWorld(entityplayermp);
+        getPlayerManager(entityplayermp.dimension).addPlayer(entityplayermp);
 
         //Check their invenotry for illageal items.
         String itemIDBlacklist = gameruleManager.getGamerule("itemidblacklist", " ");
@@ -96,7 +108,7 @@ public class ServerConfigurationManager {
                     entityplayermp.inventory.setInventorySlotContents(i, fallbackItem);
                 }
             } else {
-                System.out.println("Slot " + i + " contained null or nonextistant item");
+//                System.out.println("Slot " + i + " contained null or nonextistant item");
             }
         }
         //MOTD
@@ -127,14 +139,16 @@ public class ServerConfigurationManager {
     }
 
     public void func_613_b(EntityPlayerMP entityplayermp) {
-        playerManagerObj.func_543_c(entityplayermp);
+        getPlayerManager(entityplayermp.dimension).func_543_c(entityplayermp);
     }
 
     public void playerLoggedOut(EntityPlayerMP entityplayermp) {
+        WorldServer worldServer = mcServer.getWorldManager(entityplayermp.dimension);
+
         playerNBTManagerObj.writePlayerData(entityplayermp);
-        mcServer.overworld.func_12016_d(entityplayermp);
+        worldServer.func_12016_d(entityplayermp);
         playerEntities.remove(entityplayermp);
-        playerManagerObj.func_9213_b(entityplayermp);
+        getPlayerManager(entityplayermp.dimension).removePlayer(entityplayermp);
     }
 
     public EntityPlayerMP login(NetLoginHandler netloginhandler, String username, String s1) {
@@ -163,45 +177,129 @@ public class ServerConfigurationManager {
         for (int i = 0; i < playerEntities.size(); i++) {
             EntityPlayerMP entityplayermp = (EntityPlayerMP) playerEntities.get(i);
             if (entityplayermp.username.equalsIgnoreCase(username)) {
-                entityplayermp.field_421_a.func_43_c("You logged in from another location");
+                entityplayermp.playerNetServerHandler.func_43_c("You logged in from another location");
             }
         }
 
-        return new EntityPlayerMP(mcServer, mcServer.overworld, username, new ItemInWorldManager(mcServer.overworld));
+        WorldServer worldServer = mcServer.getWorldManager(0);
+
+        return new EntityPlayerMP(mcServer, worldServer, username, new ItemInWorldManager(worldServer));
     }
 
-    public EntityPlayerMP func_9242_d(EntityPlayerMP entityplayermp) {
-        mcServer.field_6028_k.func_9238_a(entityplayermp);
-        mcServer.field_6028_k.func_610_b(entityplayermp);
-        playerManagerObj.func_9213_b(entityplayermp);
-        playerEntities.remove(entityplayermp);
-        mcServer.overworld.func_12014_e(entityplayermp);
-        EntityPlayerMP entityplayermp1 = new EntityPlayerMP(mcServer, mcServer.overworld, entityplayermp.username, new ItemInWorldManager(mcServer.overworld));
-        entityplayermp1.field_331_c = entityplayermp.field_331_c;
-        entityplayermp1.field_421_a = entityplayermp.field_421_a;
-        mcServer.overworld.chunkProvider.loadChunk((int) entityplayermp1.posX >> 4, (int) entityplayermp1.posZ >> 4);
-        for (; mcServer.overworld.getCollidingBoundingBoxes(entityplayermp1, entityplayermp1.boundingBox).size() != 0; entityplayermp1.setPosition(entityplayermp1.posX, entityplayermp1.posY + 1.0D, entityplayermp1.posZ)) {
+    public EntityPlayerMP recreatePlayerEntity(EntityPlayerMP entityplayermp) {
+        if(entityplayermp.dimension != 0) {
+            WorldServer worldserver = mcServer.getWorldManager(entityplayermp.dimension);
+            EntityTracker entityTracker = mcServer.getEntityTracker(entityplayermp.dimension);
+            logger.info((new StringBuilder("Sending ")).append(entityplayermp.username).append(0).toString());
+            entityTracker.func_9238_a(entityplayermp);
+            entityTracker.func_610_b(entityplayermp);
+            getPlayerManager(entityplayermp.dimension).removePlayer(entityplayermp);
+            playerEntities.remove(entityplayermp);
+            worldserver.removePlayer(entityplayermp);
+
+            EntityPlayerMP entityplayermp1 = new EntityPlayerMP(mcServer, mcServer.worldMngr[0], entityplayermp.username, new ItemInWorldManager(mcServer.worldMngr[0]));
+            entityplayermp1.dimension = 0;
+            entityplayermp1.field_331_c = entityplayermp.field_331_c;
+            entityplayermp1.playerNetServerHandler = entityplayermp.playerNetServerHandler;
+            mcServer.worldMngr[0].chunkProvider.loadChunk((int) entityplayermp1.posX >> 4, (int) entityplayermp1.posZ >> 4);
+            for (; mcServer.worldMngr[0].getCollidingBoundingBoxes(entityplayermp1, entityplayermp1.boundingBox).size() != 0; entityplayermp1.setPosition(entityplayermp1.posX, entityplayermp1.posY + 1.0D, entityplayermp1.posZ)) {
+            }
+            entityplayermp1.playerNetServerHandler.sendPacket(new Packet9Respawn());
+            entityplayermp1.playerNetServerHandler.teleportTo(entityplayermp1.posX, entityplayermp1.posY, entityplayermp1.posZ, entityplayermp1.rotationYaw, entityplayermp1.rotationPitch);
+            playerManagerObj[0].addPlayer(entityplayermp1);
+            mcServer.worldMngr[0].entityJoinedWorld(entityplayermp1);
+            playerEntities.add(entityplayermp1);
+
+//            entityplayermp.isDead = false;
+//            double d = entityplayermp.posX;
+//            double d1 = entityplayermp.posZ;
+//            double d2 = 8D;
+//            if(entityplayermp.dimension == -1)
+//            {
+//                d /= d2;
+//                d1 /= d2;
+//                entityplayermp.setLocationAndAngles(d, entityplayermp.posY, d1, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
+//                if(entityplayermp.isEntityAlive())
+//                {
+//                    worldserver.updateEntityWithOptionalForce(entityplayermp, false);
+//                }
+//            } else
+//            {
+//                d *= d2;
+//                d1 *= d2;
+//                entityplayermp.setLocationAndAngles(d, entityplayermp.posY, d1, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
+//                if(entityplayermp.isEntityAlive())
+//                {
+//                    worldserver.updateEntityWithOptionalForce(entityplayermp, false);
+//                }
+//            }
+            if(entityplayermp.isEntityAlive())
+            {
+                mcServer.worldMngr[0].entityJoinedWorld(entityplayermp);
+                entityplayermp.setLocationAndAngles(entityplayermp1.posX, entityplayermp1.posY, entityplayermp1.posZ, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
+                mcServer.worldMngr[0].updateEntityWithOptionalForce(entityplayermp, false);
+                mcServer.worldMngr[0].chunkProvider.chunkLoadOverride = true;
+                (new Teleporter()).func_4107_a(mcServer.worldMngr[0], entityplayermp);
+                mcServer.worldMngr[0].chunkProvider.chunkLoadOverride = false;
+            }
+            func_28172_a(entityplayermp);
+            entityplayermp.playerNetServerHandler.teleportTo(entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
+            entityplayermp.setWorldHandler(mcServer.worldMngr[0]);
+            func_28170_a(entityplayermp, mcServer.worldMngr[0]);
+            func_30008_g(entityplayermp);
+            return entityplayermp1;
+
+        } else {
+
+            WorldServer worldServer = mcServer.getWorldManager(entityplayermp.dimension);
+            EntityTracker entityTracker = mcServer.getEntityTracker(entityplayermp.dimension);
+            entityTracker.func_9238_a(entityplayermp);
+            entityTracker.func_610_b(entityplayermp);
+        playerManagerObj[0].removePlayer(entityplayermp);
+            playerEntities.remove(entityplayermp);
+            worldServer.removePlayer(entityplayermp);
+            EntityPlayerMP entityplayermp1 = new EntityPlayerMP(mcServer, worldServer, entityplayermp.username, new ItemInWorldManager(worldServer));
+            entityplayermp1.field_331_c = entityplayermp.field_331_c;
+            entityplayermp1.playerNetServerHandler = entityplayermp.playerNetServerHandler;
+            worldServer.chunkProvider.loadChunk((int) entityplayermp1.posX >> 4, (int) entityplayermp1.posZ >> 4);
+            for (; worldServer.getCollidingBoundingBoxes(entityplayermp1, entityplayermp1.boundingBox).size() != 0; entityplayermp1.setPosition(entityplayermp1.posX, entityplayermp1.posY + 1.0D, entityplayermp1.posZ)) {
+            }
+            entityplayermp1.playerNetServerHandler.sendPacket(new Packet9Respawn());
+            entityplayermp1.playerNetServerHandler.teleportTo(entityplayermp1.posX, entityplayermp1.posY, entityplayermp1.posZ, entityplayermp1.rotationYaw, entityplayermp1.rotationPitch);
+        playerManagerObj[0].addPlayer(entityplayermp1);
+            worldServer.entityJoinedWorld(entityplayermp1);
+            playerEntities.add(entityplayermp1);
+            return entityplayermp1;
         }
-        entityplayermp1.field_421_a.sendPacket(new Packet9());
-        entityplayermp1.field_421_a.func_41_a(entityplayermp1.posX, entityplayermp1.posY, entityplayermp1.posZ, entityplayermp1.rotationYaw, entityplayermp1.rotationPitch);
-        playerManagerObj.func_9214_a(entityplayermp1);
-        mcServer.overworld.entityJoinedWorld(entityplayermp1);
-        playerEntities.add(entityplayermp1);
-        return entityplayermp1;
     }
 
     public void func_637_b() {
-        playerManagerObj.func_538_a();
+        for(int i = 0; i < playerManagerObj.length; i++) {
+            playerManagerObj[i].func_538_a();
+        }
     }
 
-    public void func_622_a(int i, int j, int k) {
-        playerManagerObj.func_535_a(i, j, k);
+    public void func_622_a(int i, int j, int k, int l) {
+        getPlayerManager(l).func_535_a(i, j, k);
     }
 
     public void sendPacketToAllPlayers(Packet packet) {
         for (int i = 0; i < playerEntities.size(); i++) {
             EntityPlayerMP entityplayermp = (EntityPlayerMP) playerEntities.get(i);
-            entityplayermp.field_421_a.sendPacket(packet);
+            entityplayermp.playerNetServerHandler.sendPacket(packet);
+        }
+
+    }
+
+    public void sendPacketToAllPlayersInDimension(Packet packet, int i)
+    {
+        for(int j = 0; j < playerEntities.size(); j++)
+        {
+            EntityPlayerMP entityplayermp = (EntityPlayerMP)playerEntities.get(j);
+            if(entityplayermp.dimension == i)
+            {
+                entityplayermp.playerNetServerHandler.sendPacket(packet);
+            }
         }
 
     }
@@ -394,7 +492,7 @@ public class ServerConfigurationManager {
     public void sendChatMessageToPlayer(String s, String s1) {
         EntityPlayerMP entityplayermp = getPlayerEntity(s);
         if (entityplayermp != null) {
-            entityplayermp.field_421_a.sendPacket(new Packet3Chat(s1));
+            entityplayermp.playerNetServerHandler.sendPacket(new Packet3Chat(s1));
         }
     }
 
@@ -405,7 +503,7 @@ public class ServerConfigurationManager {
             double d5 = d1 - entityplayermp.posY;
             double d6 = d2 - entityplayermp.posZ;
             if (d4 * d4 + d5 * d5 + d6 * d6 < d3 * d3) {
-                entityplayermp.field_421_a.sendPacket(packet);
+                entityplayermp.playerNetServerHandler.sendPacket(packet);
             }
         }
 
@@ -418,7 +516,7 @@ public class ServerConfigurationManager {
             EntityPlayerMP entityplayermp = (EntityPlayerMP) playerEntities.get(i);
             //  System.out.println("Sending chat packet to "+entityplayermp.username);
             if (isOp(entityplayermp.username)) {
-                entityplayermp.field_421_a.sendPacket(packet3chat);
+                entityplayermp.playerNetServerHandler.sendPacket(packet3chat);
             }
         }
 
@@ -430,7 +528,7 @@ public class ServerConfigurationManager {
 
             EntityPlayerMP entityplayermp = (EntityPlayerMP) playerEntities.get(i);
             // System.out.println("Sending chat packet to "+entityplayermp.username);
-            entityplayermp.field_421_a.sendPacket(packet3chat);
+            entityplayermp.playerNetServerHandler.sendPacket(packet3chat);
 
         }
 
@@ -439,7 +537,7 @@ public class ServerConfigurationManager {
     public boolean sendPacketToPlayer(String s, Packet packet) {
         EntityPlayerMP entityplayermp = getPlayerEntity(s);
         if (entityplayermp != null) {
-            entityplayermp.field_421_a.sendPacket(packet);
+            entityplayermp.playerNetServerHandler.sendPacket(packet);
             return true;
         } else {
             return false;
@@ -447,7 +545,7 @@ public class ServerConfigurationManager {
     }
 
     public void sentTileEntityToPlayer(int i, int j, int k, TileEntity tileentity) {
-        playerManagerObj.func_541_a(new Packet59ComplexEntity(i, j, k, tileentity), i, j, k);
+        getPlayerManager(tileentity.worldObj.worldProvider.worldType).func_541_a(new Packet59ComplexEntity(i, j, k, tileentity), i, j, k);
     }
 
     public void savePlayerStates() {
@@ -455,5 +553,169 @@ public class ServerConfigurationManager {
             playerNBTManagerObj.writePlayerData((EntityPlayerMP) playerEntities.get(i));
         }
 
+    }
+
+    private PlayerManager getPlayerManager(int i)
+    {
+        if(i == 0)
+        {
+            return playerManagerObj[0];
+        }
+        if(i == -1)
+        {
+            return playerManagerObj[1];
+        }
+        if(i == 1)
+        {
+            return playerManagerObj[2];
+        } else
+        {
+            return playerManagerObj[0];
+        }
+    }
+
+    public void func_28172_a(EntityPlayerMP entityplayermp)
+    {
+//        getPlayerManager(entityplayermp.dimension).removePlayer(entityplayermp);
+        playerManagerObj[0].removePlayer(entityplayermp);
+        playerManagerObj[1].removePlayer(entityplayermp);
+        playerManagerObj[2].removePlayer(entityplayermp);
+        getPlayerManager(entityplayermp.dimension).addPlayer(entityplayermp);
+        WorldServer worldserver = mcServer.getWorldManager(entityplayermp.dimension);
+        worldserver.chunkProvider.loadChunk((int)entityplayermp.posX >> 4, (int)entityplayermp.posZ >> 4);
+    }
+
+    public void sendPlayerToOtherDimension(EntityPlayerMP entityplayermp)
+    {
+        WorldServer worldserver = mcServer.getWorldManager(entityplayermp.dimension);
+        int i = 0;
+        if(entityplayermp.dimension == -1)
+        {
+            i = 0;
+        } else
+        {
+            i = -1;
+        }
+        logger.info((new StringBuilder("Sending ")).append(entityplayermp.username).append(i).toString());
+        entityplayermp.dimension = i;
+        WorldServer worldserver1 = mcServer.getWorldManager(entityplayermp.dimension);
+        entityplayermp.playerNetServerHandler.sendPacket(new Packet9Respawn());
+        worldserver.removePlayer(entityplayermp);
+        entityplayermp.isDead = false;
+        double d = entityplayermp.posX;
+        double d1 = entityplayermp.posZ;
+        double d2 = 8D;
+        if(entityplayermp.dimension == 1)
+        {
+            d /= d2;
+            d1 /= d2;
+            entityplayermp.setLocationAndAngles(d, entityplayermp.posY, d1, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
+            if(entityplayermp.isEntityAlive())
+            {
+                worldserver.updateEntityWithOptionalForce(entityplayermp, false);
+            }
+        } else
+        {
+            d *= d2;
+            d1 *= d2;
+            entityplayermp.setLocationAndAngles(d, entityplayermp.posY, d1, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
+            if(entityplayermp.isEntityAlive())
+            {
+                worldserver.updateEntityWithOptionalForce(entityplayermp, false);
+            }
+        }
+        if(entityplayermp.isEntityAlive())
+        {
+            worldserver1.entityJoinedWorld(entityplayermp);
+            entityplayermp.setLocationAndAngles(d, entityplayermp.posY, d1, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
+            worldserver1.updateEntityWithOptionalForce(entityplayermp, false);
+            worldserver1.chunkProvider.chunkLoadOverride = true;
+            (new Teleporter()).func_4107_a(worldserver1, entityplayermp);
+            worldserver1.chunkProvider.chunkLoadOverride = false;
+        }
+        func_28172_a(entityplayermp);
+        entityplayermp.playerNetServerHandler.teleportTo(entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
+        entityplayermp.setWorldHandler(worldserver1);
+        func_28170_a(entityplayermp, worldserver1);
+        func_30008_g(entityplayermp);
+        worldserver1.playSoundAtEntity(entityplayermp, "portal.travel", 1.0F, random.nextFloat() * 0.4F + 0.8F);
+//        System.out.println("Sending login.");
+//        sendPacketToPlayer(entityplayermp.username, new Packet1Login("", "", entityplayermp.field_331_c, worldserver1.randomSeed, (byte) worldserver1.worldProvider.worldType));
+//        System.out.println("Sending respawn.");
+//        sendPacketToPlayer(entityplayermp.username, new Packet6SpawnPosition(worldserver1.spawnX, worldserver1.spawnY, worldserver1.spawnZ));
+//        entityplayermp.playerNetServerHandler.sendPacket(new Packet9Respawn());
+//        entityplayermp.playerNetServerHandler.sendPacket(new Packet10Flying());
+    }
+
+    public void sendPlayerToSkyDimension(EntityPlayerMP entityplayermp)
+    {
+        WorldServer worldserver = mcServer.getWorldManager(entityplayermp.dimension);
+        int i = 0;
+        if(entityplayermp.dimension == -1)
+        {
+            i = 0;
+        } else
+        {
+            i = 1;
+        }
+        logger.info((new StringBuilder("Sending ")).append(entityplayermp.username).append(i).toString());
+        entityplayermp.dimension = i;
+        WorldServer worldserver1 = mcServer.getWorldManager(entityplayermp.dimension);
+        entityplayermp.playerNetServerHandler.sendPacket(new Packet9Respawn());
+        worldserver.removePlayer(entityplayermp);
+        entityplayermp.isDead = false;
+        double d = entityplayermp.posX;
+        double d1 = entityplayermp.posZ;
+        double d2 = 8D;
+        if(entityplayermp.dimension == -1)
+        {
+            d /= d2;
+            d1 /= d2;
+            entityplayermp.setLocationAndAngles(d, entityplayermp.posY, d1, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
+            if(entityplayermp.isEntityAlive())
+            {
+                worldserver.updateEntityWithOptionalForce(entityplayermp, false);
+            }
+        } else
+        {
+            d *= d2;
+            d1 *= d2;
+            entityplayermp.setLocationAndAngles(d, entityplayermp.posY, d1, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
+            if(entityplayermp.isEntityAlive())
+            {
+                worldserver.updateEntityWithOptionalForce(entityplayermp, false);
+            }
+        }
+        if(entityplayermp.isEntityAlive())
+        {
+            worldserver1.entityJoinedWorld(entityplayermp);
+            entityplayermp.setLocationAndAngles(d, entityplayermp.posY, d1, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
+            worldserver1.updateEntityWithOptionalForce(entityplayermp, false);
+            worldserver1.chunkProvider.chunkLoadOverride = true;
+            (new Teleporter()).func_4107_a(worldserver1, entityplayermp);
+            worldserver1.chunkProvider.chunkLoadOverride = false;
+        }
+        func_28172_a(entityplayermp);
+        entityplayermp.playerNetServerHandler.teleportTo(entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
+        entityplayermp.setWorldHandler(worldserver1);
+        func_28170_a(entityplayermp, worldserver1);
+        func_30008_g(entityplayermp);
+        worldserver1.playSoundAtEntity(entityplayermp, "portal.travel", 1.0F, random.nextFloat() * 0.4F + 0.8F);
+//        System.out.println("Sending login.");
+//        sendPacketToPlayer(entityplayermp.username, new Packet1Login("", "", entityplayermp.field_331_c, worldserver1.randomSeed, (byte) worldserver1.worldProvider.worldType));
+//        System.out.println("Sending respawn.");
+//        sendPacketToPlayer(entityplayermp.username, new Packet6SpawnPosition(worldserver1.spawnX, worldserver1.spawnY, worldserver1.spawnZ));
+//        entityplayermp.playerNetServerHandler.sendPacket(new Packet9Respawn());
+//        entityplayermp.playerNetServerHandler.sendPacket(new Packet10Flying());
+    }
+
+    public void func_28170_a(EntityPlayerMP entityplayermp, WorldServer worldserver)
+    {
+        entityplayermp.playerNetServerHandler.sendPacket(new Packet4UpdateTime(worldserver.worldTime));
+    }
+
+    public void func_30008_g(EntityPlayerMP entityplayermp)
+    {
+        entityplayermp.func_30001_B();
     }
 }

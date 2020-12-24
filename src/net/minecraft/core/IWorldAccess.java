@@ -6,7 +6,7 @@ package net.minecraft.core;
 
 public interface IWorldAccess {
 
-    public abstract void func_683_a(int i, int j, int k);
+    public abstract void func_683_a(int i, int j, int k, int dim);
 
     public abstract void func_685_a(int i, int j, int k, int l, int i1, int j1);
 
@@ -16,9 +16,9 @@ public interface IWorldAccess {
     public abstract void spawnParticle(String s, double d, double d1, double d2,
                                        double d3, double d4, double d5);
 
-    public abstract void func_681_a(Entity entity);
+    public abstract void obtainEntitySkin(Entity entity);
 
-    public abstract void func_688_b(Entity entity);
+    public abstract void releaseEntitySkin(Entity entity);
 
     public abstract void func_684_a();
 

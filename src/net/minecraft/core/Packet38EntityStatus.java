@@ -7,15 +7,15 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class Packet38 extends Packet {
+public class Packet38EntityStatus extends Packet {
 
     public int field_9016_a;
     public byte field_9015_b;
 
-    public Packet38() {
+    public Packet38EntityStatus() {
     }
 
-    public Packet38(int i, byte byte0) {
+    public Packet38EntityStatus(int i, byte byte0) {
         field_9016_a = i;
         field_9015_b = byte0;
     }

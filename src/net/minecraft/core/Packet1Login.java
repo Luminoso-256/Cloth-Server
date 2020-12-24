@@ -12,8 +12,8 @@ public class Packet1Login extends Packet {
     public int protocolVersion;
     public String username;
     public String password;
-    public long field_4026_d;
-    public byte field_4025_e;
+    public long mapSeed;
+    public byte dimension;
 
     public Packet1Login() {
     }
@@ -22,24 +22,26 @@ public class Packet1Login extends Packet {
         username = s;
         password = s1;
         protocolVersion = i;
-        field_4026_d = l;
-        field_4025_e = byte0;
+        mapSeed = l;
+        dimension = byte0;
     }
 
     public void readPacketData(DataInputStream datainputstream) throws IOException {
         protocolVersion = datainputstream.readInt();
         username = datainputstream.readUTF();
         password = datainputstream.readUTF();
-        field_4026_d = datainputstream.readLong();
-        field_4025_e = datainputstream.readByte();
+        mapSeed = datainputstream.readLong();
+        dimension = datainputstream.readByte();
     }
 
     public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
         dataoutputstream.writeInt(protocolVersion);
         dataoutputstream.writeUTF(username);
         dataoutputstream.writeUTF(password);
-        dataoutputstream.writeLong(field_4026_d);
-        dataoutputstream.writeByte(field_4025_e);
+        dataoutputstream.writeLong(mapSeed);
+        // The client doesn't properly support anything other than 0.
+        // For instance, if 1 is sent, when the player respawns, the client will crash.
+        dataoutputstream.writeByte(0);
     }
 
     public void processPacket(NetHandler nethandler) {

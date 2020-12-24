@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Packet60 extends Packet {
+public class Packet60Explosion extends Packet {
 
     public double field_12003_a;
     public double field_12002_b;
@@ -18,11 +18,11 @@ public class Packet60 extends Packet {
     public float field_12005_d;
     public Set field_12004_e;
 
-    public Packet60() {
+    public Packet60Explosion() {
     }
 
-    public Packet60(double d, double d1, double d2, float f,
-                    Set set) {
+    public Packet60Explosion(double d, double d1, double d2, float f,
+                             Set set) {
         field_12003_a = d;
         field_12002_b = d1;
         field_12006_c = d2;
