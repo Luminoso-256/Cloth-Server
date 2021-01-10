@@ -194,7 +194,7 @@ public class ChunkProviderGenerate
 
     }
 
-    public Chunk func_363_b(int i, int j) {
+    public Chunk provideChunk(int i, int j) {
         rand.setSeed((long) i * 0x4f9939f508L + (long) j * 0x1ef1565bd5L);
         byte abyte0[] = new byte[32768];
         Chunk chunk = new Chunk(worldObj, abyte0, i, j);
@@ -203,8 +203,8 @@ public class ChunkProviderGenerate
         //    System.out.println("Falsifying chunk gen for chunk "+i+","+j);
         //    chunk = new Chunk(worldObj, abyte0, 1, 1);
         //}
-        biomesForGeneration = worldObj.func_4077_a().loadBlockGeneratorData(biomesForGeneration, i * 16, j * 16, 16, 16);
-        double ad[] = worldObj.func_4077_a().temperature;
+        biomesForGeneration = worldObj.getWorldChunkManager().loadBlockGeneratorData(biomesForGeneration, i * 16, j * 16, 16, 16);
+        double ad[] = worldObj.getWorldChunkManager().temperature;
         //BiomeStorage.StoreBiome(i, j, ad);
         generateTerrain(i, j, abyte0, biomesForGeneration, ad);
         replaceBlocksForBiome(i, j, abyte0, biomesForGeneration);
@@ -219,8 +219,8 @@ public class ChunkProviderGenerate
         }
         double d = 684.41200000000003D;
         double d1 = 684.41200000000003D;
-        double ad1[] = worldObj.func_4077_a().temperature;
-        double ad2[] = worldObj.func_4077_a().humidity;
+        double ad1[] = worldObj.getWorldChunkManager().temperature;
+        double ad2[] = worldObj.getWorldChunkManager().humidity;
         field_4226_g = field_715_a.func_4103_a(field_4226_g, i, k, l, j1, 1.121D, 1.121D, 0.5D);
         field_4225_h = field_714_b.func_4103_a(field_4225_h, i, k, l, j1, 200D, 200D, 0.5D);
         field_4229_d = field_703_m.func_648_a(field_4229_d, i, j, k, l, i1, j1, d / 80D, d1 / 160D, d / 80D);
@@ -310,7 +310,7 @@ public class ChunkProviderGenerate
         BlockSand.fallInstantly = true;
         int k = i * 16;
         int l = j * 16;
-        MobSpawnerBase mobspawnerbase = worldObj.func_4077_a().func_4067_a(k + 16, l + 16);
+        MobSpawnerBase mobspawnerbase = worldObj.getWorldChunkManager().getBiomeGenAt(k + 16, l + 16);
         GameruleManager gameruleManager = GameruleManager.getInstance();
         rand.setSeed(worldObj.randomSeed);
         long l1 = (rand.nextLong() / 2L) * 2L + 1L;
@@ -499,7 +499,7 @@ public class ChunkProviderGenerate
         }
 
 
-        field_4222_w = worldObj.func_4077_a().getTemperatures(field_4222_w, k + 8, l + 8, 16, 16);
+        field_4222_w = worldObj.getWorldChunkManager().getTemperatures(field_4222_w, k + 8, l + 8, 16, 16);
         for (int i17 = k + 8; i17 < k + 8 + 16; i17++) {
             for (int l19 = l + 8; l19 < l + 8 + 16; l19++) {
 

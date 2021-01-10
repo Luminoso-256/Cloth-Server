@@ -11,11 +11,11 @@ public class WorldProviderHell extends WorldProvider {
     }
 
     public void func_4090_a() {
-        field_4301_b = new WorldChunkManagerHell(MobSpawnerBase.hell, 1.0D, 0.0D);
+        worldChunkMgr = new WorldChunkManagerHell(MobSpawnerBase.hell, 1.0D, 0.0D);
         field_6167_c = true;
         field_6166_d = true;
         field_4306_c = true;
-        field_6165_g = -1;
+        worldType = -1;
     }
 
     protected void generateLightBrightnessTable() {

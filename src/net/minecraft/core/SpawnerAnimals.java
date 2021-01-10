@@ -56,7 +56,7 @@ public final class SpawnerAnimals {
                 while (var30.hasNext()) {
                     ChunkCoordIntPair var31 = (ChunkCoordIntPair) var30.next();
                     if (world.rand.nextInt(UpperSpawnRateBound) == 0) {
-                        MobSpawnerBase var32 = world.func_4077_a().func_4066_a(var31);
+                        MobSpawnerBase var32 = world.getWorldChunkManager().func_4066_a(var31);
                         Class[] var33 = var32.getEntitiesForType(var29);
                         if (var33 != null && var33.length != 0) {
                             int var8 = world.rand.nextInt(var33.length);
@@ -95,13 +95,13 @@ public final class SpawnerAnimals {
                                                         return var1;
                                                     }
 
-                                                    var34.func_107_c((double) var20, (double) var21, (double) var22, world.rand.nextFloat() * 360.0F, 0.0F);
+                                                    var34.setLocationAndAngles((double) var20, (double) var21, (double) var22, world.rand.nextFloat() * 360.0F, 0.0F);
                                                     if (var34.getCanSpawnHere()) {
                                                         ++mobCap;
                                                         world.entityJoinedWorld(var34);
                                                         if (var34 instanceof EntitySpider && world.rand.nextInt(UpperJocketBound) == 0) {
                                                             EntitySkeleton var35 = new EntitySkeleton(world);
-                                                            var35.func_107_c((double) var20, (double) var21, (double) var22, var34.rotationYaw, 0.0F);
+                                                            var35.setLocationAndAngles((double) var20, (double) var21, (double) var22, var34.rotationYaw, 0.0F);
                                                             world.entityJoinedWorld(var35);
                                                             var35.func_6094_e(var34);
                                                         }

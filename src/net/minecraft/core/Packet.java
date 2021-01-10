@@ -22,9 +22,9 @@ public abstract class Packet {
         addIdClassMapping(4, Packet4UpdateTime.class);
         addIdClassMapping(5, Packet5PlayerInventory.class);
         addIdClassMapping(6, Packet6SpawnPosition.class);
-        addIdClassMapping(7, Packet7.class);
-        addIdClassMapping(8, Packet8.class);
-        addIdClassMapping(9, Packet9.class);
+        addIdClassMapping(7, Packet7UseEntity.class);
+        addIdClassMapping(8, Packet8UpdateHealth.class);
+        addIdClassMapping(9, Packet9Respawn.class);
         addIdClassMapping(10, Packet10Flying.class);
         addIdClassMapping(11, Packet11PlayerPosition.class);
         addIdClassMapping(12, Packet12PlayerLook.class);
@@ -39,21 +39,21 @@ public abstract class Packet {
         addIdClassMapping(22, Packet22Collect.class);
         addIdClassMapping(23, Packet23VehicleSpawn.class);
         addIdClassMapping(24, Packet24MobSpawn.class);
-        addIdClassMapping(28, Packet28.class);
+        addIdClassMapping(28, Packet28EntityVelocity.class);
         addIdClassMapping(29, Packet29DestroyEntity.class);
         addIdClassMapping(30, Packet30Entity.class);
         addIdClassMapping(31, Packet31RelEntityMove.class);
         addIdClassMapping(32, Packet32EntityLook.class);
         addIdClassMapping(33, Packet33RelEntityMoveLook.class);
         addIdClassMapping(34, Packet34EntityTeleport.class);
-        addIdClassMapping(38, Packet38.class);
-        addIdClassMapping(39, Packet39.class);
+        addIdClassMapping(38, Packet38EntityStatus.class);
+        addIdClassMapping(39, Packet39AttachEntity.class);
         addIdClassMapping(50, Packet50PreChunk.class);
         addIdClassMapping(51, Packet51MapChunk.class);
         addIdClassMapping(52, Packet52MultiBlockChange.class);
         addIdClassMapping(53, Packet53BlockChange.class);
         addIdClassMapping(59, Packet59ComplexEntity.class);
-        addIdClassMapping(60, Packet60.class);
+        addIdClassMapping(60, Packet60Explosion.class);
         addIdClassMapping(255, Packet255KickDisconnect.class);
     }
 

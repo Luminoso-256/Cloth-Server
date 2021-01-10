@@ -41,7 +41,7 @@ public class EntityFireball extends Entity {
         field_9189_ao = 0;
         field_9191_am = entityliving;
         setSize(1.0F, 1.0F);
-        func_107_c(entityliving.posX, entityliving.posY, entityliving.posZ, entityliving.rotationYaw, entityliving.rotationPitch);
+        setLocationAndAngles(entityliving.posX, entityliving.posY, entityliving.posZ, entityliving.rotationYaw, entityliving.rotationPitch);
         setPosition(posX, posY, posZ);
         yOffset = 0.0F;
         motionX = motionY = motionZ = 0.0D;

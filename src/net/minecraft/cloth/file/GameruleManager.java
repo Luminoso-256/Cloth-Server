@@ -1,7 +1,5 @@
 package net.minecraft.cloth.file;
 
-import jdk.jfr.FlightRecorder;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -109,6 +107,8 @@ public class GameruleManager {
         public void run() {
             FileTime newModified;
             try {
+                if (!gamerulesFile.exists())
+                    return;
                 newModified = Files.readAttributes(gamerulesPath, BasicFileAttributes.class).lastModifiedTime();
                 if (newModified.compareTo(lastModified) != 0) {
                     Reload();

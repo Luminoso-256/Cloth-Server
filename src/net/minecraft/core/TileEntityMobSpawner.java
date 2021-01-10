@@ -60,7 +60,7 @@ public class TileEntityMobSpawner extends TileEntity {
             double d6 = (double) xCoord + (worldObj.rand.nextDouble() - worldObj.rand.nextDouble()) * 4D;
             double d7 = (yCoord + worldObj.rand.nextInt(3)) - 1;
             double d8 = (double) zCoord + (worldObj.rand.nextDouble() - worldObj.rand.nextDouble()) * 4D;
-            entityliving.func_107_c(d6, d7, d8, worldObj.rand.nextFloat() * 360F, 0.0F);
+            entityliving.setLocationAndAngles(d6, d7, d8, worldObj.rand.nextFloat() * 360F, 0.0F);
             if (!entityliving.getCanSpawnHere()) {
                 continue;
             }

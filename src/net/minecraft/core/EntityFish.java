@@ -51,7 +51,7 @@ public class EntityFish extends Entity {
         field_6151_b = entityplayer;
         field_6151_b.field_6124_at = this;
         setSize(0.25F, 0.25F);
-        func_107_c(entityplayer.posX, (entityplayer.posY + 1.6200000000000001D) - (double) entityplayer.yOffset, entityplayer.posZ, entityplayer.rotationYaw, entityplayer.rotationPitch);
+        setLocationAndAngles(entityplayer.posX, (entityplayer.posY + 1.6200000000000001D) - (double) entityplayer.yOffset, entityplayer.posZ, entityplayer.rotationYaw, entityplayer.rotationPitch);
         posX -= MathHelper.cos((rotationYaw / 180F) * 3.141593F) * 0.16F;
         posY -= 0.10000000149011612D;
         posZ -= MathHelper.sin((rotationYaw / 180F) * 3.141593F) * 0.16F;
@@ -105,7 +105,7 @@ public class EntityFish extends Entity {
         }
         if (!worldObj.multiplayerWorld) {
             ItemStack itemstack = field_6151_b.func_172_B();
-            if (field_6151_b.isDead || !field_6151_b.func_120_t() || itemstack == null || itemstack.getItem() != Item.fishingRod || getDistanceSqToEntity(field_6151_b) > 1024D) {
+            if (field_6151_b.isDead || !field_6151_b.isEntityAlive() || itemstack == null || itemstack.getItem() != Item.fishingRod || getDistanceSqToEntity(field_6151_b) > 1024D) {
                 setEntityDead();
                 field_6151_b.field_6124_at = null;
                 return;

@@ -21,7 +21,7 @@ public class WorldChunkManagerHell extends WorldChunkManager {
         return field_4262_e;
     }
 
-    public MobSpawnerBase func_4067_a(int i, int j) {
+    public MobSpawnerBase getBiomeGenAt(int i, int j) {
         return field_4262_e;
     }
 

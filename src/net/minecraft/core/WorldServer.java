@@ -17,7 +17,7 @@ public class WorldServer extends World {
     private MinecraftServer minecraftServer;
     private MCHashTable field_6159_E;
 
-    public WorldServer(MinecraftServer minecraftserver, File file, String worldName, long seed, int i) {
+    public WorldServer(MinecraftServer minecraftserver, File file, String worldName, int i, long seed) {
         super(file, worldName, seed, WorldProvider.func_4091_a(i));
         field_819_z = false;
         field_6159_E = new MCHashTable();
@@ -28,17 +28,17 @@ public class WorldServer extends World {
         super.tick();
     }
 
-    public void func_4074_a(Entity entity, boolean flag) {
+    public void updateEntityWithOptionalForce(Entity entity, boolean flag) {
         if (!minecraftServer.noAnimals && (entity instanceof EntityAnimals)) {
             entity.setEntityDead();
         }
-        if (entity.field_328_f == null || !(entity.field_328_f instanceof EntityPlayer)) {
-            super.func_4074_a(entity, flag);
+        if (entity.riddenByEntity == null || !(entity.riddenByEntity instanceof EntityPlayer)) {
+            super.updateEntityWithOptionalForce(entity, flag);
         }
     }
 
     public void func_12017_b(Entity entity, boolean flag) {
-        super.func_4074_a(entity, flag);
+        super.updateEntityWithOptionalForce(entity, flag);
     }
 
     protected IChunkProvider func_4076_a(File file) {
@@ -86,14 +86,15 @@ public class WorldServer extends World {
     }
 
     public void func_9206_a(Entity entity, byte byte0) {
-        Packet38 packet38 = new Packet38(entity.field_331_c, byte0);
-        minecraftServer.field_6028_k.func_609_a(entity, packet38);
+        Packet38EntityStatus packet38 = new Packet38EntityStatus(entity.field_331_c, byte0);
+        EntityTracker entityTracker = minecraftServer.getEntityTracker(worldProvider.worldType);
+        entityTracker.func_609_a(entity, packet38);
     }
 
     public Explosion func_12015_a(Entity entity, double d, double d1, double d2,
                                   float f, boolean flag) {
         Explosion explosion = super.func_12015_a(entity, d, d1, d2, f, flag);
-        minecraftServer.configManager.func_12022_a(d, d1, d2, 64D, new Packet60(d, d1, d2, f, explosion.field_12025_g));
+        minecraftServer.configManager.func_12022_a(d, d1, d2, 64D, new Packet60Explosion(d, d1, d2, f, explosion.field_12025_g));
         return explosion;
     }
 }

@@ -37,7 +37,7 @@ public class NetServerHandler extends NetHandler
         netManager = networkmanager;
         networkmanager.setNetHandler(this);
         playerEntity = entityplayermp;
-        entityplayermp.field_421_a = this;
+        entityplayermp.playerNetServerHandler = this;
     }
 
     public void func_42_a() {
@@ -56,6 +56,7 @@ public class NetServerHandler extends NetHandler
     }
 
     public void handleFlying(Packet10Flying packet10flying) {
+        WorldServer worldserver = mcServer.getWorldManager(playerEntity.dimension);
         if (!field_9006_j) {
             double d = packet10flying.yPosition - field_9008_h;
             if (packet10flying.xPosition == field_9009_g && d * d < 0.01D && packet10flying.zPosition == field_9007_i) {
@@ -63,10 +64,10 @@ public class NetServerHandler extends NetHandler
             }
         }
         if (field_9006_j) {
-            if (playerEntity.field_327_g != null) {
+            if (playerEntity.ridingEntity != null) {
                 float f = playerEntity.rotationYaw;
                 float f1 = playerEntity.rotationPitch;
-                playerEntity.field_327_g.func_127_w();
+                playerEntity.ridingEntity.func_127_w();
                 double d2 = playerEntity.posX;
                 double d4 = playerEntity.posY;
                 double d6 = playerEntity.posZ;
@@ -86,17 +87,17 @@ public class NetServerHandler extends NetHandler
                 playerEntity.setPositionAndRotation(d2, d4, d6, f, f1);
                 playerEntity.motionX = d8;
                 playerEntity.motionZ = d9;
-                if (playerEntity.field_327_g != null) {
-                    mcServer.overworld.func_12017_b(playerEntity.field_327_g, true);
+                if (playerEntity.ridingEntity != null) {
+                    worldserver.func_12017_b(playerEntity.ridingEntity, true);
                 }
-                if (playerEntity.field_327_g != null) {
-                    playerEntity.field_327_g.func_127_w();
+                if (playerEntity.ridingEntity != null) {
+                    playerEntity.ridingEntity.func_127_w();
                 }
                 mcServer.configManager.func_613_b(playerEntity);
                 field_9009_g = playerEntity.posX;
                 field_9008_h = playerEntity.posY;
                 field_9007_i = playerEntity.posZ;
-                mcServer.overworld.func_520_e(playerEntity);
+                worldserver.func_520_e(playerEntity);
                 return;
             }
             double d1 = playerEntity.posY;
@@ -133,7 +134,7 @@ public class NetServerHandler extends NetHandler
             double d12 = d5 - playerEntity.posY;
             double d13 = d7 - playerEntity.posZ;
             float f4 = 0.0625F;
-            boolean flag = mcServer.overworld.getCollidingBoundingBoxes(playerEntity, playerEntity.boundingBox.copy().func_694_e(f4, f4, f4)).size() == 0;
+            boolean flag = worldserver.getCollidingBoundingBoxes(playerEntity, playerEntity.boundingBox.copy().func_694_e(f4, f4, f4)).size() == 0;
             playerEntity.moveEntity(d11, d12, d13);
             d11 = d3 - playerEntity.posX;
             d12 = d5 - playerEntity.posY;
@@ -150,9 +151,9 @@ public class NetServerHandler extends NetHandler
                 System.out.println((new StringBuilder()).append("Expected ").append(playerEntity.posX).append(", ").append(playerEntity.posY).append(", ").append(playerEntity.posZ).toString());
             }
             playerEntity.setPositionAndRotation(d3, d5, d7, f2, f3);
-            boolean flag2 = mcServer.overworld.getCollidingBoundingBoxes(playerEntity, playerEntity.boundingBox.copy().func_694_e(f4, f4, f4)).size() == 0;
+            boolean flag2 = worldserver.getCollidingBoundingBoxes(playerEntity, playerEntity.boundingBox.copy().func_694_e(f4, f4, f4)).size() == 0;
             if (flag && (flag1 || !flag2)) {
-                func_41_a(field_9009_g, field_9008_h, field_9007_i, f2, f3);
+                teleportTo(field_9009_g, field_9008_h, field_9007_i, f2, f3);
                 return;
             }
             playerEntity.onGround = packet10flying.onGround;
@@ -161,19 +162,20 @@ public class NetServerHandler extends NetHandler
         }
     }
 
-    public void func_41_a(double d, double d1, double d2, float f,
-                          float f1) {
+    public void teleportTo(double d, double d1, double d2, float f,
+                           float f1) {
         field_9006_j = false;
         field_9009_g = d;
         field_9008_h = d1;
         field_9007_i = d2;
         playerEntity.setPositionAndRotation(d, d1, d2, f, f1);
-        playerEntity.field_421_a.sendPacket(new Packet13PlayerLookMove(d, d1 + 1.6200000047683716D, d1, d2, f, f1, false));
+        playerEntity.playerNetServerHandler.sendPacket(new Packet13PlayerLookMove(d, d1 + 1.6200000047683716D, d1, d2, f, f1, false));
     }
 
     public void handleBlockDig(Packet14BlockDig packet14blockdig) {
+        WorldServer worldserver = mcServer.getWorldManager(playerEntity.dimension);
         playerEntity.inventory.mainInventory[playerEntity.inventory.currentItem] = field_10_k;
-        boolean flag = mcServer.overworld.field_819_z = mcServer.configManager.isOp(playerEntity.username);
+        boolean flag = worldserver.field_819_z = mcServer.configManager.isOp(playerEntity.username);
         boolean flag1 = false;
         if (packet14blockdig.status == 0) {
             flag1 = true;
@@ -197,8 +199,8 @@ public class NetServerHandler extends NetHandler
             playerEntity.posY = d7;
         }
         int l = packet14blockdig.face;
-        int i1 = (int) MathHelper.abs(i - mcServer.overworld.spawnX);
-        int j1 = (int) MathHelper.abs(k - mcServer.overworld.spawnZ);
+        int i1 = (int) MathHelper.abs(i - worldserver.spawnX);
+        int j1 = (int) MathHelper.abs(k - worldserver.spawnZ);
         if (i1 > j1) {
             j1 = i1;
         }
@@ -218,35 +220,36 @@ public class NetServerHandler extends NetHandler
             double d6 = playerEntity.posZ - ((double) k + 0.5D);
             double d8 = d2 * d2 + d4 * d4 + d6 * d6;
             if (d8 < 256D) {
-                playerEntity.field_421_a.sendPacket(new Packet53BlockChange(i, j, k, mcServer.overworld));
+                playerEntity.playerNetServerHandler.sendPacket(new Packet53BlockChange(i, j, k, worldserver));
             }
         }
-        mcServer.overworld.field_819_z = false;
+        worldserver.field_819_z = false;
     }
 
     public void handlePlace(Packet15Place packet15place) {
-        boolean flag = mcServer.overworld.field_819_z = mcServer.configManager.isOp(playerEntity.username);
+        WorldServer worldserver = mcServer.getWorldManager(playerEntity.dimension);
+        boolean flag = worldserver.field_819_z = mcServer.configManager.isOp(playerEntity.username);
         if (packet15place.direction == 255) {
 
             if (GameruleManager.getInstance().getGamerule("doinvalidblockcheck", true)) {
                 if (ExploitUtils.IsIdValid(packet15place.id)) {
                     ItemStack itemstack = packet15place.id < 0 ? null : new ItemStack(packet15place.id);
-                    playerEntity.field_425_ad.func_6154_a(playerEntity, mcServer.overworld, itemstack);
+                    playerEntity.field_425_ad.func_6154_a(playerEntity, worldserver, itemstack);
                 } else if (mcServer.configManager.isOp(playerEntity.username)) {
                     ItemStack itemstack = packet15place.id < 0 ? null : new ItemStack(packet15place.id);
-                    playerEntity.field_425_ad.func_6154_a(playerEntity, mcServer.overworld, itemstack);
+                    playerEntity.field_425_ad.func_6154_a(playerEntity, worldserver, itemstack);
                 }
             } else {
                 ItemStack itemstack = packet15place.id < 0 ? null : new ItemStack(packet15place.id);
-                playerEntity.field_425_ad.func_6154_a(playerEntity, mcServer.overworld, itemstack);
+                playerEntity.field_425_ad.func_6154_a(playerEntity, worldserver, itemstack);
             }
         } else {
             int i = packet15place.xPosition;
             int j = packet15place.yPosition;
             int k = packet15place.zPosition;
             int l = packet15place.direction;
-            int i1 = (int) MathHelper.abs(i - mcServer.overworld.spawnX);
-            int j1 = (int) MathHelper.abs(k - mcServer.overworld.spawnZ);
+            int i1 = (int) MathHelper.abs(i - worldserver.spawnX);
+            int j1 = (int) MathHelper.abs(k - worldserver.spawnZ);
             if (i1 > j1) {
                 j1 = i1;
             }
@@ -254,10 +257,10 @@ public class NetServerHandler extends NetHandler
 
                 if (ExploitUtils.IsIdValid(packet15place.id)) {
                     ItemStack itemstack1 = packet15place.id < 0 ? null : new ItemStack(packet15place.id);
-                    playerEntity.field_425_ad.func_327_a(playerEntity, mcServer.overworld, itemstack1, i, j, k, l);
+                    playerEntity.field_425_ad.func_327_a(playerEntity, worldserver, itemstack1, i, j, k, l);
                 }
             }
-            playerEntity.field_421_a.sendPacket(new Packet53BlockChange(i, j, k, mcServer.overworld));
+            playerEntity.playerNetServerHandler.sendPacket(new Packet53BlockChange(i, j, k, worldserver));
             if (l == 0) {
                 j--;
             }
@@ -276,9 +279,9 @@ public class NetServerHandler extends NetHandler
             if (l == 5) {
                 i++;
             }
-            playerEntity.field_421_a.sendPacket(new Packet53BlockChange(i, j, k, mcServer.overworld));
+            playerEntity.playerNetServerHandler.sendPacket(new Packet53BlockChange(i, j, k, worldserver));
         }
-        mcServer.overworld.field_819_z = false;
+        worldserver.field_819_z = false;
     }
 
     public void handleErrorMessage(String s) {
@@ -298,6 +301,7 @@ public class NetServerHandler extends NetHandler
     }
 
     public void handleBlockItemSwitch(Packet16BlockItemSwitch packet16blockitemswitch) {
+        EntityTracker entityTracker = mcServer.getEntityTracker(playerEntity.dimension);
         int i = packet16blockitemswitch.id;
         playerEntity.inventory.currentItem = playerEntity.inventory.mainInventory.length - 1;
         if (i == 0) {
@@ -306,19 +310,20 @@ public class NetServerHandler extends NetHandler
             field_10_k = new ItemStack(i);
         }
         playerEntity.inventory.mainInventory[playerEntity.inventory.currentItem] = field_10_k;
-        mcServer.field_6028_k.func_12021_a(playerEntity, new Packet16BlockItemSwitch(playerEntity.field_331_c, i));
+        entityTracker.func_12021_a(playerEntity, new Packet16BlockItemSwitch(playerEntity.field_331_c, i));
     }
 
     public void handlePickupSpawn(Packet21PickupSpawn packet21pickupspawn) {
+        WorldServer worldserver = mcServer.getWorldManager(playerEntity.dimension);
         double d = (double) packet21pickupspawn.xPosition / 32D;
         double d1 = (double) packet21pickupspawn.yPosition / 32D;
         double d2 = (double) packet21pickupspawn.zPosition / 32D;
-        EntityItem entityitem = new EntityItem(mcServer.overworld, d, d1, d2, new ItemStack(packet21pickupspawn.itemId, packet21pickupspawn.count));
+        EntityItem entityitem = new EntityItem(worldserver, d, d1, d2, new ItemStack(packet21pickupspawn.itemId, packet21pickupspawn.count));
         entityitem.motionX = (double) packet21pickupspawn.rotation / 128D;
         entityitem.motionY = (double) packet21pickupspawn.pitch / 128D;
         entityitem.motionZ = (double) packet21pickupspawn.roll / 128D;
         entityitem.field_433_ad = 10;
-        mcServer.overworld.entityJoinedWorld(entityitem);
+        worldserver.entityJoinedWorld(entityitem);
     }
 
     public void handleChat(Packet3Chat packet3chat) {
@@ -432,7 +437,7 @@ public class NetServerHandler extends NetHandler
         netManager.networkShutdown("Quitting");
     }
 
-    public int func_38_b() {
+    public int getNumChunkDataPackets() {
         return netManager.getNumChunkDataPackets();
     }
 
@@ -463,6 +468,8 @@ public class NetServerHandler extends NetHandler
     }
 
     public void handleComplexEntity(Packet59ComplexEntity packet59complexentity) {
+        WorldServer worldserver = mcServer.getWorldManager(playerEntity.dimension);
+
         if (packet59complexentity.entityNBT.getInteger("x") != packet59complexentity.xPosition) {
             return;
         }
@@ -472,7 +479,7 @@ public class NetServerHandler extends NetHandler
         if (packet59complexentity.entityNBT.getInteger("z") != packet59complexentity.zPosition) {
             return;
         }
-        TileEntity tileentity = mcServer.overworld.getBlock(packet59complexentity.xPosition, packet59complexentity.yPosition, packet59complexentity.zPosition);
+        TileEntity tileentity = worldserver.getBlock(packet59complexentity.xPosition, packet59complexentity.yPosition, packet59complexentity.zPosition);
         if (tileentity != null) {
             try {
                 tileentity.readFromNBT(packet59complexentity.entityNBT);
@@ -482,23 +489,24 @@ public class NetServerHandler extends NetHandler
         }
     }
 
-    public void func_6006_a(Packet7 packet7) {
-        Entity entity = mcServer.overworld.func_6158_a(packet7.field_9018_b);
+    public void func_6006_a(Packet7UseEntity packet7) {
+        WorldServer worldserver = mcServer.getWorldManager(playerEntity.dimension);
+        Entity entity = worldserver.func_6158_a(packet7.field_9018_b);
         playerEntity.inventory.mainInventory[playerEntity.inventory.currentItem] = field_10_k;
         if (entity != null && playerEntity.func_145_g(entity)) {
             if (packet7.field_9020_c == 0) {
-                playerEntity.func_9145_g(entity);
+                playerEntity.useCurrentItemOnEntity(entity);
             } else if (packet7.field_9020_c == 1) {
-                playerEntity.func_9146_h(entity);
+                playerEntity.attackTargetEntityWithCurrentItem(entity);
             }
         }
     }
 
-    public void func_9002_a(Packet9 packet9) {
+    public void func_9002_a(Packet9Respawn packet9) {
         if (playerEntity.health > 0) {
             return;
         } else {
-            playerEntity = mcServer.configManager.func_9242_d(playerEntity);
+            playerEntity = mcServer.configManager.recreatePlayerEntity(playerEntity);
             return;
         }
     }

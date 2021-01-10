@@ -15,12 +15,14 @@ public class ChunkProviderServer
     private Chunk field_724_b;
     private IChunkProvider field_730_c;
     private IChunkLoader field_729_d;
+    public boolean chunkLoadOverride;
     private Map field_728_e;
     private List field_727_f;
     private WorldServer field_726_g;
 
     public ChunkProviderServer(WorldServer worldserver, IChunkLoader ichunkloader, IChunkProvider ichunkprovider) {
         field_725_a = new HashSet();
+        chunkLoadOverride = false;
         field_728_e = new HashMap();
         field_727_f = new ArrayList();
         field_724_b = new Chunk(worldserver, new byte[32768], 0, 0);
@@ -61,7 +63,7 @@ public class ChunkProviderServer
                 if (field_730_c == null) {
                     chunk = field_724_b;
                 } else {
-                    chunk = field_730_c.func_363_b(i, j);
+                    chunk = field_730_c.provideChunk(i, j);
                 }
             }
             field_728_e.put(chunkcoordinates, chunk);
@@ -73,24 +75,24 @@ public class ChunkProviderServer
             if (!chunk.isTerrainPopulated && chunkExists(i + 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i + 1, j)) {
                 populate(this, i, j);
             }
-            if (chunkExists(i - 1, j) && !func_363_b(i - 1, j).isTerrainPopulated && chunkExists(i - 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i - 1, j)) {
+            if (chunkExists(i - 1, j) && !provideChunk(i - 1, j).isTerrainPopulated && chunkExists(i - 1, j + 1) && chunkExists(i, j + 1) && chunkExists(i - 1, j)) {
                 populate(this, i - 1, j);
             }
-            if (chunkExists(i, j - 1) && !func_363_b(i, j - 1).isTerrainPopulated && chunkExists(i + 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i + 1, j)) {
+            if (chunkExists(i, j - 1) && !provideChunk(i, j - 1).isTerrainPopulated && chunkExists(i + 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i + 1, j)) {
                 populate(this, i, j - 1);
             }
-            if (chunkExists(i - 1, j - 1) && !func_363_b(i - 1, j - 1).isTerrainPopulated && chunkExists(i - 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i - 1, j)) {
+            if (chunkExists(i - 1, j - 1) && !provideChunk(i - 1, j - 1).isTerrainPopulated && chunkExists(i - 1, j - 1) && chunkExists(i, j - 1) && chunkExists(i - 1, j)) {
                 populate(this, i - 1, j - 1);
             }
         }
         return chunk;
     }
 
-    public Chunk func_363_b(int i, int j) {
+    public Chunk provideChunk(int i, int j) {
         ChunkCoordinates chunkcoordinates = new ChunkCoordinates(i, j);
         Chunk chunk = (Chunk) field_728_e.get(chunkcoordinates);
         if (chunk == null) {
-            if (field_726_g.field_9209_x) {
+            if (field_726_g.worldChunkLoadOverride || chunkLoadOverride) {
                 return loadChunk(i, j);
             } else {
                 return field_724_b;
@@ -140,7 +142,7 @@ public class ChunkProviderServer
     }
 
     public void populate(IChunkProvider ichunkprovider, int i, int j) {
-        Chunk chunk = func_363_b(i, j);
+        Chunk chunk = provideChunk(i, j);
         if (!chunk.isTerrainPopulated) {
             chunk.isTerrainPopulated = true;
             if (field_730_c != null) {
@@ -181,7 +183,7 @@ public class ChunkProviderServer
             for (int i = 0; i < 100; i++) {
                 if (!field_725_a.isEmpty()) {
                     ChunkCoordinates chunkcoordinates = (ChunkCoordinates) field_725_a.iterator().next();
-                    Chunk chunk = func_363_b(chunkcoordinates.field_529_a, chunkcoordinates.field_528_b);
+                    Chunk chunk = provideChunk(chunkcoordinates.field_529_a, chunkcoordinates.field_528_b);
                     chunk.func_331_d();
                     func_373_b(chunk);
                     func_375_a(chunk);

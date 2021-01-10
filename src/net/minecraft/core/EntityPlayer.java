@@ -18,7 +18,7 @@ public class EntityPlayer extends EntityLiving {
     public boolean field_9148_aq;
     public int field_9147_ar;
     public String username;
-    public int field_4110_as;
+    public int dimension;
     public EntityFish field_6124_at;
     //Death stuff
     public boolean IsDead = false;
@@ -26,6 +26,10 @@ public class EntityPlayer extends EntityLiving {
     public Entity lastDamagingEntity;
     private int field_421_a;
     private GameruleManager gameruleManager = GameruleManager.getInstance();
+    public int timeUntilPortal;
+    protected boolean inPortal;
+    protected boolean inPortalSky;
+    public float timeInPortal;
 
     public EntityPlayer(World world) {
         super(world);
@@ -38,12 +42,39 @@ public class EntityPlayer extends EntityLiving {
         field_6124_at = null;
         yOffset = 1.62F;
         IsPlayer = true;
-        func_107_c((double) world.spawnX + 0.5D, world.spawnY + 1, (double) world.spawnZ + 0.5D, 0.0F, 0.0F);
+        setLocationAndAngles((double) world.spawnX + 0.5D, world.spawnY + 1, (double) world.spawnZ + 0.5D, 0.0F, 0.0F);
         health = 20; //THIS IS THE HEALTH VALUE
         field_9116_aJ = "humanoid";
         field_9117_aI = 180F;
         // field_9062_Y = 20;
         field_9119_aG = "/mob/char.png";
+    }
+
+    public void setInPortal()
+    {
+        if(timeUntilPortal > 0)
+        {
+            timeUntilPortal = 10;
+            return;
+        } else
+        {
+            inPortal = true;
+            return;
+        }
+    }
+
+    public void setInPortalSky()
+    {
+        if(timeUntilPortal > 0)
+        {
+            timeUntilPortal = 10;
+            return;
+        } else
+        {
+            inPortal = false;
+            inPortalSky = true;
+            return;
+        }
     }
 
     public void func_115_v() {
@@ -194,13 +225,13 @@ public class EntityPlayer extends EntityLiving {
         super.readEntityFromNBT(nbttagcompound);
         NBTTagList nbttaglist = nbttagcompound.getTagList("Inventory");
         inventory.readFromNBT(nbttaglist);
-        field_4110_as = nbttagcompound.getInteger("Dimension");
+        dimension = nbttagcompound.getInteger("Dimension");
     }
 
     public void writeEntityToNBT(NBTTagCompound nbttagcompound) {
         super.writeEntityToNBT(nbttagcompound);
         nbttagcompound.setTag("Inventory", inventory.writeToNBT(new NBTTagList()));
-        nbttagcompound.setInteger("Dimension", field_4110_as);
+        nbttagcompound.setInteger("Dimension", dimension);
     }
 
     public void func_166_a(IInventory iinventory) {
@@ -259,7 +290,7 @@ public class EntityPlayer extends EntityLiving {
     public void func_4048_a(TileEntitySign tileentitysign) {
     }
 
-    public void func_9145_g(Entity entity) {
+    public void useCurrentItemOnEntity(Entity entity) {
         entity.func_6092_a(this);
     }
 
@@ -280,7 +311,7 @@ public class EntityPlayer extends EntityLiving {
         field_9148_aq = true;
     }
 
-    public void func_9146_h(Entity entity) {
+    public void attackTargetEntityWithCurrentItem(Entity entity) {
         int i = inventory.func_9157_a(entity);
         if (i > 0) {
             entity.attackEntity(this, i);
