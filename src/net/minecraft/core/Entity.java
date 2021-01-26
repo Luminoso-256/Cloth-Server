@@ -16,8 +16,8 @@ public abstract class Entity {
     public int field_331_c;
     public double field_9094_h;
     public boolean field_329_e;
-    public Entity field_328_f;
-    public Entity field_327_g;
+    public Entity riddenByEntity;
+    public Entity ridingEntity;
     public World worldObj;
     public double prevPosX;
     public double prevPosY;
@@ -112,6 +112,19 @@ public abstract class Entity {
         setPosition(0.0D, 0.0D, 0.0D);
     }
 
+    public void setWorldHandler(World world)
+    {
+        worldObj = world;
+    }
+
+    public void setInPortal()
+    {
+    }
+
+    public void setInPortalSky()
+    {
+    }
+
     public boolean equals(Object obj) {
         if (obj instanceof Entity) {
             return ((Entity) obj).field_331_c == field_331_c;
@@ -152,8 +165,8 @@ public abstract class Entity {
     }
 
     public void func_84_k() {
-        if (field_327_g != null && field_327_g.isDead) {
-            field_327_g = null;
+        if (ridingEntity != null && ridingEntity.isDead) {
+            ridingEntity = null;
         }
         field_9063_X++;
         field_9075_K = field_9074_L;
@@ -533,8 +546,8 @@ public abstract class Entity {
         setRotation(f, f1);
     }
 
-    public void func_107_c(double d, double d1, double d2, float f,
-                           float f1) {
+    public void setLocationAndAngles(double d, double d1, double d2, float f,
+                                     float f1) {
         prevPosX = posX = d;
         prevPosY = posY = d1 + (double) yOffset;
         prevPosZ = posZ = d2;
@@ -575,7 +588,7 @@ public abstract class Entity {
     }
 
     public void applyEntityCollision(Entity entity) {
-        if (entity.field_328_f == this || entity.field_327_g == this) {
+        if (entity.riddenByEntity == this || entity.ridingEntity == this) {
             return;
         }
         double d = entity.posX - posX;
@@ -735,7 +748,7 @@ public abstract class Entity {
         return entityitem;
     }
 
-    public boolean func_120_t() {
+    public boolean isEntityAlive() {
         return !isDead;
     }
 
@@ -755,17 +768,17 @@ public abstract class Entity {
     }
 
     public void func_115_v() {
-        if (field_327_g.isDead) {
-            field_327_g = null;
+        if (ridingEntity.isDead) {
+            ridingEntity = null;
             return;
         }
         motionX = 0.0D;
         motionY = 0.0D;
         motionZ = 0.0D;
         onUpdate();
-        field_327_g.func_127_w();
-        field_4128_e += field_327_g.rotationYaw - field_327_g.prevRotationYaw;
-        field_4130_d += field_327_g.rotationPitch - field_327_g.prevRotationPitch;
+        ridingEntity.func_127_w();
+        field_4128_e += ridingEntity.rotationYaw - ridingEntity.prevRotationYaw;
+        field_4130_d += ridingEntity.rotationPitch - ridingEntity.prevRotationPitch;
         for (; field_4128_e >= 180D; field_4128_e -= 360D) {
         }
         for (; field_4128_e < -180D; field_4128_e += 360D) {
@@ -796,7 +809,7 @@ public abstract class Entity {
     }
 
     public void func_127_w() {
-        field_328_f.setPosition(posX, posY + func_130_h() + field_328_f.func_117_x(), posZ);
+        riddenByEntity.setPosition(posX, posY + func_130_h() + riddenByEntity.func_117_x(), posZ);
     }
 
     public double func_117_x() {
@@ -811,27 +824,27 @@ public abstract class Entity {
         field_4130_d = 0.0D;
         field_4128_e = 0.0D;
         if (entity == null) {
-            if (field_327_g != null) {
-                func_107_c(field_327_g.posX, field_327_g.boundingBox.minY + (double) field_327_g.height, field_327_g.posZ, rotationYaw, rotationPitch);
-                field_327_g.field_328_f = null;
+            if (ridingEntity != null) {
+                setLocationAndAngles(ridingEntity.posX, ridingEntity.boundingBox.minY + (double) ridingEntity.height, ridingEntity.posZ, rotationYaw, rotationPitch);
+                ridingEntity.riddenByEntity = null;
             }
-            field_327_g = null;
+            ridingEntity = null;
             return;
         }
-        if (field_327_g == entity) {
-            field_327_g.field_328_f = null;
-            field_327_g = null;
-            func_107_c(entity.posX, entity.boundingBox.minY + (double) entity.height, entity.posZ, rotationYaw, rotationPitch);
+        if (ridingEntity == entity) {
+            ridingEntity.riddenByEntity = null;
+            ridingEntity = null;
+            setLocationAndAngles(entity.posX, entity.boundingBox.minY + (double) entity.height, entity.posZ, rotationYaw, rotationPitch);
             return;
         }
-        if (field_327_g != null) {
-            field_327_g.field_328_f = null;
+        if (ridingEntity != null) {
+            ridingEntity.riddenByEntity = null;
         }
-        if (entity.field_328_f != null) {
-            entity.field_328_f.field_327_g = null;
+        if (entity.riddenByEntity != null) {
+            entity.riddenByEntity.ridingEntity = null;
         }
-        field_327_g = entity;
-        entity.field_328_f = this;
+        ridingEntity = entity;
+        entity.riddenByEntity = this;
     }
 
     public Vec3D func_4039_B() {

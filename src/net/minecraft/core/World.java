@@ -31,12 +31,12 @@ public class World
     public File field_797_s;
     public long randomSeed;
     public long sizeOnDisk;
-    public boolean field_9209_x;
+    public boolean worldChunkLoadOverride;
     public boolean multiplayerWorld;
     protected int field_4279_g;
     protected int field_4278_h;
     protected int field_4277_j;
-    protected List field_798_r;
+    protected List worldAccesses;
     private List field_821;
     private List field_790_z;
     private TreeSet scheduledTickTreeSet;
@@ -71,7 +71,7 @@ public class World
         field_4277_j = 40;
         rand = new Random();
         field_9212_p = false;
-        field_798_r = new ArrayList();
+        worldAccesses = new ArrayList();
         randomSeed = 0L;
         sizeOnDisk = 0L;
         field_9207_I = new ArrayList();
@@ -134,20 +134,20 @@ public class World
         this.worldProvider.func_4093_a(this);
         chunkProvider = func_4076_a(field_797_s);
         if (flag) {
-            field_9209_x = true;
+            worldChunkLoadOverride = true;
             spawnX = 0;
             spawnY = 64;
             for (spawnZ = 0; !this.worldProvider.canCoordinateBeSpawn(spawnX, spawnZ); spawnZ += rand.nextInt(64) - rand.nextInt(64)) {
                 spawnX += rand.nextInt(64) - rand.nextInt(64);
             }
 
-            field_9209_x = false;
+            worldChunkLoadOverride = false;
         }
         calculateInitialSkylight();
     }
 
-    public WorldChunkManager func_4077_a() {
-        return worldProvider.field_4301_b;
+    public WorldChunkManager getWorldChunkManager() {
+        return worldProvider.worldChunkMgr;
     }
 
     protected IChunkProvider func_4076_a(File file) {
@@ -270,7 +270,7 @@ public class World
     }
 
     public Chunk getChunkFromChunkCoords(int i, int j) {
-        return chunkProvider.func_363_b(i, j);
+        return chunkProvider.provideChunk(i, j);
     }
 
     public boolean func_470_a(int i, int j, int k, int l, int i1) {
@@ -372,8 +372,8 @@ public class World
     }
 
     public void func_521_f(int i, int j, int k) {
-        for (int l = 0; l < field_798_r.size(); l++) {
-            ((IWorldAccess) field_798_r.get(l)).func_683_a(i, j, k);
+        for (int l = 0; l < worldAccesses.size(); l++) {
+            ((IWorldAccess) worldAccesses.get(l)).func_683_a(i, j, k, worldProvider.worldType);
         }
 
     }
@@ -393,8 +393,8 @@ public class World
     }
 
     public void func_519_b(int i, int j, int k, int l, int i1, int j1) {
-        for (int k1 = 0; k1 < field_798_r.size(); k1++) {
-            ((IWorldAccess) field_798_r.get(k1)).func_685_a(i, j, k, l, i1, j1);
+        for (int k1 = 0; k1 < worldAccesses.size(); k1++) {
+            ((IWorldAccess) worldAccesses.get(k1)).func_685_a(i, j, k, l, i1, j1);
         }
 
     }
@@ -553,8 +553,8 @@ public class World
         }
         Chunk chunk = getChunkFromChunkCoords(i >> 4, k >> 4);
         chunk.setLightValue(enumskyblock, i & 0xf, j, k & 0xf, l);
-        for (int i1 = 0; i1 < field_798_r.size(); i1++) {
-            ((IWorldAccess) field_798_r.get(i1)).func_683_a(i, j, k);
+        for (int i1 = 0; i1 < worldAccesses.size(); i1++) {
+            ((IWorldAccess) worldAccesses.get(i1)).func_683_a(i, j, k, worldProvider.worldType);
         }
 
     }
@@ -687,31 +687,31 @@ public class World
     }
 
     public void playSoundAtEntity(Entity entity, String s, float f, float f1) {
-        for (int i = 0; i < field_798_r.size(); i++) {
-            ((IWorldAccess) field_798_r.get(i)).playSound(s, entity.posX, entity.posY - (double) entity.yOffset, entity.posZ, f, f1);
+        for (int i = 0; i < worldAccesses.size(); i++) {
+            ((IWorldAccess) worldAccesses.get(i)).playSound(s, entity.posX, entity.posY - (double) entity.yOffset, entity.posZ, f, f1);
         }
 
     }
 
     public void playSoundEffect(double d, double d1, double d2, String s,
                                 float f, float f1) {
-        for (int i = 0; i < field_798_r.size(); i++) {
-            ((IWorldAccess) field_798_r.get(i)).playSound(s, d, d1, d2, f, f1);
+        for (int i = 0; i < worldAccesses.size(); i++) {
+            ((IWorldAccess) worldAccesses.get(i)).playSound(s, d, d1, d2, f, f1);
         }
 
     }
 
     public void playRecord(String s, int i, int j, int k) {
-        for (int l = 0; l < field_798_r.size(); l++) {
-            ((IWorldAccess) field_798_r.get(l)).playRecord(s, i, j, k);
+        for (int l = 0; l < worldAccesses.size(); l++) {
+            ((IWorldAccess) worldAccesses.get(l)).playRecord(s, i, j, k);
         }
 
     }
 
     public void spawnParticle(String s, double d, double d1, double d2,
                               double d3, double d4, double d5) {
-        for (int i = 0; i < field_798_r.size(); i++) {
-            ((IWorldAccess) field_798_r.get(i)).spawnParticle(s, d, d1, d2, d3, d4, d5);
+        for (int i = 0; i < worldAccesses.size(); i++) {
+            ((IWorldAccess) worldAccesses.get(i)).spawnParticle(s, d, d1, d2, d3, d4, d5);
         }
 
     }
@@ -738,15 +738,15 @@ public class World
     }
 
     protected void func_479_b(Entity entity) {
-        for (int i = 0; i < field_798_r.size(); i++) {
-            ((IWorldAccess) field_798_r.get(i)).func_681_a(entity);
+        for (int i = 0; i < worldAccesses.size(); i++) {
+            ((IWorldAccess) worldAccesses.get(i)).obtainEntitySkin(entity);
         }
 
     }
 
     protected void removeEntity(Entity entity) {
-        for (int i = 0; i < field_798_r.size(); i++) {
-            ((IWorldAccess) field_798_r.get(i)).func_688_b(entity);
+        for (int i = 0; i < worldAccesses.size(); i++) {
+            ((IWorldAccess) worldAccesses.get(i)).releaseEntitySkin(entity);
         }
 
     }
@@ -758,7 +758,7 @@ public class World
         }
     }
 
-    public void func_12014_e(Entity entity) {
+    public void removePlayer(Entity entity) {
         entity.setEntityDead();
         if (entity instanceof EntityPlayer) {
             playerEntities.remove((EntityPlayer) entity);
@@ -772,8 +772,8 @@ public class World
         removeEntity(entity);
     }
 
-    public void func_4072_a(IWorldAccess iworldaccess) {
-        field_798_r.add(iworldaccess);
+    public void addWorldAccess(IWorldAccess iworldaccess) {
+        worldAccesses.add(iworldaccess);
     }
 
     public List getCollidingBoundingBoxes(Entity entity, AxisAlignedBB axisalignedbb) {
@@ -891,12 +891,12 @@ public class World
         field_790_z.clear();
         for (int k = 0; k < EntityList.size(); k++) {
             Entity entity1 = (Entity) EntityList.get(k);
-            if (entity1.field_327_g != null) {
-                if (!entity1.field_327_g.isDead && entity1.field_327_g.field_328_f == entity1) {
+            if (entity1.ridingEntity != null) {
+                if (!entity1.ridingEntity.isDead && entity1.ridingEntity.riddenByEntity == entity1) {
                     continue;
                 }
-                entity1.field_327_g.field_328_f = null;
-                entity1.field_327_g = null;
+                entity1.ridingEntity.riddenByEntity = null;
+                entity1.ridingEntity = null;
             }
             if (!entity1.isDead) {
                 func_520_e(entity1);
@@ -921,10 +921,10 @@ public class World
     }
 
     public void func_520_e(Entity entity) {
-        func_4074_a(entity, true);
+        updateEntityWithOptionalForce(entity, true);
     }
 
-    public void func_4074_a(Entity entity, boolean flag) {
+    public void updateEntityWithOptionalForce(Entity entity, boolean flag) {
         int i = MathHelper.floor_double(entity.posX);
         int j = MathHelper.floor_double(entity.posZ);
         byte byte0 = 16;
@@ -937,7 +937,7 @@ public class World
         entity.prevRotationYaw = entity.rotationYaw;
         entity.prevRotationPitch = entity.rotationPitch;
         if (flag && entity.field_276_Z) {
-            if (entity.field_327_g != null) {
+            if (entity.ridingEntity != null) {
                 entity.func_115_v();
             } else {
                 entity.onUpdate();
@@ -972,12 +972,12 @@ public class World
                 entity.field_276_Z = false;
             }
         }
-        if (flag && entity.field_276_Z && entity.field_328_f != null) {
-            if (entity.field_328_f.isDead || entity.field_328_f.field_327_g != entity) {
-                entity.field_328_f.field_327_g = null;
-                entity.field_328_f = null;
+        if (flag && entity.field_276_Z && entity.riddenByEntity != null) {
+            if (entity.riddenByEntity.isDead || entity.riddenByEntity.ridingEntity != entity) {
+                entity.riddenByEntity.ridingEntity = null;
+                entity.riddenByEntity = null;
             } else {
-                func_520_e(entity.field_328_f);
+                func_520_e(entity.riddenByEntity);
             }
         }
     }
@@ -1287,8 +1287,8 @@ public class World
         int i = calculateSkylightSubtracted(1.0F);
         if (i != skylightSubtracted) {
             skylightSubtracted = i;
-            for (int j = 0; j < field_798_r.size(); j++) {
-                ((IWorldAccess) field_798_r.get(j)).func_684_a();
+            for (int j = 0; j < worldAccesses.size(); j++) {
+                ((IWorldAccess) worldAccesses.get(j)).func_684_a();
             }
 
         }
@@ -1428,8 +1428,8 @@ public class World
         if (func_530_e(i, j, k)) {
             getChunkFromBlockCoords(i, k).func_336_e();
         }
-        for (int l = 0; l < field_798_r.size(); l++) {
-            ((IWorldAccess) field_798_r.get(l)).func_686_a(i, j, k, tileentity);
+        for (int l = 0; l < worldAccesses.size(); l++) {
+            ((IWorldAccess) worldAccesses.get(l)).func_686_a(i, j, k, tileentity);
         }
 
     }

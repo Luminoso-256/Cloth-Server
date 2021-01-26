@@ -280,7 +280,7 @@ public class EntityMinecart extends Entity
             setPosition(posX, posY + (double) yOffset, posZ);
             double d22 = motionX;
             double d24 = motionZ;
-            if (field_328_f != null) {
+            if (riddenByEntity != null) {
                 d22 *= 0.75D;
                 d24 *= 0.75D;
             }
@@ -302,7 +302,7 @@ public class EntityMinecart extends Entity
             } else if (ai[1][1] != 0 && MathHelper.floor_double(posX) - i == ai[1][0] && MathHelper.floor_double(posZ) - k == ai[1][2]) {
                 setPosition(posX, posY + (double) ai[1][1], posZ);
             }
-            if (field_328_f != null) {
+            if (riddenByEntity != null) {
                 motionX *= 0.99699997901916504D;
                 motionY *= 0.0D;
                 motionZ *= 0.99699997901916504D;
@@ -408,14 +408,14 @@ public class EntityMinecart extends Entity
         if (list != null && list.size() > 0) {
             for (int i1 = 0; i1 < list.size(); i1++) {
                 Entity entity = (Entity) list.get(i1);
-                if (entity != field_328_f && entity.func_124_r() && (entity instanceof EntityMinecart)) {
+                if (entity != riddenByEntity && entity.func_124_r() && (entity instanceof EntityMinecart)) {
                     entity.applyEntityCollision(this);
                 }
             }
 
         }
-        if (field_328_f != null && field_328_f.isDead) {
-            field_328_f = null;
+        if (riddenByEntity != null && riddenByEntity.isDead) {
+            riddenByEntity = null;
         }
         if (flag && random.nextInt(4) == 0) {
             field_9165_e--;
@@ -522,10 +522,10 @@ public class EntityMinecart extends Entity
         if (worldObj.multiplayerWorld) {
             return;
         }
-        if (entity == field_328_f) {
+        if (entity == riddenByEntity) {
             return;
         }
-        if ((entity instanceof EntityLiving) && !(entity instanceof EntityPlayer) && minecartType == 0 && motionX * motionX + motionZ * motionZ > 0.01D && field_328_f == null && entity.field_327_g == null) {
+        if ((entity instanceof EntityLiving) && !(entity instanceof EntityPlayer) && minecartType == 0 && motionX * motionX + motionZ * motionZ > 0.01D && riddenByEntity == null && entity.ridingEntity == null) {
             entity.func_6094_e(this);
         }
         double d = entity.posX - posX;
@@ -589,7 +589,7 @@ public class EntityMinecart extends Entity
 
     public boolean func_6092_a(EntityPlayer entityplayer) {
         if (minecartType == 0) {
-            if (field_328_f != null && (field_328_f instanceof EntityPlayer) && field_328_f != entityplayer) {
+            if (riddenByEntity != null && (riddenByEntity instanceof EntityPlayer) && riddenByEntity != entityplayer) {
                 return true;
             }
             if (!worldObj.multiplayerWorld) {

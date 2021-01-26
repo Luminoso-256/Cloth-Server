@@ -180,7 +180,7 @@ public class ChunkProviderHell
 
     }
 
-    public Chunk func_363_b(int i, int j) {
+    public Chunk provideChunk(int i, int j) {
         field_4241_h.setSeed((long) i * 0x4f9939f508L + (long) j * 0x1ef1565bd5L);
         byte abyte0[] = new byte[32768];
         func_4062_a(i, j, abyte0);

@@ -92,16 +92,19 @@ public class NetLoginHandler extends NetHandler {
     public void doLogin(Packet1Login packet1login) {
         EntityPlayerMP entityplayermp = mcServer.configManager.login(this, packet1login.username, packet1login.password);
         if (entityplayermp != null) {
+            mcServer.configManager.readPlayerDataFromFile(entityplayermp);
+            entityplayermp.setWorldHandler(mcServer.getWorldManager(entityplayermp.dimension));
             logger.info((new StringBuilder()).append(getUserAndIPString()).append(" logged in with entity id ").append(entityplayermp.field_331_c).toString());
+            WorldServer worldserver = mcServer.getWorldManager(entityplayermp.dimension);
             NetServerHandler netserverhandler = new NetServerHandler(mcServer, netManager, entityplayermp);
-            netserverhandler.sendPacket(new Packet1Login("", "", entityplayermp.field_331_c, mcServer.overworld.randomSeed, (byte) mcServer.overworld.worldProvider.field_6165_g));
-            netserverhandler.sendPacket(new Packet6SpawnPosition(mcServer.overworld.spawnX, mcServer.overworld.spawnY, mcServer.overworld.spawnZ));
+            netserverhandler.sendPacket(new Packet1Login("", "", entityplayermp.field_331_c, worldserver.randomSeed, (byte) worldserver.worldProvider.worldType));
+            netserverhandler.sendPacket(new Packet6SpawnPosition(worldserver.spawnX, worldserver.spawnY, worldserver.spawnZ));
             mcServer.configManager.sendPacketToAllPlayers(new Packet3Chat((new StringBuilder()).append("\247e").append(entityplayermp.username).append(" joined the game.").toString()));
             mcServer.configManager.playerLoggedIn(entityplayermp);
-            netserverhandler.func_41_a(entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
+            netserverhandler.teleportTo(entityplayermp.posX, entityplayermp.posY, entityplayermp.posZ, entityplayermp.rotationYaw, entityplayermp.rotationPitch);
             netserverhandler.func_40_d();
             mcServer.field_6036_c.func_4108_a(netserverhandler);
-            netserverhandler.sendPacket(new Packet4UpdateTime(mcServer.overworld.worldTime));
+            netserverhandler.sendPacket(new Packet4UpdateTime(worldserver.worldTime));
         }
         finishedProcessing = true;
     }

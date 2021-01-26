@@ -92,7 +92,7 @@ public class EntitySlime extends EntityLiving
                 float f1 = (((float) (i / 2) - 0.5F) * (float) field_403_ad) / 4F;
                 EntitySlime entityslime = new EntitySlime(worldObj);
                 entityslime.func_160_c(field_403_ad / 2);
-                entityslime.func_107_c(posX + (double) f, posY + 0.5D, posZ + (double) f1, random.nextFloat() * 360F, 0.0F);
+                entityslime.setLocationAndAngles(posX + (double) f, posY + 0.5D, posZ + (double) f1, random.nextFloat() * 360F, 0.0F);
                 worldObj.entityJoinedWorld(entityslime);
             }
 

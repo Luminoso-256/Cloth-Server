@@ -22,7 +22,7 @@ public class EntityCreature extends EntityLiving {
             if (field_389_ag != null) {
                 field_388_a = worldObj.func_482_a(this, field_389_ag, f);
             }
-        } else if (!field_389_ag.func_120_t()) {
+        } else if (!field_389_ag.isEntityAlive()) {
             field_389_ag = null;
         } else {
             float f1 = field_389_ag.getDistanceToEntity(this);

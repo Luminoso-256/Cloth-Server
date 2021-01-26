@@ -7,22 +7,30 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class Packet9 extends Packet {
+public class Packet8UpdateHealth extends Packet {
 
-    public Packet9() {
+    public int field_9017_a;
+
+    public Packet8UpdateHealth() {
     }
 
-    public void processPacket(NetHandler nethandler) {
-        nethandler.func_9002_a(this);
+    public Packet8UpdateHealth(int i) {
+        field_9017_a = i;
     }
 
     public void readPacketData(DataInputStream datainputstream) throws IOException {
+        field_9017_a = datainputstream.readByte();
     }
 
     public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
+        dataoutputstream.writeByte(field_9017_a);
+    }
+
+    public void processPacket(NetHandler nethandler) {
+        nethandler.func_9003_a(this);
     }
 
     public int getPacketSize() {
-        return 0;
+        return 1;
     }
 }

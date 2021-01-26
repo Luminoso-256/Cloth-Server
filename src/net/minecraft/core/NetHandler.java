@@ -118,31 +118,31 @@ public class NetHandler {
         func_6001_a(packet6spawnposition);
     }
 
-    public void func_6002_a(Packet28 packet28) {
+    public void func_6002_a(Packet28EntityVelocity packet28) {
         func_6001_a(packet28);
     }
 
-    public void func_6003_a(Packet39 packet39) {
+    public void func_6003_a(Packet39AttachEntity packet39) {
         func_6001_a(packet39);
     }
 
-    public void func_6006_a(Packet7 packet7) {
+    public void func_6006_a(Packet7UseEntity packet7) {
         func_6001_a(packet7);
     }
 
-    public void func_9001_a(Packet38 packet38) {
+    public void func_9001_a(Packet38EntityStatus packet38) {
         func_6001_a(packet38);
     }
 
-    public void func_9003_a(Packet8 packet8) {
+    public void func_9003_a(Packet8UpdateHealth packet8) {
         func_6001_a(packet8);
     }
 
-    public void func_9002_a(Packet9 packet9) {
+    public void func_9002_a(Packet9Respawn packet9) {
         func_6001_a(packet9);
     }
 
-    public void func_12001_a(Packet60 packet60) {
+    public void func_12001_a(Packet60Explosion packet60) {
         func_6001_a(packet60);
     }
 }

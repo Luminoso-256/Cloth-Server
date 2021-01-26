@@ -171,7 +171,7 @@ public class BlockFire extends Block {
     }
 
     public void onBlockAdded(World world, int i, int j, int k) {
-        if (world.getBlockId(i, j - 1, k) == Block.obsidian.blockID && Block.portal.tryToCreatePortal(world, i, j, k)) {
+        if ((world.getBlockId(i, j - 1, k) == Block.obsidian.blockID || world.getBlockId(i, j - 1, k) == Block.lightStone.blockID) && Block.portal.tryToCreatePortal(world, i, j, k)) {
             return;
         }
         if (!world.doesBlockAllowAttachment(i, j - 1, k) && !func_268_g(world, i, j, k)) {

@@ -40,7 +40,7 @@ public class EntityMobs extends EntityCreature
 
     public boolean attackEntity(Entity entity, int i) {
         if (super.attackEntity(entity, i)) {
-            if (field_328_f == entity || field_327_g == entity) {
+            if (riddenByEntity == entity || ridingEntity == entity) {
                 return true;
             }
             if (entity != this) {

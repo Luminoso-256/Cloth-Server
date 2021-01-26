@@ -13,12 +13,12 @@ import java.util.Set;
 
 public class EntityPlayerMP extends EntityPlayer {
 
-    public NetServerHandler field_421_a;
+    public NetServerHandler playerNetServerHandler;
     public MinecraftServer mcServer;
     public ItemInWorldManager field_425_ad;
     public double field_9155_d;
     public double field_9154_e;
-    public List field_422_ag;
+    public List loadedChunks;
     public Set field_420_ah;
     public double field_418_ai;
     public boolean field_12012_al;
@@ -27,7 +27,7 @@ public class EntityPlayerMP extends EntityPlayer {
 
     public EntityPlayerMP(MinecraftServer minecraftserver, World world, String s, ItemInWorldManager iteminworldmanager) {
         super(world);
-        field_422_ag = new LinkedList();
+        loadedChunks = new LinkedList();
         field_420_ah = new HashSet();
         field_12012_al = false;
         field_9156_bu = 0xfa0a1f01;
@@ -40,13 +40,20 @@ public class EntityPlayerMP extends EntityPlayer {
             k = world.func_4075_e(i, j);
             j += random.nextInt(20) - 10;
         }
-        func_107_c((double) i + 0.5D, k, (double) j + 0.5D, 0.0F, 0.0F);
+        setLocationAndAngles((double) i + 0.5D, k, (double) j + 0.5D, 0.0F, 0.0F);
         mcServer = minecraftserver;
         field_9067_S = 0.0F;
         iteminworldmanager.field_675_a = this;
         username = s;
         field_425_ad = iteminworldmanager;
         yOffset = 0.0F;
+    }
+
+    public void setWorldHandler(World world)
+    {
+        super.setWorldHandler(world);
+        field_425_ad = new ItemInWorldManager((WorldServer)world);
+        field_425_ad.field_675_a = this;
     }
 
     public void onUpdate() {
@@ -83,8 +90,8 @@ public class EntityPlayerMP extends EntityPlayer {
         super.onUpdate();
         ChunkCoordIntPair chunkcoordintpair = null;
         double d = 0.0D;
-        for (int i = 0; i < field_422_ag.size(); i++) {
-            ChunkCoordIntPair chunkcoordintpair1 = (ChunkCoordIntPair) field_422_ag.get(i);
+        for (int i = 0; i < loadedChunks.size(); i++) {
+            ChunkCoordIntPair chunkcoordintpair1 = (ChunkCoordIntPair) loadedChunks.get(i);
             double d1 = chunkcoordintpair1.func_73_a(this);
             if (i == 0 || d1 < d) {
                 chunkcoordintpair = chunkcoordintpair1;
@@ -97,22 +104,67 @@ public class EntityPlayerMP extends EntityPlayer {
             if (d < 1024D) {
                 flag = true;
             }
-            if (field_421_a.func_38_b() < 2) {
+            if (playerNetServerHandler.getNumChunkDataPackets() < 2) {
                 flag = true;
             }
             if (flag) {
-                field_422_ag.remove(chunkcoordintpair);
-                field_421_a.sendPacket(new Packet51MapChunk(chunkcoordintpair.field_152_a * 16, 0, chunkcoordintpair.field_151_b * 16, 16, 128, 16, mcServer.overworld));
-                List list = mcServer.overworld.func_532_d(chunkcoordintpair.field_152_a * 16, 0, chunkcoordintpair.field_151_b * 16, chunkcoordintpair.field_152_a * 16 + 16, 128, chunkcoordintpair.field_151_b * 16 + 16);
+                WorldServer worldServer = mcServer.getWorldManager(dimension);
+                loadedChunks.remove(chunkcoordintpair);
+                playerNetServerHandler.sendPacket(new Packet51MapChunk(chunkcoordintpair.field_152_a * 16, 0, chunkcoordintpair.field_151_b * 16, 16, 128, 16, worldServer));
+                List list = worldServer.func_532_d(chunkcoordintpair.field_152_a * 16, 0, chunkcoordintpair.field_151_b * 16, chunkcoordintpair.field_152_a * 16 + 16, 128, chunkcoordintpair.field_151_b * 16 + 16);
                 for (int j = 0; j < list.size(); j++) {
                     TileEntity tileentity = (TileEntity) list.get(j);
-                    field_421_a.sendPacket(new Packet59ComplexEntity(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord, tileentity));
+                    playerNetServerHandler.sendPacket(new Packet59ComplexEntity(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord, tileentity));
                 }
 
             }
         }
+
+        if(inPortal)
+        {
+            if(mcServer.propertyManagerObj.getBooleanProperty("allow-nether", true))
+            {
+                timeInPortal += 0.0125F;
+                if(timeInPortal >= 1.0F)
+                {
+                    timeInPortal = 1.0F;
+                    timeUntilPortal = 10;
+                    mcServer.configManager.sendPlayerToNetherDimension(this);
+                }
+                inPortal = false;
+            }
+        } else
+        if(inPortalSky)
+        {
+            if(mcServer.propertyManagerObj.getBooleanProperty("allow-sky", true))
+            {
+                timeInPortal += 0.0125F;
+                if(timeInPortal >= 1.0F)
+                {
+                    timeInPortal = 1.0F;
+                    timeUntilPortal = 10;
+                    mcServer.configManager.sendPlayerToSkyDimension(this);
+                }
+                inPortalSky = false;
+            }
+        } else
+        {
+            if(timeInPortal > 0.0F)
+            {
+                timeInPortal -= 0.05F;
+            }
+            if(timeInPortal < 0.0F)
+            {
+                timeInPortal = 0.0F;
+            }
+        }
+        if(timeUntilPortal > 0)
+        {
+            timeUntilPortal--;
+        }
+
         if (health != field_9156_bu) {
-            field_421_a.sendPacket(new Packet8(health));
+            playerNetServerHandler.sendPacket(new Packet8UpdateHealth(health));
             field_9156_bu = health;
         }
     }
@@ -125,15 +177,16 @@ public class EntityPlayerMP extends EntityPlayer {
 
     public void func_163_c(Entity entity, int i) {
         if (!entity.isDead) {
+            EntityTracker entitytracker = mcServer.getEntityTracker(dimension);
             if (entity instanceof EntityItem) {
                 ExploitUtils ep = new ExploitUtils();
                 //   if(((EntityItem)entity).item.itemID )
-                field_421_a.sendPacket(new Packet17AddToInventory(((EntityItem) entity).item, i));
-                mcServer.field_6028_k.func_12021_a(entity, new Packet22Collect(entity.field_331_c, field_331_c));
+                playerNetServerHandler.sendPacket(new Packet17AddToInventory(((EntityItem) entity).item, i));
+                entitytracker.func_12021_a(entity, new Packet22Collect(entity.field_331_c, field_331_c));
             }
             if (entity instanceof EntityArrow) {
-                field_421_a.sendPacket(new Packet17AddToInventory(new ItemStack(Item.arrow), 1));
-                mcServer.field_6028_k.func_12021_a(entity, new Packet22Collect(entity.field_331_c, field_331_c));
+                playerNetServerHandler.sendPacket(new Packet17AddToInventory(new ItemStack(Item.arrow), 1));
+                entitytracker.func_12021_a(entity, new Packet22Collect(entity.field_331_c, field_331_c));
             }
         }
         super.func_163_c(entity, i);
@@ -143,7 +196,8 @@ public class EntityPlayerMP extends EntityPlayer {
         if (!field_9148_aq) {
             field_9147_ar = -1;
             field_9148_aq = true;
-            mcServer.field_6028_k.func_12021_a(this, new Packet18ArmAnimation(this, 1));
+            EntityTracker entitytracker = mcServer.getEntityTracker(dimension);
+            entitytracker.func_12021_a(this, new Packet18ArmAnimation(this, 1));
         }
     }
 
@@ -153,8 +207,8 @@ public class EntityPlayerMP extends EntityPlayer {
 
     public void func_6094_e(Entity entity) {
         super.func_6094_e(entity);
-        field_421_a.sendPacket(new Packet39(this, field_327_g));
-        field_421_a.func_41_a(posX, posY, posZ, rotationYaw, rotationPitch);
+        playerNetServerHandler.sendPacket(new Packet39AttachEntity(this, ridingEntity));
+        playerNetServerHandler.teleportTo(posX, posY, posZ, rotationYaw, rotationPitch);
     }
 
     protected void interact(double d, boolean flag) {
@@ -166,5 +220,10 @@ public class EntityPlayerMP extends EntityPlayer {
 
     public boolean func_9059_p() {
         return field_12012_al;
+    }
+
+    public void func_30001_B()
+    {
+        field_9156_bu = 0xfa0a1f01;
     }
 }

@@ -136,9 +136,9 @@ public class EntityBoat extends Entity {
         }
         double d3 = d * 2D - 1.0D;
         motionY += 0.039999999105930328D * d3;
-        if (field_328_f != null) {
-            motionX += field_328_f.motionX * 0.20000000000000001D;
-            motionZ += field_328_f.motionZ * 0.20000000000000001D;
+        if (riddenByEntity != null) {
+            motionX += riddenByEntity.motionX * 0.20000000000000001D;
+            motionZ += riddenByEntity.motionZ * 0.20000000000000001D;
         }
         double d7 = 0.40000000000000002D;
         if (motionX < -d7) {
@@ -219,24 +219,24 @@ public class EntityBoat extends Entity {
         if (list != null && list.size() > 0) {
             for (int j1 = 0; j1 < list.size(); j1++) {
                 Entity entity = (Entity) list.get(j1);
-                if (entity != field_328_f && entity.func_124_r() && (entity instanceof EntityBoat)) {
+                if (entity != riddenByEntity && entity.func_124_r() && (entity instanceof EntityBoat)) {
                     entity.applyEntityCollision(this);
                 }
             }
 
         }
-        if (field_328_f != null && field_328_f.isDead) {
-            field_328_f = null;
+        if (riddenByEntity != null && riddenByEntity.isDead) {
+            riddenByEntity = null;
         }
     }
 
     public void func_127_w() {
-        if (field_328_f == null) {
+        if (riddenByEntity == null) {
             return;
         } else {
             double d = Math.cos(((double) rotationYaw * 3.1415926535897931D) / 180D) * 0.40000000000000002D;
             double d1 = Math.sin(((double) rotationYaw * 3.1415926535897931D) / 180D) * 0.40000000000000002D;
-            field_328_f.setPosition(posX + d, posY + func_130_h() + field_328_f.func_117_x(), posZ + d1);
+            riddenByEntity.setPosition(posX + d, posY + func_130_h() + riddenByEntity.func_117_x(), posZ + d1);
             return;
         }
     }
@@ -248,7 +248,7 @@ public class EntityBoat extends Entity {
     }
 
     public boolean func_6092_a(EntityPlayer entityplayer) {
-        if (field_328_f != null && (field_328_f instanceof EntityPlayer) && field_328_f != entityplayer) {
+        if (riddenByEntity != null && (riddenByEntity instanceof EntityPlayer) && riddenByEntity != entityplayer) {
             return true;
         }
         if (!worldObj.multiplayerWorld) {

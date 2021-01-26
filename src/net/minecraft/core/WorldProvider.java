@@ -8,12 +8,12 @@ import java.io.File;
 public class WorldProvider {
 
     public World field_4302_a;
-    public WorldChunkManager field_4301_b;
+    public WorldChunkManager worldChunkMgr;
     public boolean field_6167_c;
     public boolean field_6166_d;
     public boolean field_4306_c;
     public float lightBrightnessTable[];
-    public int field_6165_g;
+    public int worldType;
     private float field_6164_h[];
 
     public WorldProvider() {
@@ -21,7 +21,7 @@ public class WorldProvider {
         field_6166_d = false;
         field_4306_c = false;
         lightBrightnessTable = new float[16];
-        field_6165_g = 0;
+        worldType = 0;
         field_6164_h = new float[4];
     }
 
@@ -31,9 +31,11 @@ public class WorldProvider {
         }
         if (i == -1) {
             return new WorldProviderHell();
-        } else {
-            return null;
         }
+        if (i == 1) {
+            return new WorldProviderSky();
+        }
+        return null;
     }
 
     public final void func_4093_a(World world) {
@@ -52,7 +54,7 @@ public class WorldProvider {
     }
 
     protected void func_4090_a() {
-        field_4301_b = new WorldChunkManager(field_4302_a);
+        worldChunkMgr = new WorldChunkManager(field_4302_a);
     }
 
     public IChunkProvider getChunkProvider() {

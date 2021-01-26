@@ -34,10 +34,10 @@ public class WorldChunkManager {
     }
 
     public MobSpawnerBase func_4066_a(ChunkCoordIntPair chunkcoordintpair) {
-        return func_4067_a(chunkcoordintpair.field_152_a, chunkcoordintpair.field_151_b);
+        return getBiomeGenAt(chunkcoordintpair.field_152_a, chunkcoordintpair.field_151_b);
     }
 
-    public MobSpawnerBase func_4067_a(int i, int j) {
+    public MobSpawnerBase getBiomeGenAt(int i, int j) {
         return func_4065_a(i, j, 1, 1)[0];
     }
 

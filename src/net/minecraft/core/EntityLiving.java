@@ -128,13 +128,13 @@ public class EntityLiving extends Entity {
                 worldObj.playSoundAtEntity(this, s, getSoundVolume(), (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
             }
         }
-        if (func_120_t() && func_91_u()) {
+        if (isEntityAlive() && func_91_u()) {
             attackEntity(null, 1);
         }
         if (field_9079_ae || worldObj.multiplayerWorld) {
             field_9061_Z = 0;
         }
-        if (func_120_t() && isInsideOfMaterial(Material.water)) {
+        if (isEntityAlive() && isInsideOfMaterial(Material.water)) {
             air--;
             if (air == -20) {
                 air = 0;
@@ -490,7 +490,7 @@ public class EntityLiving extends Entity {
         field_9103_aW = nbttagcompound.getShort("AttackTime");
     }
 
-    public boolean func_120_t() {
+    public boolean isEntityAlive() {
         return !isDead && health > 0;
     }
 

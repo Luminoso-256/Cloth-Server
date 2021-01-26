@@ -7,7 +7,6 @@ package net.minecraft;
 import net.minecraft.cloth.FallbackIdMaps;
 import net.minecraft.cloth.WorldGenParams;
 import net.minecraft.cloth.file.*;
-import net.minecraft.cloth.nether.Teleporter;
 import net.minecraft.cloth.plugins.stich.StitchLoader;
 import net.minecraft.core.*;
 
@@ -28,13 +27,12 @@ public class MinecraftServer
     public static HashMap field_6037_b = new HashMap();
     public NetworkListenThread field_6036_c;
     public PropertyManager propertyManagerObj;
-    public WorldServer overworld;
-    public WorldServer netherWorld;
+    public WorldServer worldMngr[];
     public ServerConfigurationManager configManager;
-    public boolean field_6032_g;
-    public String field_9013_i;
-    public int field_9012_j;
-    public EntityTracker field_6028_k;
+    public boolean serverRunning;
+    public String currentTask;
+    public int percentDone;
+    public EntityTracker entityTracker[];
     public boolean onlineMode;
     public boolean noAnimals;
     public boolean isPvpEnabled;
@@ -50,7 +48,7 @@ public class MinecraftServer
     public BlockMappingsManager blockMaps = new BlockMappingsManager(new File("blocks.mappings"));
     public StitchLoader stitch;
     public HashMap<String, String> advancementCriterion;
-    int field_9014_h;
+    int deathTime;
     FallbackIdMaps fallbackBlockMaps = new FallbackIdMaps();
     private boolean field_6025_n;
     private java.util.List field_9010_p;
@@ -59,12 +57,52 @@ public class MinecraftServer
     public MinecraftServer() {
         singleton = this;
         field_6025_n = true;
-        field_6032_g = false;
-        field_9014_h = 0;
+        serverRunning = false;
+        deathTime = 0;
         field_9010_p = new ArrayList();
         commands = Collections.synchronizedList(new ArrayList());
+        entityTracker = new EntityTracker[3];
         new ThreadSleepForever(this);
     }
+
+    /// Nether Stuff
+    ///
+    ///
+
+    public WorldServer getWorldManager(int i)
+    {
+        if(i == -1)
+        {
+            return worldMngr[1];
+        }
+        if(i == 1)
+        {
+            return worldMngr[2];
+        } else
+        {
+            return worldMngr[0];
+        }
+    }
+
+
+    public EntityTracker getEntityTracker(int i)
+    {
+        if(i == 1)
+        {
+            return entityTracker[2];
+        }
+        if(i == -1)
+        {
+            return entityTracker[1];
+        } else
+        {
+            return entityTracker[0];
+        }
+    }
+
+    ///
+    ///
+    ///
 
     public static boolean func_6015_a(MinecraftServer minecraftserver) {
         return minecraftserver.field_6025_n;
@@ -119,7 +157,9 @@ public class MinecraftServer
             logger.warning("To change this, set \"online-mode\" to \"true\" in the server.settings file. ");
         }
         configManager = new ServerConfigurationManager(this);
-        field_6028_k = new EntityTracker(this);
+        entityTracker[0] = new EntityTracker(this, 0);
+        entityTracker[1] = new EntityTracker(this, -1);
+        entityTracker[2] = new EntityTracker(this, 1);
         worldName = propertyManagerObj.getStringProperty("level-name", "world");
         logger.info((new StringBuilder()).append("Preparing level \"").append(worldName).append("\"").toString());
         loadWorld(worldName, seed);
@@ -139,65 +179,141 @@ public class MinecraftServer
     }
 
     private void loadWorld(String worldName, long seed) {
-        logger.info("Preparing start region");
-        overworld = new WorldServer(this, new File("."), worldName, seed, propertyManagerObj.getBooleanProperty("hellworld", false) ? -1 : 0);
-        overworld.func_4072_a(new WorldManager(this));
-
-
-        if (gameruleManager.getGamerule("nether", true)) {
-            logger.info("[Cloth] Starting nether init");
-            netherWorld = new WorldServer(this, new File("."), worldName + "_nether", seed, -1);
-            netherWorld.func_4072_a(new WorldManager(this));
-            logger.info("[Debug] created nether object with seed " + netherWorld.randomSeed);
-        }
-        overworld.monstersEnabled = propertyManagerObj.getBooleanProperty("spawn-monsters", true) ? 1 : 0;
-        configManager.setPlayerManager(overworld);
-        byte byte0 = 10;
-        for (int i = -byte0; i <= byte0; i++) {
-            func_6019_a("Preparing spawn area", ((i + byte0) * 100) / (byte0 + byte0 + 1));
-            for (int j = -byte0; j <= byte0; j++) {
-                if (!field_6025_n) {
-                    return;
-                }
-                overworld.chunkProvider.loadChunk((overworld.spawnX >> 4) + i, (overworld.spawnZ >> 4) + j);
+//        logger.info("Preparing start region");
+//        overworld = new WorldServer(this, new File("."), worldName, seed, propertyManagerObj.getBooleanProperty("hellworld", false) ? -1 : 0);
+//        overworld.addWorldAccess(new WorldManager(this, overworld));
+//
+//
+//        if (gameruleManager.getGamerule("nether", true)) {
+//            logger.info("[Cloth] Starting nether init");
+//            netherWorld = new WorldServer(this, new File("."), worldName + "_nether", seed, -1);
+//            netherWorld.addWorldAccess(new WorldManager(this, netherWorld));
+//            logger.info("[Debug] created nether object with seed " + netherWorld.randomSeed);
+//        }
+//        overworld.monstersEnabled = propertyManagerObj.getBooleanProperty("spawn-monsters", true) ? 1 : 0;
+//        configManager.setPlayerManager(overworld);
+//        byte byte0 = 10;
+//        for (int i = -byte0; i <= byte0; i++) {
+//            outputPercentRemaining("Preparing spawn area", ((i + byte0) * 100) / (byte0 + byte0 + 1));
+//            for (int j = -byte0; j <= byte0; j++) {
+//                if (!field_6025_n) {
+//                    return;
+//                }
+//                overworld.chunkProvider.loadChunk((overworld.spawnX >> 4) + i, (overworld.spawnZ >> 4) + j);
+//            }
+//
+//        }
+//
+//        clearCurrentTask();
+        worldMngr = new WorldServer[3];
+//        SaveOldDir saveolddir = new SaveOldDir(new File("."), s, true);
+        for(int i = 0; i < worldMngr.length; i++)
+        {
+            if(i == 0)
+            {
+                worldMngr[i] = new WorldServer(this, new File("."), worldName, i == 0 ? 0 : -1, seed);
+            } else
+            if(i == 1)
+            {
+                worldMngr[i] = new WorldServer(this, new File("."), worldName + "_nether", -1, seed);
+            } else
+            if(i == 2)
+            {
+                worldMngr[i] = new WorldServer(this, new File("."), worldName + "_sky", 1, seed);
+                worldMngr[i].worldChunkLoadOverride = true;
+            } else
+            {
+                worldMngr[i] = new WorldServer(this, new File("."), worldName + "_DIM" + (i - 1), i - 1, seed);
+                worldMngr[i].worldChunkLoadOverride = true;
             }
-
+            worldMngr[i].addWorldAccess(new WorldManager(this, worldMngr[i]));
+            worldMngr[i].monstersEnabled = propertyManagerObj.getBooleanProperty("spawn-monsters", true) ? 1 : 0;
+//            worldMngr[i].setAllowedSpawnTypes(propertyManagerObj.getBooleanProperty("spawn-monsters", true), spawnPeacefulMobs);
+            configManager.setPlayerManager(worldMngr);
         }
 
-        func_6011_e();
+        char c = '\304';
+        long l1 = System.currentTimeMillis();
+        label0:
+        for(int j = 0; j < worldMngr.length; j++)
+        {
+            logger.info((new StringBuilder()).append("Preparing start region for level ").append(j).toString());
+            if(j != 0 && !propertyManagerObj.getBooleanProperty("allow-nether", true))
+            {
+                continue;
+            }
+            WorldServer worldserver = worldMngr[j];
+//            ChunkCoordIntPair chunkcoordinates = worldserver.getSpawnPoint();
+            int k = -c;
+            do
+            {
+                if(k > c || !serverRunning)
+                {
+                    continue label0;
+                }
+                for(int i1 = -c; i1 <= c && serverRunning; i1 += 16)
+                {
+                    long l2 = System.currentTimeMillis();
+                    if(l2 < l1)
+                    {
+                        l1 = l2;
+                    }
+                    if(l2 > l1 + 1000L)
+                    {
+                        int j1 = (c * 2 + 1) * (c * 2 + 1);
+                        int k1 = (k + c) * (c * 2 + 1) + (i1 + 1);
+                        outputPercentRemaining("Preparing spawn area", (k1 * 100) / j1);
+                        l1 = l2;
+                    }
+                    worldserver.chunkProvider.loadChunk(worldserver.spawnX + k >> 4, worldserver.spawnZ + i1 >> 4);
+                    while(worldserver.func_6156_d() && serverRunning) ;
+                }
+
+                k += 16;
+            } while(true);
+        }
+
+        clearCurrentTask();
     }
 
-    private void func_6019_a(String s, int i) {
-        field_9013_i = s;
-        field_9012_j = i;
+    private void outputPercentRemaining(String s, int i) {
+        currentTask = s;
+        percentDone = i;
         System.out.println((new StringBuilder()).append(s).append(": ").append(i).append("%").toString());
     }
 
-    private void func_6011_e() {
-        field_9013_i = null;
-        field_9012_j = 0;
+    private void clearCurrentTask() {
+        currentTask = null;
+        percentDone = 0;
     }
 
     private void saveServerWorld() {
         logger.info("Saving chunks");
-        overworld.saveWorld(true, null);
+        for(int i = 0; i < worldMngr.length; i++)
+        {
+            WorldServer worldserver = worldMngr[i];
+            worldserver.saveWorld(true, null);
+//            worldserver.func_30006_w();
+        }
     }
 
-    private void saveNetherWorld() {
-        logger.info("[Nether] Saving chunks");
-        netherWorld.saveWorld(true, null);
-    }
+//    private void saveNetherWorld() {
+//        logger.info("[Nether] Saving chunks");
+//        netherWorld.saveWorld(true, null);
+//    }
 
     private void shutdown() {
         logger.info("Stopping server");
         if (configManager != null) {
             configManager.savePlayerStates();
         }
-        if (overworld != null) {
-            saveServerWorld();
-        }
-        if (netherWorld != null) {
-            saveNetherWorld();
+        for(int i = 0; i < worldMngr.length; i++)
+        {
+            WorldServer worldserver = worldMngr[i];
+            if(worldserver != null)
+            {
+                saveServerWorld();
+            }
         }
     }
 
@@ -238,7 +354,7 @@ public class MinecraftServer
                                 configManager.sendChatMessageToAllPlayers("The Sleep Vote was a stalemate. No action will be taken");
                             } else if (SleepVoteYesCount > SleepVoteNoCount) {
                                 configManager.sendChatMessageToAllPlayers("The Sleep Vote recieved a majority approval! Skipping to morning...");
-                                overworld.worldTime = 1000;
+                                worldMngr[0].worldTime = 1000;
                             } else if (SleepVoteNoCount > SleepVoteYesCount) {
                                 configManager.sendChatMessageToAllPlayers("The Sleep Vote recieved a majority dissaproval. No action will be taken");
                             }
@@ -310,6 +426,13 @@ public class MinecraftServer
                                                 grantAdvancement(player.username, criterion);
                                             }
                                             break;
+                                        case "dimesion":
+                                            if (tSplit[2].equals("nether") && player.getPortalStatus().equals("nether")){
+                                                grantAdvancement(player.username, criterion);
+                                            }
+                                            if (tSplit[2].equals("sky") && player.getPortalStatus().equals("sky")){
+                                                grantAdvancement(player.username, criterion);
+                                            }
                                     }
                                 }
                             }
@@ -353,7 +476,7 @@ public class MinecraftServer
                                 player.setEntityDead();
                                 String DeathMsg;
                                 //And then we will announce it
-                                if (overworld.rand.nextInt(15) <= 1) {
+                                if (worldMngr[0].rand.nextInt(15) <= 1) {
                                     DeathMsg = player.username + " is going ghost!";
                                 } else {
                                     DeathMsg = player.username + " died in mysterious circumstances";
@@ -477,7 +600,7 @@ public class MinecraftServer
             }
         } finally {
             shutdown();
-            field_6032_g = true;
+            serverRunning = true;
             System.exit(0);
         }
     }
@@ -500,18 +623,31 @@ public class MinecraftServer
 
         AxisAlignedBB.clearBoundingBoxPool();
         Vec3D.initialize();
-        field_9014_h++;
-        if (field_9014_h % 20 == 0) {
-            configManager.sendPacketToAllPlayers(new Packet4UpdateTime(overworld.worldTime));
+        deathTime++;
+        for(int j = 0; j < worldMngr.length; j++)
+        {
+            if(j != 0 && !propertyManagerObj.getBooleanProperty("allow-nether", true))
+            {
+                continue;
+            }
+            WorldServer worldserver = worldMngr[j];
+            if(deathTime % 20 == 0)
+            {
+                configManager.sendPacketToAllPlayersInDimension(new Packet4UpdateTime(worldserver.worldTime), worldserver.worldProvider.worldType);
+            }
+            worldserver.tick();
+            worldserver.func_459_b();
+            while(worldserver.func_6156_d()) ;
+//            worldserver.updateEntities();
         }
-        overworld.tick();
-        netherWorld.tick();
-        stitch.CallHook("OnServerTick", DummyList);
-        while (overworld.func_6156_d()) ;
-        overworld.func_459_b();
         field_6036_c.func_715_a();
         configManager.func_637_b();
-        field_6028_k.func_607_a();
+
+        for(int k = 0; k < entityTracker.length; k++)
+        {
+            entityTracker[k].func_607_a();
+        }
+//        overworldEntityTracker.func_607_a();
         for (int j = 0; j < field_9010_p.size(); j++) {
             ((IUpdatePlayerListBox) field_9010_p.get(j)).update();
         }
@@ -594,22 +730,23 @@ public class MinecraftServer
             } else if (command.toLowerCase().startsWith("create ")) {
                 String[] args = command.split(" ");
                 switch (args[1]) {
-                    case "player":
-                        PlayerNBTManager playerNBTManagerObj = new PlayerNBTManager(new File("_create_player_cmd"));
-                        PlayerManager playerManagerObj = new PlayerManager(this);
-                        EntityPlayerMP entityplayermp = new EntityPlayerMP(this, overworld, args[2], new ItemInWorldManager(overworld));
-                        configManager.playerEntities.add(entityplayermp);
-                        playerNBTManagerObj.readPlayerData(entityplayermp);
-                        overworld.chunkProvider.loadChunk((int) entityplayermp.posX >> 4, (int) entityplayermp.posZ >> 4);
-                        for (; overworld.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) {
-                        }
-                        overworld.entityJoinedWorld(entityplayermp);
-                        configManager.playerEntities.add(entityplayermp);
-                        playerManagerObj.func_9214_a(entityplayermp);
-                        break;
-                    case "zombie":
-                        EntityZombie zombie = new EntityZombie(overworld);
-                        overworld.entityJoinedWorld(zombie);
+                    // TODO: Reimplement.
+//                    case "player":
+//                        PlayerNBTManager playerNBTManagerObj = new PlayerNBTManager(new File("_create_player_cmd"));
+////                        PlayerManager playerManagerObj = new PlayerManager(this, configManager.getPlayerEntity(username).dimension);
+//                        EntityPlayerMP entityplayermp = new EntityPlayerMP(this, overworld, args[2], new ItemInWorldManager(overworld));
+//                        configManager.playerEntities.add(entityplayermp);
+//                        playerNBTManagerObj.readPlayerData(entityplayermp);
+//                        overworld.chunkProvider.loadChunk((int) entityplayermp.posX >> 4, (int) entityplayermp.posZ >> 4);
+//                        for (; overworld.getCollidingBoundingBoxes(entityplayermp, entityplayermp.boundingBox).size() != 0; entityplayermp.setPosition(entityplayermp.posX, entityplayermp.posY + 1.0D, entityplayermp.posZ)) {
+//                        }
+//                        overworld.entityJoinedWorld(entityplayermp);
+//                        configManager.playerEntities.add(entityplayermp);
+//                        playerManagerObj.addPlayer(entityplayermp);
+//                        break;
+//                    case "zombie":
+//                        EntityZombie zombie = new EntityZombie(overworld);
+//                        overworld.entityJoinedWorld(zombie);
 
                 }
             } else if (command.toLowerCase().startsWith("whitelist ") && gameruleManager.getGamerule("whitelist", false)) {
@@ -652,30 +789,11 @@ public class MinecraftServer
 
                 stitch.CallHook(args[1], hookArgs);
             }
-            if (command.toLowerCase().startsWith("nether") && gameruleManager.getGamerule("nether", true)) {
-
-                EntityPlayerMP player = configManager.getPlayerEntity(username);
-                logger.info("[Debug] Attempting to send player " + player.username + " to the nether. Safe Travels!");
-                overworld.RemoveEntity(player);
-                System.out.println(overworld.playerEntities);
-                //Block 1 - SP minecraft.java line 1176
-                player.setEntityDead();
-                player.isDead = false;
-                overworld.func_4074_a(player, false);
-                //func_6256_a(netherWorld, "Entering the Nether", player);
-
-                //Replacing func_6256
-                player.worldObj = netherWorld;
-                netherWorld.entityJoinedWorld(player);
-
-                //block 2, same file, line 1191
-
-
-                netherWorld.func_4074_a(player, false);
-                (new Teleporter()).func_4107_a(overworld, player);
-                System.gc();
-
-
+            if (command.toLowerCase().startsWith("nether") && propertyManagerObj.getBooleanProperty("allow-nether", true)) {
+                configManager.sendPlayerToNetherDimension(configManager.getPlayerEntity(username));
+            }
+            if (command.toLowerCase().startsWith("sky") &&  propertyManagerObj.getBooleanProperty("allow-sky", true)) {
+                configManager.sendPlayerToSkyDimension(configManager.getPlayerEntity(username));
             }
             if (command.toLowerCase().startsWith("version")) {
                 //WorldGenParams params = new WorldGenParams();
@@ -698,8 +816,9 @@ public class MinecraftServer
             }
             if (command.toLowerCase().startsWith("killall")) {
                 //   if(s.toLowerCase().startsWith("heal")){
-                for (int i = 0; i < overworld.EntityList.size(); i++) {
-                    Entity entity = (Entity) overworld.EntityList.get(i);
+                EntityPlayer player = configManager.getPlayerEntity(username);
+                for (int i = 0; i < getWorldManager(player.dimension).EntityList.size(); i++) {
+                    Entity entity = (Entity) getWorldManager(player.dimension).EntityList.get(i);
                     if (entity != null) {
                         entity.setEntityDead();
                     } //Just in case  something wacky  happens
@@ -830,12 +949,12 @@ public class MinecraftServer
                 String targetTime = command.toLowerCase().split(" ")[2];
                 configManager.sendChatMessageToPlayer(username, "§7Setting time to §a[" + targetTime + "]");
                 if (targetTime.equals("day")) {
-                    overworld.worldTime = 1000;
+                    worldMngr[0].worldTime = 1000;
                 } else if (targetTime.equals("night")) {
-                    overworld.worldTime = 13000;
+                    worldMngr[0].worldTime = 13000;
                 } else {
                     int time = Integer.parseInt(targetTime);
-                    overworld.worldTime = time;
+                    worldMngr[0].worldTime = time;
                 }
             }
 
@@ -891,7 +1010,7 @@ public class MinecraftServer
                     Vector3d locvec = target.getLocationVector();
                     Vector3f lookvec = target.getLookVector();
                     String name = target.getName();
-                    entityplayer.field_421_a.func_41_a(locvec.getX(), locvec.getY(), locvec.getZ(), lookvec.getYaw(), lookvec.getPitch());
+                    entityplayer.playerNetServerHandler.teleportTo(locvec.getX(), locvec.getY(), locvec.getZ(), lookvec.getYaw(), lookvec.getPitch());
                     //System.out.println(locvec.get(0) + locvec.get(1) + locvec.get(2) + lookvec.get(0) + lookvec.get(1));
 
                     configManager.sendChatMessageToPlayer(username, "§7Returning to §a[" + name + "]");
@@ -912,7 +1031,7 @@ public class MinecraftServer
                         Location target = pdata.getLastDeathLocation();
                         Vector3d locvec = target.getLocationVector();
                         Vector3f lookvec = target.getLookVector();
-                        entityplayer.field_421_a.func_41_a(locvec.getX(), locvec.getY(), locvec.getZ(), lookvec.getYaw(), lookvec.getPitch());
+                        entityplayer.playerNetServerHandler.teleportTo(locvec.getX(), locvec.getY(), locvec.getZ(), lookvec.getYaw(), lookvec.getPitch());
                         pdata.addBackUsage();
                         pdm.setPlayerData(username, pdata);
                         configManager.sendChatMessageToPlayer(username, "§7Returning to the last place you died...");
@@ -953,14 +1072,22 @@ public class MinecraftServer
                 field_6025_n = false;
             } else if (command.toLowerCase().startsWith("save-all")) {
                 func_6014_a(username, "Forcing save..");
-                overworld.saveWorld(true, null);
+                for(int i = 0; i < worldMngr.length; i++)
+                {
+                    WorldServer worldserver = worldMngr[i];
+                    worldserver.saveWorld(true, null);
+                }
                 func_6014_a(username, "Save complete.");
             } else if (command.toLowerCase().startsWith("save-off")) {
                 func_6014_a(username, "Disabling level saving..");
-                overworld.field_816_A = true;
+                for(int i = 0; i < worldMngr.length; i++) {
+                    worldMngr[i].field_816_A = true;
+                }
             } else if (command.toLowerCase().startsWith("save-on")) {
                 func_6014_a(username, "Enabling level saving..");
-                overworld.field_816_A = false;
+                for(int i = 0; i < worldMngr.length; i++) {
+                    worldMngr[i].field_816_A = false;
+                }
             } else if (command.toLowerCase().startsWith("op ")) {
                 String s2 = command.substring(command.indexOf(" ")).trim();
                 configManager.opPlayer(s2);
@@ -985,7 +1112,7 @@ public class MinecraftServer
                 func_6014_a(username, (new StringBuilder()).append("Banning ").append(s6).toString());
                 EntityPlayerMP entityplayermp = configManager.getPlayerEntity(s6);
                 if (entityplayermp != null) {
-                    entityplayermp.field_421_a.func_43_c("Banned by admin");
+                    entityplayermp.playerNetServerHandler.func_43_c("Banned by admin");
                 }
             } else if (command.toLowerCase().startsWith("pardon ")) {
                 String s7 = command.substring(command.indexOf(" ")).trim();
@@ -1002,7 +1129,7 @@ public class MinecraftServer
                 }
 
                 if (entityplayermp1 != null) {
-                    entityplayermp1.field_421_a.func_43_c("Kicked by admin");
+                    entityplayermp1.playerNetServerHandler.func_43_c("Kicked by admin");
                     func_6014_a(username, (new StringBuilder()).append("Kicking ").append(entityplayermp1.username).toString());
                 } else {
                     icommandlistener.log((new StringBuilder()).append("Can't find user ").append(s8).append(". No kick.").toString());
@@ -1016,8 +1143,11 @@ public class MinecraftServer
                         icommandlistener.log((new StringBuilder()).append("Can't find user ").append(as[1]).append(". No tp.").toString());
                     } else if (entityplayermp3 == null) {
                         icommandlistener.log((new StringBuilder()).append("Can't find user ").append(as[2]).append(". No tp.").toString());
+                    } else if(entityplayermp2.dimension != entityplayermp3.dimension)
+                    {
+                        icommandlistener.log((new StringBuilder()).append("User ").append(as[1]).append(" and ").append(as[2]).append(" are in different dimensions. No tp.").toString());
                     } else {
-                        entityplayermp2.field_421_a.func_41_a(entityplayermp3.posX, entityplayermp3.posY, entityplayermp3.posZ, entityplayermp3.rotationYaw, entityplayermp3.rotationPitch);
+                        entityplayermp2.playerNetServerHandler.teleportTo(entityplayermp3.posX, entityplayermp3.posY, entityplayermp3.posZ, entityplayermp3.rotationYaw, entityplayermp3.rotationPitch);
                         func_6014_a(username, (new StringBuilder()).append("Teleporting ").append(as[1]).append(" to ").append(as[2]).append(".").toString());
                     }
                 } else {
@@ -1035,7 +1165,7 @@ public class MinecraftServer
                     if (entityplayermp2 == null) {
                         icommandlistener.log((new StringBuilder()).append("Can't find user ").append(as[1]).append(". No tp.").toString());
                     } else {
-                        entityplayermp2.field_421_a.func_41_a(x, y, z, entityplayermp2.rotationYaw, entityplayermp2.rotationPitch);
+                        entityplayermp2.playerNetServerHandler.teleportTo(x, y, z, entityplayermp2.rotationYaw, entityplayermp2.rotationPitch);
                         func_6014_a(username, (new StringBuilder()).append("Teleporting ").append(as[1]).append(" to ").append(as[2]).append(".").toString());
                     }
                 } else {

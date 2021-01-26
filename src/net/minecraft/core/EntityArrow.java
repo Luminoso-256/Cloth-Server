@@ -38,7 +38,7 @@ public class EntityArrow extends Entity {
         field_437_aj = 0;
         field_439_ah = entityliving;
         setSize(0.5F, 0.5F);
-        func_107_c(entityliving.posX, entityliving.posY + (double) entityliving.func_104_p(), entityliving.posZ, entityliving.rotationYaw, entityliving.rotationPitch);
+        setLocationAndAngles(entityliving.posX, entityliving.posY + (double) entityliving.func_104_p(), entityliving.posZ, entityliving.rotationYaw, entityliving.rotationPitch);
         posX -= MathHelper.cos((rotationYaw / 180F) * 3.141593F) * 0.16F;
         posY -= 0.10000000149011612D;
         posZ -= MathHelper.sin((rotationYaw / 180F) * 3.141593F) * 0.16F;

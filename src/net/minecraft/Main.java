@@ -42,28 +42,26 @@ public class Main {
         //Main classes
         LuaValue MinecraftServer = CoerceJavaToLua.coerce(minecraftServer);
         LuaValue ConfigManager = CoerceJavaToLua.coerce(minecraftServer.configManager);
-        LuaValue WorldManager = CoerceJavaToLua.coerce(minecraftServer.overworld);
         LuaValue PropertyManager = CoerceJavaToLua.coerce(minecraftServer.propertyManagerObj);
         LuaValue GameruleManager = CoerceJavaToLua.coerce(net.minecraft.cloth.file.GameruleManager.getInstance());
-        //LuaValue Block = CoerceJavaToLua.coerce(new Block(0, Material.air));
-
-
-        //All of our lovely small classes we could ever possible need
-        LuaValue EntityCreeper = CoerceJavaToLua.coerce(new EntityCreeper(minecraftServer.overworld));
-        LuaValue EntitySpider = CoerceJavaToLua.coerce(new EntitySpider(minecraftServer.overworld));
-        LuaValue EntitySkeleton = CoerceJavaToLua.coerce(new EntitySkeleton(minecraftServer.overworld));
-        LuaValue EntityZombie = CoerceJavaToLua.coerce(new EntityZombie(minecraftServer.overworld));
-        //Main classes
+        LuaValue Block = CoerceJavaToLua.coerce(new Block(0, Material.air));
+//
+//
+//        //All of our lovely small classes we could ever possible need
+          LuaValue EntityCreeper = CoerceJavaToLua.coerce(new EntityCreeper(minecraftServer.getWorldManager(0)));
+          LuaValue EntitySpider = CoerceJavaToLua.coerce(new EntitySpider(minecraftServer.getWorldManager(0)));
+          LuaValue EntitySkeleton = CoerceJavaToLua.coerce(new EntitySkeleton(minecraftServer.getWorldManager(0)));
+          LuaValue EntityZombie = CoerceJavaToLua.coerce(new EntityZombie(minecraftServer.getWorldManager(0)));
+//        //Main classes
         _G.set("minecraft_server", MinecraftServer);
-        _G.set("world", WorldManager);
-        _G.set("config_manager", ConfigManager);
-        _G.set("property_manager", PropertyManager);
-        _G.set("gamerule_manager", GameruleManager);
-        //small classes
-        _G.set("entity_creeper", EntityCreeper);
-        _G.set("entity_spider", EntitySpider);
-        _G.set("entity_skeleton", EntitySkeleton);
-        _G.set("entity_zombie", EntityZombie);
+         _G.set("config_manager", ConfigManager);
+         _G.set("property_manager", PropertyManager);
+         _G.set("gamerule_manager", GameruleManager);
+//        //small classes
+         _G.set("entity_creeper", EntityCreeper);
+         _G.set("entity_spider", EntitySpider);
+         _G.set("entity_skeleton", EntitySkeleton);
+         _G.set("entity_zombie", EntityZombie);
 
 
         StitchLoader stitch = new StitchLoader(_G);

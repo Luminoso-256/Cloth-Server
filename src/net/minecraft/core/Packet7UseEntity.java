@@ -7,30 +7,32 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class Packet8 extends Packet {
+public class Packet7UseEntity extends Packet {
 
-    public int field_9017_a;
+    public int field_9019_a;
+    public int field_9018_b;
+    public int field_9020_c;
 
-    public Packet8() {
-    }
-
-    public Packet8(int i) {
-        field_9017_a = i;
+    public Packet7UseEntity() {
     }
 
     public void readPacketData(DataInputStream datainputstream) throws IOException {
-        field_9017_a = datainputstream.readByte();
+        field_9019_a = datainputstream.readInt();
+        field_9018_b = datainputstream.readInt();
+        field_9020_c = datainputstream.readByte();
     }
 
     public void writePacketData(DataOutputStream dataoutputstream) throws IOException {
-        dataoutputstream.writeByte(field_9017_a);
+        dataoutputstream.writeInt(field_9019_a);
+        dataoutputstream.writeInt(field_9018_b);
+        dataoutputstream.writeByte(field_9020_c);
     }
 
     public void processPacket(NetHandler nethandler) {
-        nethandler.func_9003_a(this);
+        nethandler.func_6006_a(this);
     }
 
     public int getPacketSize() {
-        return 1;
+        return 9;
     }
 }

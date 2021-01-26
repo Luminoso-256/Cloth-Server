@@ -229,7 +229,7 @@ public class Block {
     public float slipperiness;
     protected float blockHardness;
     protected float blockResistance;
-    protected Block(int i, Material material) {
+    public Block(int i, Material material) {
         stepSound = soundPowderFootstep;
         field_554_bm = 1.0F;
         slipperiness = 0.6F;

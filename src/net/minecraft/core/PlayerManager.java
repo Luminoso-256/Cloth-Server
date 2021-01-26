@@ -14,12 +14,28 @@ public class PlayerManager {
     private MCHashTable2 field_9215_b;
     private List field_833_c;
     private MinecraftServer mcServer;
+    private int dimension;
+    // TODO: Implement
+    private int playerViewRadius;
 
-    public PlayerManager(MinecraftServer minecraftserver) {
+    public PlayerManager(MinecraftServer minecraftserver, int dimension, int viewDistance) {
         field_9216_a = new ArrayList();
         field_9215_b = new MCHashTable2();
         field_833_c = new ArrayList();
-        mcServer = minecraftserver;
+        if(viewDistance > 15)
+        {
+            throw new IllegalArgumentException("Too big view radius!");
+        }
+        if(viewDistance < 3)
+        {
+            throw new IllegalArgumentException("Too small view radius!");
+        } else
+        {
+            playerViewRadius = viewDistance;
+            mcServer = minecraftserver;
+            this.dimension = dimension;
+            return;
+        }
     }
 
     static MinecraftServer getMinecraftServer(PlayerManager playermanager) {
@@ -42,7 +58,7 @@ public class PlayerManager {
         field_833_c.clear();
     }
 
-    private PlayerInstance func_537_a(int i, int j, boolean flag) {
+    private PlayerInstance getPlayerInstance(int i, int j, boolean flag) {
         long l = (long) i + 0x7fffffffL | (long) j + 0x7fffffffL << 32;
         PlayerInstance playerinstance = (PlayerInstance) field_9215_b.func_677_a(l);
         if (playerinstance == null && flag) {
@@ -55,7 +71,7 @@ public class PlayerManager {
     public void func_541_a(Packet packet, int i, int j, int k) {
         int l = i >> 4;
         int i1 = k >> 4;
-        PlayerInstance playerinstance = func_537_a(l, i1, false);
+        PlayerInstance playerinstance = getPlayerInstance(l, i1, false);
         if (playerinstance != null) {
             playerinstance.func_776_a(packet);
         }
@@ -64,20 +80,20 @@ public class PlayerManager {
     public void func_535_a(int i, int j, int k) {
         int l = i >> 4;
         int i1 = k >> 4;
-        PlayerInstance playerinstance = func_537_a(l, i1, false);
+        PlayerInstance playerinstance = getPlayerInstance(l, i1, false);
         if (playerinstance != null) {
             playerinstance.func_775_a(i & 0xf, j, k & 0xf);
         }
     }
 
-    public void func_9214_a(EntityPlayerMP entityplayermp) {
+    public void addPlayer(EntityPlayerMP entityplayermp) {
         int i = (int) entityplayermp.posX >> 4;
         int j = (int) entityplayermp.posZ >> 4;
         entityplayermp.field_9155_d = entityplayermp.posX;
         entityplayermp.field_9154_e = entityplayermp.posZ;
-        for (int k = i - 10; k <= i + 10; k++) {
-            for (int l = j - 10; l <= j + 10; l++) {
-                func_537_a(k, l, true).func_779_a(entityplayermp);
+        for (int k = i - playerViewRadius; k <= i + playerViewRadius; k++) {
+            for (int l = j - playerViewRadius; l <= j + playerViewRadius; l++) {
+                getPlayerInstance(k, l, true).addPlayer(entityplayermp);
             }
 
         }
@@ -85,12 +101,12 @@ public class PlayerManager {
         field_9216_a.add(entityplayermp);
     }
 
-    public void func_9213_b(EntityPlayerMP entityplayermp) {
+    public void removePlayer(EntityPlayerMP entityplayermp) {
         int i = (int) entityplayermp.field_9155_d >> 4;
         int j = (int) entityplayermp.field_9154_e >> 4;
-        for (int k = i - 10; k <= i + 10; k++) {
-            for (int l = j - 10; l <= j + 10; l++) {
-                PlayerInstance playerinstance = func_537_a(k, l, false);
+        for (int k = i - playerViewRadius; k <= i + playerViewRadius; k++) {
+            for (int l = j - playerViewRadius; l <= j + playerViewRadius; l++) {
+                PlayerInstance playerinstance = getPlayerInstance(k, l, false);
                 if (playerinstance != null) {
                     playerinstance.func_778_b(entityplayermp);
                 }
@@ -104,10 +120,10 @@ public class PlayerManager {
     private boolean func_544_a(int i, int j, int k, int l) {
         int i1 = i - k;
         int j1 = j - l;
-        if (i1 < -10 || i1 > 10) {
+        if (i1 < -playerViewRadius || i1 > playerViewRadius) {
             return false;
         }
-        return j1 >= -10 && j1 <= 10;
+        return j1 >= -playerViewRadius && j1 <= playerViewRadius;
     }
 
     public void func_543_c(EntityPlayerMP entityplayermp) {
@@ -126,15 +142,15 @@ public class PlayerManager {
         if (i1 == 0 && j1 == 0) {
             return;
         }
-        for (int k1 = i - 10; k1 <= i + 10; k1++) {
-            for (int l1 = j - 10; l1 <= j + 10; l1++) {
+        for (int k1 = i - playerViewRadius; k1 <= i + playerViewRadius; k1++) {
+            for (int l1 = j - playerViewRadius; l1 <= j + playerViewRadius; l1++) {
                 if (!func_544_a(k1, l1, k, l)) {
-                    func_537_a(k1, l1, true).func_779_a(entityplayermp);
+                    getPlayerInstance(k1, l1, true).addPlayer(entityplayermp);
                 }
                 if (func_544_a(k1 - i1, l1 - j1, i, j)) {
                     continue;
                 }
-                PlayerInstance playerinstance = func_537_a(k1 - i1, l1 - j1, false);
+                PlayerInstance playerinstance = getPlayerInstance(k1 - i1, l1 - j1, false);
                 if (playerinstance != null) {
                     playerinstance.func_778_b(entityplayermp);
                 }
@@ -147,6 +163,11 @@ public class PlayerManager {
     }
 
     public int func_542_b() {
-        return 144;
+        return playerViewRadius * 16 - 16;
+    }
+
+    public WorldServer getMinecraftServer()
+    {
+        return mcServer.getWorldManager(dimension);
     }
 }
