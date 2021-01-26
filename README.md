@@ -6,6 +6,8 @@ A Modded server  for  minecraft alpha 1.2.6 back-porting modern minecraft server
 ## Features
 
 #### QOL/Commands
+- the nether now works in multiplayer! `/nether` or use a nether portal. server property: `allow-nether`
+- who needs the end when you can have the sky dimension! `/sky` or use a nether portal shape made with glowstone. server property: `allow-sky`
 - backported lighting system from beta to lessen chunk lighting errors
 - fixed `/kill` as vanilla implementation is bugged
 - `/heal` to heal a player
