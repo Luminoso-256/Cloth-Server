@@ -129,14 +129,14 @@ public class EntityPlayerMP extends EntityPlayer {
                 {
                     timeInPortal = 1.0F;
                     timeUntilPortal = 10;
-                    mcServer.configManager.sendPlayerToOtherDimension(this);
+                    mcServer.configManager.sendPlayerToNetherDimension(this);
                 }
                 inPortal = false;
             }
         } else
         if(inPortalSky)
         {
-            if(mcServer.propertyManagerObj.getBooleanProperty("allow-nether", true))
+            if(mcServer.propertyManagerObj.getBooleanProperty("allow-sky", true))
             {
                 timeInPortal += 0.0125F;
                 if(timeInPortal >= 1.0F)

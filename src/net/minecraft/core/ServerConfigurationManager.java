@@ -585,7 +585,7 @@ public class ServerConfigurationManager {
         worldserver.chunkProvider.loadChunk((int)entityplayermp.posX >> 4, (int)entityplayermp.posZ >> 4);
     }
 
-    public void sendPlayerToOtherDimension(EntityPlayerMP entityplayermp)
+    public void sendPlayerToNetherDimension(EntityPlayerMP entityplayermp)
     {
         WorldServer worldserver = mcServer.getWorldManager(entityplayermp.dimension);
         int i = 0;

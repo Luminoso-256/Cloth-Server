@@ -7,7 +7,6 @@ package net.minecraft;
 import net.minecraft.cloth.FallbackIdMaps;
 import net.minecraft.cloth.WorldGenParams;
 import net.minecraft.cloth.file.*;
-import net.minecraft.cloth.nether.Teleporter;
 import net.minecraft.cloth.plugins.stich.StitchLoader;
 import net.minecraft.core.*;
 
@@ -427,6 +426,13 @@ public class MinecraftServer
                                                 grantAdvancement(player.username, criterion);
                                             }
                                             break;
+                                        case "dimesion":
+                                            if (tSplit[2].equals("nether") && player.getPortalStatus().equals("nether")){
+                                                grantAdvancement(player.username, criterion);
+                                            }
+                                            if (tSplit[2].equals("sky") && player.getPortalStatus().equals("sky")){
+                                                grantAdvancement(player.username, criterion);
+                                            }
                                     }
                                 }
                             }
@@ -634,12 +640,6 @@ public class MinecraftServer
             while(worldserver.func_6156_d()) ;
 //            worldserver.updateEntities();
         }
-
-//        overworld.tick();
-//        netherWorld.tick();
-//        stitch.CallHook("OnServerTick", DummyList);
-//        while (overworld.func_6156_d()) ;
-//        overworld.func_459_b();
         field_6036_c.func_715_a();
         configManager.func_637_b();
 
@@ -789,10 +789,10 @@ public class MinecraftServer
 
                 stitch.CallHook(args[1], hookArgs);
             }
-            if (command.toLowerCase().startsWith("nether") && gameruleManager.getGamerule("nether", true)) {
-                configManager.sendPlayerToOtherDimension(configManager.getPlayerEntity(username));
+            if (command.toLowerCase().startsWith("nether") && propertyManagerObj.getBooleanProperty("allow-nether", true)) {
+                configManager.sendPlayerToNetherDimension(configManager.getPlayerEntity(username));
             }
-            if (command.toLowerCase().startsWith("sky")) {
+            if (command.toLowerCase().startsWith("sky") &&  propertyManagerObj.getBooleanProperty("allow-sky", true)) {
                 configManager.sendPlayerToSkyDimension(configManager.getPlayerEntity(username));
             }
             if (command.toLowerCase().startsWith("version")) {

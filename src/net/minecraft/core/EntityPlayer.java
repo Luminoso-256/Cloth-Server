@@ -50,6 +50,13 @@ public class EntityPlayer extends EntityLiving {
         field_9119_aG = "/mob/char.png";
     }
 
+
+    public String getPortalStatus(){
+        if (inPortalSky){return "sky";}
+        if (inPortal){return "nether";}
+        return "none";
+    }
+
     public void setInPortal()
     {
         if(timeUntilPortal > 0)

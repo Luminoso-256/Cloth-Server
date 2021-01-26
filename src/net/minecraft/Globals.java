@@ -11,10 +11,10 @@ public class Globals {
     // [Cloth Release 1.0.0]
 
     //-------------------Release Information
-    public static final boolean IS_PREVIEW = true; //I plan to release more early or test-specific releases now, so thisl be handy
-    public static final String VERSION_STRING = "Cloth Beta 1.1.0-dev";
-    public static final int STITCH_HOOK_VERSION = 1115;// Phase|Major|Minor|Incremental
-    public static final int RULESET_FILE_VERSION = 1115; // Phase|Major|Minor|Incremental
+    public static final boolean IS_PREVIEW = false; //I plan to release more early or test-specific releases now, so thisl be handy
+    public static final String VERSION_STRING = "Cloth Beta 1.1.0-release";
+    public static final int STITCH_HOOK_VERSION = 1116;// Phase|Major|Minor|Incremental
+    public static final int RULESET_FILE_VERSION = 1116; // Phase|Major|Minor|Incremental
     public static final String TARGET_FEATURE = "Anti-Cheat: Items/Inventory";
 
 
@@ -24,9 +24,9 @@ public class Globals {
             "Bugs are features!", "Report issues on github!", "Unobfuscated!",
             "Free for all!", "Open source!", "Fork me!", "Experimental shenanigans!",
             "With contributions from many", "Compatible with JRE14! and JRE8!", "Why do these messages exist?",
-            "New flying pigmen!", "an uneasy alliance!", "buggy nether time!", "We use Trello!",
+            "New flying pigmen!", "an uneasy alliance!", "slightly less buggy nether time!", "We use Trello!",
             "Check out classic-rs", "rulesets!", "thanks for downloading!",
-            "Now with anticheat!"};
+            "Now with anticheat!", "Sky dimension!"};
 
     //-------------------Deaths
 
@@ -86,9 +86,8 @@ public class Globals {
         put("inventory.sponge", "Developer time!");
 
 
-        //travel
-        //  put("travel.nether", "getting buggier...");
-        //   put("travel.buildlimit", "I can see my house from here!");
+        put("travel.dimension.nether", "We need to go deeper");
+        put("travel.dimension.sky", "We need to go higher");
         put("travel.y.128", "I can see my house from here!");
 
 
